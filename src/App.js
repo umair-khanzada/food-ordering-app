@@ -1,12 +1,13 @@
 import './App.css';
 import { withTheme } from '@material-ui/core/styles';
 import Button from './components/Button';
+import TopNav from './components/TopNav';
 
 function App(props) {
-  console.log(props);
   return (
     <>
-    <Button />
+      <TopNav />
+      <Button />
     </>  
   );
 }

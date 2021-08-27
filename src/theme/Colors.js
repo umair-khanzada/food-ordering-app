@@ -1,15 +1,16 @@
-import { green, blue, red, yellow, purple} from '@material-ui/core/colors';
+import { lime, pink, red, yellow, purple} from '@material-ui/core/colors';
 
 export const MaterialPalleteColours = {
     primary: {
-        light: green[300],
-        main: green[500],
-        dark: green[900]
+        light: lime[300],
+        main: lime[500],
+        dark: lime[900],
+        contrastColour: pink[500],  
     },
     secondary: {
-        light: blue[300],
-        main: blue[500],
-        dark: blue[900]
+        light: pink[300],
+        main: pink[500],
+        dark: pink[900]
     },
     errror: {
         light: red[300],
@@ -27,8 +28,8 @@ export const MaterialPalleteColours = {
         dark: purple[900] 
     },
     success: {
-        light: green[100],
-        main: green[200],
-        dark: green[300]
+        light: lime[100],
+        main: lime[200],
+        dark: lime[300]
     }
 };
