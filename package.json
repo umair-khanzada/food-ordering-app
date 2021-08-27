@@ -12,7 +12,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .js,.jsx --cache --quiet && npm run lint:css",
+    "lint:css": "stylelint './src/**/*.{js,jsx}'",
+    "lint:fix": "eslint src --ext .js,.jsx --fix --cache --quiet",
+    "prettier": "find src -name '*.js' -o -name '*.jsx' -o -name '*.css' -o -name '*.scss' | xargs prettier --config ./.prettierrc --write",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run prettier:fix && npm run lint:fix"
   },
   "eslintConfig": {
     "extends": [
@@ -33,6 +39,23 @@
     ]
   },
   "devDependencies": {
+    "@babel/eslint-plugin": "^7.14.5",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^3.6.0",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-better-styled-components": "^1.1.2",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
+    "eslint-plugin-unused-imports": "^1.1.4",
+    "lint": "^0.7.0",
+    "prettier": "^2.3.2",
+    "prettier-eslint": "^13.0.0",
+    "prettier-eslint-cli": "^5.0.1",
     "web-vitals": "^2.1.0"
   }
 }
