@@ -3,17 +3,17 @@ import { MaterialPalleteColours } from './Colors';
 import { typography } from './Typography';
 
 
-const theme = createTheme({
-    overrides: {
-        pallete: MaterialPalleteColours,
+const customMaterialtheme = createTheme({
+        palette: MaterialPalleteColours,
         typography,
-    }
 });
+
+
 
 export default function MaterialThemeWrapper({children}) {
     // we can use the light dark theme modal. If we need
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={customMaterialtheme}>
             {children}
         </ThemeProvider>
     )

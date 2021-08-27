@@ -1,21 +1,10 @@
-// You can use the h1, h2 style py providing the variant props to themeProvider
-import { createTheme } from '@material-ui/core/styles';
-
+// You can use the h1, h2 style by providing the variant props to themeProvider
 // If you are using your custom breakpoints use custom breakpoints object instead
-const theme = createTheme();
 
 
 export const typography = {
     h1: {
-        [theme.breakpoints.up('lg')]: {
-            fontSize: '2.4rem', // use font size for different breakpoints here 
-        },
-        [theme.breakpoints.up('md')]: {
-            fontSize: '2.4rem', // use font size for different breakpoints here 
-        },
-        [theme.breakpoints.between("xl", "lg")]: { // use .between functions for different screen ranges
-            fontSize: '3rem'
-        }
+        fontSize: '2rem',
     },
     h2: {
         fontSize: '1.8rem',

@@ -7,9 +7,9 @@ import MaterialThemeWrapper from './theme';
 
 ReactDOM.render(
   <MaterialThemeWrapper>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
   </MaterialThemeWrapper>,
   document.getElementById('root')
 );
