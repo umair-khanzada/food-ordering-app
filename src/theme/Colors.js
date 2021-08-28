@@ -11,7 +11,7 @@ export const MaterialPalleteColours = {
         main: blue[500],
         dark: blue[900]
     },
-    errror: {
+    error: {
         light: red[300],
         main: red[500],
         dark: red[900]
@@ -24,7 +24,7 @@ export const MaterialPalleteColours = {
     info: {
         light: purple[500],
         main: purple[300],
-        dark: purple[900] 
+        dark: purple[900]
     },
     success: {
         light: green[100],
