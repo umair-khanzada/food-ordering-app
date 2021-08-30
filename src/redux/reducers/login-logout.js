@@ -1,11 +1,11 @@
-import { Actions } from '../actions';
+import { LOGIN, LOGOUT } from '../../scripts/constants';
 
 export const loginLogout = (state = { isLoggedIn: false }, action) => {
   switch (action.type) {
-    case Actions.LOGIN:
+    case LOGIN:
       return { isLoggedIn: true };
 
-    case Actions.LOGOUT:
+    case LOGOUT:
       return { isLoggedIn: false };
 
     default:
