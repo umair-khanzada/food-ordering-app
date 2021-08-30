@@ -1,24 +1,13 @@
-import { connect } from 'react-redux';
 import React from 'react';
-import { Actions } from './redux/actions';
 
-const App = ({ isLoggedIn, loginEpic }) => {
+const App = () => {
+  // const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  console.log('my con');
   return (
     <div>
-      <h1>is Logged In: {isLoggedIn.toString()}</h1>
-      <button onClick={loginEpic} type="button">
-        Log In
-      </button>
+      {/* <h1>is Logged In: {isLoggedIn.toString()} </h1> */}
+      <button type="button">Log In</button>
     </div>
   );
 };
-
-const mapStateToProps = (state) => ({
-  isLoggedIn: state.isLoggedIn,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loginEpic: () => dispatch(Actions.login()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

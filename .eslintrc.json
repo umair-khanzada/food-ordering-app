@@ -30,7 +30,7 @@
     ],
     "rules": {
         "better-styled-components/sort-declarations-alphabetically": 2,
-        "sort-imports-es6-autofix/sort-imports-es6": 1,
+        "sort-imports-es6-autofix/sort-imports-es6": 0,
         "prettier/prettier": [
         "error",
         {
@@ -41,7 +41,7 @@
             "arrow-parens": "avoid"
         }
     ],
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "semi": ["error", "always"],
     "semi-spacing": "error",
@@ -108,7 +108,7 @@
     ],
     "spaced-comment": ["error", "always"],
     "rest-spread-spacing": "error",
-    "no-console": "error",
+    // "no-console": "error",
     // rules for team discussion
     "arrow-body-style": [0, "as-needed"],
     "no-underscore-dangle": 0,

@@ -1,10 +1,11 @@
-import { createStore, applyMiddleware } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import reducer from './reducers';
-import { Epics } from './epics';
+
+import rootEpic from './epics';
 
 const epicMiddleware = createEpicMiddleware();
 
 export default createStore(reducer, applyMiddleware(epicMiddleware));
 
-epicMiddleware.run(Epics.loginEpic);
+epicMiddleware.run(rootEpic);
