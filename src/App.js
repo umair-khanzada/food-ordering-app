@@ -6,6 +6,7 @@ import React from 'react';
 // eslint-disable-next-line import/order
 import { Actions } from './redux/actions';
 import Googlelogin from './components/googleLogin/googleLogin';
+import Googlelogout from './components/googleLogout/googleLogout';
 import Main from './routes/Layout/MainContainer';
 
 const App = () => {
@@ -22,7 +23,7 @@ const App = () => {
   const changeLogin = () => {
     dispatch(Actions.login());
   };
-
+  console.log('isLogin', isLogin);
   return (
     <div>
       <h1>is Logged In: {isLogin.toString()} </h1>
@@ -31,6 +32,7 @@ const App = () => {
       </button>
       <Button />
       <Googlelogin />
+      <Googlelogout />
       <Main />
     </div>
   );
