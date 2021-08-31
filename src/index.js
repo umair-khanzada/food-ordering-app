@@ -1,20 +1,21 @@
 /* eslint-disable sort-imports-es6-autofix/sort-imports-es6 */
 /* eslint-disable import/order */
 import './index.css';
-import { Provider } from 'react-redux';
+import { CssBaseline } from '@material-ui/core';
 import React from 'react';
+// eslint-disable-next-line import/no-named-as-default
 import App from './App';
 import MaterialThemeWrapper from './theme';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
-import store from './redux/store';
+import GlobalStyles from './theme/GlobalStyles';
 
 ReactDOM.render(
   <MaterialThemeWrapper>
+    <CssBaseline />
+    <GlobalStyles />
     <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <App />
     </React.StrictMode>
   </MaterialThemeWrapper>,
   document.getElementById('root'),

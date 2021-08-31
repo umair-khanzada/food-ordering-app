@@ -1,23 +1,14 @@
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import React from 'react';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { MaterialPalleteColours } from './Colors';
+import { typography } from './Typography';
+// eslint-disable-next-line import/order
+import React from 'react';
+import customShapes from './shapes';
 
 const theme = createTheme({
   palette: MaterialPalleteColours,
-  typography: {
-    fontFamily: [
-      'Lato-Regular',
-      'Lato-Black',
-      'Lato-BlackItalic',
-      'Lato-Bold',
-      'Lato-BoldItalic',
-      'Lato-Italic',
-      'Lato-Light',
-      'Lato-LightItalic',
-      'Lato-Thin',
-      'Lato-ThinItalic',
-    ].join(','),
-  },
+  typography,
+  shape: customShapes,
 });
 
 export default function MaterialThemeWrapper({ children }) {
