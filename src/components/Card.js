@@ -10,6 +10,7 @@ export default function OutlinedCard({ children, minWidth, maxWidth }) {
       minWidth,
       maxWidth,
       borderRadius: theme.shape.borderRadius,
+      margin: '8px',
     },
   });
   const classes = useStyles();
