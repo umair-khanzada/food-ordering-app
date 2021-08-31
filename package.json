@@ -4,14 +4,12 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "cra-template": "1.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.4",
     "react-scripts": "4.0.3",
-    "redux": "^4.1.1",
-    "redux-observable": "^2.0.0",
-    "rxjs": "^6.6.7"
+    "styled-components": "^5.3.1"
   },
   "scripts": {
     "start": "react-scripts start",

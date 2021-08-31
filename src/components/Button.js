@@ -1,13 +1,19 @@
+import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
-import { useTheme } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+export default function CommonButton({ children, color }) {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      '&:hover': {
+        backgroundColor: theme.palette.primary.main,
+      },
+    },
+  }));
 
-export default function CommonButton() {
+  const classes = useStyles();
   // One option to get theme and supply it to styled compoenents
-  const _theme = useTheme();
   return (
-    <Button color="primary" variant="contained">
-      Food Ordering app
+    <Button className={classes.root} color={color} variant="contained">
+      {children}
     </Button>
   );
 }
