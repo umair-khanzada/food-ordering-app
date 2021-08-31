@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '../components/Button';
 import Card from '../components/Card';
 // import Container from '../containers/Container';
-import TextField from '../components/TextField';
+import TextField from '../components/TextField/TextField';
 
 const ForgetPassword = () => {
   return (
@@ -12,12 +12,12 @@ const ForgetPassword = () => {
         <Typography variant="h1">Reset Your Password</Typography>
         <br />
         <Card margin="auto" maxWidth={400} minWidth={300}>
-          <div style={{ textAlign: 'center' }}>
+          <div>
             <Typography color="secondary" variant="h3">
               Forgot Password ?
             </Typography>
             <br />
-            <Typography color="primary" paragraph style={{ wordWrap: 'break-word' }}>
+            <Typography color="primary" paragraph>
               Enter email associated with your account and we'll send you a link to reset your password
             </Typography>
             <TextField label="Enter Email" type="email" variant="outlined" width="100%" />
