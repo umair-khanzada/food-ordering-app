@@ -5,14 +5,16 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
+import MaterialThemeWrapper from './theme';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-
+  <MaterialThemeWrapper>
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>
+  </MaterialThemeWrapper>,
   document.getElementById('root'),
 );
 

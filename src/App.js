@@ -1,13 +1,16 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { withTheme } from '@material-ui/core/styles';
 import { Actions } from './redux/actions';
+import Button from './components/Button';
 const App = () => {
+  const dispatch = useDispatch();
   const { isLogin } = useSelector((state) => {
     return {
       isLogin: state.login_logout.isLoggedIn,
     };
   });
-  const dispatch = useDispatch();
+
   const changeLogin = () => {
     dispatch(Actions.login());
   };
@@ -18,7 +21,8 @@ const App = () => {
       <button onClick={() => changeLogin()} type="button">
         Log In
       </button>
+      <Button />
     </div>
   );
 };
-export default App;
+export default withTheme(App);
