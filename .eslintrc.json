@@ -29,7 +29,7 @@
     ],
     "rules": {
         "better-styled-components/sort-declarations-alphabetically": 2,
-        "sort-imports-es6-autofix/sort-imports-es6": 0,
+        "sort-imports-es6-autofix/sort-imports-es6": 1,
         "prettier/prettier": [
         "error",
         {
@@ -107,7 +107,7 @@
     ],
     "spaced-comment": ["error", "always"],
     "rest-spread-spacing": "error",
-    "no-console": "warn",
+    "no-console": "error",
     // rules for team discussion
     "arrow-body-style": [0, "as-needed"],
     "no-underscore-dangle": 0,

@@ -7,10 +7,10 @@ export default function CommonButton() {
   const _theme = useTheme();
   return (
     <Button color="primary" variant="contained">
-        Food Ordering app
+      Food Ordering app
     </Button>
   );
-};
+}
 
 CommonButton.defaulProps = {}; // All Components must have defualt props
 CommonButton.prototype = {}; // All Components must have propTypes
