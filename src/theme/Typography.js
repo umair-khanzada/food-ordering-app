@@ -16,6 +16,10 @@ export const typography = {
       // use .between functions for different screen ranges
       fontSize: '3rem',
     },
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '2rem',
+    },
   },
   h2: {
     [theme.breakpoints.up('lg')]: {
@@ -27,6 +31,10 @@ export const typography = {
     [theme.breakpoints.between('xl', 'lg')]: {
       // use .between functions for different screen ranges
       fontSize: '2.2rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '1.5rem',
     },
   },
   h3: {
@@ -40,6 +48,10 @@ export const typography = {
       // use .between functions for different screen ranges
       fontSize: '1.7rem',
     },
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '1.0rem',
+    },
   },
   h4: {
     [theme.breakpoints.up('lg')]: {
@@ -51,6 +63,10 @@ export const typography = {
     [theme.breakpoints.between('xl', 'lg')]: {
       // use .between functions for different screen ranges
       fontSize: '1.4rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '0.96rem',
     },
   },
   h5: {
@@ -64,6 +80,10 @@ export const typography = {
       // use .between functions for different screen ranges
       fontSize: '1.0rem',
     },
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '0.90rem',
+    },
   },
   h6: {
     [theme.breakpoints.up('lg')]: {
@@ -75,6 +95,10 @@ export const typography = {
     [theme.breakpoints.between('xl', 'lg')]: {
       // use .between functions for different screen ranges
       fontSize: '0.90rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '0.80rem',
     },
   },
   subtitle1: {
