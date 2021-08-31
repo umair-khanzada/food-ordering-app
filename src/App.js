@@ -5,6 +5,7 @@ import Button from './components/Button';
 import React from 'react';
 // eslint-disable-next-line import/order
 import { Actions } from './redux/actions';
+import Googlelogin from './components/googleLogin/googleLogin';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const App = () => {
         Log In
       </button>
       <Button />
+      <Googlelogin />
     </div>
   );
 };

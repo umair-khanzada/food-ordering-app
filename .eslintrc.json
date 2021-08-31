@@ -106,7 +106,7 @@
     ],
     "spaced-comment": ["error", "always"],
     "rest-spread-spacing": "error",
-    "no-console": "error",
+    "no-console": "warn",
     // rules for team discussion
     "arrow-body-style": [0, "as-needed"],
     "no-underscore-dangle": 0,
