@@ -109,20 +109,22 @@ export default function MiniDrawer({ children }) {
     },
   }))(MenuItem);
 
+  const { root, appBar, appBarShift, menuButton, hide, drawer, drawerOpen, drawerClose, toolbar, content } = classes;
+
   return (
-    <div className={classes.root}>
+    <div className={root}>
       <CssBaseline />
       <AppBar
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
+        className={clsx(appBar, {
+          [appBarShift]: open,
         })}
         position="fixed"
       >
         <Toolbar>
           <IconButton
             aria-label="open drawer"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
+            className={clsx(menuButton, {
+              [hide]: open,
             })}
             color="inherit"
             edge="start"
@@ -152,17 +154,17 @@ export default function MiniDrawer({ children }) {
       <Drawer
         classes={{
           paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
+            [drawerOpen]: open,
+            [drawerClose]: !open,
           }),
         }}
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
+        className={clsx(drawer, {
+          [drawerOpen]: open,
+          [drawerClose]: !open,
         })}
         variant="permanent"
       >
-        <div className={classes.toolbar}>
+        <div className={toolbar}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -186,8 +188,8 @@ export default function MiniDrawer({ children }) {
           ))}
         </List>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
+      <main className={content}>
+        <div className={toolbar} />
         {children}
       </main>
     </div>
