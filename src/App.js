@@ -6,6 +6,7 @@ import React from 'react';
 // eslint-disable-next-line import/order
 import { Actions } from './redux/actions';
 import Googlelogin from './components/googleLogin/googleLogin';
+import Main from './routes/Layout/MainContainer';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const App = () => {
       </button>
       <Button />
       <Googlelogin />
+      <Main />
     </div>
   );
 };
