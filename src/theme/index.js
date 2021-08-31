@@ -1,5 +1,7 @@
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import React from 'react';
+
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
 import { MaterialPalleteColours } from './Colors';
 
 const theme = createTheme({

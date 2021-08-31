@@ -1,6 +1,7 @@
 import React from 'react';
-import { useTheme } from '@material-ui/core/styles';
+
 import { Button } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 
 export default function CommonButton() {
   // One option to get theme and supply it to styled compoenents

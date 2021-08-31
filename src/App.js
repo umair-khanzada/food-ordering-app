@@ -1,9 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { withTheme } from '@material-ui/core/styles';
-import Button from './components/Button';
-// eslint-disable-next-line import/order
 import React from 'react';
-// eslint-disable-next-line import/order
+
+import './App.css';
+import { withTheme } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Button from './components/Button';
 import { Actions } from './redux/actions';
 
 const App = () => {
@@ -27,6 +28,8 @@ const App = () => {
       <button onClick={changeLogin} type="button">
         Log In
       </button>
+      <Button />
+
       <Button />
     </div>
   );
