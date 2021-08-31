@@ -1,8 +1,7 @@
 const RouteNames = {
-    Registration: 'register',
-    foregetPassword: 'forget-password',
-    login: 'login',
+  Registration: '/register',
+  foregetPassword: '/forget-password',
+  login: '/login',
 };
 
 export default RouteNames;
-

@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 function LoginContainer() {
-    return (
-        <div>
-            This is login Container
-        </div>
-    )
+  return (
+    <div>
+      <h1>Hello From Login</h1>
+    </div>
+  );
 }
 
 export default LoginContainer;

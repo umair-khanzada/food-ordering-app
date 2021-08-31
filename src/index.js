@@ -1,11 +1,13 @@
+/* eslint-disable sort-imports-es6-autofix/sort-imports-es6 */
+/* eslint-disable import/order */
 import './index.css';
 import { Provider } from 'react-redux';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
+import MaterialThemeWrapper from './theme';
+import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
-import MaterialThemeWrapper from './theme';
 
 ReactDOM.render(
   <MaterialThemeWrapper>
