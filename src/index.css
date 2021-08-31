@@ -1,13 +1,94 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  monospace;
 }
+/*add self host font */
+@font-face {
+  font-family: 'Lato-Black';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-Black.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato-BlackItalic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-BlackItalic.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato-Bold';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-Bold.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato-BoldItalic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-BoldItalic.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato-Italic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-Italic.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato-Light';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-Light.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato-LightItalic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-LightItalic.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-Regular.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato-Thin';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-Thin.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./theme/fonts/Lato-Regular.ttf') format('woff2');
+}
+
