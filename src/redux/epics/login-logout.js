@@ -1,6 +1,6 @@
 import { delay, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { LOGIN, LOGOUT } from '../../scripts/constants';
+import { LOGIN, LOGOUT } from '../scripts/constants';
 
 const loginEpic = (action$) =>
   action$.pipe(

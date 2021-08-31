@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from '../../scripts/constants';
+import { LOGIN, LOGOUT } from '../scripts/constants';
 
 export const login = () => ({ type: LOGIN });
 
