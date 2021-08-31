@@ -33,7 +33,6 @@
         "prettier/prettier": [
         "error",
         {
-            "endOfLine": "auto",
             "printWidth": 120,
             "singleQuote": true,
             "trailingComma" : "all",
