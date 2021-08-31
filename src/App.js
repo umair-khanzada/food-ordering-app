@@ -1,4 +1,3 @@
-import './App.css';
 import { withTheme } from '@material-ui/core/styles';
 import React, { Fragment } from 'react';
 import Drawer from './components/Drawer';
@@ -13,5 +12,4 @@ function App(props) {
     </>
   );
 }
-
 export default withTheme(App);
