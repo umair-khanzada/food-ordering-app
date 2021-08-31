@@ -23,7 +23,7 @@ const App = () => {
   const changeLogin = () => {
     dispatch(Actions.login());
   };
-  console.log('isLogin', isLogin);
+
   return (
     <div>
       <h1>is Logged In: {isLogin.toString()} </h1>

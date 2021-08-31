@@ -98,7 +98,7 @@
     "space-before-blocks": "error",
     "spaced-comment": ["error", "always"],
     "rest-spread-spacing": "error",
-    "no-console": "warn",
+    "no-console": "error",
     // rules for team discussion
     "arrow-body-style": [0, "as-needed"],
     "no-underscore-dangle": 0,
