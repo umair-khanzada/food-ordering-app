@@ -1,13 +1,16 @@
 import './App.css';
 import { withTheme } from '@material-ui/core/styles';
-import Button from './components/Button';
-
+import React, { Fragment } from 'react';
+import Drawer from './components/Drawer';
+import ForgetPassword from './Pages/ForgetPassword';
 function App(props) {
-  console.log(props);
   return (
     <>
-    <Button />
-    </>  
+      <Drawer>
+        {/* <Button /> */}
+        <ForgetPassword />
+      </Drawer>
+    </>
   );
 }
 
