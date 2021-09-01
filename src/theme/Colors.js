@@ -1,4 +1,4 @@
-import { green, blue, red, yellow, purple } from '@material-ui/core/colors';
+import { blue, green, purple, red, yellow } from '@material-ui/core/colors';
 
 export const MaterialPalleteColours = {
   primary: {

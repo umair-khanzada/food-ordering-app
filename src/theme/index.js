@@ -1,4 +1,4 @@
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import React from 'react';
 import { MaterialPalleteColours } from './Colors';
 
