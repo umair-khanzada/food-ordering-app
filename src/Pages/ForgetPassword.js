@@ -8,7 +8,7 @@ import TextField from '../components/TextField/TextField';
 const ForgetPassword = () => {
   return (
     <>
-      <Grid alignItems="center" container direction="column" justify="center" style={{ minHeight: '100vh' }}>
+      <Grid alignItems="center" container direction="column" justifyContent="center" style={{ minHeight: '100vh' }}>
         <Typography variant="h1">Reset Your Password</Typography>
         <br />
         <Card margin="auto" maxWidth="400px" minWidth="300px">

@@ -8,7 +8,7 @@ export default function OutlinedCard({ children, minWidth, maxWidth }) {
 
   // One option to get theme and supply it to styled compoenents
   return (
-    <StyledCard maxWidth={maxWidth} minWidth={minWidth} theme={theme} variant="outlined">
+    <StyledCard maxwidth={maxWidth} minwidth={minWidth} theme={theme} variant="outlined">
       <CardContent>{children}</CardContent>
     </StyledCard>
   );
