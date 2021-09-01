@@ -12,6 +12,7 @@
       "prettier"
   ],
   "parserOptions": {
+  
       "ecmaFeatures": {
           "jsx": true
       },
