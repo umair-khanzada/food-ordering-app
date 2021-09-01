@@ -1,21 +1,17 @@
 import React from 'react';
 
-import { Button, makeStyles } from '@material-ui/core';
-export default function CommonButton({ children, color }) {
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      '&:hover': {
-        backgroundColor: theme.palette.primary.main,
-      },
-    },
-  }));
+import { useTheme } from '@material-ui/core';
 
-  const classes = useStyles();
+import StyledButton from './Style';
+
+export default function CommonButton({ children, color }) {
+  const theme = useTheme();
+
   // One option to get theme and supply it to styled compoenents
   return (
-    <Button className={classes.root} color={color} variant="contained">
+    <StyledButton color={color} theme={theme} variant="contained">
       {children}
-    </Button>
+    </StyledButton>
   );
 }
 
