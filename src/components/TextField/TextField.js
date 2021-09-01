@@ -7,7 +7,7 @@ export default function BasicTextFields({ variant, width, type, label }) {
 
   return (
     <form autoComplete="off" noValidate>
-      <StyledTextField label={label} type={type} variant={variant} width={width} />
+      <StyledTextField label={label} theme={theme} type={type} variant={variant} width={width} />
     </form>
   );
 }
