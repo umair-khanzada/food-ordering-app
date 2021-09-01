@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from '../../scripts/constants';
+import { LOGIN, LOGOUT } from '../scripts/constants';
 
 export const loginLogout = (state = { isLoggedIn: false }, action) => {
   switch (action.type) {
