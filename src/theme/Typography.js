@@ -4,61 +4,138 @@ import { createTheme } from '@material-ui/core/styles';
 // If you are using your custom breakpoints use custom breakpoints object instead
 const theme = createTheme();
 
-
 export const typography = {
-    h1: {
-        [theme.breakpoints.up('lg')]: {
-            fontSize: '2.4rem', // use font size for different breakpoints here
-        },
-        [theme.breakpoints.up('md')]: {
-            fontSize: '2.4rem', // use font size for different breakpoints here
-        },
-        [theme.breakpoints.between("xl", "lg")]: { // use .between functions for different screen ranges
-            fontSize: '3rem'
-        }
+  h1: {
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '2.4rem', // use font size for different breakpoints here
     },
-    h2: {
-        fontSize: '1.8rem',
-        // Todo --> implement breakpoints responsive UI if you need
+    [theme.breakpoints.up('md')]: {
+      fontSize: '2.4rem', // use font size for different breakpoints here
     },
-    h3: {
-        fontSize: '1.6rem', // 32
-        // Todo --> implement breakpoints responsive UI if you need
+    [theme.breakpoints.between('xl', 'lg')]: {
+      // use .between functions for different screen ranges
+      fontSize: '3rem',
     },
-    h4: {
-        fontsize: '1.4rem',
-        // Todo --> implement breakpoints responsive UI if you need
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '2rem',
     },
-    h5: {
-        fontsize: '1.2rem',
-        // Todo --> implement breakpoints responsive UI if you need
+  },
+  h2: {
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '2rem', // use font size for different breakpoints here
     },
-    h6: {
-        fontsize: '1rem',
-        // Todo --> implement breakpoints responsive UI if you need
+    [theme.breakpoints.up('md')]: {
+      fontSize: '1.8rem', // use font size for different breakpoints here
     },
-    subtitle1: {
-        fontsize: '0.8rem'
+    [theme.breakpoints.between('xl', 'lg')]: {
+      // use .between functions for different screen ranges
+      fontSize: '2.2rem',
     },
-    subtitle2: {
-        fontsize: '0.6rem'
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '1.5rem',
     },
-    body1: {
-        fontsize: '1rem',
+  },
+  h3: {
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '1.4rem', // use font size for different breakpoints here
     },
-    body2: {
-        fontsize: '1.5rem'
+    [theme.breakpoints.up('md')]: {
+      fontSize: '1.3rem', // use font size for different breakpoints here
     },
-    button: {
-        fontsize: '0.5rem',
-        fontWeight: 'bold'
-        // extend style if you need
+    [theme.breakpoints.between('xl', 'lg')]: {
+      // use .between functions for different screen ranges
+      fontSize: '1.7rem',
     },
-    caption: {
-        fontsize: '1.5rem',
-        fontStyle: 'bold',
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '1.0rem',
     },
-    overline: {
-        fontSize: '2rem'
-    }
-}
+  },
+  h4: {
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '1.2rem', // use font size for different breakpoints here
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: '1.0rem', // use font size for different breakpoints here
+    },
+    [theme.breakpoints.between('xl', 'lg')]: {
+      // use .between functions for different screen ranges
+      fontSize: '1.4rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '0.96rem',
+    },
+  },
+  h5: {
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '0.96rem', // use font size for different breakpoints here
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: '0.92rem', // use font size for different breakpoints here
+    },
+    [theme.breakpoints.between('xl', 'lg')]: {
+      // use .between functions for different screen ranges
+      fontSize: '1.0rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '0.90rem',
+    },
+  },
+  h6: {
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '0.82rem', // use font size for different breakpoints here
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: '0.86rem', // use font size for different breakpoints here
+    },
+    [theme.breakpoints.between('xl', 'lg')]: {
+      // use .between functions for different screen ranges
+      fontSize: '0.90rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      // use .between functions for different screen ranges
+      fontSize: '0.80rem',
+    },
+  },
+  subtitle1: {
+    fontsize: '0.8rem',
+  },
+  subtitle2: {
+    fontsize: '0.6rem',
+  },
+  body1: {
+    fontsize: '1rem',
+  },
+  body2: {
+    fontsize: '1.5rem',
+  },
+  button: {
+    fontsize: '0.5rem',
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    // extend style if you need
+  },
+  caption: {
+    fontsize: '1.5rem',
+    fontStyle: 'bold',
+  },
+  overline: {
+    fontSize: '2rem',
+  },
+  fontFamily: [
+    'Lato-Regular',
+    'Lato-Black',
+    'Lato-BlackItalic',
+    'Lato-Bold',
+    'Lato-BoldItalic',
+    'Lato-Italic',
+    'Lato-Light',
+    'Lato-LightItalic',
+    'Lato-Thin',
+    'Lato-ThinItalic',
+  ].join(','),
+};

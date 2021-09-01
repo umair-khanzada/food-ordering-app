@@ -1,16 +1,22 @@
 /* eslint-disable sort-imports-es6-autofix/sort-imports-es6 */
 /* eslint-disable import/order */
 import './index.css';
-import { Provider } from 'react-redux';
 import React from 'react';
-import App from './App';
-import MaterialThemeWrapper from './theme';
+
+import { CssBaseline } from '@material-ui/core';
 import ReactDOM from 'react-dom';
-import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+
+import App from './App';
 import store from './redux/store';
+import reportWebVitals from './reportWebVitals';
+import MaterialThemeWrapper from './theme';
+import GlobalStyles from './theme/GlobalStyles';
 
 ReactDOM.render(
   <MaterialThemeWrapper>
+    <CssBaseline />
+    <GlobalStyles />
     <React.StrictMode>
       <Provider store={store}>
         <App />
