@@ -1,4 +1,3 @@
-import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import React from 'react';
 
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';

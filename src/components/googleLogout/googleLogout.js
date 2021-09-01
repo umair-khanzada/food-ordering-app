@@ -1,7 +1,10 @@
-import { GoogleLogout } from 'react-google-login';
 import React from 'react';
+
+import { GoogleLogout } from 'react-google-login';
+
 // eslint-disable-next-line sort-imports-es6-autofix/sort-imports-es6
-import { clientId } from '../../constants/constants';
+import { clientId } from '../../constants/googleAuth';
+
 // eslint-disable-next-line import/order
 import { useDispatch } from 'react-redux';
 // eslint-disable-next-line import/order

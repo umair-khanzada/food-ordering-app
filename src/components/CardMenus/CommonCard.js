@@ -1,26 +1,34 @@
-import { makeStyles } from '@material-ui/core/styles';
-// import Avatar from '@material-ui/core/Avatar';
+import React from 'react';
 
 // eslint-disable-next-line import/order
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 // eslint-disable-next-line import/order
-import Avatar from '@material-ui/core/Avatar';
+import { Card, CardMedia, CardContent, CardHeader, Typography, Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+// import Avatar from '@material-ui/core/Avatar';
 // eslint-disable-next-line import/order
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
+
+// eslint-disable-next-line import/order
+// eslint-disable-next-line import/order
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    width: '72%',
+    marginLeft: '250px',
   },
   media: {
     height: 0,
+
     paddingTop: '56.25%', // 16:9
+  },
+  content: {
+    padding: '0px',
+    marginLeft: '18px',
+  },
+  header: {
+    padding: '0px',
+    marginLeft: '18px',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -35,42 +43,34 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: 'red',
   },
+  image: {
+    padding: '30px',
+    border: '10px',
+    borderRadius: '200px',
+  },
 }));
-const CommonCard = ({ name, price, resturantName }) => {
+const CommonCard = ({ name, price, resturantName, img }) => {
   const classes = useStyles();
+
   return (
     <div>
       <Card className={classes.root}>
+        <Box className={classes.image}>
+          <CardMedia className={classes.media} image={img} title={name} />
+        </Box>
         <CardHeader
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              {price}
-            </Avatar>
-          }
-          subheader={resturantName}
-          title={name}
-        >
-          <CardMedia className={classes.media} image="./components/images/areebAli.png" title="Paella dish">
-            <CardContent>
-              <Typography color="textSecondary" component="p" variant="body2">
-                This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1
-                cup of frozen peas along with the mussels, if you like.
-              </Typography>
-              <Typography paragraph>
-                Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high heat. Add chicken,
-                shrimp and chorizo, and cook, stirring occasionally until lightly browned, 6 to 8 minutes. Transfer
-                shrimp to a large plate and set aside, leaving chicken and chorizo in the pan. Add pimentón, bay leaves,
-                garlic, tomatoes, onion, salt and pepper, and cook, stirring often until thickened and fragrant, about
-                10 minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-              </Typography>
-            </CardContent>
-          </CardMedia>
-        </CardHeader>
+          className={classes.header}
+          // eslint-disable-next-line react/jsx-no-duplicate-props
+          subheader={<h4>{resturantName}</h4>}
+          title={<h2>{name}</h2>}
+        />
+        <CardContent className={classes.content}>
+          <Typography color="textSecondary" component="p" variant="h4">
+            <b>
+              Price:<span style={{ marginLeft: '10px', marginBottom: '20px' }}>{price}</span>
+            </b>
+          </Typography>
+        </CardContent>
       </Card>
     </div>
   );
