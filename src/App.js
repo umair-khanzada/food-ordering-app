@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
-
+import { withTheme } from '@material-ui/core/styles';
+import Button from './components/Button';
 // eslint-disable-next-line import/order
 import React from 'react';
 // eslint-disable-next-line import/order
-import ForgetPassword from './Pages/ForgetPassword';
 import { Actions } from './redux/actions';
+import Googlelogin from './components/googleLogin/googleLogin';
+import Googlelogout from './components/googleLogout/googleLogout';
+import Main from './routes/Layout/MainContainer';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,7 +30,14 @@ const App = () => {
       <button onClick={changeLogin} type="button">
         Log In
       </button>
-      <ForgetPassword />
+      <Button />
+      <Googlelogin />
+      <Googlelogout />
+      {/* <Drawer> */}
+      {/* <Button /> */}
+      {/* <ForgetPassword />
+      </Drawer> */}
+      <Main />
     </div>
   );
 };
