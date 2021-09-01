@@ -1,15 +1,34 @@
-import { withTheme } from '@material-ui/core/styles';
-import React, { Fragment } from 'react';
-// import Drawer from './components/Drawer';
+import { useDispatch, useSelector } from 'react-redux';
+
+// eslint-disable-next-line import/order
+import React from 'react';
+// eslint-disable-next-line import/order
 import ForgetPassword from './Pages/ForgetPassword';
-function App(props) {
+import { Actions } from './redux/actions';
+
+const App = () => {
+  const dispatch = useDispatch();
+  const { isLogin } = useSelector((state) => {
+    const {
+      login_logout: { isLoggedIn },
+    } = state;
+    return {
+      isLogin: isLoggedIn,
+    };
+  });
+
+  const changeLogin = () => {
+    dispatch(Actions.login());
+  };
+
   return (
-    <>
-      {/* <Drawer> */}
-      {/* <Button /> */}
+    <div>
+      <h1>is Logged In: {isLogin.toString()} </h1>
+      <button onClick={changeLogin} type="button">
+        Log In
+      </button>
       <ForgetPassword />
-      {/* </Drawer> */}
-    </>
+    </div>
   );
-}
-export default withTheme(App);
+};
+export default App;

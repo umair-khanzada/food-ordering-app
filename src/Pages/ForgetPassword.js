@@ -1,8 +1,9 @@
-import { Grid, Typography } from '@material-ui/core';
 import React from 'react';
+
+import { Typography, Grid } from '@material-ui/core';
+
 import Button from '../components/Button/Button';
 import Card from '../components/Card/Card';
-// import Container from '../containers/Container';
 import TextField from '../components/TextField/TextField';
 
 const ForgetPassword = () => {

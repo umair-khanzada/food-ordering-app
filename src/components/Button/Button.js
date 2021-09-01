@@ -1,5 +1,7 @@
-import { useTheme } from '@material-ui/core';
 import React from 'react';
+
+import { useTheme } from '@material-ui/core';
+
 import StyledButton from './Style';
 
 export default function CommonButton({ children, color }) {
