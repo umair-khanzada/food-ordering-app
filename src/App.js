@@ -1,33 +1,53 @@
-import { useDispatch, useSelector } from 'react-redux';
-
 // eslint-disable-next-line import/order
 import React from 'react';
 // eslint-disable-next-line import/order
+import { useSelector } from 'react-redux';
+// eslint-disable-next-line import/order
+
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+
+import AppBar from './components/AppBar/AppBar';
 import ForgetPassword from './Pages/ForgetPassword';
-import { Actions } from './redux/actions';
+import Home from './Pages/Home';
+import Login from './Pages/Login';
+import Profile from './Pages/Profile';
+import ResetPassword from './Pages/ResetPassword';
 
 const App = () => {
-  const dispatch = useDispatch();
-  const { isLogin } = useSelector((state) => {
+  const { isLoggedIn } = useSelector((state) => {
     const {
       login_logout: { isLoggedIn },
     } = state;
     return {
-      isLogin: isLoggedIn,
+      isLoggedIn,
     };
   });
 
-  const changeLogin = () => {
-    dispatch(Actions.login());
-  };
-
   return (
     <div>
-      <h1>is Logged In: {isLogin.toString()} </h1>
-      <button onClick={changeLogin} type="button">
-        Log In
-      </button>
-      <ForgetPassword />
+      <Router>
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
+        {isLoggedIn && <AppBar />}
+        <Switch>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/forget-password">
+            <ForgetPassword />
+          </Route>
+          <Route exact path="/reset-password">
+            <ResetPassword />
+          </Route>
+          <Route exact path="/profile">
+            <Profile />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 };

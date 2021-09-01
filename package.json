@@ -8,12 +8,14 @@
     "cra-template": "1.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "styled-components": "^5.3.1",
     "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.1",
+    "react-scripts": "4.0.3",
     "redux": "^4.1.1",
     "redux-observable": "^2.0.0",
-    "rxjs": "^6.6.7"
+    "redux-persist": "^6.0.0",
+    "rxjs": "^6.6.7",
+    "styled-components": "^5.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
