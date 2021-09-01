@@ -41,4 +41,4 @@ const App = () => {
     </div>
   );
 };
-export default withTheme(App);
+export default App;
