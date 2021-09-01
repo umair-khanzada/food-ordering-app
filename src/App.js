@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { withTheme } from '@material-ui/core/styles';
+
 import Button from './components/Button';
+
 // eslint-disable-next-line import/order
 import React from 'react';
 // eslint-disable-next-line import/order
-import { Actions } from './redux/actions';
 import Googlelogin from './components/googleLogin/googleLogin';
 import Googlelogout from './components/googleLogout/googleLogout';
+import { Actions } from './redux/actions';
 import Main from './routes/Layout/MainContainer';
 
 const App = () => {
