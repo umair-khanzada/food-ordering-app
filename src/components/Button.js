@@ -1,5 +1,6 @@
-import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
+
+import { Button, makeStyles } from '@material-ui/core';
 export default function CommonButton({ children, color }) {
   const useStyles = makeStyles((theme) => ({
     root: {

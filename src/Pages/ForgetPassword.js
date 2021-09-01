@@ -1,5 +1,7 @@
-import { Grid, Typography } from '@material-ui/core';
 import React from 'react';
+
+import { Grid, Typography } from '@material-ui/core';
+
 import Button from '../components/Button';
 import Card from '../components/Card';
 // import Container from '../containers/Container';

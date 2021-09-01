@@ -1,7 +1,8 @@
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from 'react';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import React from 'react';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 export default function OutlinedCard({ children, minWidth, maxWidth }) {
   const theme = useTheme();
