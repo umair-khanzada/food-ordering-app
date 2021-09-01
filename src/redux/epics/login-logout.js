@@ -5,8 +5,8 @@ import { LOGIN, LOGOUT } from '../scripts/constants';
 
 const loginEpic = (action$) =>
   action$.pipe(
-    ofType(LOGIN),
+    ofType(LOGOUT),
     delay(1000), // Asynchronously wait 1000ms then continue
-    mapTo({ type: LOGOUT }),
+    mapTo({ type: LOGIN }),
   );
 export default loginEpic;

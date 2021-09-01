@@ -1,14 +1,13 @@
-import React, { Fragment } from 'react';
-
-import { withTheme } from '@material-ui/core/styles';
-
-// import Drawer from './components/Drawer';
+// eslint-disable-next-line import/order
+import React from 'react';
+// eslint-disable-next-line import/order
 import ShopButton from './components/ShopButton/ShopButton';
-function App() {
+
+const App = () => {
   return (
     <>
       <ShopButton />
     </>
   );
-}
-export default withTheme(App);
+};
+export default App;
