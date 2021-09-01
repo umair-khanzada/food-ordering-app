@@ -1,12 +1,13 @@
 import './index.css';
-import { CssBaseline } from '@material-ui/core';
 import React from 'react';
-import App from './App';
-import GlobalStyles from './theme/GlobalStyles';
-import MaterialThemeWrapper from './theme';
-// eslint-disable-next-line import/order
+
+import { CssBaseline } from '@material-ui/core';
 import ReactDOM from 'react-dom';
+
+import App from './App';
 import reportWebVitals from './reportWebVitals';
+import MaterialThemeWrapper from './theme';
+import GlobalStyles from './theme/GlobalStyles';
 
 ReactDOM.render(
   <MaterialThemeWrapper>

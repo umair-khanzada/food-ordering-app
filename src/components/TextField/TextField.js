@@ -1,6 +1,8 @@
+import React from 'react';
+
 import { MuiThemeProvider, useTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
-import React from 'react';
+
 import StyledTextField from './Style';
 
 export default function BasicTextFields({ variant, width, type, label }) {
