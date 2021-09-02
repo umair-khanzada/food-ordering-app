@@ -18,15 +18,13 @@ const MainTab = () => {
           textColor="primary"
           value={value}
         >
-          <Tab label="Active" />
-          <Tab label="Active" />
-          <Tab label="Active" />
-          <Tab label="Active" />
-          <Tab label="Active" />
-          <Tab label="Active" />
-          <Tab label="Active" />
-          <Tab label="Active" />
-          <Tab label="Active" />
+          <Tab label="Gravy" />
+          <Tab label="Bread" />
+          <Tab label="Rice" />
+          <Tab label="Burgers" />
+          <Tab label="Rolls" />
+          <Tab label="Pizza" />
+          <Tab label="Chinese" />
         </Tabs>
       </Paper>
     </>

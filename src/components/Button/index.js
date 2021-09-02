@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Button as MuiButton, Typography } from '@material-ui/core';
 
-export default function Button(props) {
+export default function Button({ buttonText }) {
   // One option to get theme and supply it to styled compoenents
   return (
     <MuiButton color="primary" variant="contained">
-      <Typography variant="button">Order Food</Typography>
+      <Typography variant="button">{buttonText}</Typography>
     </MuiButton>
   );
 }

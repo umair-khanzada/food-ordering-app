@@ -1,6 +1,6 @@
-import curry from '../components/images/curry.jpg';
-import karahai from '../components/images/karahai.jpg';
-import kofta from '../components/images/kofta.jpg';
+import curry from '../assets/curry.jpg';
+import karahai from '../assets/karahai.jpg';
+import kofta from '../assets/kofta.jpg';
 
 const UserData = [
   {
