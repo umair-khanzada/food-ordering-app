@@ -4,12 +4,32 @@ import { useTheme } from '@material-ui/core/styles';
 
 import StyledTextField from './Style';
 
-export default function BasicTextFields({ variant, width, type, label }) {
+export default function BasicTextFields({
+  variant,
+  error,
+  width,
+  type,
+  label,
+  value,
+  changeHandler,
+  minLength,
+  name,
+  required,
+}) {
   const theme = useTheme();
-
   return (
-    <form autoComplete="off" noValidate>
-      <StyledTextField label={label} theme={theme} type={type} variant={variant} width={width} />
-    </form>
+    <StyledTextField
+      error={error}
+      label={label}
+      minLength={minLength}
+      name={name}
+      onChange={changeHandler}
+      required={required}
+      theme={theme}
+      type={type}
+      value={value}
+      variant={variant}
+      width={width}
+    />
   );
 }

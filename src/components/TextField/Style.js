@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const StyledTextField = styled(TextField)`
   color: black;
+
   width: ${(props) => props.width};
   ${({ theme }) => `
    & label.Mui-focused {
