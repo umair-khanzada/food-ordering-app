@@ -1,3 +1,5 @@
+/* eslint-disable sort-imports-es6-autofix/sort-imports-es6 */
+/* eslint-disable import/order */
 import './index.css';
 import React from 'react';
 
