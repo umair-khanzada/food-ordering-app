@@ -5,8 +5,7 @@ import { Typography, Grid } from '@material-ui/core';
 import Button from '../components/Button/Button';
 import Card from '../components/Card/Card';
 import TextField from '../components/TextField/TextField';
-
-const ResetPassword = () => {
+function ResetPasswordContainer() {
   return (
     <>
       <Grid alignItems="center" container direction="column" justifyContent="center" style={{ minHeight: '100vh' }}>
@@ -33,6 +32,6 @@ const ResetPassword = () => {
       </Grid>
     </>
   );
-};
+}
 
-export default ResetPassword;
+export default ResetPasswordContainer;

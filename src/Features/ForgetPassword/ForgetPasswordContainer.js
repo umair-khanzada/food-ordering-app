@@ -5,8 +5,7 @@ import { Typography, Grid } from '@material-ui/core';
 import Button from '../components/Button/Button';
 import Card from '../components/Card/Card';
 import TextField from '../components/TextField/TextField';
-
-const ForgetPassword = () => {
+function ForgetPasswordContainer() {
   return (
     <>
       <Grid alignItems="center" container direction="column" justifyContent="center" style={{ minHeight: '100vh' }}>
@@ -31,6 +30,6 @@ const ForgetPassword = () => {
       </Grid>
     </>
   );
-};
+}
 
-export default ForgetPassword;
+export default ForgetPasswordContainer;
