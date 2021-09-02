@@ -18,12 +18,13 @@ export default FormHeading;
 
 export const ForgotPassword = styled.a`
   margin-left: 50px;
-  font-size: 16px;
+  font-size: 20px;
   color: green;
   text-decoration: none;
   display: 'flex';
   @media (max-width: 768px) {
     margin: 10px;
+    font-size: 16px;
   }
 `;
 export const FormContainer = styled.div`

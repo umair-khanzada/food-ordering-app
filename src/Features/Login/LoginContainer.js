@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
+
 import FormComponent from '../../components/FormComponent';
 
 function LoginContainer() {
@@ -65,7 +66,7 @@ function LoginContainer() {
   return (
     <div>
       <FormComponent
-        forgotPassword="Forgot Password"
+        forgotPassword="Forgot Password?"
         formButtonType={loginButtons}
         formInputType={loginInputs}
         formProperty="Login"

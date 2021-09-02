@@ -1,26 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-
-// eslint-disable-next-line import/order
 import React from 'react';
-// eslint-disable-next-line import/order
-import { Actions } from './redux/actions';
+
 import { LoginContainer } from './Features/Login';
 
 const App = () => {
-  const dispatch = useDispatch();
-  const { isLogin } = useSelector((state) => {
-    const {
-      login_logout: { isLoggedIn },
-    } = state;
-    return {
-      isLogin: isLoggedIn,
-    };
-  });
-
-  const changeLogin = () => {
-    dispatch(Actions.login());
-  };
-
   return (
     <div>
       {/* <h1>is Logged In: {isLogin.toString()} </h1> */}

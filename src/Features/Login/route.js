@@ -1,5 +1,5 @@
-import RouteNames from '../../routes/RouteNames';
 import { isPublicRoute } from '../../routes/Permission';
+import RouteNames from '../../routes/RouteNames';
 import LoginContainer from './LoginContainer';
 
 export const loginRoute = {

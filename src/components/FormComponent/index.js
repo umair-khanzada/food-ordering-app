@@ -1,10 +1,10 @@
-import { Grid } from '@material-ui/core';
 import React from 'react';
-import { display } from '@material-ui/system';
-import { FormHeading, ForgotPassword, Form, FormContainer } from './styles';
-import CommonButton from '../Button/Button';
 
+import { Grid } from '@material-ui/core';
+
+import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
+import { FormHeading, ForgotPassword, Form, FormContainer } from './styles';
 
 const FormComponent = ({ formInputType, formButtonType, formProperty, forgotPassword }) => {
   return (
