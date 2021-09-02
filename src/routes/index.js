@@ -1,8 +1,6 @@
 // implement router switch here and also map over route config to map all routes with authguard
-import React from 'react';
-
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-
+import React from 'react';
 import RouteConfig from './RouteConfig';
 
 export default function BaseRouter() {

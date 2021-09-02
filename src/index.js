@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './redux/store';
 import reportWebVitals from './reportWebVitals';
-// eslint-disable-next-line import/no-named-as-default
 import MaterialThemeWrapper from './theme';
 import GlobalStyles from './theme/GlobalStyles';
 
