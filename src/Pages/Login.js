@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -17,15 +17,12 @@ const Login = () => {
     };
   });
 
-  const changeLogin = () => {
-    dispatch(Actions.login());
-  };
-
   const history = useHistory();
 
-  useEffect(() => {
-    if (isLoggedIn) history.push('/home');
-  }, [history, isLoggedIn]);
+  const changeLogin = () => {
+    dispatch(Actions.login());
+    history.push('/home');
+  };
 
   return (
     <>

@@ -23,7 +23,9 @@ const ForgetPassword = () => {
             </Typography>
             <TextField label="Enter Email" type="email" variant="outlined" width="100%" />
             <br />
-            <Button color="secondary">Reset Password</Button>
+            <Button color="secondary" variant="contained">
+              Reset Password
+            </Button>
           </div>
         </Card>
       </Grid>
