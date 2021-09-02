@@ -9,10 +9,17 @@ export const MaterialPalleteColours = {
   },
   secondary: {
     light: blue[500],
-    main: blue[700],
+    main: '#e91e63',
     dark: blue[900],
     contrastText: '#ffffff',
   },
+  secondary1: {
+    light: '#e91e63',
+    main: '#e91e63',
+    dark: '#e91e63',
+    contrastText: '#ffffff',
+  },
+
   error: {
     light: red[300],
     main: red[500],
@@ -34,7 +41,7 @@ export const MaterialPalleteColours = {
     dark: green[300],
   },
   background: {
-    default: '#8FB9E3',
+    // default: '#8FB9E3',
   },
   action: {
     hover: grey[200],

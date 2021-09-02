@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const StyledButton = styled(Button)`
   ${({ theme }) => `
    &:hover {
-        background-color: ${theme.palette.primary.main};
+        background-color: ${theme.palette.secondary.main};
       },
   `};
 `;

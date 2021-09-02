@@ -13,9 +13,9 @@ const MainTab = () => {
       <Paper square>
         <Tabs
           aria-label="disabled tabs example"
-          indicatorColor="primary"
+          indicatorColor="secondary"
           onChange={handleChange}
-          textColor="primary"
+          textColor="secondary"
           value={value}
         >
           <Tab label="Gravy" />
@@ -23,10 +23,9 @@ const MainTab = () => {
           <Tab label="Rice" />
           <Tab label="Burgers" />
           <Tab label="Rolls" />
-          <Tab label="Pizza" />
-          <Tab label="Chinese" />
         </Tabs>
       </Paper>
+      {/* <p>{value}</p> */}
     </>
   );
 };
