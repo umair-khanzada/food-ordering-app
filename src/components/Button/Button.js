@@ -9,7 +9,6 @@ export default function CommonButton(props) {
 
   // One option to get theme and supply it to styled compoenents
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <StyledButton {...props} color="primary" theme={theme} variant="contained">
       {props.children}
     </StyledButton>

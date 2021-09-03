@@ -1,8 +1,6 @@
 import React from 'react';
 
-// eslint-disable-next-line import/order
 import Backdrop from '../Backdrop/Backdrop';
-
 import { Div } from './Style';
 
 const Modal = ({ modalClosed, show, children }) => {

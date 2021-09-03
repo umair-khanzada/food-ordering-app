@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-/* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 
 import { Button } from '@material-ui/core';

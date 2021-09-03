@@ -1,4 +1,3 @@
-/* eslint-disable sort-imports-es6-autofix/sort-imports-es6 */
 import React from 'react';
 
 import BaseRouter from '../index';

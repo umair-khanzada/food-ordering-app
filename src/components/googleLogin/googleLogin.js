@@ -1,19 +1,14 @@
 import React from 'react';
 
 import { GoogleLogin } from 'react-google-login';
-
-// eslint-disable-next-line sort-imports-es6-autofix/sort-imports-es6
-import { clientId } from '../../constants/googleAuth';
-// eslint-disable-next-line sort-imports-es6-autofix/sort-imports-es6
-import { Actions } from '../../redux/actions';
-
-// eslint-disable-next-line import/order
 import { useDispatch } from 'react-redux';
+
+import { clientId } from '../../constants/googleAuth';
+import { Actions } from '../../redux/actions';
 
 function Googlelogin() {
   const dispatch = useDispatch();
   const responseGoogle = (response) => {
-    console.log(response);
     dispatch(Actions.login());
   };
 
