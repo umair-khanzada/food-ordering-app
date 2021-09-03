@@ -33,24 +33,25 @@ function SideMenu() {
     },
   }));
   const classes = useStyles();
+  const { drawer, drawerPaper, logo, logoNisum, navigation, list } = classes;
   return (
     <Drawer
       anchor="left"
       classes={{
-        paper: classes.drawerPaper,
+        paper: drawerPaper,
       }}
-      className={classes.drawer}
+      className={drawer}
       variant="permanent"
     >
-      <div className={classes.logo}>
+      <div className={logo}>
         <Typography variant="h2">
-          <span className={classes.logoNisum}>Nisum Foods</span>
+          <span className={logoNisum}>Nisum Foods</span>
         </Typography>
       </div>
-      <div className={classes.navigation}>
-        <p className={classes.list}>Dashboard</p>
-        <p className={classes.list}>Menu</p>
-        <p className={classes.list}>Dining Areas</p>
+      <div className={navigation}>
+        <p className={list}>Dashboard</p>
+        <p className={list}>Menu</p>
+        <p className={list}>Dining Areas</p>
       </div>
     </Drawer>
   );
