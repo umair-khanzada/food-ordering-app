@@ -5,8 +5,8 @@ const StyledButton = styled(Button)`
   font-size: 20px;
   letter-spacing: 2px;
   margin-bottom: 10px;
-  max-width: ${(props) => props.maxwidth};
-  min-width: ${(props) => props.minwidth};
+  max-width: ${({ maxwidth }) => maxwidth};
+  min-width: ${({ minwidth }) => minwidth};
   background-color: #e91e63;
   color: white;
   ${({ theme }) => `

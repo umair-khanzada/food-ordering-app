@@ -41,10 +41,8 @@ const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, l
             ))}
             <BasicLink>
               <Label to={navigationPath}>{label}</Label>
-              {/* </div> */}
-              <div style={{ marginBottom: '30px' }}>
-                <ForgotPassword to="/login">{forgotPassword}</ForgotPassword>
-              </div>
+
+              <ForgotPassword to="/login">{forgotPassword}</ForgotPassword>
             </BasicLink>
           </Form>
         </Grid>
