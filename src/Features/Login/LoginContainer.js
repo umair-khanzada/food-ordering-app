@@ -48,11 +48,7 @@ function LoginContainer() {
           />
           <br />
 
-          <Button
-            color="secondary"
-            onClick={(e) => (credential.email && credential.password ? logIn() : null)}
-            variant="contained"
-          >
+          <Button color="secondary" onClick={() => logIn()} variant="contained">
             Log In
           </Button>
         </div>
