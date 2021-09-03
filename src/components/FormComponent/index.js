@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
-import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, NewAccount, BasicLink } from './styles';
+import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, Label, BasicLink } from './styles';
 
 const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, label, navigationPath }) => {
   return (
@@ -40,7 +40,7 @@ const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, l
               </div>
             ))}
             <BasicLink>
-              <NewAccount to={navigationPath}>{label}</NewAccount>
+              <Label to={navigationPath}>{label}</Label>
               {/* </div> */}
               <div style={{ marginBottom: '30px' }}>
                 <ForgotPassword to="/login">{forgotPassword}</ForgotPassword>

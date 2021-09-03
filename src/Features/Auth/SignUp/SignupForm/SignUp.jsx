@@ -4,13 +4,12 @@ import FormComponent from '../../../../components/FormComponent';
 
 function SignUpForm() {
   const [signUpForm, setSignUpForm] = useState({});
-  // const googleClickHandler = () => {};
+
   const signUpClickHandler = () => {};
 
   const textFiledChangeHandler = (e) => {
     const { value, name } = e.target;
-    console.log('value', value);
-    console.log('name', name);
+
     setSignUpForm((prev) => {
       return {
         ...prev,

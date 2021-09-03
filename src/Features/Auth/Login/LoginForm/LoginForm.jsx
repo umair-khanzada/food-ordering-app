@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import FormComponent from '../../../../components/FormComponent';
 
 function LoginForm() {
-  // console.log("test");
-
   const [loginForm, setLoginForm] = useState({});
 
   const loginClickHandler = () => {};

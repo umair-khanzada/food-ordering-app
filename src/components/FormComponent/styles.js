@@ -35,7 +35,7 @@ export const BasicLink = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-export const NewAccount = styled(Link)`
+export const Label = styled(Link)`
   margin-left: 10px;
   font-size: 16px;
   color: rgb(51, 133, 255);

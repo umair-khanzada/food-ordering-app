@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux';
 function Googlelogin() {
   const dispatch = useDispatch();
   const responseGoogle = (response) => {
-    console.log(response);
     dispatch(Actions.login());
   };
 
