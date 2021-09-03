@@ -2,11 +2,13 @@
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 
-import { isPrivateRoute, isPublicRoute } from './Permission';
+import { HomeContainer as Home } from '../Features/Home';
+import { LoginContainer as Login } from '../Features/Login';
+import AuthRoute from './AuthRoute';
+import { history } from './BrowserHistory';
 import RouteConfig from './RouteConfig';
-
 export default function BaseRouter() {
   const { isLoggedIn } = useSelector((state) => {
     const {
@@ -17,24 +19,14 @@ export default function BaseRouter() {
     };
   });
 
-  const getAllowedRoutes = (route) => {
-    if (isLoggedIn && route.permissions === isPrivateRoute) {
-      return route.component;
-    }
-    if (!isLoggedIn && route.permissions === isPublicRoute) {
-      return route.component;
-    }
-  };
-
   return (
-    <>
-      <Router>
-        <Switch>
-          {RouteConfig.auth.map((route, index) => {
-            return <Route key={index} component={getAllowedRoutes(route)} exact path={route.path} />;
-          })}
-        </Switch>
-      </Router>
-    </>
+    <Router history={history}>
+      <Switch>
+        {RouteConfig.auth.map((route, index) => {
+          return <Route key={index} component={() => <AuthRoute route={route} />} exact path={route.path} />;
+        })}
+        {isLoggedIn ? <Route component={Home} /> : <Route component={Login} />}
+      </Switch>
+    </Router>
   );
 }

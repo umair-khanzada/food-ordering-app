@@ -3,7 +3,8 @@ import { persistReducer } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
-import { loginLogout } from './login-logout';
+import { loginReducer } from '../../Features/Login';
+import { SignUpReducer } from '../../Features/SignUp';
 
 const persistConfig = {
   key: 'root',
@@ -12,7 +13,8 @@ const persistConfig = {
 };
 
 const reducer = combineReducers({
-  login_logout: loginLogout,
+  login_logout: loginReducer,
+  SignUpReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
