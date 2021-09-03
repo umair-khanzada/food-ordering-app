@@ -3,22 +3,21 @@ import React from 'react';
 // eslint-disable-next-line import/order
 import Backdrop from '../Backdrop/Backdrop';
 
-import classes from './Modal.module.css';
+import { Div } from './Style';
 
-const Modal = (props) => {
+const Modal = ({ modalClosed, show, children }) => {
   return (
     <>
-      <Backdrop clicked={props.modalClosed} show={props.show} />
+      <Backdrop clicked={modalClosed} show={show} />
 
-      <div
-        className={classes.Modal}
+      <Div
         style={{
-          transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
-          opacity: props.show ? '1' : '0',
+          transform: show ? 'translateY(0)' : 'translateY(-100vh)',
+          opacity: show ? '1' : '0',
         }}
       >
-        {props.children}
-      </div>
+        {children}
+      </Div>
     </>
   );
 };

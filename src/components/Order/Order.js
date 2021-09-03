@@ -1,60 +1,119 @@
+/* eslint-disable global-require */
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 
+import { Button } from '@material-ui/core';
+
+import OutlinedCard from '../Card/Card';
+import itemData from '../ItemData/ItemData';
+import {
+  Container,
+  Span,
+  Img,
+  NameofFood,
+  Price,
+  Header,
+  OrderText,
+  Icon,
+  Quantity,
+  TotalPrice,
+  IncrementI,
+  DecrementI,
+  PriceSpan,
+} from './Style';
+
 const ITEM_PRICES = {
-  Burger: 0.5,
-  FrenchFries: 0.4,
-  CheeseSauce: 1.3,
-  Cheese: 0.9,
+  Burger: 20,
+  Cheese: 50,
+  CheeseSAUCE: 40,
+  FrenchFries: 30,
 };
-const control = [{ type: 'Burger' }, { type: 'FrenchFries' }, { type: 'CheeseSauce' }, { type: 'Cheese' }];
+let TOTAL_PRICE = 0;
 
 const Order = (props) => {
-  const [itemState, itemSet] = useState({
-    items: { Burger: 1, FrenchFries: 3, CheeseSauce: 1, Cheese: 2 },
-    totalPrice: 4,
-  });
-  const ItemSummary = Object.keys(itemState.items).map((igkey) => {
+  const [itemState, itemSet] = useState(itemData);
+  const ItemSummary = itemState.map(({ img, price, quantity, name, id }, index) => {
     return (
-      <>
-        <li>
-          <span>{igkey}</span>: {itemState.items[igkey]}
-          <button onClick={() => addIngredientHandler(igkey)}>+</button>
-          <button onClick={() => removeIngredientHandler(igkey)}>-</button>
-        </li>
-      </>
+      <Container key={index}>
+        <div className="food-img">
+          <Img alt="food-image" src={img} />
+        </div>
+        <div className="food-description">
+          <div>
+            <NameofFood>{name}</NameofFood>
+            <Price>Price: {price}</Price>
+          </div>
+
+          <Quantity>
+            <IncrementI
+              className="fas fa-plus-circle"
+              onClick={() => addIngredientHandler(quantity, id, ITEM_PRICES[name])}
+            />
+            <Span>{quantity}</Span>
+            <DecrementI
+              className="fas fa-minus-circle"
+              onClick={() => removeIngredientHandler(quantity, id, ITEM_PRICES[name])}
+            />
+          </Quantity>
+        </div>
+      </Container>
     );
   });
 
-  const addIngredientHandler = (type) => {
-    console.log(typeof type);
-    console.log(itemState.items[type]);
-    const oldCount = itemState.items[type];
-    const newCount = oldCount + 1;
-    const updatedItem = {
-      ...itemState,
-    };
-    console.log(updatedItem);
-    updatedItem.items[type] = newCount;
+  const addIngredientHandler = (quantity, id, ActualPrice) => {
+    const newCount = quantity + 1;
+    const newPrice = ActualPrice * newCount;
+
+    const updatedItem = [...itemState];
+    updatedItem.map((item) => {
+      if (item.id === id) {
+        item.quantity = newCount;
+        item.price = newPrice;
+      }
+    });
+
     itemSet(updatedItem);
+    totalPriceHandler();
   };
-  const removeIngredientHandler = (type) => {
-    const oldCount = itemState.items[type];
-    const newCount = oldCount - 1;
-    const updatedItem = {
-      ...itemState,
-    };
-    updatedItem.items[type] = newCount;
+  const removeIngredientHandler = (quantity, id, ActualPrice) => {
+    const newCount = quantity - 1;
+    const newPrice = ActualPrice * newCount;
+    const updatedItem = [...itemState];
+    updatedItem.map((item) => {
+      if (item.id === id) {
+        item.quantity = newCount;
+        item.price = newPrice;
+      }
+    });
+
     itemSet(updatedItem);
+    totalPriceHandler();
+  };
+
+  const totalPriceHandler = () => {
+    TOTAL_PRICE = 0;
+    itemState.map((item) => {
+      TOTAL_PRICE += item.price;
+    });
   };
   return (
-    <>
-      <h3>your order</h3>
-      <p>A delicious burger with</p>
-      {ItemSummary}
-      <button onClick={props.purchaseCancelled}>Cancel</button>
-      <button onClick={props.purchaseContinued}>Continue</button>
-    </>
+    <OutlinedCard maxWidth="600px">
+      <Header>
+        <OrderText>
+          <h2>My Order</h2>
+        </OrderText>
+        <Icon>
+          <i className="fas fa-times" onClick={() => props.purchaseCancelled()} />
+        </Icon>
+      </Header>
+      <div>{ItemSummary}</div>
+      <TotalPrice>
+        <PriceSpan>Total: {TOTAL_PRICE}</PriceSpan>
+        <Button color="primary" onClick={() => props.purchaseContinued()}>
+          Continue
+        </Button>
+      </TotalPrice>
+    </OutlinedCard>
   );
 };
 

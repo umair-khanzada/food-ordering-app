@@ -25,7 +25,6 @@ const ShopButton = (props) => {
   return (
     <>
       <AddShoppingCartIcon onClick={() => purchaseHandler()} />
-      {/* <button >Order Now</button> */}
       <Modal modalClosed={purchaseCancelHandler} show={purchasing}>
         <Order purchaseCancelled={purchaseCancelHandler} purchaseContinued={purchaseContinueHandler} />
       </Modal>
