@@ -3,9 +3,9 @@ import React from 'react';
 import { Grid, ListItemIcon, ListItemText, AppBar, useTheme, Toolbar } from '@material-ui/core';
 import { Lock, MoreVert, OfflineBolt, PersonRounded } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import { logout } from '../../Features/Login';
-import { history } from '../../routes/BrowserHistory';
 import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
 import { StyledDiv, StyledMenuItem } from './Style';
 
@@ -15,6 +15,8 @@ const NavBar = () => {
   const logOut = () => {
     dispatch(logout());
   };
+
+  const history = useHistory();
 
   return (
     <StyledDiv>

@@ -8,16 +8,14 @@ export default function BasicTextFields({ label, type, variant, width, margin, o
   const theme = useTheme();
 
   return (
-    <form autoComplete="off" noValidate>
-      <StyledTextField
-        label={label}
-        margin={margin}
-        onChange={onChange}
-        theme={theme}
-        type={type}
-        variant={variant}
-        width={width}
-      />
-    </form>
+    <StyledTextField
+      label={label}
+      margin={margin}
+      onChange={onChange}
+      theme={theme}
+      type={type}
+      variant={variant}
+      width={width}
+    />
   );
 }
