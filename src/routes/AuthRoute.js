@@ -2,8 +2,8 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
+import LoginContainer from '../Features/Auth/Login/LoginContainer';
 import { HomeContainer as Home } from '../Features/Home';
-import { LoginContainer as Login } from '../Features/Login';
 import { isProtectedRoute, isPublicRoute } from './Permission';
 
 function AuthRoute({ route }) {
@@ -25,7 +25,7 @@ function AuthRoute({ route }) {
     }
 
     if (isLoggedIn) return <Home />;
-    return <Login />;
+    return <LoginContainer />;
   };
 
   return checkRoute();

@@ -1,8 +1,7 @@
 // export * as Epics from './login-logout';
 import { combineEpics } from 'redux-observable';
 
-import { loginEpic, logoutEpic } from '../../Features/Login';
-import { signUpEpic } from '../../Features/SignUp';
+import { loginEpic, logoutEpic, signUpEpic } from '../../Features/Auth/epics';
 
 const rootEpic = combineEpics(loginEpic, logoutEpic, signUpEpic);
 

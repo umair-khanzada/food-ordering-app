@@ -4,12 +4,20 @@ import { useTheme } from '@material-ui/core';
 
 import StyledButton from './Style';
 
-export default function CommonButton({ onClick, color, children, variant }) {
+export default function CommonButton({ onCLick, type, property, color, maxWidth, minWidth }) {
   const theme = useTheme();
 
   return (
-    <StyledButton color={color} onClick={onClick} theme={theme} variant={variant}>
-      {children}
+    <StyledButton
+      color={color}
+      maxwidth={maxWidth}
+      minwidth={minWidth}
+      onClick={onCLick}
+      theme={theme}
+      type={type}
+      variant="contained"
+    >
+      {property}
     </StyledButton>
   );
 }

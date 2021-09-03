@@ -1,9 +1,6 @@
-import { forgetPasswordRoute } from '../Features/ForgetPassword';
+import { forgetPasswordRoute, loginRoute, signUpRoute, resetPasswordRoute } from '../Features/Auth/route';
 import { homeRoute } from '../Features/Home';
-import { loginRoute } from '../Features/Login';
 import { profileRoute } from '../Features/Profile';
-import { resetPasswordRoute } from '../Features/ResetPassword';
-import { signUpRoute } from '../Features/SignUp';
 
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, forgetPasswordRoute, resetPasswordRoute, profileRoute],

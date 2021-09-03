@@ -5,7 +5,7 @@ import { Lock, MoreVert, OfflineBolt, PersonRounded } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import { logout } from '../../Features/Login';
+import { logout } from '../../Features/Auth/actions';
 import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
 import { StyledDiv, StyledMenuItem } from './Style';
 

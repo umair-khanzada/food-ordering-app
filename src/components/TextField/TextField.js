@@ -4,18 +4,31 @@ import { useTheme } from '@material-ui/core/styles';
 
 import StyledTextField from './Style';
 
-export default function BasicTextFields({ label, type, variant, width, margin, onChange, name }) {
+export default function BasicTextFields({
+  variant,
+  error,
+  width,
+  type,
+  label,
+  value,
+  changeHandler,
+  minLength,
+  name,
+  required,
+}) {
   const theme = useTheme();
-
   return (
     <StyledTextField
+      error={error}
       label={label}
-      margin={margin}
+      minLength={minLength}
       name={name}
-      onChange={onChange}
+      onChange={changeHandler}
+      required={required}
       theme={theme}
       type={type}
-      variant={variant}
+      value={value}
+      variant={variant ? variant : 'outlined'}
       width={width}
     />
   );

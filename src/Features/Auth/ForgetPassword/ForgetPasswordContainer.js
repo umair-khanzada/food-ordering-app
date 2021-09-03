@@ -3,9 +3,9 @@ import React from 'react';
 import { Typography, Grid, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-import Button from '../../components/Button/Button';
-import Card from '../../components/Card/Card';
-import TextField from '../../components/TextField/TextField';
+import Button from '../../../components/Button/Button';
+import Card from '../../../components/Card/Card';
+import TextField from '../../../components/TextField/TextField';
 function ForgetPasswordContainer() {
   return (
     <Box p={20}>
