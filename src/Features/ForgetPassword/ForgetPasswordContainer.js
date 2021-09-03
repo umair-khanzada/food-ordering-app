@@ -1,17 +1,18 @@
 import React from 'react';
 
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid, Box } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-import Button from '../components/Button/Button';
-import Card from '../components/Card/Card';
-import TextField from '../components/TextField/TextField';
+import Button from '../../components/Button/Button';
+import Card from '../../components/Card/Card';
+import TextField from '../../components/TextField/TextField';
 function ForgetPasswordContainer() {
   return (
-    <>
-      <Grid alignItems="center" container direction="column" justifyContent="center" style={{ minHeight: '100vh' }}>
+    <Box p={20}>
+      <Grid alignItems="center" container direction="column" justifyContent="center">
         <Typography variant="h1">Reset Your Password</Typography>
         <br />
-        <Card margin="auto" maxWidth="400px" minWidth="300px">
+        <Card margin="auto" maxwidth="400px" minwidth="300px">
           <div>
             <Typography color="secondary" variant="h3">
               Forgot Password ?
@@ -25,10 +26,13 @@ function ForgetPasswordContainer() {
             <Button color="secondary" variant="contained">
               Reset Password
             </Button>
+            <br />
+            <br />
+            <Link to="/login">Back To Log In</Link>
           </div>
         </Card>
       </Grid>
-    </>
+    </Box>
   );
 }
 

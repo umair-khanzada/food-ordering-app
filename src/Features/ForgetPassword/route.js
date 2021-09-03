@@ -1,9 +1,9 @@
 import { isPublicRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
-import foregetPasswordContainer from './ForgetPasswordContainer';
+import forgetPasswordContainer from './ForgetPasswordContainer';
 
-export const foregetPasswordRoute = {
-  path: RouteNames.foregetPassword,
+export const forgetPasswordRoute = {
+  path: RouteNames.forgetPassword,
   permissions: isPublicRoute, // to intimate it is public route
-  component: foregetPasswordContainer,
+  component: forgetPasswordContainer,
 };
