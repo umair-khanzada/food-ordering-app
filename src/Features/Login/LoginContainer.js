@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Card, Grid, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
@@ -10,12 +10,18 @@ import { login } from './actions';
 function LoginContainer() {
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
-  const logIn = () => {
-    dispatch(login({ email, password }));
+  const credential = {
+    email: '',
+    password: '',
   };
+  const logIn = () => {
+    dispatch(login({ email: credential.email, password: credential.password }));
+  };
+  const handleChange = (e) => {
+    const { name, value } = e;
+    credential[name] = value;
+  };
+
   return (
     <Grid alignItems="center" container direction="column" justifyContent="center" style={{ minHeight: '100vh' }}>
       <Typography variant="h1">Log In</Typography>
@@ -23,17 +29,30 @@ function LoginContainer() {
       <Card margin="auto" maxWidth="400px" minWidth="300px">
         <br />
         <div>
-          <TextField label="Enter Email" onChange={(e) => setEmail(e.target.value)} type="email" variant="outlined" />
+          <TextField
+            label="Enter Email"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            type="email"
+            variant="outlined"
+          />
           <br />
           <TextField
             label="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              handleChange(e);
+            }}
             type="password"
             variant="outlined"
           />
           <br />
 
-          <Button color="secondary" onClick={() => (password && email ? logIn() : null)} variant="contained">
+          <Button
+            color="secondary"
+            onClick={(e) => (credential.email && credential.password ? logIn() : null)}
+            variant="contained"
+          >
             Log In
           </Button>
         </div>

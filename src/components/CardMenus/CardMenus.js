@@ -17,10 +17,12 @@ const useStyles = makeStyles((theme) => ({
 const CardMenu = () => {
   const classes = useStyles();
 
+  const { control } = classes;
+
   return (
     <div>
       <MainTab />
-      <Grid className={classes.control} container elevation justifyContent="space-around" spacing={3}>
+      <Grid className={control} container elevation justifyContent="space-around" spacing={3}>
         {UserData.map((usedata) => {
           const { id, name, price, resturantName, img } = usedata;
           return <CommonCard key={id} img={img} name={name} price={price} resturantName={resturantName} />;

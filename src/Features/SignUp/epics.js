@@ -6,8 +6,6 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { SIGNUP } from '../../scripts/constants';
 import { loginError, loginSuccess } from '../Login';
 
-// implement redux-observable logic here!!
-
 export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),

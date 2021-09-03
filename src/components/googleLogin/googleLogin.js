@@ -14,12 +14,7 @@ function Googlelogin() {
 
   return (
     <div>
-      <GoogleLogin
-        clientId={clientId}
-        cookiePolicy="single_host_origin"
-        // onFailure={responseGoogle}
-        onSuccess={responseGoogle}
-      />
+      <GoogleLogin clientId={clientId} cookiePolicy="single_host_origin" onSuccess={responseGoogle} />
     </div>
   );
 }

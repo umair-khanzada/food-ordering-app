@@ -44,14 +44,16 @@ const useStyles = makeStyles((theme) => ({
 const CommonCard = ({ name, price, resturantName, img }) => {
   const classes = useStyles();
 
+  const { root, image, media, header, content } = classes;
+
   return (
     <div>
-      <Card className={classes.root}>
-        <Box className={classes.image}>
-          <CardMedia className={classes.media} image={img} title={name} />
+      <Card className={root}>
+        <Box className={image}>
+          <CardMedia className={media} image={img} title={name} />
         </Box>
-        <CardHeader className={classes.header} subheader={<h4>{resturantName}</h4>} title={<h2>{name}</h2>} />
-        <CardContent className={classes.content}>
+        <CardHeader className={header} subheader={<h4>{resturantName}</h4>} title={<h2>{name}</h2>} />
+        <CardContent className={content}>
           <Typography color="textSecondary" component="p" variant="h4">
             <b>
               Price:<span style={{ marginLeft: '10px', marginBottom: '20px' }}>{price}</span>

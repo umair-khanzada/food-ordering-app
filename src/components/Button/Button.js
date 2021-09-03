@@ -7,7 +7,6 @@ import StyledButton from './Style';
 export default function CommonButton({ onClick, color, children, variant }) {
   const theme = useTheme();
 
-  // One option to get theme and supply it to styled compoenents
   return (
     <StyledButton color={color} onClick={onClick} theme={theme} variant={variant}>
       {children}

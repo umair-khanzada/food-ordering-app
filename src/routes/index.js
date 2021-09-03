@@ -1,4 +1,3 @@
-// implement router switch here and also map over route config to map all routes with authguard
 import React from 'react';
 
 import { useSelector } from 'react-redux';

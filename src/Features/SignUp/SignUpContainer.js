@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Card, Grid, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
@@ -9,16 +9,14 @@ import { signUp } from './actions';
 
 function SignUpContainer() {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
-  const signUpUser = async () => {
-    dispatch(signUp({ email, password }));
-  };
 
   const credential = {
     email: '',
     password: '',
+  };
+
+  const signUpUser = async () => {
+    dispatch(signUp({ email: credential.email, password: credential.password }));
   };
 
   const handleChange = (e) => {
