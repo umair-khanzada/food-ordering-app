@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// eslint-disable-next-line import/no-named-as-default
 import MaterialThemeWrapper from './theme';
 import GlobalStyles from './theme/GlobalStyles';
 
