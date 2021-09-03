@@ -2,9 +2,10 @@ import React from 'react';
 
 import { Paper, Tab, Tabs } from '@material-ui/core';
 
+import CardMenus from './CardMenus';
+
 const MainTab = () => {
   const [value, setValue] = React.useState(2);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -25,6 +26,8 @@ const MainTab = () => {
           <Tab label="Rolls" />
         </Tabs>
       </Paper>
+      {value === 0 && <CardMenus />}
+
       {/* <p>{value}</p> */}
     </>
   );

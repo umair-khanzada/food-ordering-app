@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
 
-// eslint-disable-next-line import/order
-// eslint-disable-next-line import/order
 import { Card, CardMedia, CardContent, CardHeader, Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import CommonButton from '../Button/Button';
-
-// import Avatar from '@material-ui/core/Avatar';
-// eslint-disable-next-line import/order
-
-// eslint-disable-next-line import/order
-// eslint-disable-next-line import/order
 
 const drawerWidth = 300;
 const useStyles = makeStyles((theme) => ({
@@ -62,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     padding: '30px',
     border: '100px',
-    borderRadius: '10px',
+    boxShadow: '10px 10px F0F0F0',
   },
   drawer: {
     width: drawerWidth,
@@ -73,11 +65,19 @@ const useStyles = makeStyles((theme) => ({
   },
   price: {
     paddingTop: '10px',
+    paddingLeft: '50px',
+    fontSize: '18px',
+    fontWeight: '700',
+  },
+  price2: {
+    paddingTop: '10px',
+    paddingLeft: '25px',
     fontSize: '18px',
     fontWeight: '700',
   },
   btn: {
     marginTop: '10px',
+    minWidth: '10px',
   },
 }));
 const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
@@ -98,7 +98,9 @@ const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
       </Drawer> */}
       <Card className={classes.root}>
         <div className={classes.image}>
-          <CardMedia className={classes.media} image={img} title={name} />
+          <div style={{ boxShadow: '10px 10px 13px lightgrey' }}>
+            <CardMedia className={classes.media} image={img} title={name} />
+          </div>
         </div>
         <CardHeader
           className={classes.header}
@@ -110,23 +112,31 @@ const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
           }
         />
         <CardContent className={classes.content}>
-          <Typography className={classes.price} color="textSecondary" component="p" variant="h4">
-            Rs. <span style={{ marginLeft: '10px', marginBottom: '20px' }}>{price}</span>
-          </Typography>
-          <div className={classes.btn}>
-            {showButton ? (
-              <div style={{ marginTop: '20px' }}>
-                <CommonButton color="secondary">+</CommonButton>
-                {'  '}-{'  '}
-                <CommonButton color="secondary">-</CommonButton>
-              </div>
-            ) : (
-              <div style={{ marginTop: '20px' }}>
-                <CommonButton color="secondary" onClick={() => setShowButton(true)}>
-                  {buttonText}
-                </CommonButton>
-              </div>
-            )}
+          <div style={{ marginTop: '20px', display: 'flex' }}>
+            <div className={classes.btn}>
+              {showButton ? (
+                <div>
+                  <CommonButton color="secondary" minwidth="10px">
+                    +
+                  </CommonButton>
+                  {'  '}
+                  <span style={{ margin: '5px 5px' }}>1</span>
+                  {'  '}
+                  <CommonButton color="secondary" minwidth="15px">
+                    -
+                  </CommonButton>
+                </div>
+              ) : (
+                <div>
+                  <CommonButton color="secondary" onClick={() => setShowButton(true)} style={{ width: '50px' }}>
+                    {buttonText}
+                  </CommonButton>
+                </div>
+              )}
+            </div>
+            <Typography className={classes.price} color="textSecondary" component="p" variant="h4">
+              <span>Rs.{price}</span>
+            </Typography>
           </div>
         </CardContent>
       </Card>

@@ -5,7 +5,6 @@ import { Grid, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import CardMenus from '../../components/CardMenus/CardMenus';
 import MainTab from '../../components/CardMenus/Tabs';
 import SideMenu from '../../components/sideMenu';
 
@@ -72,9 +71,7 @@ function DashBoard() {
             <div className={classes.tabs}>
               <MainTab />
             </div>
-            <div>
-              <CardMenus />
-            </div>
+            <div />
           </Box>
         </Grid>
       </Grid>

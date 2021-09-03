@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/order
 import React from 'react';
+
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -8,9 +8,8 @@ import CommonCard from './CommonCard';
 const useStyles = makeStyles((theme) => ({
   control: {
     padding: theme.spacing(3),
-    // width: '75%',
+
     marginTop: '50px',
-    // justifyContent: 'center',
   },
 }));
 
@@ -22,6 +21,7 @@ const CardMenu = () => {
       <Grid className={classes.control} container elevation={3} spacing={3}>
         {UserData.map((usedata) => {
           const { id, name, price, resturantName, img } = usedata;
+
           return (
             <CommonCard
               key={id}
