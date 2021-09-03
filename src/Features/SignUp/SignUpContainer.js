@@ -5,23 +5,21 @@ import { useDispatch } from 'react-redux';
 
 import Button from '../../components/Button/Button';
 import TextField from '../../components/TextField/TextField';
-import { login } from './actions';
+import { signUp } from './actions';
 
-function LoginContainer() {
+function SignUpContainer() {
   const dispatch = useDispatch();
-
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const logIn = () => {
-    dispatch(login({ email, password }));
+  const signUpUser = async () => {
+    dispatch(signUp({ email, password }));
   };
   return (
     <Grid alignItems="center" container direction="column" justifyContent="center" style={{ minHeight: '100vh' }}>
-      <Typography variant="h1">Log In</Typography>
+      <Typography variant="h1">Sign Up</Typography>
       <br />
       <Card margin="auto" maxWidth="400px" minWidth="300px">
-        <br />
         <div>
           <TextField label="Enter Email" onChange={(e) => setEmail(e.target.value)} type="email" variant="outlined" />
           <br />
@@ -33,8 +31,8 @@ function LoginContainer() {
           />
           <br />
 
-          <Button color="secondary" onClick={() => (password && email ? logIn() : null)} variant="contained">
-            Log In
+          <Button color="secondary" onClick={signUpUser} variant="contained">
+            Sign Up
           </Button>
         </div>
       </Card>
@@ -42,4 +40,4 @@ function LoginContainer() {
   );
 }
 
-export default LoginContainer;
+export default SignUpContainer;
