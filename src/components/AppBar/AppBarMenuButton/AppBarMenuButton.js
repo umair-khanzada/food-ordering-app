@@ -1,9 +1,6 @@
 import React from 'react';
 
-import Menu from '@material-ui/core/Menu';
-import { withStyles } from '@material-ui/core/styles';
-
-import Button from '../../Button/Button';
+import { IconButton, Menu, withStyles } from '@material-ui/core';
 
 const StyledMenu = withStyles({
   paper: {
@@ -41,15 +38,9 @@ const AppBarMenuButton = (props) => {
 
   return (
     <div>
-      <Button
-        aria-controls="customized-menu"
-        aria-haspopup="true"
-        color="primary"
-        onClick={handleClick}
-        variant="contained"
-      >
+      <IconButton aria-controls="customized-menu" aria-haspopup="true" onClick={handleClick}>
         {buttonIcon}
-      </Button>
+      </IconButton>
       <StyledMenu anchorEl={anchorEl} id="customized-menu" keepMounted onClose={handleClose} open={Boolean(anchorEl)}>
         {children}
       </StyledMenu>

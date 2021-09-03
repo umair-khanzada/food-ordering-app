@@ -1,30 +1,24 @@
 import React from 'react';
 
-import { Grid, ListItemIcon, ListItemText } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import { useTheme } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
+import { Grid, ListItemIcon, ListItemText, AppBar, useTheme, Toolbar } from '@material-ui/core';
 import { Lock, MoreVert, OfflineBolt, PersonRounded } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
-import { Actions } from '../../redux/actions';
+import { logout } from '../../Features/Login';
+import { history } from '../../routes/BrowserHistory';
 import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
 import { StyledDiv, StyledMenuItem } from './Style';
 
-const MenuAppBar = () => {
+const NavBar = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const history = useHistory();
-
   const logOut = () => {
-    dispatch(Actions.logout());
-    history.push('/login');
+    dispatch(logout());
   };
 
   return (
     <StyledDiv>
-      <AppBar position="sticky">
+      <AppBar color="secondary" position="sticky">
         <Toolbar>
           <Grid alignItems="flex-end" container justifyContent="flex-end">
             <AppBarMenuButton buttonIcon={<MoreVert />}>
@@ -54,4 +48,4 @@ const MenuAppBar = () => {
   );
 };
 
-export default MenuAppBar;
+export default NavBar;
