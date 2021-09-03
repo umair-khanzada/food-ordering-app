@@ -3,10 +3,6 @@ import React from 'react';
 import MainContainer from './routes/Layout/MainContainer';
 
 const App = () => {
-  return (
-    <div>
-      <MainContainer />
-    </div>
-  );
+  return <MainContainer />;
 };
 export default App;
