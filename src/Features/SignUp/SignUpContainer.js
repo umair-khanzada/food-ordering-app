@@ -15,17 +15,37 @@ function SignUpContainer() {
   const signUpUser = async () => {
     dispatch(signUp({ email, password }));
   };
+
+  const credential = {
+    email: '',
+    password: '',
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e;
+    credential[name] = value;
+  };
+
   return (
     <Grid alignItems="center" container direction="column" justifyContent="center" style={{ minHeight: '100vh' }}>
       <Typography variant="h1">Sign Up</Typography>
       <br />
       <Card margin="auto" maxWidth="400px" minWidth="300px">
         <div>
-          <TextField label="Enter Email" onChange={(e) => setEmail(e.target.value)} type="email" variant="outlined" />
+          <TextField
+            label="Enter Email"
+            name="email"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            type="email"
+            variant="outlined"
+          />
           <br />
           <TextField
             label="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            onChange={(e) => handleChange(e)}
             type="password"
             variant="outlined"
           />
