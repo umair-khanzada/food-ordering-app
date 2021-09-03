@@ -8,22 +8,30 @@ import CommonCard from './CommonCard';
 const useStyles = makeStyles((theme) => ({
   control: {
     padding: theme.spacing(3),
-    width: '75%',
-    marginTop: '20px',
+
+    marginTop: '50px',
   },
 }));
 
 const CardMenu = () => {
   const classes = useStyles();
 
-  const { control } = classes;
-
   return (
     <div>
-      <Grid className={control} container elevation justifyContent="space-around" spacing={3}>
+      <Grid className={classes.control} container elevation={3} spacing={3}>
         {UserData.map((usedata) => {
           const { id, name, price, resturantName, img } = usedata;
-          return <CommonCard key={id} img={img} name={name} price={price} resturantName={resturantName} />;
+
+          return (
+            <CommonCard
+              key={id}
+              buttonText="Add to Cart"
+              img={img}
+              name={name}
+              price={price}
+              resturantName={resturantName}
+            />
+          );
         })}
       </Grid>
     </div>

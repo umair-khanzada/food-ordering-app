@@ -5,6 +5,7 @@ const RouteNames = {
   home: '/home',
   resetPassword: '/reset-password',
   profile: '/profile',
+  dashboard: '/dashboard',
 };
 
 export default RouteNames;
