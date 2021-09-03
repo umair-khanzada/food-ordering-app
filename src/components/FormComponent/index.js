@@ -4,58 +4,49 @@ import { Grid } from '@material-ui/core';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
-import { FormHeading, ForgotPassword, Form, FormContainer } from './styles';
+import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, NewAccount, BasicLink } from './styles';
 
-const FormComponent = ({ formInputType, formButtonType, formProperty, forgotPassword }) => {
+const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, label, navigationPath }) => {
   return (
     <FormContainer>
-      <Grid alignItems="center" container justifyContent="center" style={{ padding: '0 20px' }}>
-        <Grid item md={6} xs={12}>
-          {/* alignItems="center" direction="column" justifyContent="center" style={{ minHeight: '100vh' }} */}
-          {/* <OutlinedCard> */}
-          <FormHeading>{formProperty}</FormHeading>
+      <Grid alignItems="center" container justifyContent="center" style={{ padding: '0 5px', height: '100vh' }}>
+        <Grid item md={4} xs={12}>
           <Form>
-            {formInputType.fields.map(({ changeHandler, required, label, name, type, value }, i) => (
-              <React.Fragment key={i}>
-                {/* <BasicInput
-            key={i}
-            changeHandler={field.changeHandler}
-            label={field.label}
-            property={field.property}
-            type={field.type}
-            value={field.value}
-          /> */}
-                <div style={{ marginBottom: '30px' }}>
-                  <BasicTextFields
-                    key={i}
-                    changeHandler={changeHandler}
-                    label={label}
-                    name={name}
-                    required={required}
-                    type={type}
-                    value={value}
-                    variant="outlined"
-                    width="100%"
-                  />
-                </div>
-              </React.Fragment>
+            <FormHeading>{formTitle}</FormHeading>
+            {inputFields.fields.map(({ changeHandler, required, label, name, type, value }, i) => (
+              <InputBox key={name + '-' + i} className="inputFields">
+                <BasicTextFields
+                  key={name + '-' + i}
+                  changeHandler={changeHandler}
+                  label={label}
+                  name={name}
+                  required={required}
+                  type={type}
+                  value={value}
+                  variant="outlined"
+                  width="100%"
+                />
+              </InputBox>
             ))}
-
-            {formButtonType.button.map((button, i) => (
-              // <Button key={i} clickHandler={button.clickHandler} property={button.name} />
-
-              <CommonButton
-                key={i}
-                clickHandler={button.clickHandler}
-                minwidth={button.minwidth}
-                property={button.name}
-                type={button.type}
-              />
+            {basicButtons.button.map(({ clickHandler, minWidth, name, type }, i) => (
+              <div key={name + '-' + i}>
+                <CommonButton
+                  key={name + '-' + i}
+                  clickHandler={clickHandler}
+                  minWidth={minWidth}
+                  property={name}
+                  type={type}
+                />
+              </div>
             ))}
-
-            <ForgotPassword href="/">{forgotPassword}</ForgotPassword>
+            <BasicLink>
+              <NewAccount to={navigationPath}>{label}</NewAccount>
+              {/* </div> */}
+              <div style={{ marginBottom: '30px' }}>
+                <ForgotPassword to="/login">{forgotPassword}</ForgotPassword>
+              </div>
+            </BasicLink>
           </Form>
-          {/* </OutlinedCard> */}
         </Grid>
       </Grid>
     </FormContainer>

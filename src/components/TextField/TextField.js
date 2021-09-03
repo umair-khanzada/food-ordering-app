@@ -28,7 +28,7 @@ export default function BasicTextFields({
       theme={theme}
       type={type}
       value={value}
-      variant={variant}
+      variant="outlined"
       width={width}
     />
   );

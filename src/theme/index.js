@@ -10,6 +10,16 @@ const theme = createTheme({
   palette: MaterialPalleteColours,
   typography,
   shape: customShapes,
+  // overrides: {
+  //   MuiTextField: {
+  //     root: {
+  //       '&:hover': {
+  //         border: '1px solid red',
+  //         borderRadius: '10px',
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 export default function MaterialThemeWrapper({ children }) {

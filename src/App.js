@@ -1,17 +1,7 @@
 import React from 'react';
 
-import { LoginContainer } from './Features/Login';
-
+import MainContainer from './routes/Layout/MainContainer';
 const App = () => {
-  return (
-    <div>
-      {/* <h1>is Logged In: {isLogin.toString()} </h1> */}
-      {/* <button onClick={changeLogin} type="button">
-        Log In
-      </button>
-      <ForgetPassword /> */}
-      <LoginContainer />
-    </div>
-  );
+  return <MainContainer />;
 };
 export default App;

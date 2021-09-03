@@ -1,22 +1,16 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 
-import FormComponent from '../../components/FormComponent';
+import FormComponent from '../../../../components/FormComponent';
 
-function LoginContainer() {
+function LoginForm() {
+  // console.log("test");
+
   const [loginForm, setLoginForm] = useState({});
-  const googleClickHandler = () => {
-    // console.log('google');
-  };
-  const loginClickHandler = () => {
-    console.log('loginForm');
-    console.log(loginForm);
-  };
+
+  const loginClickHandler = () => {};
 
   const textFiledChangeHandler = (e) => {
     const { value, name } = e.target;
-    console.log('value', value);
-    console.log('property', e.target.name);
 
     setLoginForm((prev) => {
       return {
@@ -51,14 +45,8 @@ function LoginContainer() {
       {
         type: 'submit',
         name: 'login',
-        minwidth: '100%',
+        minWidth: '100%',
         clickHandler: loginClickHandler,
-      },
-      {
-        type: 'button',
-        name: 'Google',
-        minwidth: '50%',
-        clickHandler: googleClickHandler,
       },
     ],
   };
@@ -66,19 +54,15 @@ function LoginContainer() {
   return (
     <div>
       <FormComponent
+        basicButtons={loginButtons}
         forgotPassword="Forgot Password?"
-        formButtonType={loginButtons}
-        formInputType={loginInputs}
-        formProperty="Login"
+        formTitle="Login"
+        inputFields={loginInputs}
+        label="Create New Account?"
+        navigationPath="/signup"
       />
-      {/* {loginFormObj.fields.map((field, i) => (
-        <>
-          <BasicInput key={i} label={field.label} name={field.name} type={field.type} value={field.value} />
-          <br />
-        </>
-      ))} */}
     </div>
   );
 }
 
-export default LoginContainer;
+export default LoginForm;

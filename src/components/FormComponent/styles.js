@@ -1,33 +1,53 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import CommonButton from '../Button/Button';
+
 export const Form = styled.form`
   background-color: white;
-  padding: 50px 65px;
+  padding: 10px 15px 10px 15px;
   border-radius: 10px;
-  @media (max-width: 768px) {
-    padding: 20px 10px;
+  box-shadow: 0 0 10px lightgrey;
+  @media (min-width: 768px) {
+    padding: 20px 35px;
   }
+`;
+export const InputBox = styled.div`
+  margin-bottom: 30px;
 `;
 export const FormHeading = styled.h1`
-  margin: 40px 0px;
-  color: green;
+  margin-bottom: 20px;
+  color: #e91e63;
   text-align: center;
   font-size: 40px;
+  font-weight: 500;
 `;
-export default FormHeading;
 
-export const ForgotPassword = styled.a`
-  margin-left: 50px;
-  font-size: 20px;
-  color: green;
+export const ForgotPassword = styled(Link)`
+  font-size: 16px;
+  color: rgb(51, 133, 255);
   text-decoration: none;
-  display: 'flex';
+  float: right;
   @media (max-width: 768px) {
-    margin: 10px;
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
+export const BasicLink = styled.div`
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+`;
+export const NewAccount = styled(Link)`
+  margin-left: 10px;
+  font-size: 16px;
+  color: rgb(51, 133, 255);
+  text-decoration: none;
+  float: right;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
 export const FormContainer = styled.div`
-  background-color: rgb(240, 234, 234);
+  background-color:#F0F0F0 ;
+  backgroundSize: 'cover',
   min-height: 100vh;
 `;

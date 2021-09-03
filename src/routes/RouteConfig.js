@@ -1,7 +1,7 @@
-import { loginRoute } from '../Features/Login';
+import { loginRoute, signUpRoute } from '../Features/Auth/route';
 
 const routeConfig = {
-  auth: [loginRoute],
+  auth: [loginRoute, signUpRoute],
   orderPlacer: [],
   officeBoy: [],
   common: [],
