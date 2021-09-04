@@ -64,20 +64,7 @@ export const TotalPrice = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-export const IncrementI = styled.i`
-  color: green;
-  font-size: 20px;
-  &:hover {
-    cursor: pointer;
-  }
-`;
+
 export const PriceSpan = styled.span`
   fontweight: bold;
-`;
-export const DecrementI = styled(IncrementI)`
-  font-size: 20px;
-  color: rgb(227, 66, 52);
-  &:hover {
-    cursor: pointer;
-  }
 `;

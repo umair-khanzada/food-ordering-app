@@ -20,8 +20,6 @@ const StyledMenu = withStyles({
       vertical: 'top',
       horizontal: 'center',
     }}
-  
-    {...props}
   />
 ));
 

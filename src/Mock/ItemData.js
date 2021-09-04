@@ -1,7 +1,7 @@
-import Burger from '../../util/images/Burger.jpg';
-import Cheese from '../../util/images/CheeseSauce.jpg';
-import CheeseSauce from '../../util/images/CheeseSauce.jpg';
-import FrenchFries from '../../util/images/FrenchFries.jpg';
+import Burger from '../assets/Burger.jpg';
+import Cheese from '../assets/CheeseSauce.jpg';
+import CheeseSauce from '../assets/CheeseSauce.jpg';
+import FrenchFries from '../assets/FrenchFries.jpg';
 const itemData = [
   {
     id: 1,

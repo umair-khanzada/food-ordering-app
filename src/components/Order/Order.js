@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 
 import { Button } from '@material-ui/core';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import CloseIcon from '@material-ui/icons/Close';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import { makeStyles } from '@material-ui/styles';
 
+import itemData from '../../Mock/ItemData';
 import OutlinedCard from '../Card/Card';
-import itemData from '../ItemData/ItemData';
 import {
   Container,
-  Span,
   Img,
   NameofFood,
   Price,
@@ -15,11 +18,9 @@ import {
   Icon,
   Quantity,
   TotalPrice,
-  IncrementI,
-  DecrementI,
   PriceSpan,
+  Span,
 } from './Style';
-
 const ITEM_PRICES = {
   Burger: 20,
   Cheese: 50,
@@ -27,8 +28,30 @@ const ITEM_PRICES = {
   FrenchFries: 30,
 };
 let TOTAL_PRICE = 0;
+const useStyles = makeStyles({
+  plusIcon: {
+    color: 'green',
+    fontSize: '20px',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+  removeIcon: {
+    color: 'rgb(227, 66, 52)',
+    fontSize: '20px',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+  crossIcon: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+});
 
 const Order = (props) => {
+  const styles = useStyles();
   const [itemState, itemSet] = useState(itemData);
   const ItemSummary = itemState.map(({ img, price, quantity, name, id }, index) => {
     return (
@@ -43,13 +66,13 @@ const Order = (props) => {
           </div>
 
           <Quantity>
-            <IncrementI
-              className="fas fa-plus-circle"
+            <AddCircleOutlineIcon
+              className={styles.plusIcon}
               onClick={() => addIngredientHandler(quantity, id, ITEM_PRICES[name])}
             />
             <Span>{quantity}</Span>
-            <DecrementI
-              className="fas fa-minus-circle"
+            <RemoveCircleOutlineIcon
+              className={styles.removeIcon}
               onClick={() => removeIngredientHandler(quantity, id, ITEM_PRICES[name])}
             />
           </Quantity>
@@ -75,6 +98,9 @@ const Order = (props) => {
   };
   const removeIngredientHandler = (quantity, id, ActualPrice) => {
     const newCount = quantity - 1;
+    if (newCount < 0) {
+      return;
+    }
     const newPrice = ActualPrice * newCount;
     const updatedItem = [...itemState];
     updatedItem.map((item) => {
@@ -101,7 +127,7 @@ const Order = (props) => {
           <h2>My Order</h2>
         </OrderText>
         <Icon>
-          <i className="fas fa-times" onClick={() => props.purchaseCancelled()} />
+          <CloseIcon className="styles.crossIcon" onClick={() => props.purchaseCancelled()} />
         </Icon>
       </Header>
       <div>{ItemSummary}</div>

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Backdrop from '../Backdrop/Backdrop';
+// import Backdrop from '../Backdrop/Backdrop';
 import { Div } from './Style';
 
 const Modal = ({ modalClosed, show, children }) => {
   return (
     <>
-      <Backdrop clicked={modalClosed} show={show} />
+      {/* <Backdrop clicked={modalClosed} show={show} /> */}
 
       <Div
         style={{
