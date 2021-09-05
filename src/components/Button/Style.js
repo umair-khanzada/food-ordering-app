@@ -9,7 +9,7 @@ const StyledButton = styled(Button)`
   min-width: ${({ minwidth }) => minwidth};
   background-color: #e91e63;
   color: white;
-  ${({ theme }) => `
+  ${() => `
   
    &:hover {
       },
