@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 
-import { dispatch } from 'rxjs/internal/observable/pairs';
+import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
 import { login } from '../actions';
 
 function LoginForm() {
-  const [loginForm, setLoginForm] = useState({});
+  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
+  const dispatch = useDispatch();
 
   const loginClickHandler = () => {
-    dispatch(login({ email: 'asdas@asd.com', password: 'asdasd' }));
+    console.log('asdsad');
+    dispatch(login({ email: loginForm.email, password: loginForm.password }));
   };
 
   const textFiledChangeHandler = (e) => {
@@ -26,10 +28,10 @@ function LoginForm() {
     fields: [
       {
         required: true,
-        label: 'UserName',
-        name: 'username',
-        type: 'text',
-        value: loginForm?.username || '',
+        label: 'Email',
+        name: 'email',
+        type: 'email',
+        value: loginForm?.email || '',
         changeHandler: textFiledChangeHandler,
       },
       {

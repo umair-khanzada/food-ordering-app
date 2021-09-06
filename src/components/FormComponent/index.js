@@ -32,8 +32,9 @@ const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, l
               <div key={name + '-' + i}>
                 <CommonButton
                   key={name + '-' + i}
-                  clickHandler={clickHandler}
-                  minWidth={minWidth}
+                  fontSize="16px"
+                  minwidth={minWidth}
+                  onClick={clickHandler}
                   property={name}
                   type={type}
                 />
@@ -42,7 +43,7 @@ const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, l
             <BasicLink>
               <Label to={navigationPath}>{label}</Label>
 
-              <ForgotPassword to="/login">{forgotPassword}</ForgotPassword>
+              <ForgotPassword to="/forget-password">{forgotPassword}</ForgotPassword>
             </BasicLink>
           </Form>
         </Grid>

@@ -3,12 +3,14 @@
     {
       "id": 1,
       "email": "example@example.com",
-      "password": "something"
+      "password": "something",
+      "role": "Office_Boy"
     },
     {
       "email": "ex@ex.com",
       "password": "ex",
-      "id": 2
+      "id": 2,
+      "role": "Order_Placer"
     }
   ]
 }

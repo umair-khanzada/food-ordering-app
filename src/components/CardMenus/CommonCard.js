@@ -96,16 +96,17 @@ const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
             <div className={btn}>
               {showButton ? (
                 <div>
-                  <CommonButton color="secondary" minwidth="10px" property="+" />
+                  <CommonButton color="secondary" fontSize={16} minwidth="10px" property="+" />
                   {'  '}
                   <span style={{ margin: '5px 5px' }}>1</span>
                   {'  '}
-                  <CommonButton color="secondary" minwidth="15px" property="-" />
+                  <CommonButton color="secondary" fontSize={16} minwidth="15px" property="-" />
                 </div>
               ) : (
                 <div>
                   <CommonButton
                     color="secondary"
+                    fontSize={16}
                     onClick={() => setShowButton(true)}
                     property={buttonText}
                     style={{ width: '50px' }}

@@ -10,8 +10,11 @@ export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
     mergeMap((action) => {
+      console.log('pwoeri');
+
       return ajax.getJSON('http://localhost:5000/users').pipe(
         mergeMap((res) => {
+          console.log('qweqw');
           return of(loginSuccess());
         }),
         catchError(() => {

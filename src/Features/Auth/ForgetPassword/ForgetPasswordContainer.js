@@ -9,8 +9,10 @@ import TextField from '../../../components/TextField/TextField';
 function ForgetPasswordContainer() {
   return (
     <Box p={20}>
-      <Grid alignItems="center" container direction="column" justifyContent="center">
-        <Typography variant="h1">Reset Your Password</Typography>
+      <Grid alignItems="center" container direction="column" justify="center">
+        <Typography color="primary" variant="h1">
+          Reset Your Password
+        </Typography>
         <br />
         <Card margin="auto" maxwidth="400px" minwidth="300px">
           <div>
@@ -18,14 +20,13 @@ function ForgetPasswordContainer() {
               Forgot Password ?
             </Typography>
             <br />
-            <Typography color="primary" paragraph>
+            <Typography color="info" paragraph>
               Enter email associated with your account and we'll send you a link to reset your password
             </Typography>
             <TextField label="Enter Email" type="email" variant="outlined" width="100%" />
             <br />
-            <Button color="secondary" variant="contained">
-              Reset Password
-            </Button>
+            <br />
+            <Button color="secondary" fontSize="16px" property="Reset Password" variant="contained" />
             <br />
             <br />
             <Link to="/login">Back To Log In</Link>

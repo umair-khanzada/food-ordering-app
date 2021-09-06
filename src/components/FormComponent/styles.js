@@ -47,7 +47,7 @@ export const Label = styled(Link)`
 `;
 
 export const FormContainer = styled.div`
-  background-color:#F0F0F0 ;
-  backgroundSize: 'cover',
+  background-color: #f0f0f0;
+  background-size: 'cover';
   min-height: 100vh;
 `;
