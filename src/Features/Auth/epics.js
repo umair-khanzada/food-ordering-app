@@ -9,12 +9,15 @@ import { loginSuccess, loginError } from './actions';
 export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
-    mergeMap((action) => {
-      console.log('pwoeri');
-
-      return ajax.getJSON('http://localhost:5000/users').pipe(
+    mergeMap(({ payload }) => {
+      console.log('payload', payload);
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/login',
+        method: 'POST',
+        body: payload,
+      }).pipe(
         mergeMap((res) => {
-          console.log('qweqw');
+          console.log(res);
           return of(loginSuccess());
         }),
         catchError(() => {
@@ -27,12 +30,19 @@ export const loginEpic = (action$) =>
 export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
-    mergeMap((action) => {
-      return ajax.getJSON('http://localhost:5000/users').pipe(
+    mergeMap(({ payload }) => {
+      console.log('payload signup', payload);
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/register',
+        method: 'POST',
+        body: payload,
+      }).pipe(
         mergeMap((res) => {
+          console.log(res);
           return of(loginSuccess());
         }),
         catchError((err) => {
+          console.log(err);
           return of(loginError());
         }),
       );
