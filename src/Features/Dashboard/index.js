@@ -1,5 +1,6 @@
 import React from 'react';
 
+// eslint-disable-next-line import/order
 import { Grid, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -7,7 +8,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import MainTab from '../../components/CardMenus/Tabs';
 import SideMenu from '../../components/sideMenu';
 
-function Dashboard() {
+function DashBoard() {
   const drawerWidth = 300;
   const useStyles = makeStyles((theme) => ({
     header: {
@@ -39,11 +40,7 @@ function Dashboard() {
   const classes = useStyles();
   return (
     <div>
-      {console.log('sadas')}
       <Grid container>
-        <Grid item md={3}>
-          <SideMenu />
-        </Grid>
         <Grid item md={9}>
           <Box>
             <div className={classes.header}>
@@ -74,8 +71,11 @@ function Dashboard() {
             <div />
           </Box>
         </Grid>
+        <Grid item md={3}>
+          <SideMenu />
+        </Grid>
       </Grid>
     </div>
   );
 }
-export default Dashboard;
+export default DashBoard;
