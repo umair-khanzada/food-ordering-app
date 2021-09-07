@@ -5,7 +5,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import CloseIcon from '@material-ui/icons/Close';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { makeStyles } from '@material-ui/styles';
-
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import itemData from '../../Mock/ItemData';
 import OutlinedCard from '../Card/Card';
 import {
@@ -66,7 +66,7 @@ const Order = (props) => {
           </div>
 
           <Quantity>
-            <AddCircleOutlineIcon
+            <
               className={styles.plusIcon}
               onClick={() => addIngredientHandler(quantity, id, ITEM_PRICES[name])}
             />

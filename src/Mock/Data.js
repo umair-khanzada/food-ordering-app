@@ -6,24 +6,39 @@ const UserData = [
   {
     id: '1',
     name: 'Curry',
-    price: '150 Rs',
+    price: '150 ',
     resturantName: 'Kitchen',
     img: curry,
+    type: 'Curry',
+    addToCart: 'Add To Cart',
   },
   {
     id: '2',
     name: 'Kofta',
-    price: '220 Rs',
+    price: '220 ',
+    type: 'Curry',
     resturantName: 'Kitchen',
     img: kofta,
+    addToCart: 'Add To Cart',
   },
   {
     id: '3',
     name: 'Karhai',
-    price: '250 Rs',
+    price: '250 ',
     resturantName: 'Kitchen',
     img: karahai,
+    type: 'Curry',
+    addToCart: 'Add To Cart',
   },
+  // {
+  //   id: '4',
+  //   name: 'Naan',
+  //   price: '12 ',
+  //   resturantName: 'Tandoor',
+  //   img: karahai,
+  //   type: 'Roti',
+  //   addToCart: 'Add To Cart',
+  // },
 ];
 
 export default UserData;

@@ -1,8 +1,12 @@
 import React from 'react';
 
-import ShopButton from './components/ShopButton/ShopButton';
+import DashBoard from './Features/DashBoard';
 
 const App = () => {
-  return <ShopButton />;
+  return (
+    <>
+      <DashBoard />;{/* <Sweepable /> */}
+    </>
+  );
 };
 export default App;
