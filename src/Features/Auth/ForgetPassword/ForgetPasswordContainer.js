@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Typography, Grid, Box } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Button from '../../../components/Button/Button';
@@ -13,15 +14,30 @@ function ForgetPasswordContainer() {
   const [email, setEmail] = useState({
     email: '',
   });
+
+  const history = useHistory();
   const [password, setpassword] = useState({
     password: '',
   });
   const dispatch = useDispatch();
+  // const message =
+  const { message, status } = useSelector((state) => {
+    const { message, status } = state.responseMessage;
+    return { message, status };
+  });
+  // useSelector((state) => {
+  //   console.log(state);
+  // });
+
   const sendEmail = () => {
-    // console.log(email);
-    // console.log(password)
     dispatch(forgotPassword({ email, password }));
   };
+  useEffect(() => {
+    if (status === 200) {
+      history.push('/login');
+    }
+  });
+
   return (
     <Box p={20}>
       <Grid alignItems="center" container direction="column" justify="center">
@@ -56,6 +72,7 @@ function ForgetPasswordContainer() {
               variant="outlined"
               width="100%"
             />
+
             <br />
             <br />
             <Button
@@ -67,6 +84,7 @@ function ForgetPasswordContainer() {
             />
             <br />
             <br />
+            <p style={{ color: 'red' }}>{message}</p>
             <Link to="/login">Back To Log In</Link>
           </div>
         </Card>

@@ -4,7 +4,7 @@ import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError, ignoreElements } from 'rxjs/operators';
 
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../scripts/constants';
-import { loginSuccess, loginError } from './actions';
+import { loginSuccess, loginError, formMessage } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
@@ -39,6 +39,7 @@ export const signUpEpic = (action$) =>
           return of(loginSuccess(token));
         }),
         catchError((err) => {
+          console.log('hello error');
           return of(loginError());
         }),
       );
@@ -56,13 +57,25 @@ export const forgotPasswordEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          console.log(res);
-          ignoreElements();
-          // return of(loginSuccess({ name: res.response.user.name, token: res.response.tokens.access }));
+          // console.log('my response', res.response.message);
+          // ignoreElements();
+          // const
+          // return of(resetPasswordFail({res.response.message,}));
+          const {
+            response: { message },
+            status,
+          } = res;
+          return of(formMessage({ message, status }));
         }),
-        catchError(() => {
-          ignoreElements();
-          // return of(loginError());
+        catchError((err) => {
+          // ignoreElements();
+          // console.log('hello erro');
+          const {
+            response: { message },
+            status,
+          } = err;
+
+          return of(formMessage({ message, status }));
         }),
       );
     }),

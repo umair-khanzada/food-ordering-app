@@ -1,4 +1,4 @@
-import { LOGIN, LOGIN_SUCCESS, LOGOUT, LOGIN_ERROR, FORGOT_PASSWORD, SIGNUP } from '../../scripts/constants';
+import { LOGIN, LOGIN_SUCCESS, LOGOUT, LOGIN_ERROR, FORGOT_PASSWORD, SIGNUP, MESSAGE } from '../../scripts/constants';
 
 export const loginReducer = (state = { isLoggedIn: false, token: '', name: '' }, action) => {
   switch (action.type) {
@@ -22,11 +22,23 @@ export const loginReducer = (state = { isLoggedIn: false, token: '', name: '' },
   }
 };
 
-export const forgotPassword = (state = {}, action) => {
+export const forgotPassword = (state = { message: '', status: 0 }, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD:
-      console.log('hell');
+      return {};
+
+    default:
       return state;
+  }
+};
+export const responseMessage = (state = { message: '', status: 0 }, action) => {
+  switch (action.type) {
+    case MESSAGE:
+      // eslint-disable-next-line no-case-declarations
+      const { message, status } = action.payload;
+
+      return { ...state, message, status };
+
     default:
       return state;
   }
