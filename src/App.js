@@ -1,7 +1,7 @@
 import React from 'react';
 
-import MainContainer from './routes/Layout/MainContainer';
+import OrderHistory from './components/OrderHistory/OrderHistory';
 const App = () => {
-  return <MainContainer />;
+  return <OrderHistory />;
 };
 export default App;
