@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import { Grid, Typography } from '@material-ui/core';
+import { ToggleOff, ToggleOn } from '@material-ui/icons';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
@@ -11,6 +14,8 @@ function SignUpForm() {
     email: '',
     password: '',
   });
+
+  const [selected, setSelected] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -77,15 +82,44 @@ function SignUpForm() {
   };
 
   return (
-    <div>
-      <FormComponent
-        basicButtons={signupButtons}
-        formTitle="Sign UP"
-        inputFields={signupInputs}
-        label="Back to Login"
-        navigationPath="/login"
-      />
-    </div>
+    <Grid
+      alignItems="center"
+      container
+      direction="row"
+      justifyContent="center"
+      spacing={3}
+      style={{ minHeight: '100vh' }}
+    >
+      <Grid item xs={12}>
+        {' '}
+        <Typography align="center" variant="h2">
+          Sign Up as
+        </Typography>
+      </Grid>
+      <Grid item>
+        Customer{' '}
+        <ToggleButton
+          onChange={() => {
+            setSelected(!selected);
+          }}
+          selected={selected}
+          value="check"
+        >
+          {selected ? <ToggleOn color="primary" /> : <ToggleOff color="secondary" />}
+        </ToggleButton>{' '}
+        Vendor
+      </Grid>
+
+      <Grid item xs={12}>
+        <FormComponent
+          basicButtons={signupButtons}
+          formTitle="Sign UP"
+          inputFields={signupInputs}
+          label="Back to Login"
+          navigationPath="/login"
+        />
+      </Grid>
+    </Grid>
   );
 }
 

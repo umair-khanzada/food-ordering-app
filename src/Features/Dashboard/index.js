@@ -8,8 +8,7 @@ import MainTab from '../../components/CardMenus/Tabs';
 import SideMenu from '../../components/sideMenu';
 
 function Dashboard() {
-  const drawerWidth = 300;
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(() => ({
     header: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -39,7 +38,6 @@ function Dashboard() {
   const classes = useStyles();
   return (
     <div>
-      {console.log('sadas')}
       <Grid container>
         <Grid item md={3}>
           <SideMenu />

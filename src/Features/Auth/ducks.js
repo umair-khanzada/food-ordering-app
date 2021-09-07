@@ -1,11 +1,11 @@
-import { LOGIN, LOGIN_SUCCESS, LOGOUT, LOGIN_ERROR, SIGNUP } from '../../scripts/constants';
+import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, SIGNUP, LOGOUT_SUCCESS } from '../../scripts/constants';
 
 export const loginReducer = (state = { isLoggedIn: false, token: '', name: '' }, action) => {
   switch (action.type) {
     case LOGIN:
       return {};
 
-    case LOGOUT:
+    case LOGOUT_SUCCESS:
       return { isLoggedIn: false, token: '', name: '' };
 
     case LOGIN_SUCCESS:
