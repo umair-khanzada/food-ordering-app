@@ -27,7 +27,6 @@ const CardMenu = () => {
             <CommonCard
               key={id}
               buttonText="Add to Cart"
-              id={id}
               img={img}
               name={name}
               price={price}

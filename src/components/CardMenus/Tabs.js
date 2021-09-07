@@ -1,12 +1,10 @@
-/* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 
 import { Paper, Tab, Tabs } from '@material-ui/core';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import CardMenus from './CardMenus';
 
-const MainTab = (props) => {
+const MainTab = () => {
   const [value, setValue] = useState(2);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -20,7 +18,6 @@ const MainTab = (props) => {
           <Tab label="Rice" />
           <Tab label="Burgers" />
           <Tab label="Rolls" />
-          <Tab icon={<AddShoppingCartIcon />} onClick={props.click} />
         </Tabs>
       </Paper>
       <CardMenus />

@@ -1,7 +1,11 @@
 const RouteNames = {
-  Registration: '/register',
-  foregetPassword: '/forget-password',
+  forgetPassword: '/forget-password',
+  signup: '/signup',
   login: '/login',
+  home: '/home',
+  resetPassword: '/reset-password',
+  profile: '/profile',
+  dashboard: '/dashboard',
 };
 
 export default RouteNames;

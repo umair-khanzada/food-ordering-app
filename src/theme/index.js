@@ -10,6 +10,7 @@ const theme = createTheme({
   palette: MaterialPalleteColours,
   typography,
   shape: customShapes,
+  spacing: 8,
 });
 
 export default function MaterialThemeWrapper({ children }) {

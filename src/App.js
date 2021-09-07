@@ -1,12 +1,7 @@
 import React from 'react';
 
-import DashBoard from './Features/DashBoard';
-
+import MainContainer from './routes/Layout/MainContainer';
 const App = () => {
-  return (
-    <>
-      <DashBoard />;{/* <Sweepable /> */}
-    </>
-  );
+  return <MainContainer />;
 };
 export default App;
