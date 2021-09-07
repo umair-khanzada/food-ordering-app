@@ -1,4 +1,4 @@
-import { green, grey, red, yellow } from '@material-ui/core/colors';
+import { blue, green, grey, red, yellow } from '@material-ui/core/colors';
 
 export const MaterialPalleteColours = {
   primary: {
@@ -9,7 +9,7 @@ export const MaterialPalleteColours = {
   },
   secondary: {
     light: blue[500],
-    main: '#e91e63',
+    main: blue[500],
     dark: blue[900],
     contrastText: '#ffffff',
   },
@@ -41,11 +41,7 @@ export const MaterialPalleteColours = {
     dark: green[300],
   },
   background: {
-<<<<<<< HEAD
-    // default: '#8FB9E3',
-=======
     default: '#f0f0f0',
->>>>>>> a2a2203ee544832b4077918541c0151cb80a701f
   },
   action: {
     hover: grey[200],
