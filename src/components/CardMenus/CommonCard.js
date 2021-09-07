@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 
 import { Card, CardMedia, CardContent, CardHeader, Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
 
+import { addtocart } from '../../Features/DashBoard/redux/actions/index';
 import CommonButton from '../Button/Button';
+// import TemporaryDrawer from '../Sweepable';
 
 const drawerWidth = 300;
 const useStyles = makeStyles((theme) => ({
@@ -70,12 +73,20 @@ const useStyles = makeStyles((theme) => ({
     minWidth: '10px',
   },
 }));
-const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
+const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { root, content, header, image, Price, btn } = classes;
   const [showButton, setShowButton] = useState(false);
+
+  const passButtonKey = () => {
+    setShowButton(true);
+    // <TemporaryDrawer />;
+  };
+
   return (
     <Grid item md={3}>
+      {/* {showButton ? <TemporaryDrawer id={id} /> : null} */}
       <Card className={root}>
         <div className={image}>
           <div style={{ boxShadow: '10px 10px 13px lightgrey' }}>
@@ -96,21 +107,27 @@ const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
             <div className={btn}>
               {showButton ? (
                 <div>
-                  <CommonButton color="secondary" fontSize={16} minwidth="10px" property="+" />
+                  <CommonButton color="secondary" minwidth="10px">
+                    +
+                  </CommonButton>
                   {'  '}
                   <span style={{ margin: '5px 5px' }}>1</span>
                   {'  '}
-                  <CommonButton color="secondary" fontSize={16} minwidth="15px" property="-" />
+                  <CommonButton color="secondary" minwidth="15px">
+                    -
+                  </CommonButton>
                 </div>
               ) : (
                 <div>
                   <CommonButton
                     color="secondary"
-                    fontSize={16}
-                    onClick={() => setShowButton(true)}
-                    property={buttonText}
+                    onClick={() => {
+                      dispatch(addtocart({ id, name, price, img }));
+                    }}
                     style={{ width: '50px' }}
-                  />
+                  >
+                    {buttonText}
+                  </CommonButton>
                 </div>
               )}
             </div>

@@ -1,19 +1,12 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import storage from 'redux-persist/lib/storage';
 
-import { loginReducer, SignUpReducer } from '../../Features/Auth/ducks';
-
-const persistConfig = {
-  key: 'root',
-  storage,
-  stateReconciler: autoMergeLevel2,
-};
+import addtocartReducers from '../../Features/DashBoard/redux/reducer/index';
+import { loginLogout } from './login-logout';
 
 const reducer = combineReducers({
-  login_logout: loginReducer,
-  SignUpReducer,
+  login_logout: loginLogout,
+  addtocartReducers,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
