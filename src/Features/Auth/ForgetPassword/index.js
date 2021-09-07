@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 
-import { dispatch } from 'rxjs/internal/observable/pairs';
-
 import FormComponent from '../../../components/FormComponent';
 import { validEmail } from '../../../scripts/constants';
-import { login } from '../actions';
 
-function SignUpForm() {
+function ForgetPassword() {
+  const forgetPasswordClickHandler = () => {};
   const textFiledChangeHandler = (e, index) => {
     const { value, name } = e.target;
 
-    setSignUpForm((prev) => {
+    setforgetPasswordForm((prev) => {
       const prevForm = [...prev];
       const currentTextField = prevForm[index];
+
       currentTextField.value = value;
       const getValidationError = currentTextField.getValidation(currentTextField.value);
+
       [currentTextField.errorMessage, currentTextField.isValid] = getValidationError;
       return prevForm;
     });
   };
-  const [signUpForm, setSignUpForm] = useState([
+  const [forgetPasswordForm, setforgetPasswordForm] = useState([
     {
       required: true,
       label: 'Email',
@@ -37,30 +37,12 @@ function SignUpForm() {
     },
     {
       required: true,
-      label: 'UserName',
-      name: 'username',
-      type: 'text',
-      value: '',
-      isValid: true,
-      errorMessage: '',
-      getValidation: (value) => {
-        if (value.length < 3) {
-          return ['Name should be gratter then 3', false];
-        }
-        if (value.length > 10) {
-          return ['Name should be less then 10 letters', false];
-        }
-        return ['', true];
-      },
-    },
-    {
-      required: true,
       label: 'Password',
       name: 'password',
       type: 'password',
       minlength: '6',
-      value: '',
       isValid: true,
+      value: '',
       errorMessage: '',
       getValidation: (value) => {
         if (value.length < 8) {
@@ -69,51 +51,30 @@ function SignUpForm() {
         return ['', true];
       },
     },
-    {
-      required: true,
-      label: 'Contact No',
-      name: 'contact',
-      value: '',
-      isValid: true,
-      errorMessage: '',
-
-      getValidation: (value) => {
-        const abc = 11;
-        if (value.length == abc) {
-          return ['Invalid number', false];
-        }
-        return ['', true];
-      },
-    },
   ]);
-
-  const signUpClickHandler = () => {
-    dispatch(login({ email: 'asdsa@ads.com', password: 'asdas' }));
-  };
-
-  const signupButtons = {
+  const loginButtons = {
     button: [
       {
         type: 'submit',
-        name: 'SignUp',
+        name: 'login',
         minWidth: '100%',
-        clickHandler: signUpClickHandler,
+        clickHandler: forgetPasswordClickHandler,
       },
     ],
   };
 
   return (
-    <div>
+    <>
       <FormComponent
-        basicButtons={signupButtons}
+        basicButtons={loginButtons}
         changeHandler={textFiledChangeHandler}
-        formTitle="Sign UP"
-        inputFields={signUpForm}
-        label="Login?"
+        formTitle="Forgot Password"
+        inputFields={forgetPasswordForm}
+        label="Back to login?"
         navigationPath="/login"
       />
-    </div>
+    </>
   );
 }
 
-export default SignUpForm;
+export default ForgetPassword;

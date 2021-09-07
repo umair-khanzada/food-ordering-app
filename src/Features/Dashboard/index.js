@@ -1,47 +1,53 @@
 import React from 'react';
 
-// eslint-disable-next-line import/order
-import { Grid, Typography, Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Grid, useTheme } from '@material-ui/core';
 
-import MainTab from '../../components/CardMenus/Tabs';
 import SideMenu from '../../components/sideMenu';
-
+import VendorData from '../../Mock/vendor.data';
+import Vendor from '../Vendor';
+import { VendorGrid } from './style';
 function DashBoard() {
-  const drawerWidth = 300;
-  const useStyles = makeStyles((theme) => ({
-    header: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginTop: '30px',
-    },
-    orderHeading: {
-      fontWeight: '700',
-      marginLeft: '40px',
-    },
-    orderRef: {
-      color: 'lightgrey',
-      paddingLeft: '10px',
-      paddingTop: '8px',
-      fontSize: '18px',
-    },
-    orderDetails: {
-      display: 'flex',
-    },
-    userInfo: {
-      paddingRight: '40px',
-    },
-    tabs: {
-      paddingRight: '30px',
-    },
-  }));
+  const theme = useTheme();
+  // const drawerWidth = 300;
+  // const useStyles = makeStyles((theme) => ({
+  //   header: {
+  //     display: 'flex',
+  //     justifyContent: 'space-between',
+  //     marginTop: '30px',
+  //   },
+  //   orderHeading: {
+  //     fontWeight: '700',
+  //     marginLeft: '40px',
+  //   },
+  //   orderRef: {
+  //     color: 'lightgrey',
+  //     paddingLeft: '10px',
+  //     paddingTop: '8px',
+  //     fontSize: '18px',
+  //   },
+  //   orderDetails: {
+  //     display: 'flex',
+  //   },
+  //   userInfo: {
+  //     paddingRight: '40px',
+  //   },
+  //   tabs: {
+  //     paddingRight: '30px',
+  //   },
+  // }));
 
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
-    <div>
-      <Grid container>
-        <Grid item md={9}>
+    <Grid container>
+      <Grid item md={2}>
+        <SideMenu />
+      </Grid>
+      <VendorGrid item md={10} theme={theme}>
+        {VendorData.map((vendor, i) => {
+          return <Vendor key={i} vendor={vendor} />;
+        })}
+      </VendorGrid>
+      {/* <Grid item md={9}>
           <Box>
             <div className={classes.header}>
               <div className={classes.orderDetails}>
@@ -71,11 +77,8 @@ function DashBoard() {
             <div />
           </Box>
         </Grid>
-        <Grid item md={3}>
-          <SideMenu />
-        </Grid>
-      </Grid>
-    </div>
+        */}
+    </Grid>
   );
 }
 export default DashBoard;

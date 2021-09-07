@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
-
 import FormComponent from '../../../components/FormComponent';
-import { validEmail } from '../../../scripts/constants';
-import { login } from '../actions';
 
-function LoginForm() {
-  const dispatch = useDispatch();
-
-  const loginClickHandler = () => {
-    dispatch(login({ email: loginForm.email, password: loginForm.password }));
-  };
+function ResetPassword() {
+  const resetPasswordClickHandler = () => {};
   const textFiledChangeHandler = (e, index) => {
     const { value, name } = e.target;
 
-    setLoginForm((prev) => {
+    setResetPasswordForm((prev) => {
       const prevForm = [...prev];
       const currentTextField = prevForm[index];
 
@@ -26,26 +18,42 @@ function LoginForm() {
       return prevForm;
     });
   };
-  const [loginForm, setLoginForm] = useState([
+  const [resetForm, setResetPasswordForm] = useState([
     {
       required: true,
-      label: 'Email',
-      name: 'email',
-      type: 'email',
+      label: 'Old Password',
+      name: 'oldpassword',
+      type: 'password',
       value: '',
       isValid: true,
       errorMessage: '',
       getValidation: (value) => {
-        if (!validEmail.test(value)) {
-          return ['Email type is not valid', false];
+        if (value.length < 8) {
+          return ['Password should be 8 letters', false];
         }
         return ['', true];
       },
     },
     {
       required: true,
-      label: 'Password',
-      name: 'password',
+      label: 'New Password',
+      name: 'newpassword',
+      type: 'password',
+      minlength: '6',
+      isValid: true,
+      value: '',
+      errorMessage: '',
+      getValidation: (value) => {
+        if (value.length < 8) {
+          return ['Password should be 8 letters', false];
+        }
+        return ['', true];
+      },
+    },
+    {
+      required: true,
+      label: 'Confirm Password',
+      name: 'confirmpassword',
       type: 'password',
       minlength: '6',
       isValid: true,
@@ -64,9 +72,9 @@ function LoginForm() {
     button: [
       {
         type: 'submit',
-        name: 'login',
+        name: 'Reset Password',
         minWidth: '100%',
-        clickHandler: loginClickHandler,
+        clickHandler: resetPasswordClickHandler,
       },
     ],
   };
@@ -76,14 +84,12 @@ function LoginForm() {
       <FormComponent
         basicButtons={loginButtons}
         changeHandler={textFiledChangeHandler}
-        forgotPassword="Forgot Password?"
-        formTitle="Login"
-        inputFields={loginForm}
-        label="Create New Account?"
+        formTitle="Reset Password"
+        inputFields={resetForm}
         navigationPath="/signup"
       />
     </div>
   );
 }
 
-export default LoginForm;
+export default ResetPassword;

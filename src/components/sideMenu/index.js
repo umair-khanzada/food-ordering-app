@@ -3,8 +3,10 @@ import React from 'react';
 import { Drawer, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { SideMenuLink } from './style';
+
 function SideMenu() {
-  const drawerWidth = 300;
+  const drawerWidth = 220;
   const useStyles = makeStyles((theme) => ({
     drawer: {
       width: drawerWidth,
@@ -25,7 +27,7 @@ function SideMenu() {
     },
     navigation: {
       marginTop: '100px',
-      padding: '0 50px',
+      padding: '0 40px',
     },
     list: {
       fontSize: '22px',
@@ -36,7 +38,7 @@ function SideMenu() {
   const { drawer, drawerPaper, logo, logoNisum, navigation, list } = classes;
   return (
     <Drawer
-      anchor="right"
+      anchor="left"
       classes={{
         paper: drawerPaper,
       }}
@@ -52,6 +54,10 @@ function SideMenu() {
         <p className={list}>Dashboard</p>
         <p className={list}>Menu</p>
         <p className={list}>Dining Areas</p>
+
+        <SideMenuLink to="/dashboard">
+          <p className={list}>Vendor</p>
+        </SideMenuLink>
       </div>
     </Drawer>
   );
