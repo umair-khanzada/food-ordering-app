@@ -16,8 +16,7 @@ export const loginEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          const token = res.response.tokens.access;
-          return of(loginSuccess(token));
+          return of(loginSuccess({ name: res.response.user.name, token: res.response.tokens.access }));
         }),
         catchError(() => {
           return of(loginError());
