@@ -5,6 +5,7 @@ const StyledCard = styled(Card)`
   margin: '8px';
   max-width: ${(props) => props.maxwidth};
   min-width: ${(props) => props.minwidth};
+  textAlign: : ${(props) => props.textalign};
   ${({ theme }) => `
    &:hover {
         border-radius: ${theme.shape.borderRadius};

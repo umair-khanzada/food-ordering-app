@@ -1,16 +1,15 @@
 import React from 'react';
 
-import CardContent from '@material-ui/core/CardContent';
-import { useTheme } from '@material-ui/core/styles';
+import { CardContent, useTheme } from '@material-ui/core';
 
 import StyledCard from './Style';
 
-export default function OutlinedCard({ children, minWidth, maxWidth }) {
+export default function OutlinedCard({ children, variant, maxwidth, minwidth }) {
   const theme = useTheme();
 
   // One option to get theme and supply it to styled compoenents
   return (
-    <StyledCard maxwidth={maxWidth} minwidth={minWidth} theme={theme} variant="outlined">
+    <StyledCard maxwidth={maxwidth} minwidth={minwidth} theme={theme} variant={variant ? variant : 'outlined'}>
       <CardContent>{children}</CardContent>
     </StyledCard>
   );

@@ -1,9 +1,9 @@
 import { isPublicRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
-import LoginContainer from './LoginContainer';
+import Dashboard from './index';
 
-export const loginRoute = {
-  path: RouteNames.login,
+export const dashboardRoute = {
+  path: RouteNames.dashboard,
   permissions: isPublicRoute, // to intimate it is public route
-  component: LoginContainer,
+  component: Dashboard,
 };

@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Paper, Tab, Tabs } from '@material-ui/core';
 
+import CardMenus from './CardMenus';
+
 const MainTab = () => {
   const [value, setValue] = React.useState(2);
 
@@ -27,6 +29,7 @@ const MainTab = () => {
           <Tab label="Chinese" />
         </Tabs>
       </Paper>
+      <CardMenus />
     </>
   );
 };

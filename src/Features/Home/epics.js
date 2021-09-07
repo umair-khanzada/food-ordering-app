@@ -1,5 +1,5 @@
 // implement redux-observable logic here!!
 
-export const loginEpic = {
+export const homeEpic = {
   epics: '',
 };

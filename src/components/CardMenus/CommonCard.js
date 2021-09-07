@@ -1,15 +1,7 @@
 import React from 'react';
 
-// eslint-disable-next-line import/order
-// eslint-disable-next-line import/order
 import { Card, CardMedia, CardContent, CardHeader, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-// import Avatar from '@material-ui/core/Avatar';
-// eslint-disable-next-line import/order
-
-// eslint-disable-next-line import/order
-// eslint-disable-next-line import/order
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,19 +44,16 @@ const useStyles = makeStyles((theme) => ({
 const CommonCard = ({ name, price, resturantName, img }) => {
   const classes = useStyles();
 
+  const { root, image, media, header, content } = classes;
+
   return (
     <div>
-      <Card className={classes.root}>
-        <Box className={classes.image}>
-          <CardMedia className={classes.media} image={img} title={name} />
+      <Card className={root}>
+        <Box className={image}>
+          <CardMedia className={media} image={img} title={name} />
         </Box>
-        <CardHeader
-          className={classes.header}
-          // eslint-disable-next-line react/jsx-no-duplicate-props
-          subheader={<h4>{resturantName}</h4>}
-          title={<h2>{name}</h2>}
-        />
-        <CardContent className={classes.content}>
+        <CardHeader className={header} subheader={<h4>{resturantName}</h4>} title={<h2>{name}</h2>} />
+        <CardContent className={content}>
           <Typography color="textSecondary" component="p" variant="h4">
             <b>
               Price:<span style={{ marginLeft: '10px', marginBottom: '20px' }}>{price}</span>
