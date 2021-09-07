@@ -38,7 +38,8 @@
           "printWidth": 120,
           "singleQuote": true,
           "trailingComma" : "all",
-          "arrow-parens": "avoid"
+          "arrow-parens": "avoid",
+          "endOfLine": "auto"
 
       }
   ],
@@ -62,7 +63,7 @@
         }
       }
     ],
-  "linebreak-style": ["error", "unix"],
+  "linebreak-style": ["error", "windows"],
   "quotes": ["error", "single", { "allowTemplateLiterals": true }],
   "semi": ["error", "always"],
   "semi-spacing": "error",
