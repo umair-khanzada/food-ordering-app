@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import LoginContainer from '../Features/Auth/Login/LoginContainer';
-import { HomeContainer as Home } from '../Features/Home';
-import AuthRoute from './AuthRoute';
+import { HomeContainer } from '../Features/Home';
+import { isProtectedRoute, isPublicRoute } from './Permission';
 import RouteConfig from './RouteConfig';
 
 export default function BaseRouter() {
@@ -18,12 +18,34 @@ export default function BaseRouter() {
     };
   });
 
+  const checkRoute = (route, index) => {
+    if (isLoggedIn && route.permissions === isProtectedRoute) {
+      return <Route key={index} component={() => route.component()} exact path={route.path} />;
+    }
+    if (!isLoggedIn && route.permissions === isPublicRoute) {
+      return <Route key={index} component={() => route.component()} exact path={route.path} />;
+    }
+
+    if (isLoggedIn) return <Route key={index} component={() => <HomeContainer />} exact path="/home" />;
+    return <Route key={index} component={() => <LoginContainer />} exact path="/login" />;
+  };
+
   return (
-    <Switch>
-      {RouteConfig.auth.map((route, index) => {
-        return <Route key={index} component={() => <AuthRoute route={route} />} exact path={route.path} />;
-      })}
-      {isLoggedIn ? <Route component={Home} /> : <Route component={LoginContainer} />}
-    </Switch>
+    <>
+      <Switch>
+        {RouteConfig.auth.map((route, index) => {
+          return checkRoute(route, index);
+        })}
+        {isLoggedIn ? (
+          <Route>
+            <Redirect to="/home" />
+          </Route>
+        ) : (
+          <Route>
+            <Redirect to="/login" />
+          </Route>
+        )}
+      </Switch>
+    </>
   );
 }
