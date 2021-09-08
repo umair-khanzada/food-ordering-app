@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
+import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
 import { loginSuccess, loginError, logoutSuccess } from './actions';
 
 export const loginEpic = (action$) =>
@@ -16,7 +16,11 @@ export const loginEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          return of(loginSuccess({ name: res.response.user.name, token: res.response.tokens.access }));
+          const {
+            user: { name },
+            token: { access },
+          } = res.response;
+          return of(loginSuccess({ name, token: access }));
         }),
         catchError(() => {
           return of(loginError());
@@ -35,8 +39,10 @@ export const signUpEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          const token = res.response.tokens.access;
-          return of(loginSuccess(token));
+          const {
+            tokens: { access },
+          } = res.response;
+          return of(loginSuccess(access));
         }),
         catchError(() => {
           return of(loginError());
@@ -45,6 +51,33 @@ export const signUpEpic = (action$) =>
     }),
   );
 
+export const forgotPasswordEpic = (action$) =>
+  action$.pipe(
+    ofType(FORGOT_PASSWORD),
+    mergeMap(({ payload }) => {
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/forgot-password',
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        mergeMap((res) => {
+          const {
+            response: { message },
+            status,
+          } = res;
+          return of(formMessage({ message, status }));
+        }),
+        catchError((err) => {
+          const {
+            response: { message },
+            status,
+          } = err;
+
+          return of(formMessage({ message, status }));
+        }),
+      );
+    }),
+  );
 export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
