@@ -9,7 +9,7 @@ import BaseRouter from '../index';
 function MainContainer() {
   const { isLoggedIn } = useSelector((state) => {
     const {
-      login_logout: { isLoggedIn },
+      authReducer: { isLoggedIn },
     } = state;
     return {
       isLoggedIn,

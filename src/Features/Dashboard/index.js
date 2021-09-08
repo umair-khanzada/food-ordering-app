@@ -8,8 +8,7 @@ import MainTab from '../../components/CardMenus/Tabs';
 import SideMenu from '../../components/sideMenu';
 
 function Dashboard() {
-  const drawerWidth = 300;
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(() => ({
     header: {
       display: 'flex',
       justifyContent: 'space-between',

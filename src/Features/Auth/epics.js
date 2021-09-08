@@ -1,10 +1,10 @@
 import { ofType } from 'redux-observable';
 import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { mergeMap, catchError, ignoreElements } from 'rxjs/operators';
+import { mergeMap, catchError } from 'rxjs/operators';
 
-import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../scripts/constants';
-import { loginSuccess, loginError, formMessage } from './actions';
+import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
+import { loginSuccess, loginError, logoutSuccess } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
@@ -44,7 +44,7 @@ export const signUpEpic = (action$) =>
           } = res.response;
           return of(loginSuccess(access));
         }),
-        catchError((err) => {
+        catchError(() => {
           return of(loginError());
         }),
       );
@@ -74,6 +74,23 @@ export const forgotPasswordEpic = (action$) =>
           } = err;
 
           return of(formMessage({ message, status }));
+export const logoutEpic = (action$, state) =>
+  action$.pipe(
+    ofType(LOGOUT),
+    mergeMap(() => {
+      const refreshToken = { refreshToken: state.value.authReducer.token.token };
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/logout',
+        method: 'POST',
+        body: refreshToken,
+      }).pipe(
+        mergeMap((res) => {
+          console.log(res);
+          return of(logoutSuccess());
+        }),
+        catchError((err) => {
+          console.log(err);
+          return of(logoutSuccess());
         }),
       );
     }),
