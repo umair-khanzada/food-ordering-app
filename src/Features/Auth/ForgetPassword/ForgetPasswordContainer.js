@@ -11,7 +11,7 @@ import TextField from '../../../components/TextField/TextField';
 import { forgotPassword } from '../actions';
 
 function ForgetPasswordContainer() {
-  const [login, setLogin] = useState({
+  const [loginFields, setLoginFields] = useState({
     email: '',
     password: '',
   });
@@ -25,19 +25,19 @@ function ForgetPasswordContainer() {
     return { message, status };
   });
 
-  const sendEmail = () => {
-    dispatch(forgotPassword(login));
+  const resetPasswordRequest = () => {
+    dispatch(forgotPassword(loginFields));
   };
   useEffect(() => {
     if (status === 200) {
       history.push('/login');
     }
   });
-  function loginForm(e) {
+  function inputHandler(e) {
     const { name, value } = e.target;
 
-    setLogin(() => {
-      return { ...login, [name]: value };
+    setLoginFields(() => {
+      return { ...loginFields, [name]: value };
     });
   }
 
@@ -58,9 +58,7 @@ function ForgetPasswordContainer() {
               Enter email associated with your account and we'll send you a link to reset your password
             </Typography>
             <TextField
-              changeHandler={(e) => {
-                loginForm(e);
-              }}
+              changeHandler={inputHandler}
               label="Enter Email"
               name="email"
               type="email"
@@ -68,9 +66,7 @@ function ForgetPasswordContainer() {
               width="100%"
             />
             <TextField
-              changeHandler={(e) => {
-                loginForm(e);
-              }}
+              changeHandler={inputHandler}
               label="Enter password"
               name="password"
               type="password"
@@ -83,7 +79,7 @@ function ForgetPasswordContainer() {
             <Button
               color="secondary"
               fontSize="16px"
-              onClick={() => sendEmail()}
+              onClick={resetPasswordRequest}
               property="Reset Password"
               variant="contained"
             />

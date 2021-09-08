@@ -74,6 +74,10 @@ export const forgotPasswordEpic = (action$) =>
           } = err;
 
           return of(formMessage({ message, status }));
+        }),
+      );
+    }),
+  );
 export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
@@ -95,4 +99,3 @@ export const logoutEpic = (action$, state) =>
       );
     }),
   );
-export const logoutEpic = (action$) => action$.pipe(ofType(LOGOUT), ignoreElements());
