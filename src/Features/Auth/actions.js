@@ -7,7 +7,7 @@ import {
   SIGNUP,
   MESSAGE,
   LOGOUT_SUCCESS,
-} from '../../scripts/constants';
+} from '../../redux/ActionTypes';
 
 export const login = (data) => ({ type: LOGIN, payload: data });
 
