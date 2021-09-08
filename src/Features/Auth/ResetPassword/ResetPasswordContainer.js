@@ -23,9 +23,7 @@ function ResetPasswordContainer() {
           <br />
           <TextField label="Enter repeat password" type="password" variant="outlined" width="100%" />
           <br />
-          <Button color="secondary" variant="contained">
-            Reset Password
-          </Button>
+          <Button color="secondary" property="Reset Password" variant="contained" />
         </div>
       </Card>
     </Grid>

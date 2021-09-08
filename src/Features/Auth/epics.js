@@ -1,21 +1,22 @@
 import { ofType } from 'redux-observable';
 import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { mergeMap, catchError, ignoreElements } from 'rxjs/operators';
+import { mergeMap, catchError } from 'rxjs/operators';
 
-import { LOGIN, LOGOUT, SIGNUP } from '../../scripts/constants';
-import { loginSuccess, loginError } from './actions';
+import { LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
+import { loginSuccess, loginError, logoutSuccess } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
-    mergeMap((action) => {
-      console.log('pwoeri');
-
-      return ajax.getJSON('http://localhost:5000/users').pipe(
+    mergeMap(({ payload }) => {
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/login',
+        method: 'POST',
+        body: payload,
+      }).pipe(
         mergeMap((res) => {
-          console.log('qweqw');
-          return of(loginSuccess());
+          return of(loginSuccess({ name: res.response.user.name, token: res.response.tokens.access }));
         }),
         catchError(() => {
           return of(loginError());
@@ -27,16 +28,41 @@ export const loginEpic = (action$) =>
 export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
-    mergeMap((action) => {
-      return ajax.getJSON('http://localhost:5000/users').pipe(
+    mergeMap(({ payload }) => {
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/register',
+        method: 'POST',
+        body: payload,
+      }).pipe(
         mergeMap((res) => {
-          return of(loginSuccess());
+          const token = res.response.tokens.access;
+          return of(loginSuccess(token));
         }),
-        catchError((err) => {
+        catchError(() => {
           return of(loginError());
         }),
       );
     }),
   );
 
-export const logoutEpic = (action$) => action$.pipe(ofType(LOGOUT), ignoreElements());
+export const logoutEpic = (action$, state) =>
+  action$.pipe(
+    ofType(LOGOUT),
+    mergeMap(() => {
+      const refreshToken = { refreshToken: state.value.authReducer.token.token };
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/logout',
+        method: 'POST',
+        body: refreshToken,
+      }).pipe(
+        mergeMap((res) => {
+          console.log(res);
+          return of(logoutSuccess());
+        }),
+        catchError((err) => {
+          console.log(err);
+          return of(logoutSuccess());
+        }),
+      );
+    }),
+  );

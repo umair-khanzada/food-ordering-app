@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 
-import { dispatch } from 'rxjs/internal/observable/pairs';
+import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
-import { login } from '../actions';
+import { signup } from '../actions';
 
 function SignUpForm() {
-  const [signUpForm, setSignUpForm] = useState({});
+  const [signUpForm, setSignUpForm] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+
+  const dispatch = useDispatch();
 
   const signUpClickHandler = () => {
-    dispatch(login({ email: 'asdsa@ads.com', password: 'asdas' }));
+    dispatch(signup({ name: signUpForm.username, email: signUpForm.email, password: signUpForm.password }));
   };
 
   const textFiledChangeHandler = (e) => {
@@ -62,7 +68,7 @@ function SignUpForm() {
   const signupButtons = {
     button: [
       {
-        type: 'submit',
+        type: 'button',
         name: 'SignUp',
         minWidth: '100%',
         clickHandler: signUpClickHandler,
@@ -76,7 +82,7 @@ function SignUpForm() {
         basicButtons={signupButtons}
         formTitle="Sign UP"
         inputFields={signupInputs}
-        label="Login?"
+        label="Back to Login"
         navigationPath="/login"
       />
     </div>

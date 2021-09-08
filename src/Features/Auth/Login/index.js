@@ -10,7 +10,6 @@ function LoginForm() {
   const dispatch = useDispatch();
 
   const loginClickHandler = () => {
-    console.log('asdsad');
     dispatch(login({ email: loginForm.email, password: loginForm.password }));
   };
 
