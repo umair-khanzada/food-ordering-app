@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
+import { forgotPassword } from '../actions';
 
 function ForgetPassword() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { message, status } = useSelector((state) => {
+    const { message, status } = state.responseMessage;
+    return { message, status };
+  });
   const forgetPasswordClickHandler = (e) => {
     e.preventDefault();
 
@@ -25,8 +35,14 @@ function ForgetPassword() {
       forgetPasswordForm.map(({ name, value }) => {
         userData[name] = value;
       });
+      dispatch(forgotPassword(userData));
     }
   };
+  useEffect(() => {
+    if (status === 200) {
+      history.push('/login');
+    }
+  });
   const textFiledChangeHandler = (e, index) => {
     const { value } = e.target;
 
@@ -94,6 +110,7 @@ function ForgetPassword() {
         inputFields={forgetPasswordForm}
         label="Back to login?"
         navigationPath="/login"
+        responseError={message}
       />
     </>
   );

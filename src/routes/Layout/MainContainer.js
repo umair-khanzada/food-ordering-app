@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import AppBar from '../../components/AppBar/AppBar';
+import { history } from '../BrowserHistory';
 import BaseRouter from '../index';
-
 function MainContainer() {
   const { isLoggedIn } = useSelector((state) => {
     const {
-      login_logout: { isLoggedIn },
+      authReducer: { isLoggedIn },
     } = state;
     return {
       isLoggedIn,
@@ -17,7 +17,7 @@ function MainContainer() {
   });
 
   return (
-    <Router>
+    <Router history={history}>
       {isLoggedIn && <AppBar />}
       {/* TopNav should be there*/}
       {/* SideNav should be there */}

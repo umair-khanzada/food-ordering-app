@@ -6,8 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { SideMenuLink } from './style';
 
 function SideMenu() {
-  const drawerWidth = 220;
-  const useStyles = makeStyles((theme) => ({
+  const drawerWidth = 300;
+  const useStyles = makeStyles(() => ({
     drawer: {
       width: drawerWidth,
       flexShrink: 0,

@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex } from '../../../scripts/constants';
+import { signup } from '../actions';
 
 function SignUpForm() {
+  const dispatch = useDispatch();
+  const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
+  const contactRegex = new RegExp('([0-9]{1}|[0-9]{2}|[0-9]{3})[0-9]{10,12}');
+
   const textFiledChangeHandler = (e, index) => {
     const { value } = e.target;
 
@@ -76,7 +82,7 @@ function SignUpForm() {
       errorMessage: '',
 
       getValidation: (value) => {
-        if (value.length < 11) {
+        if (!contactRegex.test(value)) {
           return ['Invalid number', false];
         }
         return ['', true];
@@ -105,13 +111,15 @@ function SignUpForm() {
       signUpForm.map(({ name, value }) => {
         userData[name] = value;
       });
+
+      dispatch(signup(userData));
     }
   };
 
   const signupButtons = {
     button: [
       {
-        type: 'submit',
+        type: 'button',
         name: 'SignUp',
         minWidth: '100%',
         clickHandler: signUpClickHandler,

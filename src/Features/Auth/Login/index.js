@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex } from '../../../scripts/constants';
+import { login } from '../actions';
 
 function LoginForm() {
   const dispatch = useDispatch();
-
+  const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
   const loginClickHandler = (e) => {
     e.preventDefault();
 
@@ -29,6 +29,8 @@ function LoginForm() {
       loginForm.map(({ name, value }) => {
         userData[name] = value;
       });
+
+      dispatch(login(userData));
     }
   };
   const textFiledChangeHandler = (e, index) => {

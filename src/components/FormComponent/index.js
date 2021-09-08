@@ -14,6 +14,7 @@ const FormComponent = ({
   label,
   navigationPath,
   changeHandler,
+  responseError,
 }) => {
   return (
     <FormContainer>
@@ -54,6 +55,7 @@ const FormComponent = ({
 
               <ForgotPassword to="/forget-password">{forgotPassword}</ForgotPassword>
             </BasicLink>
+            <Error>{responseError}</Error>
           </Form>
         </Grid>
       </Grid>
