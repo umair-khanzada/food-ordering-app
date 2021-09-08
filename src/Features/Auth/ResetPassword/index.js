@@ -3,7 +3,30 @@ import React, { useState } from 'react';
 import FormComponent from '../../../components/FormComponent';
 
 function ResetPassword() {
-  const resetPasswordClickHandler = () => {};
+  let newPassword = '';
+  const resetPasswordClickHandler = (e) => {
+    e.preventDefault();
+
+    let isValid = true;
+    resetForm.map((textField) => {
+      if (textField.value == '') {
+        setResetPasswordForm((prev) => {
+          textField.errorMessage = textField.name + ' field cannot be empty';
+          textField.isValid = false;
+          return [...prev];
+        });
+      }
+
+      !isValid ? null : (isValid = textField.isValid);
+    });
+
+    if (isValid) {
+      const userData = {};
+      resetForm.map(({ name, value }) => {
+        userData[name] = value;
+      });
+    }
+  };
   const textFiledChangeHandler = (e, index) => {
     const { value, name } = e.target;
 
@@ -29,7 +52,7 @@ function ResetPassword() {
       errorMessage: '',
       getValidation: (value) => {
         if (value.length < 8) {
-          return ['Password should be 8 letters', false];
+          return ['Password must be 8 characters long', false];
         }
         return ['', true];
       },
@@ -44,8 +67,9 @@ function ResetPassword() {
       value: '',
       errorMessage: '',
       getValidation: (value) => {
+        newPassword = value;
         if (value.length < 8) {
-          return ['Password should be 8 letters', false];
+          return ['Password must be 8 characters long', false];
         }
         return ['', true];
       },
@@ -60,8 +84,8 @@ function ResetPassword() {
       value: '',
       errorMessage: '',
       getValidation: (value) => {
-        if (value.length < 8) {
-          return ['Password should be 8 letters', false];
+        if (value !== newPassword) {
+          return ['Confirm Password does not match', false];
         }
         return ['', true];
       },

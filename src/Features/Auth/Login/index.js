@@ -3,17 +3,36 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
-import { validEmail } from '../../../scripts/constants';
-import { login } from '../actions';
+import { emailRegex } from '../../../scripts/constants';
 
 function LoginForm() {
   const dispatch = useDispatch();
 
-  const loginClickHandler = () => {
-    dispatch(login({ email: loginForm.email, password: loginForm.password }));
+  const loginClickHandler = (e) => {
+    e.preventDefault();
+
+    let isValid = true;
+    loginForm.map((textField) => {
+      if (textField.value == '') {
+        setLoginForm((prev) => {
+          textField.errorMessage = textField.name + ' field cannot be empty';
+          textField.isValid = false;
+          return [...prev];
+        });
+      }
+
+      !isValid ? null : (isValid = textField.isValid);
+    });
+
+    if (isValid) {
+      const userData = {};
+      loginForm.map(({ name, value }) => {
+        userData[name] = value;
+      });
+    }
   };
   const textFiledChangeHandler = (e, index) => {
-    const { value, name } = e.target;
+    const { value } = e.target;
 
     setLoginForm((prev) => {
       const prevForm = [...prev];
@@ -21,7 +40,6 @@ function LoginForm() {
 
       currentTextField.value = value;
       const getValidationError = currentTextField.getValidation(currentTextField.value);
-
       [currentTextField.errorMessage, currentTextField.isValid] = getValidationError;
       return prevForm;
     });
@@ -36,7 +54,7 @@ function LoginForm() {
       isValid: true,
       errorMessage: '',
       getValidation: (value) => {
-        if (!validEmail.test(value)) {
+        if (!emailRegex.test(value)) {
           return ['Email type is not valid', false];
         }
         return ['', true];
@@ -53,7 +71,7 @@ function LoginForm() {
       errorMessage: '',
       getValidation: (value) => {
         if (value.length < 8) {
-          return ['Password should be 8 letters', false];
+          return ['Password must be 8 characters long', false];
         }
         return ['', true];
       },

@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 
-import { dispatch } from 'rxjs/internal/observable/pairs';
-
 import FormComponent from '../../../components/FormComponent';
-import { validEmail } from '../../../scripts/constants';
-import { login } from '../actions';
+import { emailRegex } from '../../../scripts/constants';
 
 function SignUpForm() {
   const textFiledChangeHandler = (e, index) => {
-    const { value, name } = e.target;
+    const { value } = e.target;
 
     setSignUpForm((prev) => {
       const prevForm = [...prev];
@@ -29,7 +26,7 @@ function SignUpForm() {
       isValid: true,
       errorMessage: '',
       getValidation: (value) => {
-        if (!validEmail.test(value)) {
+        if (!emailRegex.test(value)) {
           return ['Email type is not valid', false];
         }
         return ['', true];
@@ -64,7 +61,7 @@ function SignUpForm() {
       errorMessage: '',
       getValidation: (value) => {
         if (value.length < 8) {
-          return ['Password should be 8 letters', false];
+          return ['Password must be 8 characters long', false];
         }
         return ['', true];
       },
@@ -74,12 +71,12 @@ function SignUpForm() {
       label: 'Contact No',
       name: 'contact',
       value: '',
+      type: 'tel',
       isValid: true,
       errorMessage: '',
 
       getValidation: (value) => {
-        const abc = 11;
-        if (value.length == abc) {
+        if (value.length < 11) {
           return ['Invalid number', false];
         }
         return ['', true];
@@ -87,8 +84,28 @@ function SignUpForm() {
     },
   ]);
 
-  const signUpClickHandler = () => {
-    dispatch(login({ email: 'asdsa@ads.com', password: 'asdas' }));
+  const signUpClickHandler = (e) => {
+    e.preventDefault();
+
+    let isValid = true;
+    signUpForm.map((textField) => {
+      if (textField.value == '') {
+        setSignUpForm((prev) => {
+          textField.errorMessage = textField.name + ' field cannot be empty';
+          textField.isValid = false;
+          return [...prev];
+        });
+      }
+
+      !isValid ? null : (isValid = textField.isValid);
+    });
+
+    if (isValid) {
+      const userData = {};
+      signUpForm.map(({ name, value }) => {
+        userData[name] = value;
+      });
+    }
   };
 
   const signupButtons = {
