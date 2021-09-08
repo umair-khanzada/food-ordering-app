@@ -9,6 +9,7 @@ function LoginForm() {
   const dispatch = useDispatch();
   const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
   const loginClickHandler = (e) => {
+    console.log(loginForm);
     e.preventDefault();
 
     let isValid = true;
@@ -29,7 +30,7 @@ function LoginForm() {
       loginForm.map(({ name, value }) => {
         userData[name] = value;
       });
-
+      console.log(userData);
       dispatch(login(userData));
     }
   };

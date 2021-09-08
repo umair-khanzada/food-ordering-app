@@ -4,7 +4,7 @@ import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
-import { loginSuccess, loginError, logoutSuccess } from './actions';
+import { loginSuccess, loginError, logoutSuccess, formMessage } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
