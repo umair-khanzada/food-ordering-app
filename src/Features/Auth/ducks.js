@@ -1,6 +1,6 @@
-import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, SIGNUP, LOGOUT_SUCCESS } from '../../scripts/constants';
+import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, SIGNUP, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
 
-export const loginReducer = (state = { isLoggedIn: false, token: '', name: '' }, action) => {
+export const authReducer = (state = { isLoggedIn: false, token: '', name: '' }, action) => {
   switch (action.type) {
     case LOGIN:
       return {};

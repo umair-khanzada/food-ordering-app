@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { LOGIN, LOGOUT, SIGNUP } from '../../scripts/constants';
+import { LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
 import { loginSuccess, loginError, logoutSuccess } from './actions';
 
 export const loginEpic = (action$) =>
@@ -49,7 +49,7 @@ export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
     mergeMap(() => {
-      const refreshToken = { refreshToken: state.value.login_logout.token.token };
+      const refreshToken = { refreshToken: state.value.authReducer.token.token };
       return ajax({
         url: 'http://localhost:4000/v1/auth/logout',
         method: 'POST',

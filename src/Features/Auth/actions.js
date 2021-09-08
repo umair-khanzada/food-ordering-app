@@ -1,4 +1,4 @@
-import { LOGIN, LOGIN_SUCCESS, LOGOUT, LOGIN_ERROR, SIGNUP, LOGOUT_SUCCESS } from '../../scripts/constants';
+import { LOGIN, LOGIN_SUCCESS, LOGOUT, LOGIN_ERROR, SIGNUP, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
 
 export const login = (data) => ({ type: LOGIN, payload: data });
 

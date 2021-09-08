@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React from 'react';
 
 import { useSelector } from 'react-redux';
@@ -11,14 +12,14 @@ import RouteConfig from './RouteConfig';
 export default function BaseRouter() {
   const { isLoggedIn } = useSelector((state) => {
     const {
-      login_logout: { isLoggedIn },
+      authReducer: { isLoggedIn },
     } = state;
     return {
       isLoggedIn,
     };
   });
 
-  const checkRoute = (route, index) => {
+  const getAuthenticatedRoute = (route, index) => {
     if (isLoggedIn && route.permissions === isProtectedRoute) {
       return <Route key={index} component={() => route.component()} exact path={route.path} />;
     }
@@ -34,8 +35,17 @@ export default function BaseRouter() {
     <>
       <Switch>
         {RouteConfig.auth.map((route, index) => {
-          return checkRoute(route, index);
+          return getAuthenticatedRoute(route, index);
         })}
+        {isLoggedIn
+          ? RouteConfig.orderPlacer.map((route, index) => {
+              return <Route key={index} component={() => route.component()} exact path={route.path} />;
+            })
+          : null}
+        {isLoggedIn &&
+          RouteConfig.common.map((route, index) => {
+            return <Route key={index} component={() => route.component()} exact path={route.path} />;
+          })}
         {isLoggedIn ? (
           <Route>
             <Redirect to="/home" />
