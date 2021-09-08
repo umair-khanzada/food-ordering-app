@@ -39,7 +39,6 @@ function Dashboard() {
   const classes = useStyles();
   return (
     <div>
-      {console.log('sadas')}
       <Grid container>
         <Grid item md={3}>
           <SideMenu />

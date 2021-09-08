@@ -34,7 +34,6 @@ export const forgotPassword = (state = { message: '', status: 0 }, action) => {
 export const responseMessage = (state = { message: '', status: 0 }, action) => {
   switch (action.type) {
     case MESSAGE:
-      // eslint-disable-next-line no-case-declarations
       const { message, status } = action.payload;
 
       return { ...state, message, status };
