@@ -85,6 +85,7 @@ function ForgetPasswordContainer() {
             <br />
             <br />
             <p style={{ color: 'red' }}>{message}</p>
+
             <Link to="/login">Back To Log In</Link>
           </div>
         </Card>
