@@ -11,32 +11,35 @@ import TextField from '../../../components/TextField/TextField';
 import { forgotPassword } from '../actions';
 
 function ForgetPasswordContainer() {
-  const [email, setEmail] = useState({
+  const [login, setLogin] = useState({
     email: '',
+    password: '',
   });
 
   const history = useHistory();
-  const [password, setpassword] = useState({
-    password: '',
-  });
+
   const dispatch = useDispatch();
-  // const message =
+
   const { message, status } = useSelector((state) => {
     const { message, status } = state.responseMessage;
     return { message, status };
   });
-  // useSelector((state) => {
-  //   console.log(state);
-  // });
 
   const sendEmail = () => {
-    dispatch(forgotPassword({ email, password }));
+    dispatch(forgotPassword(login));
   };
   useEffect(() => {
     if (status === 200) {
       history.push('/login');
     }
   });
+  function loginForm(e) {
+    const { name, value } = e.target;
+
+    setLogin(() => {
+      return { ...login, [name]: value };
+    });
+  }
 
   return (
     <Box p={20}>
@@ -56,18 +59,20 @@ function ForgetPasswordContainer() {
             </Typography>
             <TextField
               changeHandler={(e) => {
-                setEmail(e.target.value);
+                loginForm(e);
               }}
               label="Enter Email"
+              name="email"
               type="email"
               variant="outlined"
               width="100%"
             />
             <TextField
               changeHandler={(e) => {
-                setpassword(e.target.value);
+                loginForm(e);
               }}
               label="Enter password"
+              name="password"
               type="password"
               variant="outlined"
               width="100%"
