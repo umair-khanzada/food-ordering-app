@@ -19,15 +19,8 @@ function MainContainer() {
   });
 
   return (
-    <Grid
-      // alignItems="center"
-      container
-      direction="row"
-      // justifyContent="center"
-      spacing={3}
-      style={{ height: '100%' }}
-    >
-      <Router>
+    <Router>
+      <Grid container direction="row" spacing={3}>
         <Grid item style={{ paddingRight: '0px', height: '100%' }} xs={2}>
           <SideMenu />
         </Grid>
@@ -35,10 +28,8 @@ function MainContainer() {
           {isLoggedIn && <AppBar />}
           <BaseRouter />
         </Grid>
-        {/* TopNav should be there*/}
-        {/* SideNav should be there */}
-      </Router>
-    </Grid>
+      </Grid>
+    </Router>
   );
 }
 
