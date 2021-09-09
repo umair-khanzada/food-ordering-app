@@ -5,4 +5,6 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const SIGNUP = 'SIGNUP';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_ERROR = 'SIGNUP_ERROR';
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+export const MESSAGE = 'MESSAGE';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';

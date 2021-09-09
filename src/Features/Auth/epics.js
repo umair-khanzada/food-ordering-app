@@ -3,8 +3,8 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
-import { loginSuccess, loginError, logoutSuccess } from './actions';
+import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
+import { loginSuccess, loginError, formMessage, logoutSuccess } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
@@ -56,6 +56,33 @@ export const signUpEpic = (action$) =>
     }),
   );
 
+export const forgotPasswordEpic = (action$) =>
+  action$.pipe(
+    ofType(FORGOT_PASSWORD),
+    mergeMap(({ payload }) => {
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/forgot-password',
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        mergeMap((res) => {
+          const {
+            response: { message },
+            status,
+          } = res;
+          return of(formMessage({ message, status }));
+        }),
+        catchError((err) => {
+          const {
+            response: { message },
+            status,
+          } = err;
+
+          return of(formMessage({ message, status }));
+        }),
+      );
+    }),
+  );
 export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),

@@ -7,7 +7,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import AppBar from '../../components/AppBar/AppBar';
 import SideMenu from '../../components/sideMenu';
 import BaseRouter from '../index';
-
 function MainContainer() {
   const { isLoggedIn } = useSelector((state) => {
     const {
@@ -18,17 +17,23 @@ function MainContainer() {
     };
   });
 
+  const baseRouter = <BaseRouter />;
+
   return (
     <Router>
-      <Grid container direction="row" spacing={3}>
-        <Grid item style={{ paddingRight: '0px', height: '100%' }} xs={2}>
-          <SideMenu />
+      {isLoggedIn ? (
+        <Grid container direction="row" spacing={3}>
+          <Grid item style={{ paddingRight: '0px', height: '100%' }} xs={2}>
+            <SideMenu />
+          </Grid>
+          <Grid item style={{ paddingRight: '0px', paddingLeft: '0px' }} xs={10}>
+            <AppBar />
+            {baseRouter}
+          </Grid>
         </Grid>
-        <Grid item style={{ paddingRight: '0px', paddingLeft: '0px' }} xs={10}>
-          {isLoggedIn && <AppBar />}
-          <BaseRouter />
-        </Grid>
-      </Grid>
+      ) : (
+        baseRouter
+      )}
     </Router>
   );
 }
