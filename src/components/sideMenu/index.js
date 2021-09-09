@@ -2,16 +2,23 @@ import React from 'react';
 
 import { Drawer, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 function SideMenu() {
-  const drawerWidth = 300;
+  // const drawerWidth = 300;
   const useStyles = makeStyles(() => ({
     drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
+      // position: 'relative',
+      // width: '100%',
+      // height: '100%',
+      // flexShrink: 0,
+      // top: 0,
+      // bottom: 0,
+      overflow: 'hidden',
     },
     drawerPaper: {
-      width: drawerWidth,
+      position: 'relative',
+      height: '100vh',
       backgroundColor: '#F0F0F0',
     },
 
@@ -31,29 +38,51 @@ function SideMenu() {
       fontSize: '22px',
       paddingBottom: '40px',
     },
+    link: {
+      textDecoration: 'none',
+    },
   }));
   const classes = useStyles();
-  const { drawer, drawerPaper, logo, logoNisum, navigation, list } = classes;
+  const { drawer, drawerPaper, logo, logoNisum, navigation, list, link } = classes;
   return (
-    <Drawer
-      anchor="left"
-      classes={{
-        paper: drawerPaper,
-      }}
-      className={drawer}
-      variant="permanent"
-    >
-      <div className={logo}>
-        <Typography variant="h2">
-          <span className={logoNisum}>Nisum Foods</span>
-        </Typography>
-      </div>
-      <div className={navigation}>
-        <p className={list}>Dashboard</p>
-        <p className={list}>Menu</p>
-        <p className={list}>Dining Areas</p>
-      </div>
-    </Drawer>
+    <div style={{ width: '100%' }}>
+      <Drawer
+        anchor="left"
+        classes={{
+          paper: drawerPaper,
+        }}
+        className={drawer}
+        variant="permanent"
+      >
+        <div className={logo}>
+          <Typography variant="h2">
+            <span className={logoNisum}>Nisum Foods</span>
+          </Typography>
+        </div>
+        <div className={navigation} style={{ position: 'relative', wordWrap: 'break-word' }}>
+          <p className={list}>
+            <Link className={link} to="/">
+              Order History
+            </Link>
+          </p>
+          <p className={list}>
+            <Link className={link} to="/">
+              Vendor List
+            </Link>
+          </p>
+          <p className={list}>
+            <Link className={link} to="/">
+              Users List
+            </Link>
+          </p>
+          <p className={list}>
+            <Link className={link} to="/">
+              Category List
+            </Link>
+          </p>
+        </div>
+      </Drawer>
+    </div>
   );
 }
 

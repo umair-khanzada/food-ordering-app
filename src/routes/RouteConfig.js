@@ -11,11 +11,11 @@ const routeConfig = {
     resetPasswordRoute,
     resetPasswordRoute,
     forgetPasswordRoute,
-    dashboardRoute,
+    resetPasswordRoute,
   ],
-  orderPlacer: [],
+  orderPlacer: [dashboardRoute],
   officeBoy: [],
-  common: [profileRoute, resetPasswordRoute],
+  common: [profileRoute],
 };
 
 export default routeConfig;

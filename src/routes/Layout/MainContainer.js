@@ -1,10 +1,11 @@
 import React from 'react';
 
+import { Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import AppBar from '../../components/AppBar/AppBar';
-import { history } from '../BrowserHistory';
+import SideMenu from '../../components/sideMenu';
 import BaseRouter from '../index';
 function MainContainer() {
   const { isLoggedIn } = useSelector((state) => {
@@ -16,12 +17,25 @@ function MainContainer() {
     };
   });
 
+  const baseRouter = <BaseRouter />;
+
   return (
-    <Router history={history}>
-      {isLoggedIn && <AppBar />}
-      {/* TopNav should be there*/}
-      {/* SideNav should be there */}
-      <BaseRouter />
+    <Router>
+      {isLoggedIn ? (
+        <>
+          <AppBar />
+          <Grid container direction="row" spacing={3}>
+            <Grid item style={{ paddingRight: '0px', height: '100%' }} xs={2}>
+              <SideMenu />
+            </Grid>
+            <Grid item style={{ paddingRight: '0px', paddingLeft: '0px' }} xs={10}>
+              {baseRouter}
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        baseRouter
+      )}
     </Router>
   );
 }
