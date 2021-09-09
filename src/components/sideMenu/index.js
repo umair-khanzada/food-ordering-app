@@ -52,6 +52,7 @@ function SideMenu() {
         <p className={list}>Dashboard</p>
         <p className={list}>Menu</p>
         <p className={list}>Dining Areas</p>
+        <p className={list}>Menu</p>
       </div>
     </Drawer>
   );
