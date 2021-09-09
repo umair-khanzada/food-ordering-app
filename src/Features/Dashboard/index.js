@@ -6,9 +6,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import MainTab from '../../components/CardMenus/Tabs';
 import SideMenu from '../../components/sideMenu';
-
+import NestedList from './List';
 function Dashboard() {
-  const useStyles = makeStyles(() => ({
+  const drawerWidth = 300;
+  const useStyles = makeStyles((theme) => ({
     header: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -58,12 +59,7 @@ function Dashboard() {
               </div>
 
               <div className={classes.userInfo}>
-                <Typography variant="h4">
-                  <b> Arham Ahmed</b>
-                </Typography>
-                <Typography color="textSecondary" component="p" variant="h4">
-                  Waiter
-                </Typography>
+                <NestedList />
               </div>
             </div>
             <div className={classes.tabs}>

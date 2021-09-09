@@ -4,7 +4,7 @@ import { Drawer, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 function SideMenu() {
-  const drawerWidth = 300;
+  const drawerWidth = '25%';
   const useStyles = makeStyles(() => ({
     drawer: {
       width: drawerWidth,

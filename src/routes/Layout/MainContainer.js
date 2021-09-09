@@ -3,8 +3,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import AppBar from '../../components/AppBar/AppBar';
-import { history } from '../BrowserHistory';
 import BaseRouter from '../index';
 function MainContainer() {
   const { isLoggedIn } = useSelector((state) => {
@@ -17,8 +15,8 @@ function MainContainer() {
   });
 
   return (
-    <Router history={history}>
-      {isLoggedIn && <AppBar />}
+    <Router>
+      {!isLoggedIn}
       {/* TopNav should be there*/}
       {/* SideNav should be there */}
       <BaseRouter />

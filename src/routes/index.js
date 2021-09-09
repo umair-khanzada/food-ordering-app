@@ -1,14 +1,12 @@
-/* eslint-disable indent */
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import LoginContainer from '../Features/Auth/Login/LoginContainer';
 import { HomeContainer } from '../Features/Home';
 import { isProtectedRoute, isPublicRoute } from './Permission';
-import RouteConfig from './RouteConfig';
-
+import routeConfig from './RouteConfig';
 export default function BaseRouter() {
   const { isLoggedIn } = useSelector((state) => {
     const {
@@ -32,30 +30,14 @@ export default function BaseRouter() {
   };
 
   return (
-    <>
-      <Switch>
-        {RouteConfig.auth.map((route, index) => {
-          return getAuthenticatedRoute(route, index);
-        })}
-        {isLoggedIn
-          ? RouteConfig.orderPlacer.map((route, index) => {
-              return <Route key={index} component={() => route.component()} exact path={route.path} />;
-            })
-          : null}
-        {isLoggedIn &&
-          RouteConfig.common.map((route, index) => {
-            return <Route key={index} component={() => route.component()} exact path={route.path} />;
-          })}
-        {isLoggedIn ? (
-          <Route>
-            <Redirect to="/home" />
-          </Route>
-        ) : (
-          <Route>
-            <Redirect to="/login" />
-          </Route>
-        )}
-      </Switch>
-    </>
+    <Switch>
+      {routeConfig.auth.map((route, index) => {
+        return getAuthenticatedRoute(route, index);
+      })}
+      {routeConfig.orderPlacer.map((route, index) => {
+        return <Route key={index} component={() => route.component()} exact path={route.path} />;
+      })}
+      {isLoggedIn ? <Route component={HomeContainer} /> : <Route component={LoginContainer} />}
+    </Switch>
   );
 }
