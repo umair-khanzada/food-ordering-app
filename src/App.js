@@ -1,7 +1,7 @@
 import React from 'react';
 
-import MainContainer from './routes/Layout/MainContainer';
+import Profile from './Features/ProfilePage/Profile';
 const App = () => {
-  return <MainContainer />;
+  return <Profile />;
 };
 export default App;
