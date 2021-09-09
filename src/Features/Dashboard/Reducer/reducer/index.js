@@ -1,14 +1,21 @@
 const initialData = {
   cart: [],
+  isDrawerOpen: false,
 };
 export const addtocartReducers = (state = initialData, action) => {
   const updatedCart = [];
+
   switch (action.type) {
+    case 'OPEN_DRAWER':
+      return { ...state, isDrawerOpen: true };
+    case 'CLOSE_DRAWER':
+      return { ...state, isDrawerOpen: false };
     case 'ADD_TOCART':
       // eslint-disable-next-line no-case-declarations
       const { id, name, price, img, qty } = action.payload;
 
       return {
+        ...state,
         cart: [...state.cart, { id, name, price, img, qty }],
       };
     case 'INCREMENT':
@@ -19,7 +26,7 @@ export const addtocartReducers = (state = initialData, action) => {
         return element;
       });
 
-      return { cart: [...state.cart] };
+      return { ...state, cart: [...state.cart] };
 
     case 'DECREMENT':
       state.cart.map((element, index) => {
@@ -28,8 +35,14 @@ export const addtocartReducers = (state = initialData, action) => {
         }
         return element;
       });
-
-      return { cart: [...state.cart] };
+      return { ...state, cart: [...state.cart] };
+    case 'DELETE_ITEM':
+      // eslint-disable-next-line no-case-declarations
+      const updCart = state.cart.filter((element) => element.id !== action.payload);
+      return {
+        ...state,
+        cart: updCart,
+      };
 
     default:
       return state;

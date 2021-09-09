@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
 import UserData from '../../Mock/Data';
 import CommonCard from './CommonCard';
@@ -15,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
 
 const CardMenu = () => {
   const classes = useStyles();
+  const cart = useSelector((state) => state.addtocartReducers.cart);
+
+  console.log('CART DATA from redux', cart);
 
   return (
     <div>

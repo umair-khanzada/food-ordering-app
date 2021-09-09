@@ -18,3 +18,21 @@ export const decreaseQuantity = (data) => {
     payload: data,
   };
 };
+export const deleteItem = (data) => {
+  return {
+    type: 'DELETE_ITEM',
+    payload: data,
+  };
+};
+
+export const openDrawer = () => {
+  return {
+    type: 'OPEN_DRAWER',
+  };
+};
+
+export const closeDrawer = () => {
+  return {
+    type: 'CLOSE_DRAWER',
+  };
+};

@@ -4,8 +4,16 @@ import { homeRoute } from '../Features/Home';
 import { profileRoute } from '../Features/Profile';
 
 const routeConfig = {
-  auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
-  orderPlacer: [dashboardRoute],
+  auth: [
+    loginRoute,
+    homeRoute,
+    signUpRoute,
+    resetPasswordRoute,
+    resetPasswordRoute,
+    forgetPasswordRoute,
+    dashboardRoute,
+  ],
+  orderPlacer: [],
   officeBoy: [],
   common: [profileRoute, resetPasswordRoute],
 };
