@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { TableRow, Table, TableBody, TablePagination, TableContainer } from '@material-ui/core';
+import { TableRow, Table, TableBody, TablePagination } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import { useTheme } from '@material-ui/core/styles';
@@ -9,7 +9,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import { CustomTableHead, IconContainer, EditDeleteCell } from './style';
+import { CustomTableHead, IconContainer, EditDeleteCell, CustomTableContainer } from './style';
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -38,7 +38,7 @@ function TablePaginationActions(props) {
   );
 }
 
-export default function CustomTable({ rows, header, editDelete }) {
+export default function CustomTable({ rows, header, editDelete, tablewidth }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -55,7 +55,7 @@ export default function CustomTable({ rows, header, editDelete }) {
   };
 
   return (
-    <TableContainer component={Paper} style={{ width: '80%', margin: 'auto' }}>
+    <CustomTableContainer component={Paper} tablewidth={tablewidth}>
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
@@ -102,6 +102,6 @@ export default function CustomTable({ rows, header, editDelete }) {
           </TableRow>
         </TableFooter>
       </Table>
-    </TableContainer>
+    </CustomTableContainer>
   );
 }

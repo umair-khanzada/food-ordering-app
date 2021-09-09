@@ -26,7 +26,7 @@ function UsersList() {
         <CommonButton property="Add Users" />
       </VendorTitleContainer>
 
-      <CustomTable editDelete={editDelete} header={header} rows={userList} />
+      <CustomTable editDelete={editDelete} header={header} rows={userList} tablewidth="80%" />
     </>
   );
 }

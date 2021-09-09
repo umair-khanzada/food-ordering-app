@@ -7,7 +7,8 @@ const RouteNames = {
   profile: '/profile',
   dashboard: '/dashboard',
   vendors: '/vendors',
-  usersList: '/usersList',
+  usersList: '/users-list',
+  categoryList: '/category-list',
 };
 
 export default RouteNames;
