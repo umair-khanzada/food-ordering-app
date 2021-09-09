@@ -36,7 +36,7 @@ function SideMenu() {
   const { drawer, drawerPaper, logo, logoNisum, navigation, list } = classes;
   return (
     <Drawer
-      anchor="right"
+      anchor="left"
       classes={{
         paper: drawerPaper,
       }}

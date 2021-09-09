@@ -23,6 +23,9 @@ export default function BaseRouter() {
       {RouteConfig.auth.map((route, index) => {
         return <Route key={index} component={() => <AuthRoute route={route} />} exact path={route.path} />;
       })}
+      {RouteConfig.orderPlacer.map((route, index) => {
+        return <Route key={index} component={() => route.component()} exact path={route.path} />;
+      })}
       {isLoggedIn ? <Route component={Home} /> : <Route component={LoginContainer} />}
     </Switch>
   );
