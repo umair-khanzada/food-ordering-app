@@ -1,18 +1,15 @@
 import React from 'react';
 
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import CreateIcon from '@material-ui/icons/Create';
 
-import SideMenu from '../../../../components/sideMenu/index';
 // import Header from '../OrderHistory/Header';
 const useStyles = makeStyles((theme) => ({
-  root: {
+  AddUserRoot: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -26,107 +23,62 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
-  paper: {
-    width: '100%',
-    borderRadius: '24px 0 24px 0',
-    height: '90vh',
+  paperAddUser: {
+    width: '500px',
+    height: '100%',
   },
-  main: {
+  mainAddUser: {
     padding: '20px',
   },
-  avatar: {
+  Useravatar: {
     width: '150px',
     height: '150px',
   },
-  icon: {
-    fontSize: '1rem',
+  textstyle: {
+    paddingBottom: '40px',
+    paddingTop: '40px',
+    fontSize: '40px',
+    fontWeight: '600',
   },
-  gird: {
-    marginTop: '11px',
+
+  gridAddUser: {
+    // marginTop: '11px',
+    display: 'flex',
+    justifyContent: 'center',
   },
-  btncontainer: {
-    width: '44ch',
+  btnAddUser: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  btn: {
+  addUserButton: {
     backgroundColor: '#E91E63',
     color: 'white',
-    padding: '9px',
+    margin: '20px',
+    '&:hover': {
+      color: 'black',
+    },
   },
 }));
 const AddUser = () => {
   const classes = useStyles();
   return (
     <Grid container>
-      <Grid item md={3}>
-        <SideMenu />
-      </Grid>
-      <Grid className={classes.grid} item md={9}>
+      <Grid className={classes.gridAddUser} item md={12}>
         {/* <Header /> */}
-        <div className={classes.main}>
-          <Paper className={classes.paper}>
-            <form autoComplete="off" className={classes.root} noValidate>
-              <Avatar className={classes.avatar} src="/broken-image.jpg" />
-              <TextField
-                className={classes.text}
-                defaultValue="Fahad"
-                id="standard-read-only-input"
-                InputProps={{
-                  readOnly: true,
-                  className: classes.text,
-                  endAdornment: (
-                    <InputAdornment>
-                      <CreateIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="First Name"
-              />
-              <TextField
-                defaultValue="Ali"
-                id="standard-read-only-input"
-                InputProps={{
-                  readOnly: true,
-                  className: classes.text,
-                  endAdornment: (
-                    <InputAdornment>
-                      <CreateIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="Last Name"
-              />
-              <TextField
-                defaultValue="fahadqureshy23@gmail.com"
-                id="standard-read-only-input"
-                InputProps={{
-                  readOnly: true,
-                  className: classes.text,
-                  endAdornment: (
-                    <InputAdornment>
-                      <CreateIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="Email"
-              />
-              <TextField
-                defaultValue="03161359848"
-                id="standard-read-only-input"
-                InputProps={{
-                  readOnly: true,
-                  className: classes.text,
-                  endAdornment: (
-                    <InputAdornment>
-                      <CreateIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="Number"
-              />
-              <div className={classes.btncontainer}>
-                <Button className={classes.btn}>Edit Profile</Button>{' '}
+        <div className={classes.mainAddUser}>
+          <Paper className={classes.paperAddUser}>
+            <form autoComplete="off" className={classes.AddUserRoot} noValidate>
+              <Avatar className={classes.Useravatar} src="/broken-image.jpg" />
+              <Typography className={classes.textstyle} variant="h2">
+                Add User
+              </Typography>
+              <TextField defaultValue="Fahad Qureshi" id="standard-read-only-input" label="Name" />
+
+              <TextField defaultValue="fahadqureshy23@gmail.com" id="standard-read-only-input" label="Email" />
+              <TextField defaultValue="03161359848" id="standard-read-only-input" label="Number" />
+              <div className={classes.btnAddUser}>
+                <Button className={classes.addUserButton}>Add User</Button>
               </div>
             </form>
           </Paper>

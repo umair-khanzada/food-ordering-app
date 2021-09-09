@@ -12,7 +12,6 @@ const persistConfig = {
 };
 
 const reducer = combineReducers({
-  // login_logout: loginReducer,
   forgotPassword,
   responseMessage,
   authReducer,
