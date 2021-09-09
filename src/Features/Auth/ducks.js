@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   LOGIN,
   LOGIN_SUCCESS,
@@ -6,7 +7,7 @@ import {
   SIGNUP,
   MESSAGE,
   LOGOUT_SUCCESS,
-} from '../../scripts/constants';
+} from '../../redux/ActionTypes';
 
 export const authReducer = (state = { isLoggedIn: false, token: '', name: '' }, action) => {
   switch (action.type) {
