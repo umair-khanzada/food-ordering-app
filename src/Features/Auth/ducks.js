@@ -1,4 +1,5 @@
-import { LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT_SUCCESS, MESSAGE, FORGOT_PASSWORD } from '../../redux/ActionTypes';
+import { LOGIN_SUCCESS, LOGIN_ERROR, FORGOT_PASSWORD, MESSAGE, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
+
 export const authReducer = (state = { isLoggedIn: false, token: '', name: '' }, action) => {
   switch (action.type) {
     case LOGOUT_SUCCESS:

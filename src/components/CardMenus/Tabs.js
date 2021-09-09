@@ -5,7 +5,7 @@ import { Paper, Tab, Tabs } from '@material-ui/core';
 import CardMenus from './CardMenus';
 
 const MainTab = () => {
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

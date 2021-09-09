@@ -21,7 +21,7 @@ function MainContainer() {
 
   return (
     <Router>
-      {isLoggedIn ? (
+      {!isLoggedIn ? (
         <>
           <AppBar />
           <Grid container direction="row" spacing={3}>
