@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid, ListItemIcon, ListItemText, AppBar, useTheme, Toolbar } from '@material-ui/core';
-import { History, Lock, MoreVert, OfflineBolt, PersonRounded } from '@material-ui/icons';
+import { Lock, OfflineBolt, PersonRounded } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -17,13 +17,12 @@ const NavBar = () => {
   };
 
   const history = useHistory();
-
   return (
     <StyledDiv>
       <AppBar color="secondary" position="sticky">
         <Toolbar>
           <Grid alignItems="flex-end" container justifyContent="flex-end">
-            <AppBarMenuButton buttonIcon={<MoreVert />}>
+            <AppBarMenuButton>
               <StyledMenuItem onClick={() => history.push('/profile')} theme={theme}>
                 <ListItemIcon>
                   <PersonRounded fontSize="small" />
@@ -41,12 +40,6 @@ const NavBar = () => {
                   <OfflineBolt fontSize="small" />
                 </ListItemIcon>
                 <ListItemText primary="Log Out" />
-              </StyledMenuItem>
-              <StyledMenuItem onClick={() => history.push('/dashboard')} theme={theme}>
-                <ListItemIcon>
-                  <History fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="History" />
               </StyledMenuItem>
             </AppBarMenuButton>
           </Grid>

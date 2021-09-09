@@ -24,11 +24,11 @@ function MainContainer() {
       {isLoggedIn ? (
         <>
           <AppBar />
-          <Grid container direction="row" spacing={3}>
-            <Grid item style={{ paddingRight: '0px', height: '100%' }} xs={2}>
+          <Grid container direction="row">
+            <Grid item xs={2}>
               <SideMenu />
             </Grid>
-            <Grid item style={{ paddingRight: '0px', paddingLeft: '0px' }} xs={10}>
+            <Grid item xs={10}>
               {baseRouter}
             </Grid>
           </Grid>

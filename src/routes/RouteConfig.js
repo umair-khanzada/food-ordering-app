@@ -1,3 +1,4 @@
+import { editVendorRoute } from '../Features/Admin/Vendors/route';
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { dashboardRoute } from '../Features/Dashboard/route';
 import { homeRoute } from '../Features/Home';
@@ -14,6 +15,7 @@ const routeConfig = {
     resetPasswordRoute,
   ],
   orderPlacer: [dashboardRoute],
+  admin: [editVendorRoute],
   officeBoy: [],
   common: [profileRoute],
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { IconButton, Menu, withStyles } from '@material-ui/core';
+import { MoreVert } from '@material-ui/icons';
 
 const StyledMenu = withStyles({
   paper: {
@@ -26,7 +27,7 @@ const StyledMenu = withStyles({
 const AppBarMenuButton = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const { buttonIcon, children } = props;
+  const { children } = props;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,7 +40,7 @@ const AppBarMenuButton = (props) => {
   return (
     <div>
       <IconButton aria-controls="customized-menu" aria-haspopup="true" onClick={handleClick}>
-        {buttonIcon}
+        <MoreVert />
       </IconButton>
       <StyledMenu anchorEl={anchorEl} id="customized-menu" keepMounted onClose={handleClose} open={Boolean(anchorEl)}>
         {children}
