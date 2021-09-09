@@ -16,11 +16,13 @@ export const loginEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          const {
-            user: { name },
-            token: { access },
-          } = res.response;
-          return of(loginSuccess({ name, token: access }));
+          return of(
+            loginSuccess({
+              name: res.response.user.name,
+              refreshToken: res.response.tokens.refresh,
+              accessToken: res.response.tokens.access,
+            }),
+          );
         }),
         catchError(() => {
           return of(loginError());
@@ -39,10 +41,13 @@ export const signUpEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          const {
-            tokens: { access },
-          } = res.response;
-          return of(loginSuccess(access));
+          return of(
+            loginSuccess({
+              name: res.response.user.name,
+              refreshToken: res.response.tokens.refresh,
+              accessToken: res.response.tokens.access,
+            }),
+          );
         }),
         catchError(() => {
           return of(loginError());
@@ -82,18 +87,16 @@ export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
     mergeMap(() => {
-      const refreshToken = { refreshToken: state.value.authReducer.token.token };
+      const refreshToken = { refreshToken: state.value.authReducer.refreshToken.token };
       return ajax({
         url: 'http://localhost:4000/v1/auth/logout',
         method: 'POST',
         body: refreshToken,
       }).pipe(
-        mergeMap((res) => {
-          console.log(res);
+        mergeMap(() => {
           return of(logoutSuccess());
         }),
-        catchError((err) => {
-          console.log(err);
+        catchError(() => {
           return of(logoutSuccess());
         }),
       );

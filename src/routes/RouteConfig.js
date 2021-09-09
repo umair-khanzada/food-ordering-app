@@ -15,7 +15,7 @@ const routeConfig = {
   ],
   orderPlacer: [],
   officeBoy: [],
-  common: [profileRoute, resetPasswordRoute],
+  common: [profileRoute],
 };
 
 export default routeConfig;
