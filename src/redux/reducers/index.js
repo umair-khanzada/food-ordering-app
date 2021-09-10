@@ -4,6 +4,7 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
 import { forgotPassword, responseMessage, authReducer } from '../../Features/Auth/ducks';
+import { addtocartReducers } from '../../Features/Dashboard/Reducer/reducer';
 
 const persistConfig = {
   key: 'root',
@@ -12,9 +13,10 @@ const persistConfig = {
 };
 
 const reducer = combineReducers({
+  authReducer,
+  addtocartReducers,
   forgotPassword,
   responseMessage,
-  authReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

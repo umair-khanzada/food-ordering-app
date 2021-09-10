@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import 'date-fns';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import CustomTable from '../../components/CustomeTable';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useDispatch, useSelector } from 'react-redux';
 
-// import AddMenuContainer from '../Menu/AddMenu/AddMenuContainer';
-// import AddRestrauntContainer from '../Restraunt/AddRestraunt/AddRestrauntContainer';
+import MainTab from '../../components/CardMenus/Tabs';
+import TemporaryDrawer from '../../components/Drawer';
+import SideMenu from '../../components/sideMenu';
+import { openDrawer } from './Reducer/action';
 
 function Dashboard() {
   const drawerWidth = 300;
@@ -112,8 +115,27 @@ function Dashboard() {
   ];
   // closing time ends
 
+  const classes = useStyles();
+  // const [isDrawerOpen, setOpenDrawer] = useState(false);
+
+  const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
+  const dispatch = useDispatch();
+
+  // function toggleDrawer() {
+  //   setOpenDrawer(!isDrawerOpen);
+  // }
+
+  // const openDrawer = () => {
+  //   setOpenDrawer(true);
+  // };
+
+  // const closeDrawer = () => {
+  //   setOpenDrawer(false);
+  // };
+
   return (
     <div>
+      {console.log('state changed!!!', isDrawerOpen)}
       <Grid container>
         <Grid item md={12}>
           {/* <Box>
@@ -140,8 +162,11 @@ function Dashboard() {
               </div>
             </div>
             <div className={classes.tabs}>
-              <MainTab />
+              <TemporaryDrawer />
+
+              <MainTab setOpenDrawer={() => dispatch(openDrawer())} />
             </div>
+
             <div />
           </Box> */}
         </Grid>
