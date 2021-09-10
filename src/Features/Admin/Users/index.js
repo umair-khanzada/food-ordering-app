@@ -6,7 +6,7 @@ import { Edit } from '@material-ui/icons';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import { userList } from '../../../Mock/UserList';
-import { VendorTitleContainer, VendorTitle, DeleteIcon } from './style';
+import { UsersTitleContainer, UsersTitle, DeleteIcon } from './style';
 function UsersList() {
   const editDelete = (
     <>
@@ -21,10 +21,10 @@ function UsersList() {
   const header = ['Id', 'Name', 'Email', 'Contact', 'Edit'];
   return (
     <>
-      <VendorTitleContainer>
-        <VendorTitle>Users</VendorTitle>
+      <UsersTitleContainer>
+        <UsersTitle>Users</UsersTitle>
         <CommonButton property="Add Users" />
-      </VendorTitleContainer>
+      </UsersTitleContainer>
 
       <CustomTable editDelete={editDelete} header={header} rows={userList} tablewidth="80%" />
     </>

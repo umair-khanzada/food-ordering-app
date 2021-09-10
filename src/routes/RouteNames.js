@@ -9,6 +9,7 @@ const RouteNames = {
   vendors: '/vendors',
   usersList: '/users-list',
   categoryList: '/category-list',
+  ordersHistory: '/orders-history',
 };
 
 export default RouteNames;

@@ -1,4 +1,4 @@
-import { categoryListsRoute, usersListsRoute, vendorsRoute } from '../Features/Admin/route';
+import { categoryListsRoute, ordersHistoryRourte, usersListsRoute, vendorsRoute } from '../Features/Admin/route';
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { dashboardRoute } from '../Features/Dashboard/route';
 import { homeRoute } from '../Features/Home';
@@ -15,6 +15,7 @@ const routeConfig = {
     vendorsRoute,
     usersListsRoute,
     categoryListsRoute,
+    ordersHistoryRourte,
   ],
 
   orderPlacer: [dashboardRoute],

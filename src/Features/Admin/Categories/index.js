@@ -6,7 +6,7 @@ import { Edit } from '@material-ui/icons';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import { categoryList } from '../../../Mock/CategoryList';
-import { VendorTitleContainer, VendorTitle, DeleteIcon } from './style';
+import { CategoriesTitleContainer, CategoriesTitle, DeleteIcon } from './style';
 function CategoryList() {
   const editDelete = (
     <>
@@ -22,10 +22,10 @@ function CategoryList() {
 
   return (
     <>
-      <VendorTitleContainer>
-        <VendorTitle>Categories</VendorTitle>
+      <CategoriesTitleContainer>
+        <CategoriesTitle>Categories</CategoriesTitle>
         <CommonButton property="Add Category" />
-      </VendorTitleContainer>
+      </CategoriesTitleContainer>
 
       <CustomTable editDelete={editDelete} header={header} rows={categoryList} tablewidth="50%" />
     </>
