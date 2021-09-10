@@ -8,6 +8,8 @@ const RouteNames = {
   dashboard: '/dashboard',
   vendors: '/vendors',
   usersList: '/usersList',
+  addcategories: '/addcategories',
+  editcategories: '/editcategories',
 };
 
 export default RouteNames;
