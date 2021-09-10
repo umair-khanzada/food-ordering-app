@@ -1,35 +1,30 @@
 import React from 'react';
 
-import IconButton from '@material-ui/core/IconButton';
-import { Edit } from '@material-ui/icons';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import { userList } from '../../../Mock/UserList';
-import { VendorTitleContainer, VendorTitle, DeleteIcon } from './style';
+import { UsersTitleContainer, UsersTitle } from './style';
 function UsersList() {
-  const editDelete = (
-    <>
-      <IconButton>
-        <Edit />
-      </IconButton>
-      <IconButton>
-        <DeleteIcon />
-      </IconButton>
-    </>
-  );
+  const onEdit = (row) => {
+    history.push({
+      pathname: '/edituser',
+      state: { data: row },
+    });
+  };
+
   const header = ['Id', 'Name', 'Email', 'Contact', 'Edit'];
   const history = useHistory();
 
   return (
     <>
-      <VendorTitleContainer>
-        <VendorTitle>Users</VendorTitle>
+      <UsersTitleContainer>
+        <UsersTitle>Users</UsersTitle>
         <CommonButton property="Add Users" />
-      </VendorTitleContainer>
+      </UsersTitleContainer>
 
-      <CustomTable editDelete={editDelete} header={header} isEditDelete rows={userList} />
+      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={userList} tablewidth="80%" />
     </>
   );
 }

@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
   },
   gird: {
-    marginTop: '11px',
+    margin: 'auto',
   },
   btncontainer: {
     width: '44ch',
@@ -67,8 +67,8 @@ const EditVendor = () => {
     // data[key] = value;
   };
   return (
-    <Grid container>
-      <Grid className={classes.grid} item md={9}>
+    <Grid alignContent="center" alignItems="center" container justifyContent="center">
+      <Grid className={classes.grid} item md={5}>
         <div className={classes.main}>
           <Paper className={classes.paper}>
             <form autoComplete="off" className={classes.root} noValidate>

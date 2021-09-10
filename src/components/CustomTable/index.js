@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { TableRow, Table, TableBody, TablePagination, TableContainer } from '@material-ui/core';
+import { TableRow, Table, TableBody, TablePagination } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import { useTheme } from '@material-ui/core/styles';
@@ -12,7 +12,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import { DeleteIcon } from '../../Features/Admin/Vendors/style';
 import DeleteButton from '../Delete Button';
-import { CustomTableHead, IconContainer, EditDeleteCell } from './style';
+import { CustomTableHead, IconContainer, EditDeleteCell, CustomTableContainer } from './style';
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -41,7 +41,7 @@ function TablePaginationActions(props) {
   );
 }
 
-export default function CustomTable({ rows, header, onEdit, isEditDelete }) {
+export default function CustomTable({ rows, header, tablewidth, onEdit, isEditDelete }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -52,7 +52,6 @@ export default function CustomTable({ rows, header, onEdit, isEditDelete }) {
   };
 
   const [rowsData, setRowsData] = useState([...rows]);
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -75,8 +74,9 @@ export default function CustomTable({ rows, header, onEdit, isEditDelete }) {
   };
 
   return (
-    <TableContainer component={Paper} style={{ width: '80%', margin: 'auto' }}>
+    <CustomTableContainer component={Paper} tablewidth={tablewidth}>
       {isEditDelete && <DeleteButton handleClose={handleClose} onDelete={onDelete} open={open} />}
+
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
@@ -105,7 +105,7 @@ export default function CustomTable({ rows, header, onEdit, isEditDelete }) {
                     <IconButton
                       onClick={() => {
                         setCurrentSelectedRow(row);
-                        setOpen(true);
+                        handleClickOpen();
                       }}
                     >
                       <DeleteIcon />
@@ -140,6 +140,6 @@ export default function CustomTable({ rows, header, onEdit, isEditDelete }) {
           </TableRow>
         </TableFooter>
       </Table>
-    </TableContainer>
+    </CustomTableContainer>
   );
 }
