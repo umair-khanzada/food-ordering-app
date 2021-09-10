@@ -112,6 +112,9 @@ function Menu() {
   function showAddMenu() {
     history.push('/addmenu');
   }
+  function showAddRestraunt() {
+    history.push('/restraunt');
+  }
   // closing time ends
   return (
     <div>
@@ -121,12 +124,7 @@ function Menu() {
             <div className={classes.headerMenu}>
               <div className={classes.buttons}>
                 <div className={classes.button}>
-                  <CommonButton
-                    fontSize="14px"
-                    minwidth="100px"
-                    onClick={() => openRestrauntModal(true)}
-                    property="Add Restraunt"
-                  />
+                  <CommonButton fontSize="14px" minwidth="100px" onClick={showAddRestraunt} property="Add Restraunt" />
                 </div>
                 <div className={classes.button}>
                   <CommonButton fontSize="14px" minwidth="100px" onClick={showAddMenu} property="Add Item" />
