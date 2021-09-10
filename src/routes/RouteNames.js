@@ -7,7 +7,7 @@ const RouteNames = {
   profile: '/profile',
   dashboard: '/dashboard',
   addUser: '/adduser',
-  addHistory: '/addHistory',
+  editUser: '/editUser',
 };
 
 export default RouteNames;
