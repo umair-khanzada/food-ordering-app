@@ -6,18 +6,24 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import LoginContainer from '../Features/Auth/Login/LoginContainer';
 import { HomeContainer } from '../Features/Home';
+import Roles from '../roles';
 import { isProtectedRoute, isPublicRoute } from './Permission';
 import RouteConfig from './RouteConfig';
 
 export default function BaseRouter() {
-  const { isLoggedIn } = useSelector((state) => {
+  const { isLoggedIn, user } = useSelector((state) => {
     const {
-      authReducer: { isLoggedIn },
+      authReducer: { isLoggedIn, user },
     } = state;
     return {
+      user,
       isLoggedIn,
     };
   });
+
+  const { role } = user;
+
+  const { vendor, admin } = Roles;
 
   const getAuthenticatedRoute = (route, index) => {
     if (isLoggedIn && route.permissions === isProtectedRoute) {
@@ -37,7 +43,7 @@ export default function BaseRouter() {
         {RouteConfig.auth.map((route, index) => {
           return getAuthenticatedRoute(route, index);
         })}
-        {isLoggedIn
+        {isLoggedIn && role === Roles.user
           ? RouteConfig.orderPlacer.map((route, index) => {
               return <Route key={index} component={() => route.component()} exact path={route.path} />;
             })
@@ -46,6 +52,11 @@ export default function BaseRouter() {
           RouteConfig.common.map((route, index) => {
             return <Route key={index} component={() => route.component()} exact path={route.path} />;
           })}
+        {isLoggedIn && role === admin
+          ? RouteConfig.admin.map((route, index) => {
+              return <Route key={index} component={() => route.component()} exact path={route.path} />;
+            })
+          : null}
         {isLoggedIn ? (
           <Route>
             <Redirect to="/home" />
