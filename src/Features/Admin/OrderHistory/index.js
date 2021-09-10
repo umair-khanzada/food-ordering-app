@@ -17,7 +17,7 @@ function OrdersHistory() {
       </IconButton>
     </>
   );
-  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Edit'];
+  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date', 'Edit'];
 
   return (
     <>

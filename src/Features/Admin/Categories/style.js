@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const CategoriesTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 20px 25px 10px 25px;
-  padding: 5px 80px 10px 40px;
+  width: 50%;
+  margin: 20px auto;
 `;
 
 export const CategoriesTitle = styled.div`

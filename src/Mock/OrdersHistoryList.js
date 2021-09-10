@@ -5,6 +5,7 @@ export const ordersHistoryList = [
     contact: '13131232',
     items: 'roti, keema',
     price: 'Rs 250',
+    date: '25-9-2021',
   },
   {
     id: 2,
@@ -13,6 +14,7 @@ export const ordersHistoryList = [
 
     items: 'roti, karhai',
     price: 'Rs 200',
+    date: '25-9-2021',
   },
   {
     id: 3,
@@ -21,6 +23,7 @@ export const ordersHistoryList = [
 
     items: 'burger',
     price: 'Rs 350',
+    date: '24-9-2021',
   },
   {
     id: 4,
@@ -29,6 +32,7 @@ export const ordersHistoryList = [
 
     items: 'biryani, coldrink',
     price: 'Rs 200',
+    date: '24-9-2021',
   },
   {
     id: 5,
@@ -37,6 +41,7 @@ export const ordersHistoryList = [
 
     items: 'biryani',
     price: 'Rs 150',
+    date: '23-9-2021',
   },
   {
     id: 6,
@@ -45,6 +50,7 @@ export const ordersHistoryList = [
 
     items: 'karhai, coldrink, roti',
     price: 'Rs 450',
+    date: '23-9-2021',
   },
   {
     id: 7,
@@ -53,5 +59,6 @@ export const ordersHistoryList = [
 
     items: 'biryani, coldrink, salad',
     price: 'Rs 400',
+    date: '22-9-2021',
   },
 ];
