@@ -80,5 +80,5 @@ const tableData = [
 ];
 
 export default function BasicTable() {
-  return <CustomTable header={header} rows={tableData} />;
+  return <CustomTable header={header} rows={tableData} tablewidth="80%" />;
 }

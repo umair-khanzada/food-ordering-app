@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Header from './Header';
 import HistoryBar from './HistoryBar';
 import MuiVirtualizedTable from './HistoryTable';
 const useStyles = makeStyles({
@@ -12,21 +11,21 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    marginTop: '50px',
   },
   text: {
     textAlign: 'center',
   },
   table: {
-    marginTop: '59px',
+    marginTop: '30px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
   paper: {
+    width: '100%',
     padding: '6px 20px',
     marginTop: '30px',
-    height: '90vh',
+    height: '80vh',
     borderRadius: '24px 0 24px 0',
   },
 });
@@ -35,7 +34,6 @@ const OrderHistory = () => {
   return (
     <Grid container>
       <Grid item md={12}>
-        <Header />
         <Paper className={classes.paper}>
           <div className={classes.Bar}>
             <HistoryBar />

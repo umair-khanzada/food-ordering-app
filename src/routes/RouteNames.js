@@ -10,6 +10,9 @@ const RouteNames = {
   restraunt: '/restraunt',
   addMenu: '/addmenu',
   orderhistory: '/orderhistory',
+  orderlist: '/orderlist',
+  categorylist: '/categorylist',
+  addcategory: '/addcategory',
 };
 
 export default RouteNames;

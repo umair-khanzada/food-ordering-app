@@ -9,7 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import CreateIcon from '@material-ui/icons/Create';
 
-import Header from '../OrderHistory/Header';
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
@@ -61,7 +60,6 @@ const Profile = () => {
   return (
     <Grid container>
       <Grid className={classes.grid} item md={12}>
-        <Header />
         <div className={classes.main}>
           <Paper className={classes.paper}>
             <form autoComplete="off" className={classes.root} noValidate>
