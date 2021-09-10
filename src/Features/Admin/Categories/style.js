@@ -30,7 +30,7 @@ export const GridContainer = styled(Grid)`
 export const CategoriesTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width: 98%;
   margin: 20px auto;
 `;
 

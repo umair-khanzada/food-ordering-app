@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const UsersTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 98%;
   margin: 20px auto;
 `;
 

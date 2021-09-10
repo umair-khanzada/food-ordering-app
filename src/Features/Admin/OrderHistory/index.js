@@ -25,7 +25,7 @@ function OrdersHistory() {
         <CommonButton onClick={() => history.push('/addhistory')} property="Add History" />
       </OrdersHistoryTitleContainer>
 
-      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={ordersHistoryList} tablewidth="80%" />
+      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={ordersHistoryList} tablewidth="100%" />
     </>
   );
 }

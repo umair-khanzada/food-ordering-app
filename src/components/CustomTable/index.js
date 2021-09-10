@@ -74,7 +74,7 @@ export default function CustomTable({ rows, header, tablewidth, onEdit, isEditDe
   };
 
   return (
-    <CustomTableContainer component={Paper} tablewidth={tablewidth}>
+    <CustomTableContainer component={Paper} style={{ borderRadius: '0px' }} tablewidth={tablewidth}>
       {isEditDelete && <DeleteButton handleClose={handleClose} onDelete={onDelete} open={open} />}
 
       <Table aria-label="custom pagination table">
@@ -92,9 +92,7 @@ export default function CustomTable({ rows, header, tablewidth, onEdit, isEditDe
             (row) => (
               <TableRow key={row.name}>
                 {Object.keys(row).map((data, index) => (
-                  <TableCell key={index} style={{ width: 200 }}>
-                    {row[data]}
-                  </TableCell>
+                  <TableCell key={index}>{row[data]}</TableCell>
                 ))}
 
                 {isEditDelete ? (

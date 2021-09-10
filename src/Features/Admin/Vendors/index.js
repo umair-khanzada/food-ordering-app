@@ -25,7 +25,7 @@ function VendorList() {
         <CommonButton onClick={() => history.push('/addvendor')} property="Add Vendor" />
       </VendorTitleContainer>
 
-      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={vendorList} tablewidth="80%" />
+      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={vendorList} tablewidth="100%" />
     </>
   );
 }
