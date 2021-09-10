@@ -43,13 +43,15 @@ export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
     mergeMap(({ payload }) => {
+      payload['role'] = 'user';
+      console.log(payload);
       return ajax({
         url: 'http://localhost:5000/users',
         method: 'POST',
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          return of();
+          return of(loginSuccess(res.response));
           // loginSuccess({
           //   name: res.response.user.name,
           //   refreshToken: res.response.tokens.refresh,

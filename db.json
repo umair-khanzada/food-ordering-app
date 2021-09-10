@@ -17,6 +17,19 @@
       "password": "ex",
       "id": 2,
       "role": "Vendor"
+    },
+    {
+      "name": "qwe",
+      "email": "s@s.com",
+      "password": "qwe",
+      "id": 3
+    },
+    {
+      "name": "r",
+      "email": "r@r.com",
+      "password": "r",
+      "role": "user",
+      "id": 4
     }
   ]
 }
