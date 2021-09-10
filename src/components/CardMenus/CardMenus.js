@@ -23,13 +23,14 @@ const CardMenu = () => {
   return (
     <div>
       <Grid className={classes.control} container elevation={3} spacing={3}>
-        {UserData.map((usedata) => {
+        {UserData.map((usedata, index) => {
           const { id, name, price, resturantName, img } = usedata;
 
           return (
             <CommonCard
               key={id}
               buttonText="Add to Cart"
+              id={id}
               img={img}
               name={name}
               price={price}

@@ -1,4 +1,5 @@
 export const addtocart = (data) => {
+  console.log(data, 'data');
   return {
     type: 'ADD_TOCART',
     payload: {
@@ -6,22 +7,28 @@ export const addtocart = (data) => {
     },
   };
 };
-export const increaseQuantity = (data) => {
+export const increaseQuantity = (itemId) => {
   return {
     type: 'INCREMENT',
-    payload: data,
+    payload: {
+      id: itemId,
+    },
   };
 };
-export const decreaseQuantity = (data) => {
+export const decreaseQuantity = (itemId) => {
   return {
     type: 'DECREMENT',
-    payload: data,
+    payload: {
+      id: itemId,
+    },
   };
 };
-export const deleteItem = (data) => {
+export const deleteItem = (itemId) => {
   return {
     type: 'DELETE_ITEM',
-    payload: data,
+    payload: {
+      id: itemId,
+    },
   };
 };
 

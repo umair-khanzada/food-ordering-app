@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { increaseQuantity, decreaseQuantity, deleteItem, closeDrawer } from '../../Features/Dashboard/Reducer/action';
+import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Dashboard/Reducer/action';
 
 const useStyles = makeStyles({
   cartdesc: {
@@ -175,14 +175,7 @@ const TemporaryDrawer = () => {
   //     </div>
   //   </div>
   // );
-
-  function hello() {
-    console.log('hi');
-  }
-
   const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
-
-  console.log('drawer flag ================================', isDrawerOpen);
 
   return (
     <>
@@ -213,8 +206,11 @@ const TemporaryDrawer = () => {
                         </div>
 
                         <div className={classes.itemprice}>
-                          <span style={{ marginLeft: '70px' }}> {cartdata.price}</span>
+                          <span style={{ marginLeft: '40px' }}> {cartdata.price}</span>
                         </div>
+                        <span style={{ marginLeft: '80px' }}>
+                          <CloseIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
+                        </span>
                       </div>
 
                       <div className={classes.add}>
@@ -228,9 +224,6 @@ const TemporaryDrawer = () => {
                           onClick={() => dispatch(decreaseQuantity(cartdata.id))}
                         />
                       </div>
-                      <span style={{ marginLeft: '130px' }}>
-                        <CloseIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
-                      </span>
                     </div>
                   </Card>
                 );
