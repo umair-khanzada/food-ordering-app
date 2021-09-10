@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Dashboard/Reducer/action';
+import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Customer/actions';
 
 const useStyles = makeStyles({
   cartdesc: {

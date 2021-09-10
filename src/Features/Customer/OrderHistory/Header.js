@@ -4,7 +4,7 @@ import { Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import NestedList from '../../Dashboard/List';
+// import NestedList from '../Dashboard/List';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -55,9 +55,9 @@ const Header = () => {
             #023025
           </Typography>
         </div>
-        <div className={classes.userInfo}>
+        {/* <div className={classes.userInfo}>
           <NestedList />
-        </div>
+        </div> */}
         {/* </div> */}
       </div>
     </Box>

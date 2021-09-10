@@ -4,7 +4,7 @@ import { Card, CardMedia, CardContent, CardHeader, Typography, Grid } from '@mat
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 
-import { addtocart } from '../../Features/Dashboard/Reducer/action';
+import { addtocart } from '../../Features/Customer/actions';
 import CommonButton from '../Button/Button';
 
 const drawerWidth = 300;
