@@ -37,6 +37,7 @@ export default function BaseRouter() {
       {routeConfig.orderPlacer.map((route, index) => {
         return <Route key={index} component={() => route.component()} exact path={route.path} />;
       })}
+      <Route component={() => (isLoggedIn ? HomeContainer : LoginContainer)} exact path="/" />
       {isLoggedIn ? <Route component={HomeContainer} /> : <Route component={LoginContainer} />}
     </Switch>
   );

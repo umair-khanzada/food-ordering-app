@@ -9,7 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import CreateIcon from '@material-ui/icons/Create';
 
-import SideMenu from '../../components/sideMenu/index';
 import Header from '../OrderHistory/Header';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,10 +60,7 @@ const Profile = () => {
   const classes = useStyles();
   return (
     <Grid container>
-      <Grid item md={3}>
-        <SideMenu />
-      </Grid>
-      <Grid className={classes.grid} item md={9}>
+      <Grid className={classes.grid} item md={12}>
         <Header />
         <div className={classes.main}>
           <Paper className={classes.paper}>

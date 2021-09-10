@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 
 import 'date-fns';
-import { Grid } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
+
+import MainTab from '../../components/CardMenus/Tabs';
+import TemporaryDrawer from '../../components/Drawer';
+import { openDrawer } from './Reducer/action';
 
 function Dashboard() {
   const drawerWidth = 300;
@@ -131,10 +135,10 @@ function Dashboard() {
       {console.log('state changed!!!', isDrawerOpen)}
       <Grid container>
         <Grid item md={12}>
-          {/* <Box>
+          <Box>
             <div className={classes.header}>
               <div className={classes.orderDetails}>
-                <ArrowBackIcon fontSize="large" style={{ color: '#e91e63' }} />
+                {/* <ArrowBackIcon fontSize="large" style={{ color: '#e91e63' }} /> */}
 
                 <Typography className={classes.orderHeading} noWrap style={{ marginLeft: '40px' }} variant="h2">
                   New Order
@@ -145,9 +149,9 @@ function Dashboard() {
                 </Typography>
               </div>
 
-              <div className={classes.userInfo}>
+              {/* <div className={classes.userInfo}>
                 <NestedList />
-              </div>
+              </div> */}
             </div>
             <div className={classes.tabs}>
               <TemporaryDrawer />
@@ -156,7 +160,7 @@ function Dashboard() {
             </div>
 
             <div />
-          </Box> */}
+          </Box>
         </Grid>
       </Grid>
     </div>

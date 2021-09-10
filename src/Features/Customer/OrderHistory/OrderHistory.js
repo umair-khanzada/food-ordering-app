@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import SideMenu from '../../components/sideMenu';
 import Header from './Header';
 import HistoryBar from './HistoryBar';
 import MuiVirtualizedTable from './HistoryTable';
@@ -35,10 +34,7 @@ const OrderHistory = () => {
   const classes = useStyles();
   return (
     <Grid container>
-      <Grid item md={3}>
-        <SideMenu />
-      </Grid>
-      <Grid item md={9}>
+      <Grid item md={12}>
         <Header />
         <Paper className={classes.paper}>
           <div className={classes.Bar}>
