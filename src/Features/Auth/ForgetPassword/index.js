@@ -17,7 +17,7 @@ function ForgetPassword() {
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = forgetPasswordForm.map((textField) => {
-      if (textField.value == '') {
+      if (textField.value == null) {
         isValid = false;
         return {
           ...textField,
@@ -71,14 +71,14 @@ function ForgetPassword() {
       label: 'Email',
       name: 'email',
       type: 'email',
-      value: '',
+      value: null,
       isValid: true,
-      errorMessage: '',
+      errorMessage: null,
       getValidation: (value) => {
         if (!emailRegex.test(value)) {
           return ['Email type is not valid', false];
         }
-        return ['', true];
+        return [null, true];
       },
     },
     {
@@ -88,13 +88,13 @@ function ForgetPassword() {
       type: 'password',
       minlength: '6',
       isValid: true,
-      value: '',
-      errorMessage: '',
+      value: null,
+      errorMessage: null,
       getValidation: (value) => {
         if (value.length < 8) {
           return ['Password must be 8 characters long', false];
         }
-        return ['', true];
+        return [null, true];
       },
     },
   ]);
