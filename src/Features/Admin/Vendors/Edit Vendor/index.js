@@ -53,11 +53,11 @@ const useStyles = makeStyles((theme) => ({
     padding: '9px',
   },
 }));
-const AddVendors = ({ data }) => {
+const EditVendor = (props) => {
   const classes = useStyles();
 
   const setData = (key, value) => {
-    data[key] = value;
+    // data[key] = value;
   };
 
   return (
@@ -143,4 +143,4 @@ const AddVendors = ({ data }) => {
     </Grid>
   );
 };
-export default AddVendors;
+export default EditVendor;

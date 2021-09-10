@@ -13,6 +13,8 @@ const RouteNames = {
   users: '/users',
   orderHistory: '/orderhistory',
   categories: '/categories',
+  addUser: '/adduser',
+  addHistory: '/addHistory',
 };
 
 export default RouteNames;
