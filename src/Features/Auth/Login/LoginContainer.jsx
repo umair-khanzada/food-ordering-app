@@ -1,9 +1,9 @@
 import React from 'react';
 
-import EditCategories from '../../Admin/Categories/Edit Categories';
+import LoginForm from '.';
 
 function LoginContainer() {
-  return <EditCategories />;
+  return <LoginForm />;
 }
 
 export default LoginContainer;

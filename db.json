@@ -8,13 +8,13 @@
     },
     {
       "email": "ex@ex.com",
-      "password": "ex",
+      "password": "xxxxxxxx",
       "id": 2,
       "role": "User"
     },
     {
-      "email": "ex@ex.com",
-      "password": "ex",
+      "email": "e@e.com",
+      "password": "xxxxxxxx",
       "id": 2,
       "role": "Vendor"
     },

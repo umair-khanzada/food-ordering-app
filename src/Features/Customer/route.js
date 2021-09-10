@@ -9,7 +9,7 @@ export const dashboardRoute = {
   permissions: isPublicRoute, // to intimate it is public route
   component: Dashboard,
 };
-export const orderHistoryRoute = {
+export const orderHistoryCustomerRoute = {
   path: RouteNames.orderhistory,
   permissions: isPublicRoute, // to intimate it is public route
   component: OrderHistory,

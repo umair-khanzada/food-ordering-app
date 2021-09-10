@@ -5,8 +5,9 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import CardMenus from './CardMenus';
 
-const MainTab = () => {
-  const [value, setValue] = useState();
+const MainTab = (props) => {
+  const [value, setValue] = useState(2);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
