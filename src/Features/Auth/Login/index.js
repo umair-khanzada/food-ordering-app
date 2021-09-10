@@ -3,34 +3,39 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
+import { emailRegex } from '../../../scripts/constants';
 import { login } from '../actions';
 
 function LoginForm() {
-  const dispatch = useDispatch();
-  const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
-  const loginClickHandler = (e) => {
-    console.log(loginForm);
-    e.preventDefault();
-
+  const validateOnSubmit = () => {
     let isValid = true;
-    loginForm.map((textField) => {
+    const ValidateArray = loginForm.map((textField) => {
       if (textField.value == '') {
-        setLoginForm((prev) => {
-          textField.errorMessage = textField.name + ' field cannot be empty';
-          textField.isValid = false;
-          return [...prev];
-        });
+        isValid = false;
+        return {
+          ...textField,
+          errorMessage: textField.name + ' field cannot be empty',
+          isValid: false,
+        };
       }
-
       !isValid ? null : (isValid = textField.isValid);
+      return textField;
     });
 
-    if (isValid) {
+    setLoginForm(ValidateArray);
+
+    return isValid;
+  };
+  const dispatch = useDispatch();
+
+  const loginClickHandler = (e) => {
+    e.preventDefault();
+    if (validateOnSubmit()) {
       const userData = {};
       loginForm.map(({ name, value }) => {
         userData[name] = value;
       });
-      console.log(userData);
+
       dispatch(login(userData));
     }
   };

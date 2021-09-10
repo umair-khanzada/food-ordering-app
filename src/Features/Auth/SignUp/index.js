@@ -3,12 +3,30 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
+import { emailRegex, contactRegex } from '../../../scripts/constants';
 import { signup } from '../actions';
 
 function SignUpForm() {
+  const validateOnSubmit = () => {
+    let isValid = true;
+    const ValidateArray = signUpForm.map((textField) => {
+      if (textField.value == '') {
+        isValid = false;
+        return {
+          ...textField,
+          errorMessage: textField.name + ' field cannot be empty',
+          isValid: false,
+        };
+      }
+      !isValid ? null : (isValid = textField.isValid);
+      return textField;
+    });
+
+    setSignUpForm(ValidateArray);
+
+    return isValid;
+  };
   const dispatch = useDispatch();
-  const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
-  const contactRegex = new RegExp('([0-9]{1}|[0-9]{2}|[0-9]{3})[0-9]{10,12}');
 
   const textFiledChangeHandler = (e, index) => {
     const { value } = e.target;
@@ -93,20 +111,7 @@ function SignUpForm() {
   const signUpClickHandler = (e) => {
     e.preventDefault();
 
-    let isValid = true;
-    signUpForm.map((textField) => {
-      if (textField.value == '') {
-        setSignUpForm((prev) => {
-          textField.errorMessage = textField.name + ' field cannot be empty';
-          textField.isValid = false;
-          return [...prev];
-        });
-      }
-
-      !isValid ? null : (isValid = textField.isValid);
-    });
-
-    if (isValid) {
+    if (validateOnSubmit()) {
       const userData = {};
       signUpForm.map(({ name, value }) => {
         userData[name] = value;

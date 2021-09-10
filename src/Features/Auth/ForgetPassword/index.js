@@ -14,27 +14,35 @@ function ForgetPassword() {
     const { message, status } = state.responseMessage;
     return { message, status };
   });
+  const validateOnSubmit = () => {
+    let isValid = true;
+    const ValidateArray = forgetPasswordForm.map((textField) => {
+      if (textField.value == '') {
+        isValid = false;
+        return {
+          ...textField,
+          errorMessage: textField.name + ' field cannot be empty',
+          isValid: false,
+        };
+      }
+      !isValid ? null : (isValid = textField.isValid);
+      return textField;
+    });
+
+    setforgetPasswordForm(ValidateArray);
+
+    return isValid;
+  };
+
   const forgetPasswordClickHandler = (e) => {
     e.preventDefault();
 
-    let isValid = true;
-    forgetPasswordForm.map((textField) => {
-      if (textField.value == '') {
-        setforgetPasswordForm((prev) => {
-          textField.errorMessage = textField.name + ' field cannot be empty';
-          textField.isValid = false;
-          return [...prev];
-        });
-      }
-
-      !isValid ? null : (isValid = textField.isValid);
-    });
-
-    if (isValid) {
+    if (validateOnSubmit()) {
       const userData = {};
       forgetPasswordForm.map(({ name, value }) => {
         userData[name] = value;
       });
+
       dispatch(forgotPassword(userData));
     }
   };

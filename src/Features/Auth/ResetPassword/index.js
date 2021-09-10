@@ -4,31 +4,40 @@ import FormComponent from '../../../components/FormComponent';
 
 function ResetPassword() {
   let newPassword = '';
-  const resetPasswordClickHandler = (e) => {
-    e.preventDefault();
 
-    let isValid = true;
-    resetForm.map((textField) => {
+  const validateOnSubmit = () => {
+    let isFormValid = true;
+    const resetValidateArray = resetForm.map((textField) => {
       if (textField.value == '') {
-        setResetPasswordForm((prev) => {
-          textField.errorMessage = textField.name + ' field cannot be empty';
-          textField.isValid = false;
-          return [...prev];
-        });
+        isFormValid = false;
+        return {
+          ...textField,
+          errorMessage: textField.name + ' field cannot be empty',
+          isValid: false,
+        };
       }
+      !isFormValid ? null : (isFormValid = textField.isValid);
 
-      !isValid ? null : (isValid = textField.isValid);
+      return textField;
     });
 
-    if (isValid) {
+    setResetPasswordForm(resetValidateArray);
+
+    return isFormValid;
+  };
+
+  const resetPasswordClickHandler = (e) => {
+    e.preventDefault();
+    if (validateOnSubmit()) {
       const userData = {};
       resetForm.map(({ name, value }) => {
         userData[name] = value;
       });
+      console.log(userData);
     }
   };
   const textFiledChangeHandler = (e, index) => {
-    const { value, name } = e.target;
+    const { value } = e.target;
 
     setResetPasswordForm((prev) => {
       const prevForm = [...prev];
