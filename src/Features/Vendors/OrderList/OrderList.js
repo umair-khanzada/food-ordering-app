@@ -74,13 +74,13 @@ function OrdersList() {
       </IconButton>
     </>
   );
-  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date', 'Edit'];
+  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date'];
   return (
     <>
       <OrdersHistoryTitleContainer>
         <OrdersHistoryTitle>Orders</OrdersHistoryTitle>
       </OrdersHistoryTitleContainer>
-      <CustomTable editDelete={editDelete} header={header} rows={ordersHistoryList} tablewidth="80%" />
+      <CustomTable header={header} rows={ordersHistoryList} tablewidth="80%" />
     </>
   );
 }

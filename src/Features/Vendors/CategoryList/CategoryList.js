@@ -54,7 +54,7 @@ function CategoryList() {
     </>
   );
 
-  const header = ['Id', 'Category', 'Edit'];
+  const header = ['Id', 'Category'];
 
   return (
     <>
@@ -64,7 +64,7 @@ function CategoryList() {
         <CommonButton onClick={() => History.push('/addcategory')} property="Add Category" />
       </CategoriesTitleContainer>
 
-      <CustomTable editDelete={editDelete} header={header} rows={categoryList} tablewidth="80%" />
+      <CustomTable header={header} rows={categoryList} tablewidth="80%" />
     </>
   );
 }
