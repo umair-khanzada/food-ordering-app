@@ -3,68 +3,124 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
+import { emailRegex, contactRegex } from '../../../scripts/constants';
 import { signup } from '../actions';
 
 function SignUpForm() {
-  const [signUpForm, setSignUpForm] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
+  const validateOnSubmit = () => {
+    let isValid = true;
+    const ValidateArray = signUpForm.map((textField) => {
+      if (textField.value == '') {
+        isValid = false;
+        return {
+          ...textField,
+          errorMessage: textField.name + ' field cannot be empty',
+          isValid: false,
+        };
+      }
+      !isValid ? null : (isValid = textField.isValid);
+      return textField;
+    });
 
+    setSignUpForm(ValidateArray);
+
+    return isValid;
+  };
   const dispatch = useDispatch();
 
-  const signUpClickHandler = () => {
-    dispatch(signup({ name: signUpForm.username, email: signUpForm.email, password: signUpForm.password }));
-  };
-
-  const textFiledChangeHandler = (e) => {
-    const { value, name } = e.target;
+  const textFiledChangeHandler = (e, index) => {
+    const { value } = e.target;
 
     setSignUpForm((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
+      const prevForm = [...prev];
+      const currentTextField = prevForm[index];
+      currentTextField.value = value;
+      const getValidationError = currentTextField.getValidation(currentTextField.value);
+      [currentTextField.errorMessage, currentTextField.isValid] = getValidationError;
+      return prevForm;
     });
   };
-  const signupInputs = {
-    fields: [
-      {
-        required: true,
-        label: 'Email',
-        name: 'email',
-        type: 'email',
-        value: signUpForm?.email || '',
-        changeHandler: textFiledChangeHandler,
+  const [signUpForm, setSignUpForm] = useState([
+    {
+      required: true,
+      label: 'Email',
+      name: 'email',
+      type: 'email',
+      value: '',
+      isValid: true,
+      errorMessage: '',
+      getValidation: (value) => {
+        if (!emailRegex.test(value)) {
+          return ['Email type is not valid', false];
+        }
+        return ['', true];
       },
-      {
-        required: true,
-        label: 'UserName',
-        name: 'username',
-        type: 'text',
-        value: signUpForm?.username || '',
-        changeHandler: textFiledChangeHandler,
+    },
+    {
+      required: true,
+      label: 'UserName',
+      name: 'username',
+      type: 'text',
+      value: '',
+      isValid: true,
+      errorMessage: '',
+      getValidation: (value) => {
+        if (value.length < 3) {
+          return ['Name should be gratter then 3', false];
+        }
+        if (value.length > 10) {
+          return ['Name should be less then 10 letters', false];
+        }
+        return ['', true];
       },
-      {
-        required: true,
-        label: 'Password',
-        name: 'password',
-        type: 'password',
-        minlength: '6',
-        value: signUpForm?.password || '',
-        changeHandler: textFiledChangeHandler,
+    },
+    {
+      required: true,
+      label: 'Password',
+      name: 'password',
+      type: 'password',
+      minlength: '6',
+      value: '',
+      isValid: true,
+      errorMessage: '',
+      getValidation: (value) => {
+        if (value.length < 8) {
+          return ['Password must be 8 characters long', false];
+        }
+        return ['', true];
       },
-      {
-        required: true,
-        label: 'Contact No',
-        name: 'contact',
-        type: 'text',
-        value: signUpForm?.contact || '',
-        changeHandler: textFiledChangeHandler,
+    },
+    {
+      required: true,
+      label: 'Contact No',
+      name: 'contact',
+      value: '',
+      type: 'tel',
+      isValid: true,
+      errorMessage: '',
+
+      getValidation: (value) => {
+        if (!contactRegex.test(value)) {
+          return ['Invalid number', false];
+        }
+        return ['', true];
       },
-    ],
+    },
+  ]);
+
+  const signUpClickHandler = (e) => {
+    e.preventDefault();
+
+    if (validateOnSubmit()) {
+      const userData = {};
+      signUpForm.map(({ name, value }) => {
+        userData[name] = value;
+      });
+
+      dispatch(signup(userData));
+    }
   };
+
   const signupButtons = {
     button: [
       {
@@ -80,9 +136,10 @@ function SignUpForm() {
     <div>
       <FormComponent
         basicButtons={signupButtons}
+        changeHandler={textFiledChangeHandler}
         formTitle="Sign UP"
-        inputFields={signupInputs}
-        label="Back to Login"
+        inputFields={signUpForm}
+        label="Login?"
         navigationPath="/login"
       />
     </div>

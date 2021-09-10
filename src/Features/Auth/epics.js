@@ -17,13 +17,14 @@ export const loginEpic = (action$) =>
       }).pipe(
         mergeMap((res) => {
           console.log(payload);
-          let found = {};
+          let found = null;
           res.response.map((user) =>
             user.email === payload.email && user.password === payload.password ? (found = user) : user,
           );
           if (found) {
             return of(loginSuccess(found));
           }
+
           return of(loginError());
 
           // loginSuccess({

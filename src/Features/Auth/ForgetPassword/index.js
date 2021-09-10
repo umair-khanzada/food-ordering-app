@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
-import { login } from '../actions';
+import { forgotPassword } from '../actions';
 
-function LoginForm() {
+function ForgetPassword() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { message, status } = useSelector((state) => {
+    const { message, status } = state.responseMessage;
+    return { message, status };
+  });
   const validateOnSubmit = () => {
     let isValid = true;
-    const ValidateArray = loginForm.map((textField) => {
+    const ValidateArray = forgetPasswordForm.map((textField) => {
       if (textField.value == '') {
         isValid = false;
         return {
@@ -22,37 +29,43 @@ function LoginForm() {
       return textField;
     });
 
-    setLoginForm(ValidateArray);
+    setforgetPasswordForm(ValidateArray);
 
     return isValid;
   };
-  const dispatch = useDispatch();
 
-  const loginClickHandler = (e) => {
+  const forgetPasswordClickHandler = (e) => {
     e.preventDefault();
+
     if (validateOnSubmit()) {
       const userData = {};
-      loginForm.map(({ name, value }) => {
+      forgetPasswordForm.map(({ name, value }) => {
         userData[name] = value;
       });
 
-      dispatch(login(userData));
+      dispatch(forgotPassword(userData));
     }
   };
+  useEffect(() => {
+    if (status === 200) {
+      history.push('/login');
+    }
+  });
   const textFiledChangeHandler = (e, index) => {
     const { value } = e.target;
 
-    setLoginForm((prev) => {
+    setforgetPasswordForm((prev) => {
       const prevForm = [...prev];
       const currentTextField = prevForm[index];
 
       currentTextField.value = value;
       const getValidationError = currentTextField.getValidation(currentTextField.value);
+
       [currentTextField.errorMessage, currentTextField.isValid] = getValidationError;
       return prevForm;
     });
   };
-  const [loginForm, setLoginForm] = useState([
+  const [forgetPasswordForm, setforgetPasswordForm] = useState([
     {
       required: true,
       label: 'Email',
@@ -85,31 +98,30 @@ function LoginForm() {
       },
     },
   ]);
-
   const loginButtons = {
     button: [
       {
         type: 'submit',
         name: 'login',
         minWidth: '100%',
-        clickHandler: loginClickHandler,
+        clickHandler: forgetPasswordClickHandler,
       },
     ],
   };
 
   return (
-    <div>
+    <>
       <FormComponent
         basicButtons={loginButtons}
         changeHandler={textFiledChangeHandler}
-        forgotPassword="Forgot Password?"
-        formTitle="Login"
-        inputFields={loginForm}
-        label="Create New Account?"
-        navigationPath="/signup"
+        formTitle="Forgot Password"
+        inputFields={forgetPasswordForm}
+        label="Back to login?"
+        navigationPath="/login"
+        responseError={message}
       />
-    </div>
+    </>
   );
 }
 
-export default LoginForm;
+export default ForgetPassword;
