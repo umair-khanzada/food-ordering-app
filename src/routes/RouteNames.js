@@ -7,6 +7,12 @@ const RouteNames = {
   profile: '/profile',
   dashboard: '/dashboard',
   addVendor: '/editvendor',
+  vendors: '/vendors',
+  usersList: '/usersList',
+  editVendor: '/editvendor',
+  users: '/users',
+  orderHistory: '/orderhistory',
+  categories: '/categories',
 };
 
 export default RouteNames;

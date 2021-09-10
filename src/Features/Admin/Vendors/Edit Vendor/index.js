@@ -134,9 +134,7 @@ const AddVendors = ({ data }) => {
                 onChange={(e) => setData('building', e.target.value)}
               />
               <div className={classes.btncontainer}>
-                <Button className={classes.btn} onClick={() => console.log(data)}>
-                  Save Changes
-                </Button>{' '}
+                <Button className={classes.btn}>Save Changes</Button>{' '}
               </div>
             </form>
           </Paper>

@@ -61,23 +61,23 @@ function SideMenu() {
         </div>
         <div className={navigation} style={{ position: 'relative', wordWrap: 'break-word' }}>
           <p className={list}>
-            <Link className={link} to="/">
+            <Link className={link} to="/orderhistory">
               Order History
             </Link>
           </p>
           <p className={list}>
-            <Link className={link} to="/">
-              Vendor List
+            <Link className={link} to="/vendors">
+              Vendors
             </Link>
           </p>
           <p className={list}>
-            <Link className={link} to="/">
-              Users List
+            <Link className={link} to="/users">
+              Users
             </Link>
           </p>
           <p className={list}>
-            <Link className={link} to="/">
-              Category List
+            <Link className={link} to="/categories">
+              Categories
             </Link>
           </p>
         </div>

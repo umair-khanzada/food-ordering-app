@@ -2,59 +2,21 @@
   "users": [
     {
       "id": 1,
-      "email": "example@example.com",
-      "password": "something",
-      "role": "Office_Boy"
+      "email": "s@s.com",
+      "password": "s",
+      "role": "Admin"
     },
     {
       "email": "ex@ex.com",
       "password": "ex",
       "id": 2,
-      "role": "Order_Placer"
-    }
-  ],
-  "vendors": [
-    {
-      "id": 1,
-      "name": "Yousuf",
-      "timing": "12:00",
-      "building": "main"
+      "role": "User"
     },
     {
+      "email": "ex@ex.com",
+      "password": "ex",
       "id": 2,
-      "name": "Arif",
-      "timing": "12:00",
-      "building": "qasre sheeren"
-    },
-    {
-      "name": "asva",
-      "timing": "12:00",
-      "building": "main",
-      "id": 3
-    }
-  ],
-  "menus": [
-    {
-      "id": 1,
-      "name": "daal",
-      "price": "80",
-      "restaurant": "abc"
-    },
-    {
-      "id": 2,
-      "name": "roti",
-      "price": "20",
-      "restaurant": "xyz"
-    }
-  ],
-  "restaurants": [
-    {
-      "id": 1,
-      "name": "abc"
-    },
-    {
-      "id": 2,
-      "name": "asdasd"
+      "role": "Vendor"
     }
   ]
 }
