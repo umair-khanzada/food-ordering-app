@@ -2,6 +2,8 @@ import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from
 import { dashboardRoute } from '../Features/Dashboard/route';
 import { homeRoute } from '../Features/Home';
 import { profileRoute } from '../Features/Profile';
+// import { AddMenuRoute, MenuRoute } from '../Features/Vendors/route';
+import { AddMenuRoute, MenuRoute } from '../Features/Vendors/route';
 
 const routeConfig = {
   auth: [
@@ -12,6 +14,8 @@ const routeConfig = {
     resetPasswordRoute,
     forgetPasswordRoute,
     dashboardRoute,
+    AddMenuRoute,
+    MenuRoute,
   ],
   orderPlacer: [],
   officeBoy: [],

@@ -12,7 +12,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
 
-import { CustomTableHead } from './style';
+import { CustomTableHead, EditDeleteCell } from './style';
 const useStyles1 = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -71,7 +71,7 @@ const useStyles2 = makeStyles({
     minWidth: 500,
   },
 });
-export default function CustomTable({ rows, header }) {
+export default function CustomTable({ rows, header, editDelete }) {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -104,6 +104,7 @@ export default function CustomTable({ rows, header }) {
                   {row[data]}
                 </TableCell>
               ))}
+              <EditDeleteCell>{editDelete}</EditDeleteCell>
             </TableRow>
           ))}
           {emptyRows > 0 && (
