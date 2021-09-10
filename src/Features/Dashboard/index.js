@@ -3,13 +3,7 @@ import React, { useState } from 'react';
 import 'date-fns';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useDispatch, useSelector } from 'react-redux';
-
-import MainTab from '../../components/CardMenus/Tabs';
-import TemporaryDrawer from '../../components/Drawer';
-import SideMenu from '../../components/sideMenu';
-import { openDrawer } from './Reducer/action';
 
 function Dashboard() {
   const drawerWidth = 300;
@@ -115,7 +109,6 @@ function Dashboard() {
   ];
   // closing time ends
 
-  const classes = useStyles();
   // const [isDrawerOpen, setOpenDrawer] = useState(false);
 
   const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
@@ -153,12 +146,7 @@ function Dashboard() {
               </div>
 
               <div className={classes.userInfo}>
-                <Typography variant="h4">
-                  <b> Arham Ahmed</b>
-                </Typography>
-                <Typography color="textSecondary" component="p" variant="h4">
-                  Waiter
-                </Typography>
+                <NestedList />
               </div>
             </div>
             <div className={classes.tabs}>
