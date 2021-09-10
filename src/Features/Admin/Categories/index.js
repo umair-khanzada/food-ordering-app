@@ -8,7 +8,7 @@ import { categoryList } from '../../../Mock/CategoryList';
 import { CategoriesTitleContainer, CategoriesTitle } from './style';
 function CategoryList() {
   const history = useHistory();
-
+  ``;
   const onEdit = (row) => {
     history.push({
       pathname: '/editcategory',
@@ -22,7 +22,7 @@ function CategoryList() {
     <>
       <CategoriesTitleContainer>
         <CategoriesTitle>Categories</CategoriesTitle>
-        <CommonButton property="Add Category" />
+        <CommonButton onClick={() => history.push('/addcategory')} property="Add Category" />
       </CategoriesTitleContainer>
 
       <CustomTable header={header} isEditDelete onEdit={onEdit} rows={categoryList} tablewidth="50%" />

@@ -16,6 +16,8 @@ const RouteNames = {
   editUser: '/edituser',
   editOrderHistory: '/editorderhistory',
   addHistory: '/addHistory',
+  addCategory: '/addcategory',
+  editCategory: '/editcategory',
 };
 
 export default RouteNames;

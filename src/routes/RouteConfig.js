@@ -1,4 +1,4 @@
-import { categoriesRoute } from '../Features/Admin/Categories/route';
+import { addCategoriesRoute, categoriesRoute, editCategoriesRoute } from '../Features/Admin/Categories/route';
 import { addHistoryRoute, editHistoryRoute, orderHistoryRoute } from '../Features/Admin/OrderHistory/route';
 import { addUserRoute, editUserRoute, usersRoute } from '../Features/Admin/Users/route';
 import { addVendorsRoute, editVendorsRoute, vendorsRoute } from '../Features/Admin/Vendors/route';
@@ -21,6 +21,8 @@ const routeConfig = {
     editUserRoute,
     editVendorsRoute,
     addVendorsRoute,
+    addCategoriesRoute,
+    editCategoriesRoute,
   ],
   officeBoy: [],
   common: [profileRoute],
