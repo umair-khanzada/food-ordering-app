@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
 
 function SideMenu() {
-  // const drawerWidth = 300;
+  const drawerWidth = '25%';
   const useStyles = makeStyles(() => ({
     drawerPaper: {
       position: 'static',

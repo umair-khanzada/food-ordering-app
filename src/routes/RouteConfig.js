@@ -3,10 +3,18 @@ import { addHistoryRoute, editHistoryRoute, orderHistoryRoute } from '../Feature
 import { addUserRoute, editUserRoute, usersRoute } from '../Features/Admin/Users/route';
 import { addVendorsRoute, editVendorsRoute, vendorsRoute } from '../Features/Admin/Vendors/route';
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
-import { dashboardRoute } from '../Features/Dashboard/route';
+import { orderHistoryRoute, profileRoute } from '../Features/Customer/route';
+import { dashboardRoute } from '../Features/Customer/route';
 import { homeRoute } from '../Features/Home';
-import { profileRoute } from '../Features/Profile';
-
+import {
+  AddMenuRoute,
+  MenuRoute,
+  OrderListRoute,
+  CategoryListRoute,
+  AddCategoryRoute,
+  EditMenuRoute,
+  RestrauntRoute,
+} from '../Features/Vendors/route';
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
   orderPlacer: [dashboardRoute],
@@ -24,8 +32,28 @@ const routeConfig = {
     addCategoriesRoute,
     editCategoriesRoute,
   ],
+  auth: [
+    loginRoute,
+    homeRoute,
+    signUpRoute,
+    resetPasswordRoute,
+    resetPasswordRoute,
+    forgetPasswordRoute,
+    dashboardRoute,
+    AddMenuRoute,
+    MenuRoute,
+    profileRoute,
+    orderHistoryRoute,
+    profileRoute,
+    OrderListRoute,
+    CategoryListRoute,
+    AddCategoryRoute,
+    EditMenuRoute,
+    RestrauntRoute,
+  ],
+  orderPlacer: [],
   officeBoy: [],
-  common: [profileRoute],
+  common: [],
 };
 
 export default routeConfig;

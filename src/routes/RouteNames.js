@@ -1,7 +1,7 @@
 const RouteNames = {
   forgetPassword: '/forget-password',
   signup: '/signup',
-  login: '/login',
+  login: '/',
   home: '/home',
   resetPassword: '/reset-password',
   profile: '/profile',
@@ -18,6 +18,14 @@ const RouteNames = {
   addHistory: '/addHistory',
   addCategory: '/addcategory',
   editCategory: '/editcategory',
+  menu: '/menu',
+  restraunt: '/restraunt',
+  addMenu: '/addmenu',
+  orderhistory: '/orderhistory',
+  orderlist: '/orderlist',
+  categorylist: '/categorylist',
+  addcategory: '/addcategory',
+  editMenu: '/editmenu',
 };
 
 export default RouteNames;

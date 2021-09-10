@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { Paper, Tab, Tabs } from '@material-ui/core';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import CardMenus from './CardMenus';
 
@@ -18,6 +19,7 @@ const MainTab = () => {
           <Tab label="Rice" />
           <Tab label="Burgers" />
           <Tab label="Rolls" />
+          <Tab icon={<AddShoppingCartIcon />} onClick={() => props.setOpenDrawer()} />
         </Tabs>
       </Paper>
       <CardMenus />

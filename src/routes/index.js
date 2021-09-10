@@ -1,15 +1,12 @@
-/* eslint-disable indent */
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import LoginContainer from '../Features/Auth/Login/LoginContainer';
 import { HomeContainer } from '../Features/Home';
 import Roles from '../roles';
 import { isProtectedRoute, isPublicRoute } from './Permission';
-import RouteConfig from './RouteConfig';
-
 export default function BaseRouter() {
   const { isLoggedIn, user } = useSelector((state) => {
     const {
@@ -45,8 +42,8 @@ export default function BaseRouter() {
         })}
         {isLoggedIn && role === Roles.user
           ? RouteConfig.orderPlacer.map((route, index) => {
-              return <Route key={index} component={() => route.component()} exact path={route.path} />;
-            })
+            return <Route key={index} component={() => route.component()} exact path={route.path} />;
+          })
           : null}
         {isLoggedIn &&
           RouteConfig.common.map((route, index) => {
@@ -54,8 +51,8 @@ export default function BaseRouter() {
           })}
         {isLoggedIn && role === admin
           ? RouteConfig.admin.map((route, index) => {
-              return <Route key={index} component={() => route.component()} exact path={route.path} />;
-            })
+            return <Route key={index} component={() => route.component()} exact path={route.path} />;
+          })
           : null}
         {isLoggedIn ? (
           <Route>

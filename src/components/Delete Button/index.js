@@ -3,7 +3,6 @@ import React from 'react';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 
 import Button from '../Button/Button';
-
 const DeleteButton = ({ handleClose, open, onDelete }) => {
   return (
     <div>
@@ -33,5 +32,4 @@ const DeleteButton = ({ handleClose, open, onDelete }) => {
     </div>
   );
 };
-
 export default DeleteButton;
