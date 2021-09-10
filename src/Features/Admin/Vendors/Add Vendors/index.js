@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 
 // import Header from '../OrderHistory/Header';
 const useStyles = makeStyles((theme) => ({
-  AddHistoryRoot: {
+  AddVendorsRoot: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
-  AddHistoryPaper: {
+  AddVendorsPaper: {
     width: '500px',
     height: '100%',
   },
-  AddHistorymain: {
+  AddVendorsmain: {
     padding: '20px',
   },
-  AddHistoryAvatar: {
+  AddVendorsAvatar: {
     width: '150px',
     height: '150px',
   },
@@ -41,17 +41,17 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '600',
   },
 
-  addHistoryGrid: {
+  addVendorsyGrid: {
     marginTop: '20px',
     display: 'flex',
     justifyContent: 'center',
   },
-  AddHistoryDiv: {
+  AddVendorsDiv: {
     width: '49ch',
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  AddHistoryButton: {
+  AddVendorsButton: {
     backgroundColor: '#E91E63',
     color: 'white',
     margin: '20px',
@@ -60,24 +60,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const AddHistory = () => {
+const AddVendors = () => {
   const classes = useStyles();
   return (
-    <Grid className={classes.addHistoryGrid}>
+    <Grid className={classes.addVendorsyGrid}>
       {/* <Header /> */}
-      <div className={classes.AddHistorymain}>
-        <Paper className={classes.AddHistoryPaper}>
-          <form autoComplete="off" className={classes.AddHistoryRoot} noValidate>
-            <Avatar className={classes.AddHistoryAvatar} src="/broken-image.jpg" />
+      <div className={classes.AddVendorsmain}>
+        <Paper className={classes.AddVendorsPaper}>
+          <form autoComplete="off" className={classes.AddVendorsRoot} noValidate>
+            <Avatar className={classes.AddVendorsAvatar} src="/broken-image.jpg" />
             <Typography className={classes.textstyle} variant="h2">
-              Order History
+              Add Vendor
             </Typography>
+            <TextField defaultValue="1" id="standard-read-only-input" label="ID" />
             <TextField defaultValue="Fahad Qureshi" id="standard-read-only-input" label="Name" />
-            <TextField defaultValue="Karhai" id="standard-read-only-input" label="Item" />
-            <TextField defaultValue="Bread" id="standard-read-only-input" label="Breat Item" />
+            <TextField defaultValue="RS 250/=" id="standard-read-only-input" label="Price" />
+            <TextField defaultValue="Karhai" id="standard-read-only-input" label="Menu" />
+            <TextField defaultValue="Barbar" id="standard-read-only-input" label="Vendor Name" />
 
-            <div className={classes.AddHistoryDiv}>
-              <Button className={classes.AddHistoryButton}>Add Order History</Button>
+            <div className={classes.AddVendorsDiv}>
+              <Button className={classes.AddVendorsButton}>Add Vendors</Button>
             </div>
           </form>
         </Paper>
@@ -85,4 +87,4 @@ const AddHistory = () => {
     </Grid>
   );
 };
-export default AddHistory;
+export default AddVendors;

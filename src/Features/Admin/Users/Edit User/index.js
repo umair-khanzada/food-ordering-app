@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 
 // import Header from '../OrderHistory/Header';
 const useStyles = makeStyles((theme) => ({
-  AddHistoryRoot: {
+  EditUserRoot: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
-  AddHistoryPaper: {
+  EditUserPaper: {
     width: '500px',
     height: '100%',
   },
-  AddHistorymain: {
+  EditUsermain: {
     padding: '20px',
   },
-  AddHistoryAvatar: {
+  EditUserAvatar: {
     width: '150px',
     height: '150px',
   },
@@ -41,17 +41,17 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '600',
   },
 
-  addHistoryGrid: {
+  EditUserGrid: {
     marginTop: '20px',
     display: 'flex',
     justifyContent: 'center',
   },
-  AddHistoryDiv: {
+  EditUserDiv: {
     width: '49ch',
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  AddHistoryButton: {
+  EditUserButton: {
     backgroundColor: '#E91E63',
     color: 'white',
     margin: '20px',
@@ -60,24 +60,25 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const AddHistory = () => {
+const EditUser = () => {
   const classes = useStyles();
   return (
-    <Grid className={classes.addHistoryGrid}>
+    <Grid className={classes.EditUserGrid}>
       {/* <Header /> */}
-      <div className={classes.AddHistorymain}>
-        <Paper className={classes.AddHistoryPaper}>
-          <form autoComplete="off" className={classes.AddHistoryRoot} noValidate>
-            <Avatar className={classes.AddHistoryAvatar} src="/broken-image.jpg" />
+      <div className={classes.EditUsermain}>
+        <Paper className={classes.EditUserPaper}>
+          <form autoComplete="off" className={classes.EditUserRoot} noValidate>
+            <Avatar className={classes.EditUserAvatar} src="/broken-image.jpg" />
             <Typography className={classes.textstyle} variant="h2">
-              Order History
+              Edit User
             </Typography>
+            <TextField defaultValue="1" id="standard-read-only-input" label="ID" />
             <TextField defaultValue="Fahad Qureshi" id="standard-read-only-input" label="Name" />
-            <TextField defaultValue="Karhai" id="standard-read-only-input" label="Item" />
-            <TextField defaultValue="Bread" id="standard-read-only-input" label="Breat Item" />
+            <TextField defaultValue="FahadQureshi@nisum.com" id="standard-read-only-input" label="Email" />
+            <TextField defaultValue="123456789" id="standard-read-only-input" label="Contact" />
 
-            <div className={classes.AddHistoryDiv}>
-              <Button className={classes.AddHistoryButton}>Add Order History</Button>
+            <div className={classes.EditUserDiv}>
+              <Button className={classes.EditUserButton}>Edit Users</Button>
             </div>
           </form>
         </Paper>
@@ -85,4 +86,4 @@ const AddHistory = () => {
     </Grid>
   );
 };
-export default AddHistory;
+export default EditUser;

@@ -21,7 +21,7 @@ function UsersList() {
     <>
       <UsersTitleContainer>
         <UsersTitle>Users</UsersTitle>
-        <CommonButton property="Add Users" />
+        <CommonButton onClick={() => history.push('/adduser')} property="Add Users" />
       </UsersTitleContainer>
 
       <CustomTable header={header} isEditDelete onEdit={onEdit} rows={userList} tablewidth="80%" />

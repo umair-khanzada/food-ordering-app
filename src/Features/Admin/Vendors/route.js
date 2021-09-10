@@ -1,16 +1,23 @@
-import { isProtectedRoute, isPublicRoute } from '../../../routes/Permission';
+import Vendors from '.';
+import { isProtectedRoute } from '../../../routes/Permission';
 import RouteNames from '../../../routes/RouteNames';
+import AddVendor from './Add Vendors';
 import EditVendor from './Edit Vendor';
-import VendorList from './index';
 
 export const vendorsRoute = {
   path: RouteNames.vendors,
-  permissions: isPublicRoute, // to intimate it is public route
-  component: VendorList,
+  permissions: isProtectedRoute, // to intimate it is public route
+  component: Vendors,
 };
 
-export const editVendorRoute = {
+export const editVendorsRoute = {
   path: RouteNames.editVendor,
   permissions: isProtectedRoute, // to intimate it is public route
   component: EditVendor,
+};
+
+export const addVendorsRoute = {
+  path: RouteNames.addVendor,
+  permissions: isProtectedRoute, // to intimate it is public route
+  component: AddVendor,
 };

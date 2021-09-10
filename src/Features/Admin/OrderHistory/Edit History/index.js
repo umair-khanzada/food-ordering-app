@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const AddHistory = () => {
+const EditHistory = () => {
   const classes = useStyles();
   return (
     <Grid className={classes.addHistoryGrid}>
@@ -72,12 +72,13 @@ const AddHistory = () => {
             <Typography className={classes.textstyle} variant="h2">
               Order History
             </Typography>
+            <TextField defaultValue="Number" id="standard-read-only-input" label="ID" />
             <TextField defaultValue="Fahad Qureshi" id="standard-read-only-input" label="Name" />
-            <TextField defaultValue="Karhai" id="standard-read-only-input" label="Item" />
-            <TextField defaultValue="Bread" id="standard-read-only-input" label="Breat Item" />
+            <TextField defaultValue="123456789" id="standard-read-only-input" label="Contact" />
+            <TextField defaultValue="FahadQureshi@gmail.com" id="standard-read-only-input" label="Email" />
 
             <div className={classes.AddHistoryDiv}>
-              <Button className={classes.AddHistoryButton}>Add Order History</Button>
+              <Button className={classes.AddHistoryButton}>Edit History</Button>
             </div>
           </form>
         </Paper>
@@ -85,4 +86,4 @@ const AddHistory = () => {
     </Grid>
   );
 };
-export default AddHistory;
+export default EditHistory;

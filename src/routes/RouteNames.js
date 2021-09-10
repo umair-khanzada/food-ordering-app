@@ -6,14 +6,15 @@ const RouteNames = {
   resetPassword: '/reset-password',
   profile: '/profile',
   dashboard: '/dashboard',
-  addVendor: '/editvendor',
+  addVendor: '/addvendor',
   vendors: '/vendors',
-  usersList: '/usersList',
   editVendor: '/editvendor',
   users: '/users',
   orderHistory: '/orderhistory',
   categories: '/categories',
   addUser: '/adduser',
+  editUser: '/edituser',
+  editOrderHistory: '/editorderhistory',
   addHistory: '/addHistory',
 };
 
