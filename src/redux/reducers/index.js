@@ -4,7 +4,7 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
 import { forgotPassword, responseMessage, authReducer } from '../../Features/Auth/ducks';
-import { addtocartReducers } from '../../Features/Dashboard/Reducer/reducer';
+import { addtocartReducers } from '../../Features/Customer/ducks';
 
 const persistConfig = {
   key: 'root',

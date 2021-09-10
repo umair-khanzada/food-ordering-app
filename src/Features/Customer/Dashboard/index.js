@@ -1,42 +1,17 @@
 import React, { useState } from 'react';
 
 import 'date-fns';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
-import MainTab from '../../components/CardMenus/Tabs';
-import TemporaryDrawer from '../../components/Drawer';
-import { openDrawer } from './Reducer/action';
+import MainTab from '../../../components/CardMenus/Tabs';
+import TemporaryDrawer from '../../../components/Drawer';
+import { openDrawer } from '../actions';
 
 function Dashboard() {
   const drawerWidth = 300;
   const useStyles = makeStyles((theme) => ({
-    // header: {
-    //   display: 'flex',
-    //   justifyContent: 'space-between',
-    //   marginTop: '30px',
-    // },
-    // orderHeading: {
-    //   fontWeight: '700',
-    //   marginLeft: '40px',
-    // },
-    // orderRef: {
-    //   color: 'lightgrey',
-    //   paddingLeft: '10px',
-    //   paddingTop: '8px',
-    //   fontSize: '18px',
-    // },
-    // orderDetails: {
-    //   display: 'flex',
-    // },
-    // userInfo: {
-    //   paddingRight: '40px',
-    // },
-    // tabs: {
-    //   paddingRight: '30px',
-    // },
-    // menu
     buttons: {
       display: 'flex',
       marginTop: '20px',
@@ -47,6 +22,9 @@ function Dashboard() {
     headerMenu: {
       display: 'flex',
       justifyContent: 'space-between',
+    },
+    tab: {
+      marginTop: '20px',
     },
   }));
 
@@ -140,13 +118,13 @@ function Dashboard() {
               <div className={classes.orderDetails}>
                 {/* <ArrowBackIcon fontSize="large" style={{ color: '#e91e63' }} /> */}
 
-                <Typography className={classes.orderHeading} noWrap style={{ marginLeft: '40px' }} variant="h2">
+                {/* <Typography className={classes.orderHeading} noWrap style={{ marginLeft: '40px' }} variant="h2">
                   New Order
                 </Typography>
 
                 <Typography className={classes.orderRef} noWrap paragraph>
                   #023025
-                </Typography>
+                </Typography> */}
               </div>
 
               {/* <div className={classes.userInfo}>
@@ -155,8 +133,9 @@ function Dashboard() {
             </div>
             <div className={classes.tabs}>
               <TemporaryDrawer />
-
-              <MainTab setOpenDrawer={() => dispatch(openDrawer())} />
+              <div className={classes.tab}>
+                <MainTab setOpenDrawer={() => dispatch(openDrawer())} />
+              </div>
             </div>
 
             <div />

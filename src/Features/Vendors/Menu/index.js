@@ -62,6 +62,13 @@ function Menu() {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+
+  const onEdit = (row) => {
+    history.push({
+      pathname: '/editmenu',
+      state: { data: row },
+    });
+  };
   const header = ['Item Name', 'Type', 'Restraunt', 'Price', 'Edit'];
 
   const tableData = [
@@ -146,7 +153,7 @@ function Menu() {
           </div>
 
           <div style={{ padding: '20px', marginTop: '30px' }}>
-            <CustomTable editDelete={editDelete} header={header} rows={tableData} />
+            <CustomTable header={header} isEditDelete onEdit={onEdit} rows={tableData} tablewidth="80%" />
           </div>
         </Grid>
       </Grid>

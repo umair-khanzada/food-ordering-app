@@ -11,8 +11,7 @@ import HistoryIcon from '@material-ui/icons/History';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import { logout } from '../Auth/actions';
-
+import { logout } from '../../Auth/actions';
 const useStyles = makeStyles((theme) => ({
   nested: {
     marginRight: '6px',

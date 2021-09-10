@@ -1,8 +1,8 @@
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { orderHistoryRoute, profileRoute } from '../Features/Customer/route';
-import { dashboardRoute } from '../Features/Dashboard/route';
+import { dashboardRoute } from '../Features/Customer/route';
 import { homeRoute } from '../Features/Home';
-import { AddMenuRoute, MenuRoute } from '../Features/Vendors/route';
+import { AddMenuRoute, MenuRoute, EditMenuRoute, RestrauntRoute } from '../Features/Vendors/route';
 const routeConfig = {
   auth: [
     loginRoute,
@@ -17,6 +17,8 @@ const routeConfig = {
     profileRoute,
     orderHistoryRoute,
     profileRoute,
+    EditMenuRoute,
+    RestrauntRoute,
   ],
   orderPlacer: [],
   officeBoy: [],

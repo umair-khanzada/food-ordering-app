@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function AddRestrauntContainer() {
+function EditMenuContainer() {
   const classes = useStyles();
   const history = useHistory();
   function addItem() {
@@ -59,18 +59,27 @@ function AddRestrauntContainer() {
       <div className={classes.form}>
         <div className={classes.alignCenter}>
           <Typography className={classes.heading} variant="h2">
-            Add Restraunt
+            Edit Item
           </Typography>
+          <div className={classes.formField}>
+            <TextField className={classes.txtField} label="Category" />
+          </div>
           <div className={classes.formField}>
             <TextField className={classes.txtField} label="Restraunt" />
           </div>
+          <div className={classes.formField}>
+            <TextField className={classes.txtField} label="Item Name " />
+          </div>
+          <div className={classes.formField}>
+            <TextField className={classes.txtField} label="Price" />
+          </div>
 
           <div className={classes.button}>
-            <CommonButton fontSize="14px" minwidth="100px" onClick={addItem} property="Add Restraunt" />
+            <CommonButton fontSize="14px" minwidth="100px" onClick={addItem} property="Edit Menu" />
           </div>
         </div>
       </div>
     </div>
   );
 }
-export default AddRestrauntContainer;
+export default EditMenuContainer;

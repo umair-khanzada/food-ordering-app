@@ -2,6 +2,8 @@ import { isPublicRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
 import Menu from './Menu';
 import AddMenuContainer from './Menu/AddMenu/AddMenuContainer';
+import EditMenuContainer from './Menu/EditMenu/EditMenuContainer';
+import AddRestrauntContainer from './Restraunt/AddRestraunt/AddRestrauntContainer';
 export const MenuRoute = {
   path: RouteNames.menu,
   permissions: isPublicRoute, // to intimate it is public route
@@ -14,8 +16,14 @@ export const AddMenuRoute = {
   component: AddMenuContainer,
 };
 
-// export const RestrauntRoute = {
-//   path: RouteNames.restraunt,
-//   permissions: isPublicRoute, // to intimate it is public route
-//   component: Menu,
-// };
+export const EditMenuRoute = {
+  path: RouteNames.editMenu,
+  permissions: isPublicRoute, // to intimate it is public route
+  component: EditMenuContainer,
+};
+
+export const RestrauntRoute = {
+  path: RouteNames.restraunt,
+  permissions: isPublicRoute, // to intimate it is public route
+  component: AddRestrauntContainer,
+};
