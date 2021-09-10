@@ -1,52 +1,144 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Grid, Typography, Box } from '@material-ui/core';
+import 'date-fns';
+import { Box, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MainTab from '../../components/CardMenus/Tabs';
-import SideMenu from '../../components/sideMenu';
+import TemporaryDrawer from '../../components/Drawer';
+import { openDrawer } from './Reducer/action';
 
 function Dashboard() {
-  const useStyles = makeStyles(() => ({
-    header: {
+  const drawerWidth = 300;
+  const useStyles = makeStyles((theme) => ({
+    // header: {
+    //   display: 'flex',
+    //   justifyContent: 'space-between',
+    //   marginTop: '30px',
+    // },
+    // orderHeading: {
+    //   fontWeight: '700',
+    //   marginLeft: '40px',
+    // },
+    // orderRef: {
+    //   color: 'lightgrey',
+    //   paddingLeft: '10px',
+    //   paddingTop: '8px',
+    //   fontSize: '18px',
+    // },
+    // orderDetails: {
+    //   display: 'flex',
+    // },
+    // userInfo: {
+    //   paddingRight: '40px',
+    // },
+    // tabs: {
+    //   paddingRight: '30px',
+    // },
+    // menu
+    buttons: {
+      display: 'flex',
+      marginTop: '20px',
+    },
+    button: {
+      marginRight: '10px',
+    },
+    headerMenu: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '30px',
-    },
-    orderHeading: {
-      fontWeight: '700',
-      marginLeft: '40px',
-    },
-    orderRef: {
-      color: 'lightgrey',
-      paddingLeft: '10px',
-      paddingTop: '8px',
-      fontSize: '18px',
-    },
-    orderDetails: {
-      display: 'flex',
-    },
-    userInfo: {
-      paddingRight: '40px',
-    },
-    tabs: {
-      paddingRight: '30px',
     },
   }));
 
   const classes = useStyles();
+
+  // side menu work starts
+  const [isRestrauntModalOpen, setRestrauntModal] = useState(false);
+  const [isMenuModalOpen, setMenuModal] = useState(false);
+
+  function openRestrauntModal(isOpen) {
+    setRestrauntModal(isOpen);
+  }
+  function openMenuModal(isOpen) {
+    setMenuModal(isOpen);
+  }
+
+  // side menu work end
+
+  // closing time starts
+  const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+  const header = ['Item Name', 'Type', 'Restraunt', 'Price', 'Active Today', 'Delete'];
+
+  const tableData = [
+    {
+      name: 'Pizza',
+      type: 'Fast Food',
+      restraunt: 'Domino',
+      price: 'Rs. 100',
+    },
+    {
+      name: 'Pizza',
+      type: 'Fast Food',
+      restraunt: 'Domino',
+      price: 'Rs. 100',
+    },
+    {
+      name: 'Pizza',
+      type: 'Fast Food',
+      restraunt: 'Domino',
+      price: 'Rs. 100',
+    },
+    {
+      name: 'Pizza',
+      type: 'Fast Food',
+      restraunt: 'Domino',
+      price: 'Rs. 100',
+    },
+    {
+      name: 'Pizza',
+      type: 'Fast Food',
+      restraunt: 'Domino',
+      price: 'Rs. 100',
+    },
+    {
+      name: 'Pizza',
+      type: 'Fast Food',
+      restraunt: 'Domino',
+      price: 'Rs. 100',
+    },
+  ];
+  // closing time ends
+
+  // const [isDrawerOpen, setOpenDrawer] = useState(false);
+
+  const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
+  const dispatch = useDispatch();
+
+  // function toggleDrawer() {
+  //   setOpenDrawer(!isDrawerOpen);
+  // }
+
+  // const openDrawer = () => {
+  //   setOpenDrawer(true);
+  // };
+
+  // const closeDrawer = () => {
+  //   setOpenDrawer(false);
+  // };
+
   return (
     <div>
+      {console.log('state changed!!!', isDrawerOpen)}
       <Grid container>
-        <Grid item md={3}>
-          <SideMenu />
-        </Grid>
-        <Grid item md={9}>
+        <Grid item md={12}>
           <Box>
             <div className={classes.header}>
               <div className={classes.orderDetails}>
-                <ArrowBackIcon fontSize="large" style={{ color: '#e91e63' }} />
+                {/* <ArrowBackIcon fontSize="large" style={{ color: '#e91e63' }} /> */}
 
                 <Typography className={classes.orderHeading} noWrap style={{ marginLeft: '40px' }} variant="h2">
                   New Order
@@ -57,18 +149,16 @@ function Dashboard() {
                 </Typography>
               </div>
 
-              <div className={classes.userInfo}>
-                <Typography variant="h4">
-                  <b> Arham Ahmed</b>
-                </Typography>
-                <Typography color="textSecondary" component="p" variant="h4">
-                  Waiter
-                </Typography>
-              </div>
+              {/* <div className={classes.userInfo}>
+                <NestedList />
+              </div> */}
             </div>
             <div className={classes.tabs}>
-              <MainTab />
+              <TemporaryDrawer />
+
+              <MainTab setOpenDrawer={() => dispatch(openDrawer())} />
             </div>
+
             <div />
           </Box>
         </Grid>
