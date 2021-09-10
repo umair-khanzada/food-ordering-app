@@ -8,6 +8,9 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import CreateIcon from '@material-ui/icons/Create';
+import { useHistory } from 'react-router';
+
+import DeleteButton from '../../../../components/Delete Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,13 +56,16 @@ const useStyles = makeStyles((theme) => ({
     padding: '9px',
   },
 }));
-const EditVendor = (props) => {
-  const classes = useStyles();
+const EditVendor = () => {
+  const history = useHistory();
 
+  const { data } = history.location.state;
+  const { id, name, email, contact, timing, building } = data;
+
+  const classes = useStyles();
   const setData = (key, value) => {
     // data[key] = value;
   };
-
   return (
     <Grid container>
       <Grid className={classes.grid} item md={9}>
@@ -69,7 +75,7 @@ const EditVendor = (props) => {
               <Avatar className={classes.avatar} src="/broken-image.jpg" />
               <TextField
                 className={classes.text}
-                defaultValue="Fahad"
+                defaultValue={name}
                 InputProps={{
                   className: classes.text,
                   endAdornment: (
@@ -82,7 +88,7 @@ const EditVendor = (props) => {
                 onChange={(e) => setData('name', e.target.value)}
               />
               <TextField
-                defaultValue="fahadqureshy23@gmail.com"
+                defaultValue={email}
                 InputProps={{
                   className: classes.text,
                   endAdornment: (
@@ -95,7 +101,7 @@ const EditVendor = (props) => {
                 onChange={(e) => setData('email', e.target.value)}
               />
               <TextField
-                defaultValue="03161359848"
+                defaultValue={contact}
                 InputProps={{
                   className: classes.text,
                   endAdornment: (
@@ -108,7 +114,7 @@ const EditVendor = (props) => {
                 onChange={(e) => setData('contact', e.target.value)}
               />
               <TextField
-                defaultValue="03161359848"
+                defaultValue={timing}
                 InputProps={{
                   className: classes.text,
                   endAdornment: (
@@ -121,7 +127,7 @@ const EditVendor = (props) => {
                 onChange={(e) => setData('timing', e.target.value)}
               />
               <TextField
-                defaultValue="03161359848"
+                defaultValue={building}
                 InputProps={{
                   className: classes.text,
                   endAdornment: (
@@ -133,8 +139,11 @@ const EditVendor = (props) => {
                 label="Building"
                 onChange={(e) => setData('building', e.target.value)}
               />
+              <DeleteButton />
               <div className={classes.btncontainer}>
-                <Button className={classes.btn}>Save Changes</Button>{' '}
+                <Button className={classes.btn} onClick={() => console.log(data)}>
+                  Save Changes
+                </Button>
               </div>
             </form>
           </Paper>

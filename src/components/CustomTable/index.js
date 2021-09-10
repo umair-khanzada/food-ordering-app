@@ -6,9 +6,12 @@ import Paper from '@material-ui/core/Paper';
 import { useTheme } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableFooter from '@material-ui/core/TableFooter';
+import { Edit } from '@material-ui/icons';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
+import { DeleteIcon } from '../../Features/Admin/Vendors/style';
+import DeleteButton from '../Delete Button';
 import { CustomTableHead, IconContainer, EditDeleteCell } from './style';
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -38,7 +41,18 @@ function TablePaginationActions(props) {
   );
 }
 
-export default function CustomTable({ rows, header, editDelete }) {
+export default function CustomTable({ rows, header, onEdit, isEditDelete }) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [rowsData, setRowsData] = useState([...rows]);
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -54,8 +68,15 @@ export default function CustomTable({ rows, header, editDelete }) {
     setPage(0);
   };
 
+  const [currentSelectedRow, setCurrentSelectedRow] = useState({});
+
+  const onDelete = () => {
+    setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
+  };
+
   return (
     <TableContainer component={Paper} style={{ width: '80%', margin: 'auto' }}>
+      {isEditDelete && <DeleteButton handleClose={handleClose} onDelete={onDelete} open={open} />}
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
@@ -67,16 +88,33 @@ export default function CustomTable({ rows, header, editDelete }) {
           </TableRow>
         </CustomTableHead>
         <TableBody>
-          {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row) => (
-            <TableRow key={row.name}>
-              {Object.keys(row).map((data, index) => (
-                <TableCell key={index} style={{ width: 200 }}>
-                  {row[data]}
-                </TableCell>
-              ))}
-              <EditDeleteCell>{editDelete}</EditDeleteCell>
-            </TableRow>
-          ))}
+          {(rowsPerPage > 0 ? rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rowsData).map(
+            (row) => (
+              <TableRow key={row.name}>
+                {Object.keys(row).map((data, index) => (
+                  <TableCell key={index} style={{ width: 200 }}>
+                    {row[data]}
+                  </TableCell>
+                ))}
+
+                {isEditDelete ? (
+                  <EditDeleteCell>
+                    <IconButton onClick={() => onEdit(row)}>
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setCurrentSelectedRow(row);
+                        setOpen(true);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </EditDeleteCell>
+                ) : null}
+              </TableRow>
+            ),
+          )}
 
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>

@@ -65,7 +65,7 @@ function OrderHistory() {
         <VendorTitle>Orders</VendorTitle>
       </VendorTitleContainer>
 
-      <CustomTable editDelete={editDelete} header={header} rows={tableData} />
+      <CustomTable editDelete={editDelete} header={header} isEditDelete rows={tableData} />
     </>
   );
 }

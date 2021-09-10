@@ -2,6 +2,7 @@ import React from 'react';
 
 import IconButton from '@material-ui/core/IconButton';
 import { Edit } from '@material-ui/icons';
+import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
@@ -19,6 +20,8 @@ function UsersList() {
     </>
   );
   const header = ['Id', 'Name', 'Email', 'Contact', 'Edit'];
+  const history = useHistory();
+
   return (
     <>
       <VendorTitleContainer>
@@ -26,7 +29,7 @@ function UsersList() {
         <CommonButton property="Add Users" />
       </VendorTitleContainer>
 
-      <CustomTable editDelete={editDelete} header={header} rows={userList} />
+      <CustomTable editDelete={editDelete} header={header} isEditDelete rows={userList} />
     </>
   );
 }

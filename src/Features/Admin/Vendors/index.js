@@ -1,24 +1,22 @@
 import React from 'react';
 
-import IconButton from '@material-ui/core/IconButton';
-import { Edit } from '@material-ui/icons';
+import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import { vendorList } from '../../../Mock/VendorList';
-import { VendorTitleContainer, VendorTitle, DeleteIcon } from './style';
+import { VendorTitleContainer, VendorTitle } from './style';
 function VendorList() {
-  const editDelete = (
-    <>
-      <IconButton>
-        <Edit />
-      </IconButton>
-      <IconButton>
-        <DeleteIcon />
-      </IconButton>
-    </>
-  );
+  const history = useHistory();
+
   const header = ['Id', 'Name', 'Email', 'Contact', 'Timing', 'Building', 'Edit'];
+
+  const onEdit = (row) => {
+    history.push({
+      pathname: '/editvendor',
+      state: { data: row },
+    });
+  };
 
   return (
     <>
@@ -27,7 +25,7 @@ function VendorList() {
         <CommonButton property="Add Vendor" />
       </VendorTitleContainer>
 
-      <CustomTable editDelete={editDelete} header={header} rows={vendorList} />
+      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={vendorList} />
     </>
   );
 }
