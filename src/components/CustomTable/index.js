@@ -1,13 +1,17 @@
 import React from 'react';
 
-import { TableContainer, TableHead, TableRow, Table, TableBody } from '@material-ui/core';
+import { TableContainer, TableHead, TableRow, Table, TableBody, TableCell } from '@material-ui/core';
 
-function CustomTable({ header, content }) {
+function CustomTable({ head, content }) {
   return (
     <TableContainer>
       <Table>
         <TableHead>
-          <TableRow>{header}</TableRow>
+          <TableRow>
+            {head.map((data, i) => {
+              return <TableCell key={i}>{data}</TableCell>;
+            })}
+          </TableRow>
         </TableHead>
         <TableBody>{content}</TableBody>
       </Table>
