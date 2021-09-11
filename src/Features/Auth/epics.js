@@ -16,11 +16,14 @@ export const loginEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
+          const { user, tokens } = res.response;
+          const { name } = user;
+          const { refresh, access } = tokens;
           return of(
             loginSuccess({
-              name: res.response.user.name,
-              refreshToken: res.response.tokens.refresh,
-              accessToken: res.response.tokens.access,
+              name,
+              refreshToken: refresh,
+              accessToken: access,
             }),
           );
         }),
@@ -41,11 +44,14 @@ export const signUpEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
+          const { user, tokens } = res.response;
+          const { name } = user;
+          const { refresh, access } = tokens;
           return of(
             loginSuccess({
-              name: res.response.user.name,
-              refreshToken: res.response.tokens.refresh,
-              accessToken: res.response.tokens.access,
+              name,
+              refreshToken: refresh,
+              accessToken: access,
             }),
           );
         }),
