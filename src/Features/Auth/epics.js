@@ -38,6 +38,7 @@ export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
     mergeMap(({ payload }) => {
+      delete payload['contact'];
       return ajax({
         url: 'http://localhost:4000/v1/auth/register',
         method: 'POST',
