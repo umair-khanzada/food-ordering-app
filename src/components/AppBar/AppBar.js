@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, ListItemIcon, ListItemText, AppBar, useTheme, Toolbar } from '@material-ui/core';
+import { Grid, ListItemIcon, ListItemText, AppBar, useTheme, Toolbar, makeStyles } from '@material-ui/core';
 import { Lock, OfflineBolt, PersonRounded } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -8,6 +8,7 @@ import { useHistory } from 'react-router';
 import { logout } from '../../Features/Auth/actions';
 import RouteNames from '../../routes/RouteNames';
 import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
+import nisumLogo from './nisum-logo.png';
 import { StyledDiv, StyledMenuItem } from './Style';
 
 const NavBar = () => {
@@ -16,15 +17,30 @@ const NavBar = () => {
   const logOut = () => {
     dispatch(logout());
   };
-
+  const useStyles = makeStyles(() => ({
+    logoNisum: {
+      color: 'white',
+      width: '100%',
+      fontWeight: '600',
+      fontSize: '30px',
+    },
+    NisumImageLogo: {
+      height: '80px',
+      minwidth: '160px',
+      marginLeft: '20px',
+    },
+  }));
+  const classes = useStyles();
   const history = useHistory();
+  const { NisumImageLogo } = classes;
 
   const { profile, resetPassword } = RouteNames;
 
   return (
     <StyledDiv>
-      <AppBar color="secondary" position="sticky">
+      <AppBar color="primary" position="sticky">
         <Toolbar>
+          <img alt="logo" className={NisumImageLogo} src={nisumLogo} />
           <Grid alignItems="flex-end" container justifyContent="flex-end">
             <AppBarMenuButton>
               <StyledMenuItem onClick={() => history.push(profile)} theme={theme}>
