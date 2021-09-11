@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { logout } from '../../Features/Auth/actions';
+import RouteNames from '../../routes/RouteNames';
 import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
 import { StyledDiv, StyledMenuItem } from './Style';
 
@@ -17,19 +18,22 @@ const NavBar = () => {
   };
 
   const history = useHistory();
+
+  const { profile, resetPassword } = RouteNames;
+
   return (
     <StyledDiv>
       <AppBar color="secondary" position="sticky">
         <Toolbar>
           <Grid alignItems="flex-end" container justifyContent="flex-end">
             <AppBarMenuButton>
-              <StyledMenuItem onClick={() => history.push('/profile')} theme={theme}>
+              <StyledMenuItem onClick={() => history.push(profile)} theme={theme}>
                 <ListItemIcon>
                   <PersonRounded fontSize="small" />
                 </ListItemIcon>
                 <ListItemText primary="Profile" />
               </StyledMenuItem>
-              <StyledMenuItem onClick={() => history.push('/reset-password')} theme={theme}>
+              <StyledMenuItem onClick={() => history.push(resetPassword)} theme={theme}>
                 <ListItemIcon>
                   <Lock fontSize="small" />
                 </ListItemIcon>
