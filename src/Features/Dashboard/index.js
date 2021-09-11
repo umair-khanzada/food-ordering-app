@@ -34,7 +34,6 @@ function Dashboard() {
       paddingRight: '30px',
     },
   }));
-
   const classes = useStyles();
 
   const { header, orderDetails, orderHeading, orderRef, userInfo, tabs } = classes;

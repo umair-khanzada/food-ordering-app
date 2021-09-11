@@ -1,85 +1,100 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
-
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex } from '../../../scripts/constants';
-import { login } from '../actions';
 
-function LoginForm() {
+function ResetPassword() {
+  let newPassword = '';
+
   const validateOnSubmit = () => {
-    let isValid = true;
-    const ValidateArray = loginForm.map((textField) => {
+    let isFormValid = true;
+    const resetValidateArray = resetForm.map((textField) => {
       if (textField.value == '') {
-        isValid = false;
+        isFormValid = false;
         return {
           ...textField,
           errorMessage: textField.name + ' field cannot be empty',
           isValid: false,
         };
       }
-      !isValid ? null : (isValid = textField.isValid);
+      !isFormValid ? null : (isFormValid = textField.isValid);
+
       return textField;
     });
 
-    setLoginForm(ValidateArray);
+    setResetPasswordForm(resetValidateArray);
 
-    return isValid;
+    return isFormValid;
   };
-  const dispatch = useDispatch();
 
-  const loginClickHandler = (e) => {
+  const resetPasswordClickHandler = (e) => {
     e.preventDefault();
     if (validateOnSubmit()) {
       const userData = {};
-      loginForm.map(({ name, value }) => {
+      resetForm.map(({ name, value }) => {
         userData[name] = value;
       });
-
-      dispatch(login(userData));
+      console.log(userData);
     }
   };
   const textFiledChangeHandler = (e, index) => {
     const { value } = e.target;
 
-    setLoginForm((prev) => {
+    setResetPasswordForm((prev) => {
       const prevForm = [...prev];
       const currentTextField = prevForm[index];
 
       currentTextField.value = value;
       const getValidationError = currentTextField.getValidation(currentTextField.value);
+
       [currentTextField.errorMessage, currentTextField.isValid] = getValidationError;
       return prevForm;
     });
   };
-  const [loginForm, setLoginForm] = useState([
+  const [resetForm, setResetPasswordForm] = useState([
     {
       required: true,
-      label: 'Email',
-      name: 'email',
-      type: 'email',
+      label: 'Old Password',
+      name: 'oldpassword',
+      type: 'password',
       value: '',
       isValid: true,
       errorMessage: '',
       getValidation: (value) => {
-        if (!emailRegex.test(value)) {
-          return ['Email type is not valid', false];
+        if (value.length < 8) {
+          return ['Password must be 8 characters long', false];
         }
         return ['', true];
       },
     },
     {
       required: true,
-      label: 'Password',
-      name: 'password',
+      label: 'New Password',
+      name: 'newpassword',
       type: 'password',
       minlength: '6',
       isValid: true,
       value: '',
       errorMessage: '',
       getValidation: (value) => {
+        newPassword = value;
         if (value.length < 8) {
           return ['Password must be 8 characters long', false];
+        }
+        return ['', true];
+      },
+    },
+    {
+      required: true,
+      label: 'Confirm Password',
+      name: 'confirmpassword',
+      type: 'password',
+      minlength: '6',
+      isValid: true,
+      value: '',
+      errorMessage: '',
+      getValidation: (value) => {
+        if (value !== newPassword) {
+          return ['Confirm Password does not match', false];
         }
         return ['', true];
       },
@@ -90,9 +105,9 @@ function LoginForm() {
     button: [
       {
         type: 'submit',
-        name: 'login',
+        name: 'Reset Password',
         minWidth: '100%',
-        clickHandler: loginClickHandler,
+        clickHandler: resetPasswordClickHandler,
       },
     ],
   };
@@ -102,14 +117,12 @@ function LoginForm() {
       <FormComponent
         basicButtons={loginButtons}
         changeHandler={textFiledChangeHandler}
-        forgotPassword="Forgot Password?"
-        formTitle="Login"
-        inputFields={loginForm}
-        label="Create New Account?"
+        formTitle="Reset Password"
+        inputFields={resetForm}
         navigationPath="/signup"
       />
     </div>
   );
 }
 
-export default LoginForm;
+export default ResetPassword;

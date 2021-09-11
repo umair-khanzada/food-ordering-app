@@ -25,7 +25,7 @@ function SideMenu() {
     },
     navigation: {
       marginTop: '100px',
-      padding: '0 50px',
+      padding: '0 40px',
     },
     list: {
       fontSize: '22px',
