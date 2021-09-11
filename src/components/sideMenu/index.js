@@ -5,15 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
 function SideMenu() {
-  // const drawerWidth = 300;
   const useStyles = makeStyles(() => ({
     drawer: {
-      // position: 'relative',
-      // width: '100%',
-      // height: '100%',
-      // flexShrink: 0,
-      // top: 0,
-      // bottom: 0,
       overflow: 'hidden',
     },
     drawerPaper: {
