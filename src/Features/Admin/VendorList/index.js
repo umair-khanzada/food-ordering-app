@@ -8,14 +8,14 @@ function VendorList() {
   function GetTableData() {
     return (
       <>
-        {vendorList.map((data) => {
+        {vendorList.map(({ id, name, contact, timing, building }) => {
           return (
-            <TableRow key={data.id}>
-              <TableCell>{data.id}</TableCell>
-              <TableCell>{data.name}</TableCell>
-              <TableCell>{data.contact}</TableCell>
-              <TableCell>{data.timing}</TableCell>
-              <TableCell>{data.building}</TableCell>
+            <TableRow key={id}>
+              <TableCell>{id}</TableCell>
+              <TableCell>{name}</TableCell>
+              <TableCell>{contact}</TableCell>
+              <TableCell>{timing}</TableCell>
+              <TableCell>{building}</TableCell>
               <TableCell>Edit / delete</TableCell>
             </TableRow>
           );
