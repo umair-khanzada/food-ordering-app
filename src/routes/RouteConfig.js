@@ -1,4 +1,4 @@
-import { orderHistorydRoute } from '../Features/Admin/OrderHistory/route';
+import { orderHistorydRoute, addOrderdRoute } from '../Features/Admin/OrderHistory/route';
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { dashboardRoute } from '../Features/Dashboard/route';
 import { homeRoute } from '../Features/Home';
@@ -15,7 +15,7 @@ const routeConfig = {
     resetPasswordRoute,
   ],
   orderPlacer: [dashboardRoute],
-  admin: [orderHistorydRoute],
+  admin: [orderHistorydRoute, addOrderdRoute],
   officeBoy: [],
   common: [profileRoute],
 };
