@@ -21,14 +21,14 @@ function VendorList() {
   const header = ['Id', 'Name', 'Email', 'Contact', 'Timing', 'Building', 'Edit'];
 
   return (
-    <>
+    <div>
       <VendorTitleContainer>
         <VendorTitle>Vendors</VendorTitle>
         <CommonButton property="Add Vendor" />
       </VendorTitleContainer>
 
       <CustomTable editDelete={editDelete} header={header} rows={vendorList} tablewidth="80%" />
-    </>
+    </div>
   );
 }
 
