@@ -59,6 +59,9 @@ const AddNEditForm = ({ fields }) => {
             : null}
         </Grid>
       </Grid>
+      <Grid item>
+        <hr />
+      </Grid>
       <Grid item xs={4}>
         <Grid container justifyContent="flex-start">
           <Button property="save" />
