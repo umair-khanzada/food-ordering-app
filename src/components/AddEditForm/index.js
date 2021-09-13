@@ -12,7 +12,7 @@ import { SELECT, MULTI_SELECT, DATE, PRICE } from './FieldTypes';
 import { StyledMainContainerGrid, Error } from './style';
 
 const AddEditForm = ({ fields, buttons, responseError, onSaveSuccess }) => {
-  const WIDTH = '50%';
+  const WIDTH = '100%';
 
   const getField = (field, props, index) => {
     switch (field) {
@@ -47,57 +47,39 @@ const AddEditForm = ({ fields, buttons, responseError, onSaveSuccess }) => {
   };
 
   return (
-    <StyledMainContainerGrid container direction="column" spacing={3}>
-      <Grid item>
-        <Typography color="primary" variant="h1">
-          Add Order
-        </Typography>
-      </Grid>
-      <Grid item>
-        <hr />
-      </Grid>
-      <Grid item>
-        <Grid container direction="row" justifyContent="flex-start">
-          {fields
-            ? fields.map((data, index) => {
-                return (
-                  <Fragment key={index}>
-                    <Grid item style={{ marginBottom: '15px' }} xs={4}>
-                      <Typography color="secondary" variant="h4">
-                        {data.label}
-                      </Typography>
-                      {getField(data.type, data, index)}
-                      <br />
-                      <Error style={{ justifyContent: 'top' }}>{data.errorMessage}</Error>
-                    </Grid>
-                  </Fragment>
-                );
-              })
-            : null}
-        </Grid>
-      </Grid>
-      <Grid item>
-        <hr />
-      </Grid>
-      <Grid item xs={4}>
-        <Grid container justifyContent="flex-start">
-          {buttons
-            ? buttons.button.map(({ clickHandler, minWidth, name, type }, i) => (
-                <div key={name + '-' + i}>
-                  <Button
-                    key={name + '-' + i}
-                    fontSize="16px"
-                    minwidth={minWidth}
-                    onClick={clickHandler}
-                    property={name}
-                    type={type}
-                  />
-                </div>
-              ))
-            : null}
-        </Grid>
-        <Error>{responseError}</Error>
-        <Error>{onSaveSuccess && 'Save Successful!'}</Error>
+    <StyledMainContainerGrid container>
+      <Grid item style={{ width: '50%' }}>
+        {fields
+          ? fields.map((data, index) => {
+              return (
+                <Fragment key={index}>
+                  <Grid item style={{ marginBottom: '50px' }} xs={12}>
+                    <Typography style={{ color: '#717271' }} variant="h4">
+                      {data.label}
+                    </Typography>
+                    {getField(data.type, data, index)}
+                    <br />
+                    <Error style={{ justifyContent: 'top' }}>{data.errorMessage}</Error>
+                  </Grid>
+                </Fragment>
+              );
+            })
+          : null}
+        {buttons
+          ? buttons.button.map(({ clickHandler, minWidth, name, type }, i) => (
+              <div key={name + '-' + i}>
+                <Button
+                  key={name + '-' + i}
+                  fontSize="16px"
+                  minwidth={minWidth}
+                  onClick={clickHandler}
+                  property={name}
+                  style={{ padding: '10px 100px', backgroundColor: '#00B3E3' }}
+                  type={type}
+                />
+              </div>
+            ))
+          : null}
       </Grid>
     </StyledMainContainerGrid>
   );

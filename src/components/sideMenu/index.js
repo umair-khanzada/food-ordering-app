@@ -11,7 +11,7 @@ function SideMenu() {
     drawerPaper: {
       position: 'static',
       height: '100vh',
-      backgroundColor: '#F0F0F0',
+      backgroundColor: 'white',
     },
     navigation: {
       marginTop: '50px',
@@ -22,12 +22,12 @@ function SideMenu() {
     },
     link: {
       borderRadius: '0px',
-      color: 'black',
+      color: '#717271',
       fontSize: '20px',
       fontWeight: '200',
       width: '100%',
       '&:hover': {
-        backgroundColor: '#e91e63',
+        backgroundColor: '#00B3E3',
         color: 'white',
       },
     },

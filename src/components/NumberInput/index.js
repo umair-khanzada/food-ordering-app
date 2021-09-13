@@ -24,6 +24,7 @@ export default function NumberInput(props) {
       }}
       onBlur={handleBlur}
       {...props}
+      fullWidth
       value={value}
     />
   );

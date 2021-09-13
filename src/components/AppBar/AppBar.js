@@ -8,7 +8,6 @@ import { useHistory } from 'react-router';
 import { logout } from '../../Features/Auth/actions';
 import RouteNames from '../../routes/RouteNames';
 import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
-import nisumLogo from './nisum-logo.png';
 import { StyledDiv, StyledMenuItem } from './Style';
 
 const NavBar = () => {
@@ -38,9 +37,9 @@ const NavBar = () => {
 
   return (
     <StyledDiv>
-      <AppBar color="primary" position="sticky">
+      <AppBar position="sticky" style={{ background: 'white', borderBottom: '5px solid #00B3E3' }}>
         <Toolbar>
-          <img alt="logo" className={NisumImageLogo} src={nisumLogo} />
+          <img alt="logo" className={NisumImageLogo} src="https://www.nisum.com/hubfs/logo_nisum.svg" />
           <Grid alignItems="flex-end" container justifyContent="flex-end">
             <AppBarMenuButton>
               <StyledMenuItem onClick={() => history.push(profile)} theme={theme}>
