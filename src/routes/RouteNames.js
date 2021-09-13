@@ -6,6 +6,7 @@ const RouteNames = {
   resetPassword: '/reset-password',
   profile: '/profile',
   dashboard: '/dashboard',
+  orderlist: '/orderlist',
 };
 
 export default RouteNames;
