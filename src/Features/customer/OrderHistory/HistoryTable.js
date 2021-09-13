@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import CustomTable from '../../../components/CustomTable';
+import CustomTable from '../../../components/CustomeTable/index';
 
 const useStyles = makeStyles({
   table: {

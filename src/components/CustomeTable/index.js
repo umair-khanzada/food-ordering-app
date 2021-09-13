@@ -11,7 +11,7 @@ import { Delete } from '@material-ui/icons';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import DeleteButton from '../Delete Button';
+import DeleteButton from './DeleteButton';
 import { CustomTableHead, IconContainer, EditDeleteCell, CustomTableContainer } from './style';
 function TablePaginationActions(props) {
   const theme = useTheme();
