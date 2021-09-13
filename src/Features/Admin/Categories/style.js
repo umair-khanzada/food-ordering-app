@@ -10,7 +10,7 @@ export const CategoriesTitleContainer = styled.div`
 export const CategoriesTitle = styled.div`
   color: grey;
   font-size: 25px;
-  padding-left: 20px;
+
   font-weight: 500;
 `;
 

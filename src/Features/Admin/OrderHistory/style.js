@@ -10,7 +10,7 @@ export const OrdersHistoryTitleContainer = styled.div`
 export const OrdersHistoryTitle = styled.div`
   color: grey;
   font-size: 25px;
-  padding-left: 20px;
+
   font-weight: 500;
 `;
 
