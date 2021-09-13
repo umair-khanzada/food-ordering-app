@@ -10,7 +10,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import PropTypes from 'prop-types';
 
-import { CustomTableHead, EditDeleteCell, CustomTableContainer } from './style';
+import { CustomTableHead, EditDeleteCell, CustomTableContainer } from './Style';
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
