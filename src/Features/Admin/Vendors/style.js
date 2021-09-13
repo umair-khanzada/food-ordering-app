@@ -10,7 +10,7 @@ export const VendorTitleContainer = styled.div`
 export const VendorTitle = styled.div`
   color: grey;
   font-size: 25px;
-  padding-left: 20px;
+
   font-weight: 500;
 `;
 export const CustomTableContainer = styled.div`

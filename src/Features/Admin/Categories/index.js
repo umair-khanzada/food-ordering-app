@@ -25,7 +25,7 @@ function CategoryList() {
         <CommonButton onClick={() => history.push('/addcategory')} property="Add Category" />
       </CategoriesTitleContainer>
 
-      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={categoryList} tablewidth="50%" />
+      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={categoryList} tablewidth="80%" />
     </>
   );
 }

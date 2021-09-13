@@ -3,20 +3,18 @@ import styled from 'styled-components';
 
 export const CategoriesTitleContainer = styled.div`
   display: flex;
-
+  width: 80%;
   justify-content: space-between;
 
-  margin: 20px 25px 10px 25px;
+  margin: 20px auto;
 
-  padding: 5px 80px 10px 40px;
+  padding: 20px 0px;
 `;
 
 export const CategoriesTitle = styled.div`
   color: grey;
 
   font-size: 25px;
-
-  padding-left: 20px;
 
   font-weight: 500;
 `;

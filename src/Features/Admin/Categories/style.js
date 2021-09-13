@@ -30,14 +30,14 @@ export const GridContainer = styled(Grid)`
 export const CategoriesTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width: 80%;
   margin: 20px auto;
 `;
 
 export const CategoriesTitle = styled.div`
   color: grey;
   font-size: 25px;
-  padding-left: 20px;
+
   font-weight: 500;
 `;
 

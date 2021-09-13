@@ -16,4 +16,7 @@ export const EditDeleteCell = styled(TableCell)`
 export const CustomTableContainer = styled(TableContainer)`
   width: ${({ tablewidth }) => tablewidth};
   margin: auto;
+  && .MuiTableCell-root {
+    padding: 5px 8px;
+  }
 `;

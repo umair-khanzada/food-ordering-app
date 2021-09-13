@@ -121,7 +121,7 @@ function Menu() {
       <Grid container>
         <Grid item md={12}>
           <div className={classes.sideMenu}>
-            <div className={classes.headerMenu}>
+            <div className={classes.headerMenu} style={{ display: 'flex', width: '80%', margin: 'auto' }}>
               <div className={classes.buttons}>
                 <div className={classes.button}>
                   <CommonButton fontSize="14px" minwidth="100px" onClick={showAddRestraunt} property="Add Restraunt" />
@@ -130,7 +130,7 @@ function Menu() {
                   <CommonButton fontSize="14px" minwidth="100px" onClick={showAddMenu} property="Add Item" />
                 </div>
               </div>
-              <div style={{ paddingRight: '30px', display: 'flex' }}>
+              <div style={{ display: 'flex' }}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardTimePicker
                     id="time-picker"
@@ -143,7 +143,7 @@ function Menu() {
                     value={selectedDate}
                   />
                 </MuiPickersUtilsProvider>
-                <div style={{ paddingTop: '24px' }}>
+                <div style={{ paddingTop: '24px', marginLeft: '30px' }}>
                   <CommonButton fontSize="14px" minwidth="100px" onClick={showAddMenu} property="Save Time" />
                 </div>
               </div>

@@ -10,7 +10,7 @@ export const UsersTitleContainer = styled.div`
 export const UsersTitle = styled.div`
   color: grey;
   font-size: 25px;
-  padding-left: 20px;
+
   font-weight: 500;
 `;
 

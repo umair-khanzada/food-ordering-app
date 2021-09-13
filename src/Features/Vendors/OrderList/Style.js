@@ -5,17 +5,15 @@ export const OrdersHistoryTitleContainer = styled.div`
 
   justify-content: space-between;
 
-  margin: 20px 25px 10px 25px;
-
-  padding: 5px 80px 10px 40px;
+  margin: 20px auto;
+  width: 80%;
+  padding: 20px 0px;
 `;
 
 export const OrdersHistoryTitle = styled.div`
   color: grey;
 
   font-size: 25px;
-
-  padding-left: 20px;
 
   font-weight: 500;
 `;

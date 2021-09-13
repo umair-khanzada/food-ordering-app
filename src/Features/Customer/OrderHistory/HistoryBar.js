@@ -13,7 +13,7 @@ import SearchBar from 'material-ui-search-bar';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: '60%',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
