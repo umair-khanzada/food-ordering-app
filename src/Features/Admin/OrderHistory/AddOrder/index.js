@@ -2,7 +2,7 @@ import React from 'react';
 
 import AddNEditForm from '../../../../components/AddNEditForm';
 
-const addOrder = () => {
+const AddOrder = () => {
   const fields = [
     {
       type: 'select',
@@ -29,4 +29,4 @@ const addOrder = () => {
   return <AddNEditForm fields={fields} />;
 };
 
-export default addOrder;
+export default AddOrder;
