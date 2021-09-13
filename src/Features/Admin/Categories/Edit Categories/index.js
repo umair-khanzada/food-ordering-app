@@ -23,7 +23,9 @@ function EditCategories() {
               label="Categories"
               style={{ margin: '20px' }}
             />
-            <CommonButton property="Edit Category" />
+            <div>
+              <CommonButton property="Edit Category" />
+            </div>
           </Form>
         </Grid>
       </GridContainer>

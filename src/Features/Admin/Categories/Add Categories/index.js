@@ -13,7 +13,9 @@ function AddCategories() {
           <Form autoComplete="off" noValidate>
             <FormHeading>Add Category</FormHeading>
             <TextField label="Categories" style={{ margin: '20px' }} />
-            <CommonButton property="Add Categories" />
+            <div>
+              <CommonButton property="Add Categories" />
+            </div>
           </Form>
         </Grid>
       </GridContainer>

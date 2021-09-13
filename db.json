@@ -2,19 +2,19 @@
   "users": [
     {
       "id": 1,
-      "email": "s@s.com",
-      "password": "ssssssss",
+      "email": "admin@gmail.com",
+      "password": "12345678",
       "role": "Admin"
     },
     {
-      "email": "ex@ex.com",
-      "password": "xxxxxxxx",
+      "email": "user@gmail.com",
+      "password": "12345678",
       "id": 2,
       "role": "User"
     },
     {
-      "email": "e@e.com",
-      "password": "xxxxxxxx",
+      "email": "vendor@gmail.com",
+      "password": "12345678",
       "id": 2,
       "role": "Vendor"
     },
