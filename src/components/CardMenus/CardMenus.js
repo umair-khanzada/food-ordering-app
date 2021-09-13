@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardMenu = () => {
+const CardMenu = ({ foodType }) => {
   const classes = useStyles();
   const cart = useSelector((state) => state.addtocartReducers.cart);
 
@@ -24,19 +24,20 @@ const CardMenu = () => {
     <div>
       <Grid className={classes.control} container elevation={3} spacing={3}>
         {UserData.map((usedata, index) => {
-          const { id, name, price, resturantName, img } = usedata;
-
-          return (
-            <CommonCard
-              key={id}
-              buttonText="Add to Cart"
-              id={id}
-              img={img}
-              name={name}
-              price={price}
-              resturantName={resturantName}
-            />
-          );
+          const { id, name, type, price, resturantName, img } = usedata;
+          if (foodType == type) {
+            return (
+              <CommonCard
+                key={id}
+                buttonText="Add to Cart"
+                id={id}
+                img={img}
+                name={name}
+                price={price}
+                resturantName={resturantName}
+              />
+            );
+          }
         })}
       </Grid>
     </div>
