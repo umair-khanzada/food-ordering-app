@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 
-import { TableRow, Table, TableBody, TablePagination } from '@material-ui/core';
+import { TableRow, Table, TableBody, TablePagination, IconButton } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableCell from '@material-ui/core/TableCell';
 import TableFooter from '@material-ui/core/TableFooter';
+import { Edit } from '@material-ui/icons';
 
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer } from './style';
+import { CustomTableHead, CustomTableContainer, DeleteIcon } from './style';
 
-export default function CustomTable({ rows, header, editDelete, tablewidth }) {
+export default function CustomTable({ rows, header, cellWidth, tablewidth }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -30,7 +31,7 @@ export default function CustomTable({ rows, header, editDelete, tablewidth }) {
         <CustomTableHead>
           <TableRow>
             {header.map((head, index) => (
-              <TableCell key={index} style={{ color: 'white', padding: '5px !important' }}>
+              <TableCell key={index} style={{ color: 'white', padding: '10px', fontSize: '16px' }}>
                 {head}
               </TableCell>
             ))}
@@ -38,21 +39,22 @@ export default function CustomTable({ rows, header, editDelete, tablewidth }) {
         </CustomTableHead>
         <TableBody>
           {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows).map((row) => (
-            <TableRow key={row.name} style={{ height: 10, padding: '0 !important' }}>
+            <TableRow key={row.name}>
               {Object.keys(row).map((data, index) => (
-                <TableCell key={index} size="medium">
+                <TableCell key={index} style={{ width: cellWidth }}>
                   {row[data]}
                 </TableCell>
               ))}
-              <TableCell>{editDelete}</TableCell>
+              <TableCell>
+                <IconButton>
+                  <Edit />
+                </IconButton>
+                <IconButton>
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
-
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={7} />
-            </TableRow>
-          )}
         </TableBody>
         <TableFooter>
           <TableRow>
