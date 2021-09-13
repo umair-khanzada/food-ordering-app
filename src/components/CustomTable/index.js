@@ -1,43 +1,12 @@
 import React, { useState } from 'react';
 
 import { TableRow, Table, TableBody, TablePagination } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
-import { useTheme } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableFooter from '@material-ui/core/TableFooter';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import { CustomTableHead, IconContainer, CustomTableContainer } from './style';
-
-function TablePaginationActions(props) {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
-
-  const handleBackButtonClick = (event) => {
-    onPageChange(event, page - 1);
-  };
-
-  const handleNextButtonClick = (event) => {
-    onPageChange(event, page + 1);
-  };
-
-  return (
-    <IconContainer>
-      <IconButton aria-label="previous page" disabled={page === 0} onClick={handleBackButtonClick}>
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-      </IconButton>
-      <IconButton
-        aria-label="next page"
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        onClick={handleNextButtonClick}
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-      </IconButton>
-    </IconContainer>
-  );
-}
+import TablePaginationActions from './Pagination';
+import { CustomTableHead, CustomTableContainer } from './style';
 
 export default function CustomTable({ rows, header, editDelete, tablewidth }) {
   const [page, setPage] = useState(0);
