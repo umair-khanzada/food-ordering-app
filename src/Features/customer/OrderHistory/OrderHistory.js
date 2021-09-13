@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Grid } from '@material-ui/core';
-import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import HistoryBar from './HistoryBar';
@@ -34,14 +33,12 @@ const OrderHistory = () => {
   return (
     <Grid container>
       <Grid item md={12}>
-        <Paper className={classes.paper}>
-          <div className={classes.Bar}>
-            <HistoryBar />
-          </div>
-          <div className={classes.table}>
-            <HistoryTable />
-          </div>
-        </Paper>
+        <div className={classes.Bar}>
+          <HistoryBar />
+        </div>
+        <div className={classes.table}>
+          <HistoryTable />
+        </div>
       </Grid>
     </Grid>
   );
