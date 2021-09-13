@@ -16,7 +16,7 @@ function OrdersHistory() {
     });
   };
 
-  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date', 'Edit'];
+  const header = ['No', 'Name', 'Contact', 'Items', 'Price', 'Date', 'Edit'];
 
   return (
     <>

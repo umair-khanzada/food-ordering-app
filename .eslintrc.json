@@ -63,7 +63,7 @@
         }
       }
     ],
-  "linebreak-style": ["error", "windows"],
+  "linebreak-style": ["warn", "windows"],
   "quotes": ["error", "single", { "allowTemplateLiterals": true }],
   "semi": ["error", "always"],
   "semi-spacing": "error",

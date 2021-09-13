@@ -14,7 +14,7 @@ function UsersList() {
     });
   };
 
-  const header = ['Id', 'Name', 'Email', 'Contact', 'Edit'];
+  const header = ['No', 'Name', 'Email', 'Contact', 'Edit'];
   const history = useHistory();
 
   return (

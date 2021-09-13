@@ -9,7 +9,7 @@ import { VendorTitleContainer, VendorTitle } from './style';
 function VendorList() {
   const history = useHistory();
 
-  const header = ['Id', 'Name', 'Email', 'Contact', 'Timing', 'Building', 'Edit'];
+  const header = ['No', 'Name', 'Email', 'Contact', 'Timing', 'Building', 'Edit'];
 
   const onEdit = (row) => {
     history.push({

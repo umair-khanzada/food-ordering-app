@@ -10,31 +10,31 @@ import { CategoriesTitleContainer, CategoriesTitle, DeleteIcon } from './Style';
 
 export const categoryList = [
   {
-    id: 1,
+    No: 1,
 
     category: 'greavy',
   },
 
   {
-    id: 2,
+    No: 2,
 
     category: 'bread',
   },
 
   {
-    id: 3,
+    No: 3,
 
     category: 'rice',
   },
 
   {
-    id: 4,
+    No: 4,
 
     category: 'roll',
   },
 
   {
-    id: 5,
+    No: 5,
 
     category: 'burger',
   },
@@ -54,7 +54,7 @@ function CategoryList() {
     </>
   );
 
-  const header = ['Id', 'Category'];
+  const header = ['No', 'Category'];
 
   return (
     <>

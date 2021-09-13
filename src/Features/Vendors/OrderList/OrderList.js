@@ -7,7 +7,7 @@ import CustomTable from '../../../components/CustomTable';
 import { OrdersHistoryTitleContainer, DeleteIcon, OrdersHistoryTitle } from './Style';
 export const ordersHistoryList = [
   {
-    id: 1,
+    No: 1,
     name: 'Adnan',
     contact: '13131232',
     items: 'roti, keema',
@@ -15,7 +15,7 @@ export const ordersHistoryList = [
     date: '25-9-2021',
   },
   {
-    id: 2,
+    No: 2,
     name: 'Yousuf',
     contact: '13131232',
     items: 'roti, karhai',
@@ -23,7 +23,7 @@ export const ordersHistoryList = [
     date: '25-9-2021',
   },
   {
-    id: 3,
+    No: 3,
     name: 'Baber',
     contact: '1309232',
     items: 'burger',
@@ -31,7 +31,7 @@ export const ordersHistoryList = [
     date: '24-9-2021',
   },
   {
-    id: 4,
+    No: 4,
     name: 'Dilawer',
     contact: '23131232',
     items: 'biryani, coldrink',
@@ -39,7 +39,7 @@ export const ordersHistoryList = [
     date: '24-9-2021',
   },
   {
-    id: 5,
+    No: 5,
     name: 'Naem',
     contact: '10901232',
     items: 'biryani',
@@ -47,7 +47,7 @@ export const ordersHistoryList = [
     date: '23-9-2021',
   },
   {
-    id: 6,
+    No: 6,
     name: 'Kashif',
     contact: '13131232',
     items: 'karhai, coldrink, roti',
@@ -55,7 +55,7 @@ export const ordersHistoryList = [
     date: '23-9-2021',
   },
   {
-    id: 7,
+    No: 7,
     name: 'Dilawer',
     contact: '13131232',
     items: 'biryani, coldrink, salad',
@@ -74,7 +74,7 @@ function OrdersList() {
       </IconButton>
     </>
   );
-  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date'];
+  const header = ['No', 'Name', 'Contact', 'Items', 'Price', 'Date'];
   return (
     <>
       <OrdersHistoryTitleContainer>

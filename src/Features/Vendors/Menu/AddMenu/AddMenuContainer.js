@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../../components/Button/Button';
+import SelectTag from '../../../../components/Select';
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles(() => ({
   },
   txtField: {
     width: '100%',
-    marginBottom: '20px',
+    marginBottom: '10px',
   },
   button: {
     margin: '20px 0',
@@ -62,15 +63,16 @@ function AddMenuContainer() {
             Add Item
           </Typography>
           <div className={classes.formField}>
-            <TextField className={classes.txtField} label="Category" />
+            {/* <TextField className={classes.txtField} label="Category" /> */}
+            <SelectTag placeholder="Select Category" values={['Salan', 'Beverages', 'Fast Food']} width="100%" />
           </div>
           <div className={classes.formField}>
-            <TextField className={classes.txtField} label="Restraunt" />
+            <SelectTag placeholder="Select Restraunt" values={['Bites for delight', 'Dominos', 'KFC']} width="100%" />
           </div>
-          <div className={classes.formField}>
+          <div>
             <TextField className={classes.txtField} label="Item Name " />
           </div>
-          <div className={classes.formField}>
+          <div>
             <TextField className={classes.txtField} label="Price" />
           </div>
 

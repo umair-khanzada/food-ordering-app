@@ -16,7 +16,7 @@ function CategoryList() {
     });
   };
 
-  const header = ['Id', 'Category', 'Edit'];
+  const header = ['No', 'Category', 'Edit'];
 
   return (
     <>
@@ -25,7 +25,7 @@ function CategoryList() {
         <CommonButton onClick={() => history.push('/addcategory')} property="Add Category" />
       </CategoriesTitleContainer>
 
-      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={categoryList} tablewidth="80%" />
+      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={categoryList} tablewidth="60%" />
     </>
   );
 }

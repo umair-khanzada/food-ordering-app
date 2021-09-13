@@ -1,22 +1,22 @@
 export const categoryList = [
   {
-    id: 1,
+    no: 1,
     category: 'greavy',
   },
   {
-    id: 2,
+    no: 2,
     category: 'bread',
   },
   {
-    id: 3,
+    no: 3,
     category: 'rice',
   },
   {
-    id: 4,
+    no: 4,
     category: 'roll',
   },
   {
-    id: 5,
+    no: 5,
     category: 'burger',
   },
 ];

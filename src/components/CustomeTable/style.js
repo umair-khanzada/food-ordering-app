@@ -10,9 +10,7 @@ export const CustomTableHead = styled(TableHead)`
 export const IconContainer = styled.div`
   flex-shrink: 0;
 `;
-export const EditDeleteCell = styled(TableCell)`
-  display: flex;
-`;
+export const EditDeleteCell = styled(TableCell)``;
 export const CustomTableContainer = styled(TableContainer)`
   width: ${({ tablewidth }) => tablewidth};
   margin: auto;
