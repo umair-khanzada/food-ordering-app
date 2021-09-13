@@ -14,10 +14,11 @@ const MenuProps = {
   },
 };
 
-export default function MultipleSelect({ data, width }) {
+export default function MultipleSelect({ values, width, onChange }) {
   const [dataArray, setDataArray] = React.useState([]);
   const handleChange = (event) => {
     setDataArray(event.target.value);
+    onChange(event);
   };
   return (
     <Select
@@ -32,8 +33,8 @@ export default function MultipleSelect({ data, width }) {
       value={dataArray}
       variant="outlined"
     >
-      {data
-        ? data.map((value) => (
+      {values
+        ? values.map((value) => (
             <MenuItem key={value} value={value}>
               <Checkbox checked={dataArray.indexOf(value) > -1} />
               <ListItemText primary={value} />
