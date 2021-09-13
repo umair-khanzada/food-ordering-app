@@ -74,7 +74,7 @@ function OrdersList() {
       </IconButton>
     </>
   );
-  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date'];
+  const header = ['No', 'Name', 'Contact', 'Items', 'Price', 'Date'];
   return (
     <>
       <OrdersListTitleContainer />
