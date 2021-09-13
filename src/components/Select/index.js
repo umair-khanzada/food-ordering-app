@@ -5,10 +5,10 @@ import React from 'react';
 import { Select, MenuItem } from '@material-ui/core';
 
 const SelectTag = (props) => {
-  const { values } = props;
+  const { values, width, onChange, index, value } = props;
 
   return (
-    <Select {...props}>
+    <Select {...props} onChange={(e) => onChange(e, index)} style={{ width }} value={value}>
       {values
         ? values.map((value, index) => (
             <MenuItem key={index} value={value}>

@@ -14,11 +14,11 @@ const MenuProps = {
   },
 };
 
-export default function MultipleSelect({ values, width, onChange }) {
+export default function MultipleSelect({ values, width, onChange, index, value }) {
   const [dataArray, setDataArray] = React.useState([]);
   const handleChange = (event) => {
     setDataArray(event.target.value);
-    onChange(event);
+    onChange(event, index);
   };
   return (
     <Select
@@ -30,7 +30,7 @@ export default function MultipleSelect({ values, width, onChange }) {
       onChange={handleChange}
       renderValue={(selected) => selected.join(', ')}
       style={{ width }}
-      value={dataArray}
+      value={value}
       variant="outlined"
     >
       {values

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import AddEditForm from '../../../../components/AddEditForm';
 
 const AddOrder = () => {
+  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+
   const validateOnSubmit = () => {
     let isValid = true;
-
     const ValidateArray = fields.map((field) => {
       if (
         field.value === '' ||
@@ -13,43 +14,26 @@ const AddOrder = () => {
         field.value === null ||
         (field.value.constructor.name == 'Array' && field.value.length === 0)
       ) {
-        console.log(field.value);
         isValid = false;
-        return {
-          ...field,
-          errorMessage: field.label + ' field cannot be empty',
-          isValid: false,
-        };
+        field.errorMessage = field.label + ' field cannot be empty';
+        field.isValid = false;
+
+        return field;
       }
+      field.isValid = true;
+      field.errorMessage = '';
+
       !isValid ? null : (isValid = field.isValid);
       return field;
     });
-
     setFields(ValidateArray);
-
     return isValid;
   };
 
   const [vendor, setVendor] = useState([]);
   const [menus, setMenus] = useState([]);
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(30);
   const [date, setDate] = useState();
-
-  useEffect(() => {
-    console.log(menus, 'menus');
-  }, [menus]);
-  useEffect(() => {
-    console.log(vendor, 'vendor');
-  }, [vendor]);
-
-  useEffect(() => {
-    console.log(price, 'price');
-  }, [price]);
-
-  useEffect(() => {
-    console.log(date, 'date');
-  }, [date]);
-
   const [fields, setFields] = useState([
     {
       type: 'select',
@@ -57,8 +41,11 @@ const AddOrder = () => {
       values: ['Yousuf', 'Dilawer'],
       value: vendor,
       isValid: true,
-      onChange: (event) => {
+      errorMessage: '',
+
+      onChange: (event, index) => {
         setVendor(event.target.value);
+        fields[index].value = event.target.value;
       },
     },
     {
@@ -67,9 +54,11 @@ const AddOrder = () => {
       values: ['Karhai', 'Biryani', 'Salad'],
       value: menus,
       isValid: true,
+      errorMessage: '',
 
-      onChange: (event) => {
+      onChange: (event, index) => {
         setMenus(event.target.value);
+        fields[index].value = event.target.value;
       },
     },
     {
@@ -77,9 +66,11 @@ const AddOrder = () => {
       label: 'Price',
       value: price,
       isValid: true,
+      errorMessage: '',
 
-      onChange: (event) => {
+      onChange: (event, index) => {
         setPrice(event.target.value);
+        fields[index].value = event.target.value;
       },
     },
     {
@@ -87,15 +78,17 @@ const AddOrder = () => {
       label: 'Date',
       value: date,
       isValid: true,
+      errorMessage: '',
 
-      onChange: (event) => {
+      onChange: (event, index) => {
         setDate(event.target.value);
+        fields[index].value = event.target.value;
       },
     },
   ]);
 
   const saveHandler = () => {
-    validateOnSubmit() ? console.log('valied') : console.log('not valid');
+    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
   };
 
   const buttons = {
@@ -109,7 +102,7 @@ const AddOrder = () => {
     ],
   };
 
-  return <AddEditForm buttons={buttons} fields={fields} />;
+  return <AddEditForm buttons={buttons} fields={fields} onSaveSuccess={onSaveSuccess} />;
 };
 
 export default AddOrder;

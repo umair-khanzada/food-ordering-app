@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable indent */
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Grid, Input, Typography } from '@material-ui/core';
 
@@ -11,24 +11,35 @@ import SelectTag from '../Select';
 import { SELECT, MULTI_SELECT, DATE, PRICE } from './FieldTypes';
 import { StyledMainContainerGrid, Error } from './style';
 
-const AddEditForm = ({ fields, buttons, responseError }) => {
+const AddEditForm = ({ fields, buttons, responseError, onSaveSuccess }) => {
   const WIDTH = '50%';
 
-  const getField = (field, props) => {
+  const getField = (field, props, index) => {
     switch (field) {
       case SELECT:
-        return <SelectTag onChange={props.onChange} values={props.values} width={WIDTH} />;
+        return (
+          <SelectTag index={index} onChange={props.onChange} value={props.value} values={props.values} width={WIDTH} />
+        );
 
       case MULTI_SELECT:
         return (
-          <MultipleSelect dataArray={props.dataArray} onChange={props.onChange} values={props.values} width={WIDTH} />
+          <MultipleSelect
+            dataArray={props.dataArray}
+            index={index}
+            onChange={props.onChange}
+            value={props.value}
+            values={props.values}
+            width={WIDTH}
+          />
         );
 
       case DATE:
-        return <Input onChange={props.onChange} style={{ width: WIDTH }} type="date" />;
+        return (
+          <Input onChange={(e) => props.onChange(e, index)} style={{ width: WIDTH }} type="date" value={props.value} />
+        );
 
       case PRICE:
-        return <NumberInput onChange={props.onChange} width={WIDTH} />;
+        return <NumberInput onChange={(e) => props.onChange(e, index)} value={props.value} width={WIDTH} />;
 
       default:
         return null;
@@ -50,16 +61,16 @@ const AddEditForm = ({ fields, buttons, responseError }) => {
           {fields
             ? fields.map((data, index) => {
                 return (
-                  <>
-                    <Grid key={index} item style={{ marginBottom: '15px' }} xs={4}>
+                  <Fragment key={index}>
+                    <Grid item style={{ marginBottom: '15px' }} xs={4}>
                       <Typography color="secondary" variant="h4">
                         {data.label}
                       </Typography>
-                      {getField(data.type, data)}
+                      {getField(data.type, data, index)}
                       <br />
                       <Error style={{ justifyContent: 'top' }}>{data.errorMessage}</Error>
                     </Grid>
-                  </>
+                  </Fragment>
                 );
               })
             : null}
@@ -69,7 +80,7 @@ const AddEditForm = ({ fields, buttons, responseError }) => {
         <hr />
       </Grid>
       <Grid item xs={4}>
-        <Grid container justifyContent="flex-end">
+        <Grid container justifyContent="flex-start">
           {buttons
             ? buttons.button.map(({ clickHandler, minWidth, name, type }, i) => (
                 <div key={name + '-' + i}>
@@ -86,6 +97,7 @@ const AddEditForm = ({ fields, buttons, responseError }) => {
             : null}
         </Grid>
         <Error>{responseError}</Error>
+        <Error>{onSaveSuccess && 'Save Successful!'}</Error>
       </Grid>
     </StyledMainContainerGrid>
   );
