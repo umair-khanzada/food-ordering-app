@@ -194,6 +194,7 @@ const TemporaryDrawer = () => {
             </div>
             <div style={{ height: '85vh', overflowY: 'scroll', marginBottom: '10px' }}>
               {cart.map((cartdata) => {
+                console.log('id', cartdata);
                 return (
                   <Card key={cartdata.id} className={classes.card}>
                     <div className={classes.imgdiv}>

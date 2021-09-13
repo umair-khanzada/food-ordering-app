@@ -4,7 +4,7 @@ import kofta from '../assets/kofta.jpg';
 
 const UserData = [
   {
-    no: 1,
+    id: 1,
     name: 'Curry',
     type: 'gravy',
     price: '150 Rs',
@@ -12,7 +12,7 @@ const UserData = [
     img: curry,
   },
   {
-    no: 2,
+    id: 2,
     name: 'Naan',
     type: 'bread',
     price: '220 Rs',
@@ -20,7 +20,7 @@ const UserData = [
     img: kofta,
   },
   {
-    no: 3,
+    id: 3,
     name: 'Biryani',
     type: 'rice',
     price: '250 Rs',
