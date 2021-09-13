@@ -11,7 +11,6 @@ import { Delete } from '@material-ui/icons';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import DeleteButton from './DeleteButton';
 import { CustomTableHead, IconContainer, EditDeleteCell, CustomTableContainer } from './style';
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -63,7 +62,6 @@ export default function CustomTable({ rows, header, tablewidth, onEdit, isEditDe
   };
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
-      {isEditDelete && <DeleteButton handleClose={handleClose} onDelete={onDelete} open={open} />}
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
