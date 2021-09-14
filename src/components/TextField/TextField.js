@@ -15,10 +15,12 @@ export default function BasicTextFields({
   minLength,
   name,
   required,
+  disabled,
 }) {
   const theme = useTheme();
   return (
     <StyledTextField
+      disabled={disabled}
       error={error}
       label={label}
       minLength={minLength}

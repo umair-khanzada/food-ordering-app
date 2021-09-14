@@ -31,7 +31,7 @@ function SideMenu() {
     drawerPaper: {
       position: 'static',
 
-      height: '90vh',
+      height: '100vh',
 
       backgroundColor: 'white',
     },

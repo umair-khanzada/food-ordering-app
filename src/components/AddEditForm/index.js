@@ -46,7 +46,9 @@ const AddEditForm = ({ fields, buttons, responseError, heading, onSaveSuccess })
         return (
           <TextField
             changeHandler={(e) => props.onChange(e, index)}
+            disabled={props.disabled}
             type={props.textFieldType}
+            value={props.value}
             variant={props.variant}
             width={WIDTH}
           />

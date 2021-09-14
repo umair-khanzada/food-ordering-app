@@ -121,7 +121,7 @@ function Menu() {
       <Grid container>
         <Grid item md={12}>
           <div className={classes.sideMenu}>
-            <div className={classes.headerMenu} style={{ display: 'flex', width: '80%', margin: 'auto' }}>
+            <div className={classes.headerMenu} style={{ display: 'flex', width: '90%', margin: 'auto' }}>
               <div className={classes.buttons}>
                 <div className={classes.button}>
                   <CommonButton fontSize="14px" minwidth="100px" onClick={showAddRestraunt} property="Add Restraunt" />
@@ -144,13 +144,13 @@ function Menu() {
                   />
                 </MuiPickersUtilsProvider>
                 <div style={{ paddingTop: '24px', marginLeft: '30px' }}>
-                  <CommonButton fontSize="14px" minwidth="100px" onClick={showAddMenu} property="Save Time" />
+                  <CommonButton fontSize="14px" minwidth="100px" property="Save Time" />
                 </div>
               </div>
             </div>
           </div>
 
-          <div style={{ padding: '20px', marginTop: '30px' }}>
+          <div style={{ padding: '20px', marginTop: '10px' }}>
             <CustomTable header={header} isEditDelete onEdit={onEdit} rows={tableData} tablewidth="90%" />
           </div>
         </Grid>

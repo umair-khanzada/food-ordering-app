@@ -16,6 +16,7 @@ export const CustomTableContainer = styled(TableContainer)`
   width: ${({ tablewidth }) => tablewidth};
   & .MuiTableCell-root {
     padding: 5px 14px;
+    line-height: 3.4;
   }
   margin: auto;
 `;

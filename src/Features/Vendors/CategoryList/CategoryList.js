@@ -64,7 +64,7 @@ function CategoryList() {
         <CommonButton onClick={() => History.push('/addcategory')} property="Add Category" />
       </CategoriesTitleContainer>
 
-      <CustomTable header={header} rows={categoryList} tablewidth="80%" />
+      <CustomTable cellWidth="400px" header={header} rows={categoryList} tablewidth="80%" />
     </>
   );
 }

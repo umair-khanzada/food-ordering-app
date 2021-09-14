@@ -7,7 +7,7 @@ import { contactRegex } from '../../../scripts/constants';
 
 const AddUser = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
+  const [isEdit, setIsEdit] = useState(true);
   const validateOnSubmit = () => {
     let isValid = true;
 
@@ -59,8 +59,8 @@ const AddUser = () => {
 
       variant: 'standard',
 
-      value: email,
-
+      value: 'User',
+      disabled: isEdit,
       isValid: true,
 
       errorMessage: '',
@@ -81,8 +81,8 @@ const AddUser = () => {
 
       variant: 'standard',
 
-      value: email,
-
+      value: 'user@gmail.com',
+      disabled: isEdit,
       isValid: true,
 
       errorMessage: '',
@@ -117,8 +117,8 @@ const AddUser = () => {
 
       variant: 'standard',
 
-      value: contact,
-
+      value: '03412132212',
+      disabled: isEdit,
       isValid: true,
 
       errorMessage: '',
@@ -154,7 +154,7 @@ const AddUser = () => {
       {
         type: 'button',
 
-        name: 'save',
+        name: 'Edit',
 
         minWidth: '100%',
 

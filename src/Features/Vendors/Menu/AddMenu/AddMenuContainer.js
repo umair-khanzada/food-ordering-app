@@ -33,7 +33,7 @@ const AddMenuContainer = () => {
 
   const [category, setCategory] = useState([]);
   const [restaurant, setRestaurant] = useState([]);
-  const [price, setPrice] = useState(30);
+  const [price, setPrice] = useState(null);
   const [name, setName] = useState();
   const [fields, setFields] = useState([
     {

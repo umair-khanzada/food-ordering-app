@@ -21,7 +21,7 @@ const FormComponent = ({
       <Grid
         alignItems="center"
         container
-        justifyContent="center"
+        justifyContent="flex-end"
         style={{ padding: '0 5px', height: '100vh', boxShadow: '0 0 10px lightgrey' }}
       >
         {/* <Grid item md={4}>
@@ -50,7 +50,7 @@ const FormComponent = ({
             </div>
           </div>
         </Grid> */}
-        <Grid item md={4} xs={12}>
+        <Grid item md={4} style={{ marginRight: '100px' }} xs={12}>
           <Form>
             <FormHeading>{formTitle}</FormHeading>
             {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
