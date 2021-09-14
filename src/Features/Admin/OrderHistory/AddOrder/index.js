@@ -102,7 +102,7 @@ const AddOrder = () => {
     ],
   };
 
-  return <AddEditForm buttons={buttons} fields={fields} onSaveSuccess={onSaveSuccess} />;
+  return <AddEditForm buttons={buttons} fields={fields} heading="Add Order" onSaveSuccess={onSaveSuccess} />;
 };
 
 export default AddOrder;
