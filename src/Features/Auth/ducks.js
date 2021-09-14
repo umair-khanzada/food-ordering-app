@@ -1,12 +1,17 @@
 import { LOGIN_SUCCESS, LOGIN_ERROR, FORGOT_PASSWORD, MESSAGE, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
 
-export const authReducer = (state = { isLoggedIn: false, token: '', name: '' }, action) => {
+const initialAuthState = { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
+const initialForgotPasswordState = { message: '', status: 0 };
+const initialResponseMessageState = { message: '', status: 0 };
+
+export const authReducer = (state = { ...initialAuthState }, action) => {
   switch (action.type) {
     case LOGOUT_SUCCESS:
-      return { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
+      return { ...initialAuthState };
 
     case LOGIN_SUCCESS:
       return {
+        ...state,
         isLoggedIn: true,
         accessToken: action.payload.accessToken,
         refreshToken: action.payload.refreshToken,
@@ -14,14 +19,14 @@ export const authReducer = (state = { isLoggedIn: false, token: '', name: '' }, 
       };
 
     case LOGIN_ERROR:
-      return { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
+      return { ...initialAuthState };
 
     default:
       return state;
   }
 };
 
-export const forgotPassword = (state = { message: '', status: 0 }, action) => {
+export const forgotPassword = (state = { ...initialForgotPasswordState }, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD:
       return {};
@@ -30,7 +35,8 @@ export const forgotPassword = (state = { message: '', status: 0 }, action) => {
       return state;
   }
 };
-export const responseMessage = (state = { message: '', status: 0 }, action) => {
+
+export const responseMessage = (state = { ...initialResponseMessageState }, action) => {
   switch (action.type) {
     case MESSAGE:
       // eslint-disable-next-line no-case-declarations

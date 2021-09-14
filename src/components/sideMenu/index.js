@@ -1,49 +1,48 @@
 import React from 'react';
 
-import { Drawer, Typography } from '@material-ui/core';
+import { Drawer, Icon, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Category, History, PeopleAlt } from '@material-ui/icons';
+import { useHistory } from 'react-router';
+
+import RouteNames from '../../routes/RouteNames';
 
 function SideMenu() {
-  // const drawerWidth = 300;
   const useStyles = makeStyles(() => ({
-    drawer: {
-      // position: 'relative',
-      // width: '100%',
-      // height: '100%',
-      // flexShrink: 0,
-      // top: 0,
-      // bottom: 0,
-      overflow: 'hidden',
-    },
     drawerPaper: {
-      position: 'relative',
-      height: '100vh',
-      backgroundColor: '#F0F0F0',
-    },
-
-    logo: {
-      textAlign: 'center',
-      marginTop: '30px',
-    },
-    logoNisum: {
-      color: '#e91e63',
-      fontWeight: '600',
+      position: 'static',
+      height: '88vh',
+      backgroundColor: 'white',
     },
     navigation: {
-      marginTop: '100px',
-      padding: '0 50px',
+      marginTop: '50px',
     },
     list: {
       fontSize: '22px',
       paddingBottom: '40px',
     },
     link: {
-      textDecoration: 'none',
+      borderRadius: '0px',
+      color: '#717271',
+      fontSize: '20px',
+      fontWeight: '200',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'left',
+      '&:hover': {
+        backgroundColor: '#00B3E3',
+        color: 'white',
+      },
+    },
+    icon: {
+      marginRight: '10px',
     },
   }));
   const classes = useStyles();
-  const { drawer, drawerPaper, logo, logoNisum, navigation, list, link } = classes;
+  const { orderHistory, users, vendors, categories } = RouteNames;
+  const history = useHistory();
+
+  const { drawer, drawerPaper, navigation, list, link, icon } = classes;
   return (
     <div style={{ width: '100%' }}>
       <Drawer
@@ -54,31 +53,38 @@ function SideMenu() {
         className={drawer}
         variant="permanent"
       >
-        <div className={logo}>
-          <Typography variant="h2">
-            <span className={logoNisum}>Nisum Foods</span>
-          </Typography>
-        </div>
-        <div className={navigation} style={{ position: 'relative', wordWrap: 'break-word' }}>
+        <div className={navigation}>
           <p className={list}>
-            <Link className={link} to="/">
+            <IconButton className={link} onClick={() => history.push(orderHistory)}>
+              <Icon className={icon}>
+                <History />
+              </Icon>
               Order History
-            </Link>
+            </IconButton>
           </p>
           <p className={list}>
-            <Link className={link} to="/">
-              Vendor List
-            </Link>
+            <IconButton className={link} onClick={() => history.push(vendors)}>
+              <Icon className={icon}>
+                <PeopleAlt />
+              </Icon>
+              Vendors
+            </IconButton>
           </p>
           <p className={list}>
-            <Link className={link} to="/">
-              Users List
-            </Link>
+            <IconButton className={link} onClick={() => history.push(users)}>
+              <Icon className={icon}>
+                <PeopleAlt />
+              </Icon>
+              Users
+            </IconButton>
           </p>
           <p className={list}>
-            <Link className={link} to="/">
-              Category List
-            </Link>
+            <IconButton className={link} onClick={() => history.push(categories)}>
+              <Icon className={icon}>
+                <Category />
+              </Icon>
+              Categories
+            </IconButton>
           </p>
         </div>
       </Drawer>

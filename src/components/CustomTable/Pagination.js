@@ -10,15 +10,12 @@ import { IconContainer } from './style';
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
-
   const handleBackButtonClick = (event) => {
     onPageChange(event, page - 1);
   };
-
   const handleNextButtonClick = (event) => {
     onPageChange(event, page + 1);
   };
-
   return (
     <IconContainer>
       <IconButton aria-label="previous page" disabled={page === 0} onClick={handleBackButtonClick}>
@@ -34,4 +31,5 @@ function TablePaginationActions(props) {
     </IconContainer>
   );
 }
+
 export default TablePaginationActions;

@@ -1,6 +1,6 @@
 export const vendorList = [
   {
-    id: 1,
+    no: 1,
     name: 'Adnan',
     email: 'adnan@gmail.com',
     contact: '13131232',
@@ -8,7 +8,7 @@ export const vendorList = [
     building: 'main',
   },
   {
-    id: 2,
+    no: 2,
     name: 'Yousuf',
     email: 'Yousuf@gmail.com',
     contact: '13131232',
@@ -16,7 +16,7 @@ export const vendorList = [
     building: 'main',
   },
   {
-    id: 3,
+    no: 3,
     name: 'Baber',
     email: 'Baber@gamil.com',
     contact: '1309232',
@@ -24,7 +24,7 @@ export const vendorList = [
     building: 'qasre sheeren',
   },
   {
-    id: 4,
+    no: 4,
     name: 'Dilawer',
     email: 'Dilawer@gmail.com',
     contact: '23131232',
@@ -32,7 +32,7 @@ export const vendorList = [
     building: 'qasre sheeren',
   },
   {
-    id: 5,
+    no: 5,
     name: 'Naem',
     email: 'Naem@gmail.com',
     contact: '10901232',
@@ -40,7 +40,7 @@ export const vendorList = [
     building: 'main',
   },
   {
-    id: 6,
+    no: 6,
     name: 'Kashif',
     email: 'kashif@gamil.com',
     contact: '13131232',
@@ -48,7 +48,7 @@ export const vendorList = [
     building: 'main',
   },
   {
-    id: 7,
+    no: 7,
     name: 'Dilawer',
     email: 'Dilawer@gmail.com',
     contact: '13131232',
