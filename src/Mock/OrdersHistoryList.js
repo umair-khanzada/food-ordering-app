@@ -1,6 +1,6 @@
 export const ordersHistoryList = [
   {
-    id: 1,
+    no: 1,
     name: 'Adnan',
     contact: '13131232',
     items: ['roti', 'karhai'].join(),
@@ -8,7 +8,7 @@ export const ordersHistoryList = [
     date: '25-9-2021',
   },
   {
-    id: 2,
+    no: 2,
     name: 'Yousuf',
     contact: '13131232',
 
@@ -17,7 +17,7 @@ export const ordersHistoryList = [
     date: '25-9-2021',
   },
   {
-    id: 3,
+    no: 3,
     name: 'Baber',
     contact: '1309232',
 
@@ -26,7 +26,7 @@ export const ordersHistoryList = [
     date: '24-9-2021',
   },
   {
-    id: 4,
+    no: 4,
     name: 'Dilawer',
     contact: '23131232',
 
@@ -35,7 +35,7 @@ export const ordersHistoryList = [
     date: '24-9-2021',
   },
   {
-    id: 5,
+    no: 5,
     name: 'Naem',
     contact: '10901232',
 
@@ -44,7 +44,7 @@ export const ordersHistoryList = [
     date: '23-9-2021',
   },
   {
-    id: 6,
+    no: 6,
     name: 'Kashif',
     contact: '13131232',
 
@@ -53,7 +53,7 @@ export const ordersHistoryList = [
     date: '23-9-2021',
   },
   {
-    id: 7,
+    no: 7,
     name: 'Dilawer',
     contact: '13131232',
 
