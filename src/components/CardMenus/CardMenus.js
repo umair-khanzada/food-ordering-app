@@ -17,11 +17,14 @@ const CardMenu = ({ foodType }) => {
   // const cart = useSelector((state) => state.addtocartReducers.cart);
 
   const { control } = classes;
+  console.log('CAKKKED');
 
   return (
     <div>
       <Grid className={classes.control} container elevation={3} spacing={3}>
         {UserData.map((usedata, index) => {
+          console.log('CAKKKED2');
+
           const { id, name, price, type, resturantName, img } = usedata;
           if (type == foodType) {
             return (

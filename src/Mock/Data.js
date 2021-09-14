@@ -6,7 +6,7 @@ const UserData = [
   {
     id: 1,
     name: 'Curry',
-    type: 'gravy',
+    type: 'Gravy',
     price: '150 Rs',
     resturantName: 'Kitchen',
     img: curry,
@@ -14,7 +14,7 @@ const UserData = [
   {
     id: 2,
     name: 'Naan',
-    type: 'bread',
+    type: 'Bread',
     price: '220 Rs',
     resturantName: 'Kitchen',
     img: kofta,
@@ -22,7 +22,7 @@ const UserData = [
   {
     id: 3,
     name: 'Biryani',
-    type: 'rice',
+    type: 'Rice',
     price: '250 Rs',
     resturantName: 'Kitchen',
     img: karahai,

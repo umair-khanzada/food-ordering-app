@@ -5,18 +5,25 @@ import { useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import AppBar from '../../components/AppBar/AppBar';
+import Drawer from '../../components/Drawer/index';
 import SideMenu from '../../components/sideMenu';
+import Roles from '../../roles';
 import BaseRouter from '../index';
+
 function MainContainer() {
-  const { isLoggedIn } = useSelector((state) => {
+  const { isLoggedIn, user } = useSelector((state) => {
     const {
-      authReducer: { isLoggedIn },
+      authReducer: { isLoggedIn, user },
     } = state;
     return {
+      user,
       isLoggedIn,
     };
   });
 
+  const { role } = user;
+
+  const { vendor, admin } = Roles;
   const baseRouter = <BaseRouter />;
 
   return (
@@ -28,9 +35,16 @@ function MainContainer() {
             <Grid item xs={2}>
               <SideMenu />
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={isLoggedIn && role === Roles.user ? 8 : 10}>
               {baseRouter}
             </Grid>
+            {isLoggedIn && role === Roles.user ? (
+              <Grid item xs={2}>
+                <Drawer />
+              </Grid>
+            ) : (
+              false
+            )}
           </Grid>
         </>
       ) : (

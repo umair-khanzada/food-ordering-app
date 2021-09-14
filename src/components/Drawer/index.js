@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  paper: {
+  paper1: {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '40px 40px 17px 40px',
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
   },
   drawer: {
     width: '400px',
-
+    position: 'relative',
     // height: '100vh',
   },
   text: {
@@ -281,7 +281,7 @@ const TemporaryDrawer = () => {
             open={open}
           >
             <Fade in={open}>
-              <div className={classes.paper}>
+              <div className={classes.paper1}>
                 <p className={classes.modaltext}>Are You Sure You Want To Confirm Your Order</p>
                 <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-around' }}>
                   <Button
@@ -293,7 +293,7 @@ const TemporaryDrawer = () => {
                     <CloseIcon />
                     Cancel
                   </Button>
-                  <Button className={classes.modalbtn}>
+                  <Button className={classes.modalbtn} onClick={() => handleClose()}>
                     <DoneIcon />
                     Confirm
                   </Button>

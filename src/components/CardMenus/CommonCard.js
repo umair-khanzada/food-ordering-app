@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-
     paddingTop: '56.25%', // 16:9
   },
   foodTitle: {
@@ -48,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-
   image: {
     padding: '30px',
     border: '100px',
@@ -61,16 +59,15 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  Price: {
+  price: {
     paddingTop: '20px',
-    paddingLeft: '40px',
+    paddingRight: '40px',
     fontSize: '18px',
     fontWeight: '700',
   },
-
   btn: {
     marginTop: '10px',
-    minWidth: '10px',
+    minWidth: '40px',
   },
 }));
 const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
@@ -79,7 +76,7 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
   const [showButton, setShowButton] = useState(false);
   const dispatch = useDispatch();
   return (
-    <Grid item md={3}>
+    <Grid item md={4}>
       <Card className={root}>
         <div className={image}>
           <div style={{ boxShadow: '10px 10px 13px lightgrey' }}>
@@ -96,7 +93,7 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
           }
         />
         <CardContent className={content}>
-          <div style={{ marginTop: '20px', display: 'flex' }}>
+          <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
             <div className={btn}>
               {/* {showButton ? (
                 <div>
@@ -112,11 +109,10 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
                   fontSize={16}
                   onClick={() => dispatch(addtocart({ id, name, price, img, qty: 1 }))}
                   property={buttonText}
-                  style={{ width: '50px' }}
                 />
               </div>
             </div>
-            <Typography className={Price} color="textSecondary" component="p" variant="h4">
+            <Typography className={classes.price} color="textSecondary" component="p" variant="h4">
               <span>{price}</span>
             </Typography>
           </div>

@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MainTab from '../../../components/CardMenus/Tabs';
-import TemporaryDrawer from '../../../components/Drawer';
 import { openDrawer } from '../actions';
 
 function Dashboard() {
@@ -132,7 +131,7 @@ function Dashboard() {
               </div> */}
             </div>
             <div className={classes.tabs}>
-              <TemporaryDrawer />
+              {/* <TemporaryDrawer /> */}
               <div className={classes.tab}>
                 <MainTab setOpenDrawer={() => dispatch(openDrawer())} />
               </div>
