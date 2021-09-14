@@ -18,7 +18,7 @@ export const Error = styled.span`
 `;
 export const FormHeading = styled.h1`
   margin-bottom: 20px;
-  color: #e91e63;
+  color: #00b3e3;
   text-align: center;
   font-size: 40px;
   font-weight: 500;
