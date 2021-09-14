@@ -10,7 +10,7 @@ import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/picker
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
-import CustomTable from '../../../components/CustomeTable';
+import CustomTable from '../../../components/CustomTable';
 import { DeleteIcon } from './style';
 
 const drawerWidth = 300;
@@ -151,7 +151,7 @@ function Menu() {
           </div>
 
           <div style={{ padding: '20px', marginTop: '30px' }}>
-            <CustomTable header={header} isEditDelete onEdit={onEdit} rows={tableData} tablewidth="80%" />
+            <CustomTable header={header} isEditDelete onEdit={onEdit} rows={tableData} tablewidth="90%" />
           </div>
         </Grid>
       </Grid>

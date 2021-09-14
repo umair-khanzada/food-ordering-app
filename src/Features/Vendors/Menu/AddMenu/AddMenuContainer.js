@@ -1,87 +1,111 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import 'date-fns';
-import { TextField, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router';
+import AddEditForm from '../../../../components/AddEditForm';
+import { PRICE, SELECT, TEXT_FIELD } from '../../../../components/AddEditForm/FieldTypes';
 
-import CommonButton from '../../../../components/Button/Button';
-import SelectTag from '../../../../components/Select';
+const AddMenuContainer = () => {
+  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
-const useStyles = makeStyles(() => ({
-  header: {
-    textAlign: 'center',
-    fontSize: '20px',
-    color: '#e91e63',
-    margin: '20px 0',
-  },
-  heading: {
-    color: '#e91e63',
-    textAlign: 'center',
-  },
+  const validateOnSubmit = () => {
+    let isValid = true;
+    const ValidateArray = fields.map((field) => {
+      if (
+        field.value === '' ||
+        field.value === undefined ||
+        field.value === null ||
+        (field.value.constructor.name == 'Array' && field.value.length === 0)
+      ) {
+        isValid = false;
+        field.errorMessage = field.label + ' field cannot be empty';
+        field.isValid = false;
 
-  form: {
-    margin: '54px 20px',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  alignCenter: {
-    width: '48%',
-    background: 'white',
-    padding: '20px 77px',
-    borderRadius: '6px',
-  },
-  txtField: {
-    width: '100%',
-    marginBottom: '10px',
-  },
-  button: {
-    margin: '20px 0',
-    textAlign: 'center',
-  },
-  crossIcon: {
-    textAlign: 'right',
-    paddingRight: '20px',
-    cursor: 'pointer',
-  },
-  formField: {
-    marginBottom: '10px',
-  },
-}));
+        return field;
+      }
+      field.isValid = true;
+      field.errorMessage = '';
 
-function AddMenuContainer() {
-  const classes = useStyles();
-  const history = useHistory();
-  function addItem() {
-    history.push('/menu');
-  }
-  return (
-    <div>
-      <div className={classes.form}>
-        <div className={classes.alignCenter}>
-          <Typography className={classes.heading} variant="h2">
-            Add Item
-          </Typography>
-          <div className={classes.formField}>
-            {/* <TextField className={classes.txtField} label="Category" /> */}
-            <SelectTag placeholder="Select Category" values={['Salan', 'Beverages', 'Fast Food']} width="100%" />
-          </div>
-          <div className={classes.formField}>
-            <SelectTag placeholder="Select Restraunt" values={['Bites for delight', 'Dominos', 'KFC']} width="100%" />
-          </div>
-          <div>
-            <TextField className={classes.txtField} label="Item Name " />
-          </div>
-          <div>
-            <TextField className={classes.txtField} label="Price" />
-          </div>
+      !isValid ? null : (isValid = field.isValid);
+      return field;
+    });
+    setFields(ValidateArray);
+    return isValid;
+  };
 
-          <div className={classes.button}>
-            <CommonButton fontSize="14px" minwidth="100px" onClick={addItem} property="Add Menu" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+  const [category, setCategory] = useState([]);
+  const [restaurant, setRestaurant] = useState([]);
+  const [price, setPrice] = useState(30);
+  const [name, setName] = useState();
+  const [fields, setFields] = useState([
+    {
+      type: SELECT,
+      label: 'Categories',
+      values: ['Bread', 'Gravy'],
+      value: category,
+      isValid: true,
+      errorMessage: '',
+
+      onChange: (event, index) => {
+        setCategory(event.target.value);
+        fields[index].value = event.target.value;
+      },
+    },
+    {
+      type: SELECT,
+      label: 'Restaurant',
+      values: ['KFC', 'DOMINOS', 'DARBAR'],
+      value: restaurant,
+      isValid: true,
+      errorMessage: '',
+
+      onChange: (event, index) => {
+        setRestaurant(event.target.value);
+        fields[index].value = event.target.value;
+      },
+    },
+    {
+      type: PRICE,
+      label: 'Price',
+      value: price,
+      isValid: true,
+      errorMessage: '',
+
+      onChange: (event, index) => {
+        setPrice(event.target.value);
+        fields[index].value = event.target.value;
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      label: 'Name',
+      value: name,
+      textFieldType: 'text',
+      variant: 'standard',
+      isValid: true,
+      errorMessage: '',
+
+      onChange: (event, index) => {
+        setName(event.target.value);
+        fields[index].value = event.target.value;
+      },
+    },
+  ]);
+
+  const saveHandler = () => {
+    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+  };
+
+  const buttons = {
+    button: [
+      {
+        type: 'button',
+        name: 'save',
+        minWidth: '100%',
+        clickHandler: saveHandler,
+      },
+    ],
+  };
+
+  return <AddEditForm buttons={buttons} fields={fields} heading="Add Item" onSaveSuccess={onSaveSuccess} />;
+};
+
 export default AddMenuContainer;

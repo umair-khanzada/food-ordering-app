@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Drawer, Button } from '@material-ui/core';
+import { Drawer, Icon, IconButton, Menu } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Category, Dashboard, Edit, History, PeopleAlt, Person } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -95,24 +96,36 @@ function SideMenu() {
             <>
               {' '}
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/orderhistory')}>
+                <IconButton className={link} onClick={() => history.push('/orderhistory')}>
+                  <Icon className={icon}>
+                    <History />
+                  </Icon>
                   Order History
-                </Button>
+                </IconButton>
               </p>
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/vendors')}>
+                <IconButton className={link} onClick={() => history.push('/vendors')}>
+                  <Icon className={icon}>
+                    <PeopleAlt />
+                  </Icon>
                   Vendors
-                </Button>
+                </IconButton>
               </p>
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/users')}>
+                <IconButton className={link} onClick={() => history.push('/users')}>
+                  <Icon className={icon}>
+                    <PeopleAlt />
+                  </Icon>
                   Users
-                </Button>
+                </IconButton>
               </p>
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/categories')}>
+                <IconButton className={link} onClick={() => history.push('/categories')}>
+                  <Icon className={icon}>
+                    <Category />
+                  </Icon>
                   Category
-                </Button>
+                </IconButton>
               </p>{' '}
             </>
           ) : null}
@@ -121,19 +134,28 @@ function SideMenu() {
             <>
               {' '}
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/dashboard')}>
+                <IconButton className={link} onClick={() => history.push('/dashboard')}>
+                  <Icon className={icon}>
+                    <Dashboard />
+                  </Icon>
                   Dashboard
-                </Button>
+                </IconButton>
               </p>
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/profile')}>
+                <IconButton className={link} onClick={() => history.push('/profile')}>
+                  <Icon className={icon}>
+                    <Person />
+                  </Icon>
                   Profile
-                </Button>
+                </IconButton>
               </p>
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/orderhistory')}>
+                <IconButton className={link} onClick={() => history.push('/orderhistory')}>
+                  <Icon className={icon}>
+                    <History />
+                  </Icon>
                   Order History
-                </Button>
+                </IconButton>
               </p>
             </>
           ) : null}
@@ -142,19 +164,28 @@ function SideMenu() {
             <>
               {' '}
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/menu')}>
+                <IconButton className={link} onClick={() => history.push('/menu')}>
+                  <Icon className={icon}>
+                    <Menu />
+                  </Icon>
                   Menu
-                </Button>
+                </IconButton>
               </p>
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/categorylist')}>
+                <IconButton className={link} onClick={() => history.push('/categorylist')}>
+                  <Icon className={icon}>
+                    <Category />
+                  </Icon>
                   Category
-                </Button>
+                </IconButton>
               </p>
               <p className={list}>
-                <Button className={link} onClick={() => history.push('/orderlist')}>
+                <IconButton className={link} onClick={() => history.push('/orderlist')}>
+                  <Icon className={icon}>
+                    <Edit />
+                  </Icon>
                   Order
-                </Button>
+                </IconButton>
               </p>
             </>
           ) : null}

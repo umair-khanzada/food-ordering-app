@@ -4,11 +4,22 @@ import { useTheme } from '@material-ui/core';
 
 import StyledButton from './Style';
 
-export default function CommonButton({ onClick, type, property, color, maxwidth, minwidth, fontSize, style }) {
+export default function CommonButton({
+  className,
+  onClick,
+  type,
+  property,
+  color,
+  maxwidth,
+  minwidth,
+  fontSize,
+  style,
+}) {
   const theme = useTheme();
 
   return (
     <StyledButton
+      className={className}
       color={color}
       fontSize={fontSize}
       maxwidth={maxwidth}
@@ -25,4 +36,5 @@ export default function CommonButton({ onClick, type, property, color, maxwidth,
 }
 
 CommonButton.defaulProps = {}; // All Components must have defualt props
+
 CommonButton.prototype = {}; // All Components must have propTypes

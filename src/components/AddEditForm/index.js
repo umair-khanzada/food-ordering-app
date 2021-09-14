@@ -12,7 +12,7 @@ import TextField from '../TextField/TextField';
 import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD } from './FieldTypes';
 import { StyledMainContainerGrid, Error } from './style';
 
-const AddEditForm = ({ fields, buttons, responseError, heading }) => {
+const AddEditForm = ({ fields, buttons, responseError, heading, onSaveSuccess }) => {
   const WIDTH = '100%';
 
   const getField = (field, props, index) => {

@@ -1,73 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import 'date-fns';
-import { TextField, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router';
+import AddEditForm from '../../../components/AddEditForm';
+import { TEXT_FIELD } from '../../../components/AddEditForm/FieldTypes';
 
-import CommonButton from '../../../components/Button/Button';
-const useStyles = makeStyles(() => ({
-  header: {
-    textAlign: 'center',
-    fontSize: '20px',
-    color: '#E91E63',
-    margin: '20px 0',
-  },
-  heading: {
-    color: '#E91E63',
-    textAlign: 'center',
-  },
-  form: {
-    margin: '54px 20px',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  alignCenter: {
-    width: '48%',
-    background: 'white',
-    padding: '20px 77px',
-    borderRadius: '6px',
-  },
-  txtField: {
-    width: '100%',
-    marginBottom: '20px',
-  },
-  button: {
-    margin: '20px 0',
-    textAlign: 'center',
-  },
-  crossIcon: {
-    textAlign: 'right',
-    paddingRight: '20px',
-    cursor: 'pointer',
-  },
-  formField: {
-    marginBottom: '10px',
-  },
-}));
-function AddMenuContainer() {
-  const classes = useStyles();
-  const history = useHistory();
-  function addItem() {
-    history.push('/menu');
-  }
-  return (
-    <div>
-      <div className={classes.form}>
-        <div className={classes.alignCenter}>
-          <Typography className={classes.heading} variant="h2">
-            Add Category
-          </Typography>
-          <div className={classes.formField}>
-            <TextField className={classes.txtField} label="Category" />
-          </div>
+const AddCategory = () => {
+  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
-          <div className={classes.button}>
-            <CommonButton fontSize="14px" minwidth="100px" onClick={addItem} property="Add Category" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-export default AddMenuContainer;
+  const validateOnSubmit = () => {
+    let isValid = true;
+    const ValidateArray = fields.map((field) => {
+      console.log(field.value);
+      if (
+        field.value === '' ||
+        field.value === undefined ||
+        field.value === null ||
+        (field.value.constructor.name == 'Array' && field.value.length === 0)
+      ) {
+        isValid = false;
+        field.errorMessage = field.label + ' field cannot be empty';
+        field.isValid = false;
+
+        return field;
+      }
+
+      field.isValid = true;
+      field.errorMessage = '';
+
+      !isValid ? null : (isValid = field.isValid);
+      return field;
+    });
+    setFields(ValidateArray);
+    return isValid;
+  };
+
+  const [category, setCategory] = useState('');
+  const [fields, setFields] = useState([
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Category Name',
+      variant: 'standard',
+      value: category,
+      isValid: true,
+      errorMessage: '',
+      onChange: (event, index) => {
+        setCategory(event.target.value);
+        fields[index].value = event.target.value;
+      },
+    },
+  ]);
+
+  const saveHandler = () => {
+    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+  };
+
+  const buttons = {
+    button: [
+      {
+        type: 'button',
+        name: 'save',
+        minWidth: '100%',
+        clickHandler: saveHandler,
+      },
+    ],
+  };
+  return <AddEditForm buttons={buttons} fields={fields} heading="Add Category" onSaveSuccess={onSaveSuccess} />;
+};
+
+export default AddCategory;
