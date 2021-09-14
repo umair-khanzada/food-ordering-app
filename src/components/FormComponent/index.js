@@ -18,7 +18,38 @@ const FormComponent = ({
 }) => {
   return (
     <FormContainer>
-      <Grid alignItems="center" container justifyContent="center" style={{ padding: '0 5px', height: '100vh' }}>
+      <Grid
+        alignItems="center"
+        container
+        justifyContent="center"
+        style={{ padding: '0 5px', height: '100vh', boxShadow: '0 0 10px lightgrey' }}
+      >
+        {/* <Grid item md={4}>
+          <div style={{ position: 'relative', height: '368px' }}>
+            <img alt="logo" src={foodImage} style={{ width: '100%', height: '100%' }} />
+            <div
+              style={{
+                position: 'absolute',
+                top: '0',
+                width: '100%',
+                height: '100%',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                zIndex: '2',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%,-50%)',
+                color: 'white',
+                fontSize: '43px',
+              }}
+            >
+              Welcome To Nisum Foods
+            </div>
+          </div>
+        </Grid> */}
         <Grid item md={4} xs={12}>
           <Form>
             <FormHeading>{formTitle}</FormHeading>

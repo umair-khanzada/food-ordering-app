@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+// import background from '../../assets/foodBackground.jpeg';
+import background from '../../assets/food1.jpg';
+
 export const Form = styled.form`
   background-color: white;
   padding: 10px 15px 10px 15px;
   border-radius: 10px;
-  box-shadow: 0 0 10px lightgrey;
   @media (min-width: 768px) {
     padding: 20px 35px;
   }
@@ -50,7 +52,9 @@ export const Label = styled(Link)`
 `;
 
 export const FormContainer = styled.div`
-  background-color: #f0f0f0;
+  background-color: white;
   background-size: 'cover';
   min-height: 100vh;
+  background-image: url(${background});
+  background-size: 100%;
 `;

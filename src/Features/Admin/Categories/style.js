@@ -3,7 +3,7 @@ import { Delete } from '@material-ui/icons';
 import CreateIcon from '@material-ui/icons/Create';
 import styled from 'styled-components';
 export const FormContainer = styled.div`
-  background-color: #f0f0f0;
+  background-color: white;
   background-size: 'cover';
   min-height: 100vh;
 `;

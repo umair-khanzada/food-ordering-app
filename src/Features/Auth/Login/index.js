@@ -98,12 +98,12 @@ function LoginForm() {
   };
 
   return (
-    <div>
+    <div style={{ backgroundImage: 'url("../../../assets/foodBackground.jpeg")' }}>
       <FormComponent
         basicButtons={loginButtons}
         changeHandler={textFiledChangeHandler}
         forgotPassword="Forgot Password?"
-        formTitle="Login"
+        formTitle="Sign In"
         inputFields={loginForm}
         label="Create New Account?"
         navigationPath="/signup"
