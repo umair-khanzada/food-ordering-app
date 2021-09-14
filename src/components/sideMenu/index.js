@@ -39,7 +39,7 @@ function SideMenu() {
     },
   }));
   const classes = useStyles();
-  const { orderHistory } = RouteNames;
+  const { orderHistory, users, vendors, categories } = RouteNames;
   const history = useHistory();
 
   const { drawer, drawerPaper, navigation, list, link, icon } = classes;
@@ -63,7 +63,7 @@ function SideMenu() {
             </IconButton>
           </p>
           <p className={list}>
-            <IconButton className={link} onClick={() => history.push(orderHistory)}>
+            <IconButton className={link} onClick={() => history.push(vendors)}>
               <Icon className={icon}>
                 <PeopleAlt />
               </Icon>
@@ -71,7 +71,7 @@ function SideMenu() {
             </IconButton>
           </p>
           <p className={list}>
-            <IconButton className={link} onClick={() => history.push(orderHistory)}>
+            <IconButton className={link} onClick={() => history.push(users)}>
               <Icon className={icon}>
                 <PeopleAlt />
               </Icon>
@@ -79,7 +79,7 @@ function SideMenu() {
             </IconButton>
           </p>
           <p className={list}>
-            <IconButton className={link} onClick={() => history.push(orderHistory)}>
+            <IconButton className={link} onClick={() => history.push(categories)}>
               <Icon className={icon}>
                 <Category />
               </Icon>

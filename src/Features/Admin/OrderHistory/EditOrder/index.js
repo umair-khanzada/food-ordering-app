@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AddEditForm from '../../../../components/AddEditForm';
 import { DATE, MULTI_SELECT, PRICE, SELECT } from '../../../../components/AddEditForm/FieldTypes';
 
-const AddOrder = () => {
+const EditOrder = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const validateOnSubmit = () => {
@@ -103,7 +103,7 @@ const AddOrder = () => {
     ],
   };
 
-  return <AddEditForm buttons={buttons} fields={fields} heading="Add Order" onSaveSuccess={onSaveSuccess} />;
+  return <AddEditForm buttons={buttons} fields={fields} heading="Edit Order" onSaveSuccess={onSaveSuccess} />;
 };
 
-export default AddOrder;
+export default EditOrder;

@@ -8,7 +8,8 @@ import Button from '../Button/Button';
 import MultipleSelect from '../MultiSelect';
 import NumberInput from '../NumberInput';
 import SelectTag from '../Select';
-import { SELECT, MULTI_SELECT, DATE, PRICE } from './FieldTypes';
+import TextField from '../TextField/TextField';
+import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD } from './FieldTypes';
 import { StyledMainContainerGrid, Error } from './style';
 
 const AddEditForm = ({ fields, buttons, responseError, heading }) => {
@@ -41,26 +42,30 @@ const AddEditForm = ({ fields, buttons, responseError, heading }) => {
       case PRICE:
         return <NumberInput onChange={(e) => props.onChange(e, index)} value={props.value} width={WIDTH} />;
 
+      case TEXT_FIELD:
+        return (
+          <TextField
+            changeHandler={(e) => props.onChange(e, index)}
+            type={props.textFieldType}
+            variant={props.variant}
+            width={WIDTH}
+          />
+        );
+
       default:
         return null;
     }
   };
 
   return (
-    <StyledMainContainerGrid
-      container
-      direction="column"
-      style={{
-        margin: 0,
-        width: '100%',
-      }}
-    >
+    <StyledMainContainerGrid container direction="column">
       <Grid item>
         <Typography color="secondary" variant="h1">
           {heading}
+          <hr />
         </Typography>
       </Grid>
-      <Grid item style={{ width: '50%' }}>
+      <Grid item style={{ width: '50%', marginTop: '30px' }}>
         {fields
           ? fields.map((data, index) => {
               return (
