@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Card, CardMedia, CardContent, CardHeader, Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   foodTitle: {
     textAlign: 'center',
+    marginBottom: '10px',
   },
   content: {
     padding: '0px',
@@ -75,8 +76,9 @@ const useStyles = makeStyles((theme) => ({
 const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
   const classes = useStyles();
   const { root, content, header, image, Price, btn } = classes;
-  const [showButton, setShowButton] = useState(false);
+  // const [showButton, setShowButton] = useState(false);
   const dispatch = useDispatch();
+
   return (
     <Grid item md={3}>
       <Card className={root}>
@@ -108,7 +110,6 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
               ) : ( */}
               <div>
                 <CommonButton
-                  color="secondary"
                   fontSize={16}
                   onClick={() => dispatch(addtocart({ id, name, price, img, qty: 1 }))}
                   property={buttonText}

@@ -5,6 +5,7 @@ import { Drawer, Card, Button, Modal, Fade, Backdrop } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CloseIcon from '@material-ui/icons/Close';
+import DoneIcon from '@material-ui/icons/Done';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -22,9 +23,8 @@ const useStyles = makeStyles({
   },
   paper: {
     backgroundColor: 'white',
-    border: '2px solid #000',
-    boxShadow: '5px 5px',
-    padding: '5px',
+    borderRadius: '12px',
+    padding: '40px 40px 17px 40px',
   },
   cartimg: {
     width: 100,
@@ -46,11 +46,11 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#e91e63',
+    backgroundColor: '#00b3e3',
     height: 46,
   },
   drawer: {
-    width: 400,
+    width: '400px',
 
     // height: '100vh',
   },
@@ -90,19 +90,33 @@ const useStyles = makeStyles({
     paddingLeft: 5,
   },
   positiveicon: {
-    color: '#e91e63',
+    color: '#00b3e3',
     '&:hover': {
       cursor: 'pointer',
     },
   },
   btn: {
-    backgroundColor: '#e91e63',
+    backgroundColor: '#00b3e3',
     // width: '90%',
     margin: '0 10px',
     color: 'white',
     '&:hover': {
-      backgroundColor: '#e91e63',
+      backgroundColor: '#00b3e3',
     },
+  },
+  cancelbtn: {
+    color: 'white',
+  },
+  modalbtn: {
+    backgroundColor: '#00B3E3',
+    color: 'white',
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: '#00B3E3',
+    },
+  },
+  modaltext: {
+    color: '#717271',
   },
 });
 
@@ -192,48 +206,69 @@ const TemporaryDrawer = () => {
               <h4 className={classes.headingtext}>My Cart</h4>
               <CloseIcon className={classes.text} onClick={() => dispatch(closeDrawer())} />{' '}
             </div>
-            <div style={{ height: '85vh', overflowY: 'scroll', marginBottom: '10px' }}>
-              {cart.map((cartdata) => {
-                return (
-                  <Card key={cartdata.id} className={classes.card}>
-                    <div className={classes.imgdiv}>
-                      <img alt="cart" className={classes.cartimg} src={cartdata.img} />
-                    </div>
-                    <div className={classes.price}>
-                      <div className={classes.main}>
-                        <div>
-                          <h4>{cartdata.name}</h4>
+            <div style={{ height: '85vh', overflowY: 'scroll', marginBottom: '10px', width: '370px' }}>
+              {cart.length > 0 ? (
+                <>
+                  {cart.map((cartdata) => {
+                    return (
+                      <Card key={cartdata.id} className={classes.card}>
+                        <div className={classes.imgdiv}>
+                          <img alt="cart" className={classes.cartimg} src={cartdata.img} />
                         </div>
+                        <div className={classes.price}>
+                          <div className={classes.main}>
+                            <div>
+                              <h4>{cartdata.name}</h4>
+                            </div>
 
-                        <div className={classes.itemprice}>
-                          <span style={{ marginLeft: '40px' }}> {cartdata.price}</span>
+                            <div className={classes.itemprice}>
+                              <span style={{ marginLeft: '20px' }}> {cartdata.price}</span>
+                            </div>
+                            <span style={{ marginLeft: '75px' }}>
+                              <CloseIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
+                            </span>
+                          </div>
+
+                          <div className={classes.add}>
+                            <AddCircleIcon
+                              className={classes.positiveicon}
+                              onClick={() => dispatch(increaseQuantity(cartdata.id))}
+                            />
+
+                            {cartdata.qty}
+                            <RemoveCircleIcon
+                              className={classes.positiveicon}
+                              onClick={() => dispatch(decreaseQuantity(cartdata.id))}
+                            />
+                          </div>
                         </div>
-                        <span style={{ marginLeft: '80px' }}>
-                          <CloseIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
-                        </span>
-                      </div>
+                      </Card>
+                    );
+                  })}
+                </>
+              ) : (
+                <div
+                  style={{
+                    height: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <h2>No Item in your cart </h2>
+                  <p>Your favorite items are just a click away</p>
+                </div>
+              )}
 
-                      <div className={classes.add}>
-                        <AddCircleIcon
-                          className={classes.positiveicon}
-                          onClick={() => dispatch(increaseQuantity(cartdata.id))}
-                        />
-                        {cartdata.qty}
-                        <RemoveCircleIcon
-                          className={classes.positiveicon}
-                          onClick={() => dispatch(decreaseQuantity(cartdata.id))}
-                        />
-                      </div>
-                    </div>
-                  </Card>
-                );
-              })}
+              {/* close here */}
             </div>
           </div>
-
-          <Button className={classes.btn} onClick={handleOpen}>
-            Proceed to Checkout
-          </Button>
+          {cart.length > 0 && (
+            <Button className={classes.btn} onClick={handleOpen}>
+              Checkout
+            </Button>
+          )}
           <Modal
             aria-describedby="transition-modal-description"
             aria-labelledby="transition-modal-title"
@@ -243,12 +278,26 @@ const TemporaryDrawer = () => {
             }}
             className={classes.modal}
             closeAfterTransition
-            onClose={handleClose}
             open={open}
           >
             <Fade in={open}>
               <div className={classes.paper}>
-                <h1>Your Order has been placed</h1>
+                <p className={classes.modaltext}>Are You Sure You Want To Confirm Your Order</p>
+                <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-around' }}>
+                  <Button
+                    className={classes.cancelbtn}
+                    onClick={() => handleClose()}
+                    style={{ marginRight: '20px' }}
+                    variant="contained"
+                  >
+                    <CloseIcon />
+                    Cancel
+                  </Button>
+                  <Button className={classes.modalbtn}>
+                    <DoneIcon />
+                    Confirm
+                  </Button>
+                </div>
               </div>
             </Fade>
           </Modal>

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Grid, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import MainTab from '../../components/CardMenus/Tabs';
 import TemporaryDrawer from '../../components/Drawer';
@@ -41,8 +41,10 @@ function Dashboard() {
   const classes = useStyles();
   // const [isDrawerOpen, setOpenDrawer] = useState(false);
 
-  const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
+  // const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
   const dispatch = useDispatch();
+  const [value, setValue] = useState(0);
+  console.log('value', value);
 
   // function toggleDrawer() {
   //   setOpenDrawer(!isDrawerOpen);
@@ -58,7 +60,6 @@ function Dashboard() {
 
   return (
     <div>
-      {console.log('state changed!!!', isDrawerOpen)}
       <Grid container>
         <Grid item md={3}>
           <SideMenu />
@@ -89,8 +90,7 @@ function Dashboard() {
             </div>
             <div className={classes.tabs}>
               <TemporaryDrawer />
-
-              <MainTab setOpenDrawer={() => dispatch(openDrawer())} />
+              <MainTab setOpenDrawer={() => dispatch(openDrawer())} setTabValue={setValue} value={value} />
             </div>
 
             <div />

@@ -1,6 +1,8 @@
+/* eslint-disable no-case-declarations */
 const initialData = {
   cart: [],
   isDrawerOpen: false,
+  count: 0,
 };
 export const addtocartReducers = (state = initialData, action) => {
   const updatedCart = [];
@@ -11,13 +13,10 @@ export const addtocartReducers = (state = initialData, action) => {
     case 'CLOSE_DRAWER':
       return { ...state, isDrawerOpen: false };
     case 'ADD_TOCART':
-      // eslint-disable-next-line no-case-declarations
       const { id, name, price, img, qty } = action.payload;
-      console.log(action.payload, 'id');
-      // yaha per logic likho agr id phele s car ki array m he to uska qty increase kare
-      // eslint-disable-next-line no-case-declarations
-      const filter = state.cart.filter((elem) => elem.id === id, console.log('ele', state.cart));
-      // eslint-disable-next-line no-case-declarations
+
+      const filter = state.cart.filter((elem) => elem.id === id);
+      console.log('filter', filter);
       const obj = {
         id,
         name,
@@ -25,18 +24,29 @@ export const addtocartReducers = (state = initialData, action) => {
         img,
         qty,
       };
-      state.cart.slice(id, 0, obj);
+      // state.cart.slice(id, 0, obj);
 
       if (filter.length > 0) {
+        state.cart.map((element, index) => {
+          if (element.id === id) {
+            state.cart[index].qty = element.qty + 1;
+          }
+          return element;
+        });
         return {
           ...state,
           cart: [...state.cart],
+          isDrawerOpen: true,
         };
       }
+
       return {
         ...state,
         cart: [...state.cart, { id, name, price, img, qty }],
+        isDrawerOpen: true,
+        count: state.cart.length + 1,
       };
+
     case 'INCREMENT':
       state.cart.map((element, index) => {
         if (element.id == action.payload.id) {
@@ -51,6 +61,9 @@ export const addtocartReducers = (state = initialData, action) => {
       state.cart.map((element, index) => {
         if (element.id == action.payload.id) {
           state.cart[index].qty = element.qty - 1;
+        }
+        if (element.qty <= 0) {
+          state.cart[index].qty = 1;
         }
         return element;
       });
@@ -67,20 +80,3 @@ export const addtocartReducers = (state = initialData, action) => {
       return state;
   }
 };
-
-// export const inccartReducer = (state = initialData, action) => {
-//   switch (action.type) {
-//     case 'INCREMENT':
-//       const { id, qty } = action.payload;
-//       const updatedCart = state.map((element) => {
-//         if (curEle.id === action.payload) {
-
-//         }
-//       return [...state, { qty: curEle.qty + 1 }];
-//     case 'DECREMENT':
-//       return state;
-
-//     default:
-//       return state;
-//   }
-// };
