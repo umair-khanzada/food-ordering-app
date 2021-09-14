@@ -11,7 +11,7 @@ import SelectTag from '../Select';
 import { SELECT, MULTI_SELECT, DATE, PRICE } from './FieldTypes';
 import { StyledMainContainerGrid, Error } from './style';
 
-const AddEditForm = ({ fields, buttons, responseError, onSaveSuccess }) => {
+const AddEditForm = ({ fields, buttons, responseError, heading }) => {
   const WIDTH = '100%';
 
   const getField = (field, props, index) => {
@@ -47,7 +47,19 @@ const AddEditForm = ({ fields, buttons, responseError, onSaveSuccess }) => {
   };
 
   return (
-    <StyledMainContainerGrid container>
+    <StyledMainContainerGrid
+      container
+      direction="column"
+      style={{
+        margin: 0,
+        width: '100%',
+      }}
+    >
+      <Grid item>
+        <Typography color="secondary" variant="h1">
+          {heading}
+        </Typography>
+      </Grid>
       <Grid item style={{ width: '50%' }}>
         {fields
           ? fields.map((data, index) => {
@@ -74,7 +86,7 @@ const AddEditForm = ({ fields, buttons, responseError, onSaveSuccess }) => {
                   minwidth={minWidth}
                   onClick={clickHandler}
                   property={name}
-                  style={{ padding: '10px 100px', backgroundColor: '#00B3E3' }}
+                  style={{ padding: '10px 100px' }}
                   type={type}
                 />
               </div>
