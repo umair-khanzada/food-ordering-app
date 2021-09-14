@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Drawer, Icon, IconButton, Menu } from '@material-ui/core';
+import { Drawer, Icon, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Category, Dashboard, Edit, History, PeopleAlt, Person } from '@material-ui/icons';
+import { Category, Dashboard, Edit, History, MenuOutlined, PeopleAlt, Person } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -31,7 +31,7 @@ function SideMenu() {
     drawerPaper: {
       position: 'static',
 
-      height: '88vh',
+      height: '90vh',
 
       backgroundColor: 'white',
     },
@@ -166,7 +166,7 @@ function SideMenu() {
               <p className={list}>
                 <IconButton className={link} onClick={() => history.push('/menu')}>
                   <Icon className={icon}>
-                    <Menu />
+                    <MenuOutlined />
                   </Icon>
                   Menu
                 </IconButton>
