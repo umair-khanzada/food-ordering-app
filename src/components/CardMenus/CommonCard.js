@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   foodTitle: {
     textAlign: 'center',
+    marginBottom: '10px',
   },
   content: {
     padding: '0px',
@@ -108,7 +109,6 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
               ) : ( */}
               <div>
                 <CommonButton
-                  color="secondary"
                   fontSize={16}
                   onClick={() => dispatch(addtocart({ id, name, price, img, qty: 1 }))}
                   property={buttonText}

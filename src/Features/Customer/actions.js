@@ -1,10 +1,7 @@
 export const addtocart = (data) => {
-  console.log(data, 'data');
   return {
     type: 'ADD_TOCART',
-    payload: {
-      ...data,
-    },
+    payload: data,
   };
 };
 export const increaseQuantity = (itemId) => {
