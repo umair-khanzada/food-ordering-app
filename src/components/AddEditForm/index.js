@@ -62,7 +62,6 @@ const AddEditForm = ({ fields, buttons, responseError, heading }) => {
       <Grid item>
         <Typography color="secondary" variant="h1">
           {heading}
-          <hr />
         </Typography>
       </Grid>
       <Grid item style={{ width: '50%', marginTop: '30px' }}>

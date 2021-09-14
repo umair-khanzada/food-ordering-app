@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import {
   TableRow,
@@ -79,28 +79,30 @@ export default function CustomTable({ rows, header, tablewidth, onEdit, isEditDe
         <TableBody>
           {(rowsPerPage > 0 ? rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rowsData).map(
             (row) => (
-              <TableRow key={row.name}>
-                {Object.keys(row).map((data, index) => (
-                  <TableCell key={index} style={{ width: 200 }}>
-                    {row[data]}
-                  </TableCell>
-                ))}
-                {isEditDelete ? (
-                  <EditDeleteCell>
-                    <IconButton onClick={() => onEdit(row)}>
-                      <Edit />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        setCurrentSelectedRow(row);
-                        handleClickOpen();
-                      }}
-                    >
-                      <Delete />
-                    </IconButton>
-                  </EditDeleteCell>
-                ) : null}
-              </TableRow>
+              <Fragment key={row.name}>
+                <TableRow>
+                  {Object.keys(row).map((data, index) => (
+                    <TableCell key={index} style={{ width: 200 }}>
+                      {row[data]}
+                    </TableCell>
+                  ))}
+                  {isEditDelete ? (
+                    <EditDeleteCell>
+                      <IconButton onClick={() => onEdit(row)}>
+                        <Edit />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => {
+                          setCurrentSelectedRow(row);
+                          handleClickOpen();
+                        }}
+                      >
+                        <Delete />
+                      </IconButton>
+                    </EditDeleteCell>
+                  ) : null}
+                </TableRow>
+              </Fragment>
             ),
           )}
           {emptyRows > 0 && (

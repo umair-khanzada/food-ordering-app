@@ -39,7 +39,13 @@ const NavBar = () => {
     <StyledDiv>
       <AppBar position="sticky" style={{ background: 'white', borderBottom: '5px solid #00B3E3' }}>
         <Toolbar>
-          <img alt="logo" className={NisumImageLogo} src="https://www.nisum.com/hubfs/logo_nisum.svg" />
+          <img
+            alt="logo"
+            className={NisumImageLogo}
+            onClick={() => history.push('/')}
+            src="https://www.nisum.com/hubfs/logo_nisum.svg"
+            style={{ cursor: 'pointer' }}
+          />
           <Grid alignItems="flex-end" container justifyContent="flex-end">
             <AppBarMenuButton>
               <StyledMenuItem onClick={() => history.push(resetPassword)} theme={theme}>
