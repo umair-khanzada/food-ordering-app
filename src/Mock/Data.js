@@ -4,22 +4,25 @@ import kofta from '../assets/kofta.jpg';
 
 const UserData = [
   {
-    id: '1',
+    id: 1,
     name: 'Curry',
+    type: 'gravy',
     price: '150 Rs',
     resturantName: 'Kitchen',
     img: curry,
   },
   {
-    id: '2',
-    name: 'Kofta',
+    id: 2,
+    name: 'Naan',
+    type: 'bread',
     price: '220 Rs',
     resturantName: 'Kitchen',
     img: kofta,
   },
   {
-    id: '3',
-    name: 'Karhai',
+    id: 3,
+    name: 'Biryani',
+    type: 'rice',
     price: '250 Rs',
     resturantName: 'Kitchen',
     img: karahai,

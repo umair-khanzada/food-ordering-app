@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 const StyledCard = styled(Card)`
   margin: '8px';
-  height:  ${({ height }) => height};
+  height: ${({ height }) => height};
   max-width: ${(props) => props.maxwidth};
   min-width: ${(props) => props.minwidth};
-  textAlign: : ${(props) => props.textalign};
+  text-align: ${(props) => props.textalign};
   ${({ theme }) => `
    &:hover {
         border-radius: ${theme.shape.borderRadius};

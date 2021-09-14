@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 import { Card, CardMedia, CardContent, CardHeader, Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
 
+import { addtocart } from '../../Features/Customer/actions';
 import CommonButton from '../Button/Button';
 
 const drawerWidth = 300;
@@ -59,8 +61,8 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
   },
   Price: {
-    paddingTop: '10px',
-    paddingLeft: '50px',
+    paddingTop: '20px',
+    paddingLeft: '40px',
     fontSize: '18px',
     fontWeight: '700',
   },
@@ -70,10 +72,11 @@ const useStyles = makeStyles((theme) => ({
     minWidth: '10px',
   },
 }));
-const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
+const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
   const classes = useStyles();
-  const { root, content, header, image, Price, btn } = classes;
+  const { root, content, header, image, Price, btn, foodTitle } = classes;
   const [showButton, setShowButton] = useState(false);
+  const dispatch = useDispatch();
   return (
     <Grid item md={3}>
       <Card className={root}>
@@ -86,7 +89,7 @@ const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
           className={header}
           subheader={<h4>{resturantName}</h4>}
           title={
-            <Typography className={classes.foodTitle} variant="h2">
+            <Typography className={foodTitle} variant="h2">
               {name}
             </Typography>
           }
@@ -94,7 +97,7 @@ const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
         <CardContent className={content}>
           <div style={{ marginTop: '20px', display: 'flex' }}>
             <div className={btn}>
-              {showButton ? (
+              {/* {showButton ? (
                 <div>
                   <CommonButton color="secondary" fontSize={16} minwidth="10px" property="+" />
                   {'  '}
@@ -102,20 +105,19 @@ const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
                   {'  '}
                   <CommonButton color="secondary" fontSize={16} minwidth="15px" property="-" />
                 </div>
-              ) : (
-                <div>
-                  <CommonButton
-                    color="secondary"
-                    fontSize={16}
-                    onClick={() => setShowButton(true)}
-                    property={buttonText}
-                    style={{ width: '50px' }}
-                  />
-                </div>
-              )}
+              ) : ( */}
+              <div>
+                <CommonButton
+                  color="secondary"
+                  fontSize={16}
+                  onClick={() => dispatch(addtocart({ id, name, price, img, qty: 1 }))}
+                  property={buttonText}
+                  style={{ width: '50px' }}
+                />
+              </div>
             </div>
             <Typography className={Price} color="textSecondary" component="p" variant="h4">
-              <span>Rs.{price}</span>
+              <span>{price}</span>
             </Typography>
           </div>
         </CardContent>

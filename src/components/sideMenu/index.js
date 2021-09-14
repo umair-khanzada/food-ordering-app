@@ -1,65 +1,166 @@
 import React from 'react';
 
-import { Drawer, Typography } from '@material-ui/core';
+import { Drawer, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
-import { SideMenuLink } from './style';
+import Roles from '../../roles';
 
 function SideMenu() {
-  const drawerWidth = 300;
+  const { isLoggedIn, user } = useSelector((state) => {
+    const {
+      authReducer: { isLoggedIn, user },
+    } = state;
+
+    return {
+      user,
+
+      isLoggedIn,
+    };
+  });
+
+  const { role } = user;
+
+  const { vendor, admin } = Roles;
+
+  const drawerWidth = '25%';
+
   const useStyles = makeStyles(() => ({
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
     drawerPaper: {
-      width: drawerWidth,
-      backgroundColor: '#F0F0F0',
+      position: 'static',
+
+      height: '88vh',
+
+      backgroundColor: 'white',
     },
 
-    logo: {
-      textAlign: 'center',
-      marginTop: '30px',
-    },
-    logoNisum: {
-      color: '#e91e63',
-      fontWeight: '600',
-    },
     navigation: {
-      marginTop: '100px',
-      padding: '0 40px',
+      marginTop: '50px',
+
+      // padding: '0 50px',
     },
+
     list: {
       fontSize: '22px',
+
       paddingBottom: '40px',
     },
-  }));
-  const classes = useStyles();
-  const { drawer, drawerPaper, logo, logoNisum, navigation, list } = classes;
-  return (
-    <Drawer
-      anchor="left"
-      classes={{
-        paper: drawerPaper,
-      }}
-      className={drawer}
-      variant="permanent"
-    >
-      <div className={logo}>
-        <Typography variant="h2">
-          <span className={logoNisum}>Nisum Foods</span>
-        </Typography>
-      </div>
-      <div className={navigation}>
-        <p className={list}>Dashboard</p>
-        <p className={list}>Menu</p>
-        <p className={list}>Dining Areas</p>
 
-        <SideMenuLink to="/dashboard">
-          <p className={list}>Vendor</p>
-        </SideMenuLink>
-      </div>
-    </Drawer>
+    link: {
+      borderRadius: '0px',
+
+      color: '#717271',
+
+      fontSize: '20px',
+
+      fontWeight: '200',
+
+      width: '100%',
+
+      display: 'flex',
+
+      justifyContent: 'left',
+
+      '&:hover': {
+        backgroundColor: '#00B3E3',
+
+        color: 'white',
+      },
+    },
+
+    icon: {
+      marginRight: '10px',
+    },
+  }));
+
+  const history = useHistory();
+
+  const classes = useStyles();
+
+  const { drawer, drawerPaper, navigation, list, link, icon } = classes;
+
+  return (
+    <div style={{ width: '100%' }}>
+      <Drawer
+        anchor="left"
+        classes={{
+          paper: drawerPaper,
+        }}
+        className={drawer}
+        variant="permanent"
+      >
+        <div className={navigation} style={{ position: 'relative', wordWrap: 'break-word' }}>
+          {role === admin ? (
+            <>
+              {' '}
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/orderhistory')}>
+                  Order History
+                </Button>
+              </p>
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/vendors')}>
+                  Vendors
+                </Button>
+              </p>
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/users')}>
+                  Users
+                </Button>
+              </p>
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/categories')}>
+                  Category
+                </Button>
+              </p>{' '}
+            </>
+          ) : null}
+
+          {role === Roles.user ? (
+            <>
+              {' '}
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/dashboard')}>
+                  Dashboard
+                </Button>
+              </p>
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/profile')}>
+                  Profile
+                </Button>
+              </p>
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/orderhistory')}>
+                  Order History
+                </Button>
+              </p>
+            </>
+          ) : null}
+
+          {role === vendor ? (
+            <>
+              {' '}
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/menu')}>
+                  Menu
+                </Button>
+              </p>
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/categorylist')}>
+                  Category
+                </Button>
+              </p>
+              <p className={list}>
+                <Button className={link} onClick={() => history.push('/orderlist')}>
+                  Order
+                </Button>
+              </p>
+            </>
+          ) : null}
+        </div>
+      </Drawer>
+    </div>
   );
 }
 
