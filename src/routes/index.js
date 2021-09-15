@@ -42,10 +42,9 @@ export default function BaseRouter() {
               return <Route key={index} component={() => route.component()} exact path={route.path} />;
             })
           : null}
-        {isLoggedIn &&
-          RouteConfig.common.map((route, index) => {
-            return <Route key={index} component={() => route.component()} exact path={route.path} />;
-          })}
+        {RouteConfig.common.map((route, index) => {
+          return <Route key={index} component={() => route.component()} exact path={route.path} />;
+        })}
         {isLoggedIn &&
           RouteConfig.admin.map((route, index) => {
             return <Route key={index} component={() => route.component()} exact path={route.path} />;
