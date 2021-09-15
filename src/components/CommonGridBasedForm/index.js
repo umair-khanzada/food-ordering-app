@@ -68,22 +68,24 @@ const AddEditForm = ({ fields, buttons, responseError, heading, onSaveSuccess })
         </Typography>
       </Grid>
       <Grid item style={{ width: '50%', marginTop: '30px' }}>
-        {fields
-          ? fields.map((data, index) => {
-              return (
-                <Fragment key={index}>
-                  <Grid item style={{ marginBottom: '50px' }} xs={12}>
-                    <Typography style={{ color: '#717271' }} variant="h4">
-                      {data.label}
-                    </Typography>
-                    {getField(data.type, data, index)}
-                    <br />
-                    <Error style={{ justifyContent: 'top' }}>{data.errorMessage}</Error>
-                  </Grid>
-                </Fragment>
-              );
-            })
-          : null}
+        <Grid container direction="row" justifyContent="space-around" spacing={3}>
+          {fields
+            ? fields.map((data, index) => {
+                return (
+                  <Fragment key={index}>
+                    <Grid item style={{ marginBottom: '50px' }} xs={6}>
+                      <Typography style={{ color: '#717271' }} variant="h4">
+                        {data.label}
+                      </Typography>
+                      {getField(data.type, data, index)}
+                      <br />
+                      <Error style={{ justifyContent: 'top' }}>{data.errorMessage}</Error>
+                    </Grid>
+                  </Fragment>
+                );
+              })
+            : null}
+        </Grid>
         {buttons
           ? buttons.button.map(({ clickHandler, minWidth, name, type }, i) => (
               <div key={name + '-' + i}>
