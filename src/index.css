@@ -5,13 +5,7 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* overflow-x: hidden; */
-
 }
-
-/* #root {
-  height: 88% !important;
-} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
