@@ -1,11 +1,12 @@
 import React from 'react';
 
 import DateFnsUtils from '@date-io/date-fns';
-import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import 'date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import SearchBar from 'material-ui-search-bar';
+
+import CommonButton from '../../../components/Button/Button';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -50,7 +51,7 @@ const HistoryBar = () => {
         />
       </MuiPickersUtilsProvider>
 
-      <Button className={classes.btn}>Filter Now</Button>
+      <CommonButton property="Filter Now" />
     </>
   );
 };
