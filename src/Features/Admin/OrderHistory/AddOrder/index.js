@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AddNEditForm from '../../../../components/AddNEditForm';
+import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 
 const addOrder = () => {
   const fields = [
@@ -26,7 +26,7 @@ const addOrder = () => {
     },
   ];
 
-  return <AddNEditForm fields={fields} />;
+  return <CommonGridBasedForm fields={fields} />;
 };
 
 export default addOrder;
