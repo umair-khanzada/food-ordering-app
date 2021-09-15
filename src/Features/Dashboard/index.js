@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useState } from 'react';
 
 import { Grid, Typography, Box } from '@material-ui/core';
@@ -8,55 +9,59 @@ import { useDispatch } from 'react-redux';
 import MainTab from '../../components/CardMenus/Tabs';
 import TemporaryDrawer from '../../components/Drawer';
 import SideMenu from '../../components/sideMenu';
-import { openDrawer } from './Reducer/action';
+
+const useStyles = makeStyles(() => ({
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '30px',
+  },
+  orderHeading: {
+    fontWeight: '700',
+    marginLeft: '40px',
+  },
+  orderRef: {
+    color: 'lightgrey',
+    paddingLeft: '10px',
+    paddingTop: '8px',
+    fontSize: '18px',
+  },
+  orderDetails: {
+    display: 'flex',
+  },
+  userInfo: {
+    paddingRight: '40px',
+  },
+  tabs: {
+    paddingRight: '30px',
+  },
+}));
 
 function Dashboard() {
-  const useStyles = makeStyles(() => ({
-    header: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginTop: '30px',
-    },
-    orderHeading: {
-      fontWeight: '700',
-      marginLeft: '40px',
-    },
-    orderRef: {
-      color: 'lightgrey',
-      paddingLeft: '10px',
-      paddingTop: '8px',
-      fontSize: '18px',
-    },
-    orderDetails: {
-      display: 'flex',
-    },
-    userInfo: {
-      paddingRight: '40px',
-    },
-    tabs: {
-      paddingRight: '30px',
-    },
-  }));
+  // const [values, setValues] = useState(0);
 
   const classes = useStyles();
-  // const [isDrawerOpen, setOpenDrawer] = useState(false);
+  const [isDrawerOpen, setOpenDrawer] = useState(false);
 
-  // const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
-  console.log('value', value);
 
-  // function toggleDrawer() {
-  //   setOpenDrawer(!isDrawerOpen);
-  // }
+  // const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
+  // const dispatch = useDispatch();
+  // debugger;
+  // console.log('value', values);
 
-  // const openDrawer = () => {
-  //   setOpenDrawer(true);
-  // };
+  function toggleDrawer() {
+    setOpenDrawer(!isDrawerOpen);
+  }
 
-  // const closeDrawer = () => {
-  //   setOpenDrawer(false);
-  // };
+  const openDrawer = () => {
+    setOpenDrawer(true);
+  };
+
+  const closeDrawer = () => {
+    setOpenDrawer(false);
+  };
 
   return (
     <div>
