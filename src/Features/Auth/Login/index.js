@@ -3,47 +3,89 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
+import { emailRegex } from '../../../scripts/constants';
 import { login } from '../actions';
 
 function LoginForm() {
-  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
+  const validateOnSubmit = () => {
+    let isValid = true;
+    const ValidateArray = loginForm.map((textField) => {
+      if (textField.value == '') {
+        isValid = false;
+        return {
+          ...textField,
+          errorMessage: textField.name + ' field cannot be empty',
+          isValid: false,
+        };
+      }
+      !isValid ? null : (isValid = textField.isValid);
+      return textField;
+    });
+
+    setLoginForm(ValidateArray);
+
+    return isValid;
+  };
   const dispatch = useDispatch();
 
-  const loginClickHandler = () => {
-    dispatch(login({ email: loginForm.email, password: loginForm.password }));
-  };
+  const loginClickHandler = (e) => {
+    e.preventDefault();
+    if (validateOnSubmit()) {
+      const userData = {};
+      loginForm.map(({ name, value }) => {
+        userData[name] = value;
+      });
 
-  const textFiledChangeHandler = (e) => {
-    const { value, name } = e.target;
+      dispatch(login(userData));
+    }
+  };
+  const textFiledChangeHandler = (e, index) => {
+    const { value } = e.target;
 
     setLoginForm((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
+      const prevForm = [...prev];
+      const currentTextField = prevForm[index];
+
+      currentTextField.value = value;
+      const getValidationError = currentTextField.getValidation(currentTextField.value);
+      [currentTextField.errorMessage, currentTextField.isValid] = getValidationError;
+      return prevForm;
     });
   };
-  const loginInputs = {
-    fields: [
-      {
-        required: true,
-        label: 'Email',
-        name: 'email',
-        type: 'email',
-        value: loginForm?.email || '',
-        changeHandler: textFiledChangeHandler,
+  const [loginForm, setLoginForm] = useState([
+    {
+      required: true,
+      label: 'Email',
+      name: 'email',
+      type: 'email',
+      value: '',
+      isValid: true,
+      errorMessage: '',
+      getValidation: (value) => {
+        if (!emailRegex.test(value)) {
+          return ['Email type is not valid', false];
+        }
+        return ['', true];
       },
-      {
-        required: true,
-        label: 'Password',
-        name: 'password',
-        type: 'password',
-        minlength: '6',
-        value: loginForm?.password || '',
-        changeHandler: textFiledChangeHandler,
+    },
+    {
+      required: true,
+      label: 'Password',
+      name: 'password',
+      type: 'password',
+      minlength: '6',
+      isValid: true,
+      value: '',
+      errorMessage: '',
+      getValidation: (value) => {
+        if (value.length < 8) {
+          return ['Password must be 8 characters long', false];
+        }
+        return ['', true];
       },
-    ],
-  };
+    },
+  ]);
+
   const loginButtons = {
     button: [
       {
@@ -59,9 +101,10 @@ function LoginForm() {
     <div>
       <FormComponent
         basicButtons={loginButtons}
+        changeHandler={textFiledChangeHandler}
         forgotPassword="Forgot Password?"
         formTitle="Login"
-        inputFields={loginInputs}
+        inputFields={loginForm}
         label="Create New Account?"
         navigationPath="/signup"
       />

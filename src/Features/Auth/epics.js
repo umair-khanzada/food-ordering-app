@@ -16,11 +16,15 @@ export const loginEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
+          const {
+            user: { name },
+            tokens: { refresh, access },
+          } = res.response;
           return of(
             loginSuccess({
-              name: res.response.user.name,
-              refreshToken: res.response.tokens.refresh,
-              accessToken: res.response.tokens.access,
+              name,
+              refreshToken: refresh,
+              accessToken: access,
             }),
           );
         }),
@@ -35,17 +39,22 @@ export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
     mergeMap(({ payload }) => {
+      delete payload['contact'];
       return ajax({
         url: 'http://localhost:4000/v1/auth/register',
         method: 'POST',
         body: payload,
       }).pipe(
         mergeMap((res) => {
+          const {
+            user: { name },
+            tokens: { refresh, access },
+          } = res.response;
           return of(
             loginSuccess({
-              name: res.response.user.name,
-              refreshToken: res.response.tokens.refresh,
-              accessToken: res.response.tokens.access,
+              name,
+              refreshToken: refresh,
+              accessToken: access,
             }),
           );
         }),
@@ -87,7 +96,14 @@ export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
     mergeMap(() => {
-      const refreshToken = { refreshToken: state.value.authReducer.refreshToken.token };
+      const {
+        state: {
+          value: {
+            authReducer: { token },
+          },
+        },
+      } = state;
+      const refreshToken = { refreshToken: token };
       return ajax({
         url: 'http://localhost:4000/v1/auth/logout',
         method: 'POST',
