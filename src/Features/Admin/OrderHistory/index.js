@@ -16,6 +16,10 @@ function OrderHistory() {
     });
   };
 
+  const onDelete = (row) => {
+    row;
+  };
+
   const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date', 'Edit'];
 
   return (
@@ -25,7 +29,14 @@ function OrderHistory() {
         <CommonButton onClick={() => history.push('/addhistory')} property="Add History" />
       </OrdersHistoryTitleContainer>
 
-      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={ordersHistoryList} tablewidth="80%" />
+      <CustomTable
+        header={header}
+        isEditDelete
+        onDelete={onDelete}
+        onEdit={onEdit}
+        rows={ordersHistoryList}
+        tablewidth="80%"
+      />
     </>
   );
 }
