@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { DATE, MULTI_SELECT, PRICE, SELECT } from '../../../../components/CommonGridBasedForm/FieldTypes';
 
-const AddOrder = () => {
+const EditOrder = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const validateOnSubmit = () => {
@@ -103,7 +103,7 @@ const AddOrder = () => {
     ],
   };
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} />;
+  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Order" onSaveSuccess={onSaveSuccess} />;
 };
 
-export default AddOrder;
+export default EditOrder;

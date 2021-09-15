@@ -2,7 +2,7 @@ import { TableHead, TableCell, TableContainer } from '@material-ui/core';
 import styled from 'styled-components';
 export const CustomTableHead = styled(TableHead)`
   color: white;
-  background-color: #e91e63;
+  background-color: #00b3e3;
   & .MuiTableCell-head {
     font-weight: bold;
   }

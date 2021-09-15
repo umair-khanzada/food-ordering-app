@@ -8,6 +8,16 @@ const RouteNames = {
   dashboard: '/dashboard',
   orderHistory: '/orderHistory',
   addOrderHistory: '/orderHistory/add',
+  editOrderHistory: '/orderHistory/edit',
+  users: '/users',
+  editUser: '/users/edit',
+  addUser: '/users/add',
+  vendors: '/vendors',
+  editVendor: '/vendors/edit',
+  addVendor: '/vendors/add',
+  categories: '/categories',
+  addCategory: '/categories/add',
+  editCategory: '/categories/edit',
 };
 
 export default RouteNames;
