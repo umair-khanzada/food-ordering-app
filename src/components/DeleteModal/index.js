@@ -3,7 +3,7 @@ import React from 'react';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 
 import Button from '../Button/Button';
-const DeleteModal = ({ handleClose, open, onDelete }) => {
+const DeleteModal = ({ handleClose, open, onRowDelete }) => {
   return (
     <div>
       <Dialog
@@ -22,7 +22,7 @@ const DeleteModal = ({ handleClose, open, onDelete }) => {
             autoFocus
             color="primary"
             onClick={() => {
-              onDelete();
+              onRowDelete();
               handleClose();
             }}
             property="Agree"
