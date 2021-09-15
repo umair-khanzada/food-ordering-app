@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import AddEditForm from '../../../../components/AddEditForm';
-import { TEXT_FIELD } from '../../../../components/AddEditForm/FieldTypes';
+import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
+import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 
 const EditCategory = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
@@ -64,7 +64,9 @@ const EditCategory = () => {
       },
     ],
   };
-  return <AddEditForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={onSaveSuccess} />
+  );
 };
 
 export default EditCategory;
