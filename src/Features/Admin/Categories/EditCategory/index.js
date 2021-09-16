@@ -14,11 +14,10 @@ const EditCategory = () => {
       label: 'Category Name',
       variant: 'standard',
       value: category,
-      isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setCategory(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setCategory(value);
+        fields[index].value = value;
       },
     },
   ]);

@@ -20,9 +20,9 @@ const EditOrder = () => {
       isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setVendor(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setVendor(value);
+        fields[index].value = value;
       },
     },
     {
@@ -33,9 +33,9 @@ const EditOrder = () => {
       isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setMenus(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setMenus(value);
+        fields[index].value = value;
       },
     },
     {
@@ -45,9 +45,9 @@ const EditOrder = () => {
       isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setPrice(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setPrice(value);
+        fields[index].value = value;
       },
     },
     {
@@ -57,9 +57,9 @@ const EditOrder = () => {
       isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setDate(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setDate(value);
+        fields[index].value = value;
       },
     },
   ]);

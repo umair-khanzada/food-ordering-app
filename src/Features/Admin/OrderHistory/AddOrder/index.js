@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { DATE, MULTI_SELECT, PRICE, SELECT } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
-validateOnSubmit;
 
 const AddOrder = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
@@ -18,12 +17,11 @@ const AddOrder = () => {
       label: 'Vendor',
       values: ['Yousuf', 'Dilawer'],
       value: vendor,
-      isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setVendor(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setVendor(value);
+        fields[index].value = value;
       },
     },
     {
@@ -31,36 +29,33 @@ const AddOrder = () => {
       label: 'Menus',
       values: ['Karhai', 'Biryani', 'Salad'],
       value: menus,
-      isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setMenus(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setMenus(value);
+        fields[index].value = value;
       },
     },
     {
       type: PRICE,
       label: 'Price',
       value: price,
-      isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setPrice(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setPrice(value);
+        fields[index].value = value;
       },
     },
     {
       type: DATE,
       label: 'Date',
       value: date,
-      isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setDate(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setDate(value);
+        fields[index].value = value;
       },
     },
   ]);

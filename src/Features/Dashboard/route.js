@@ -4,6 +4,6 @@ import Dashboard from './index';
 
 export const dashboardRoute = {
   path: RouteNames.dashboard,
-  permissions: isPublicRoute, // to intimate it is public route
+  permissions: isPublicRoute,
   component: Dashboard,
 };

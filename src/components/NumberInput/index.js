@@ -4,7 +4,11 @@ import React from 'react';
 import Input from '@material-ui/core/Input';
 
 export default function NumberInput(props) {
-  const { value, setValue } = props;
+  let { value } = props;
+
+  const setValue = (no) => {
+    value = no;
+  };
 
   const handleBlur = () => {
     if (value < 0) {

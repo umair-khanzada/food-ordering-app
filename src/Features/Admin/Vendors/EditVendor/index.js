@@ -24,9 +24,9 @@ const EditVendor = () => {
       isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setRole(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setRole(value);
+        fields[index].value = value;
       },
     },
     {
@@ -37,10 +37,10 @@ const EditVendor = () => {
       value: email,
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setEmail(event.target.value);
-        fields[index].value = event.target.value;
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        setEmail(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
       },
       getValidation: (value, index) => {
         if (!emailRegex.test(value)) {
@@ -60,10 +60,10 @@ const EditVendor = () => {
       value: password,
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setPassword(event.target.value);
-        fields[index].value = event.target.value;
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        setPassword(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
       },
       getValidation: (value, index) => {
         if (value.length < 8) {
@@ -83,10 +83,10 @@ const EditVendor = () => {
       value: contact,
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setContact(event.target.value);
-        fields[index].value = event.target.value;
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        setContact(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
       },
       getValidation: (value, index) => {
         if (!contactRegex.test(value)) {
@@ -106,9 +106,9 @@ const EditVendor = () => {
       value: timing,
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setTiming(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setTiming(value);
+        fields[index].value = value;
       },
     },
     {
@@ -119,9 +119,9 @@ const EditVendor = () => {
       value: building,
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setBuilding(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setBuilding(value);
+        fields[index].value = value;
       },
     },
   ]);

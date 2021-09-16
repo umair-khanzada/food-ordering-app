@@ -22,9 +22,9 @@ const AddUser = () => {
       isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setRole(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setRole(value);
+        fields[index].value = value;
       },
     },
     {
@@ -35,10 +35,10 @@ const AddUser = () => {
       value: email,
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setEmail(event.target.value);
-        fields[index].value = event.target.value;
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        setEmail(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
       },
       getValidation: (value, index) => {
         if (!emailRegex.test(value)) {
@@ -58,10 +58,10 @@ const AddUser = () => {
       value: password,
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setPassword(event.target.value);
-        fields[index].value = event.target.value;
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        setPassword(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
       },
       getValidation: (value, index) => {
         if (value.length < 8) {
@@ -81,10 +81,10 @@ const AddUser = () => {
       value: contact,
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setContact(event.target.value);
-        fields[index].value = event.target.value;
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        setContact(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
       },
       getValidation: (value, index) => {
         if (!contactRegex.test(value)) {

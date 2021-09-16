@@ -17,27 +17,25 @@ const NavBar = () => {
     dispatch(logout());
   };
   const useStyles = makeStyles(() => ({
-    logoNisum: {
-      color: 'white',
-      width: '100%',
-      fontWeight: '600',
-      fontSize: '30px',
-    },
     NisumImageLogo: {
       height: '80px',
       minwidth: '160px',
       marginLeft: '20px',
     },
+    appBarStyle: {
+      background: 'white',
+      borderBottom: '5px solid #00B3E3',
+    },
   }));
   const classes = useStyles();
   const history = useHistory();
-  const { NisumImageLogo } = classes;
+  const { NisumImageLogo, appBarStyle } = classes;
 
-  const { profile, resetPassword } = RouteNames;
+  const { resetPassword } = RouteNames;
 
   return (
     <StyledDiv>
-      <AppBar position="sticky" style={{ background: 'white', borderBottom: '5px solid #00B3E3' }}>
+      <AppBar className={appBarStyle} position="sticky">
         <Toolbar>
           <img alt="logo" className={NisumImageLogo} src="https://www.nisum.com/hubfs/logo_nisum.svg" />
           <Grid alignItems="flex-end" container justifyContent="flex-end">

@@ -86,7 +86,7 @@ export default function CustomTable({ rows, onDelete, header, tablewidth, onEdit
                     {row[data]}
                   </TableCell>
                 ))}
-                {isEditDelete ? (
+                {isEditDelete && (
                   <EditDeleteCell>
                     <IconButton onClick={() => onEdit(row)}>
                       <Edit />
@@ -100,7 +100,7 @@ export default function CustomTable({ rows, onDelete, header, tablewidth, onEdit
                       <Delete />
                     </IconButton>
                   </EditDeleteCell>
-                ) : null}
+                )}
               </TableRow>
             ),
           )}
