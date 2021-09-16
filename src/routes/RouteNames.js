@@ -6,7 +6,12 @@ const RouteNames = {
   resetPassword: '/reset-password',
   profile: '/profile',
   dashboard: '/dashboard',
-  categorylist: '/categorylist',
+  vendorcategorylist: '/categorylist',
+  vendors: '/vendors',
+  usersList: '/userslist',
+  categoryList: '/category-list',
+  orderHistory: '/orderHistory',
+  addOrderHistory: '/orderHistory/add',
 };
 
 export default RouteNames;
