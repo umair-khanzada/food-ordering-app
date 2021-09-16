@@ -9,7 +9,7 @@ import { Edit } from '@material-ui/icons';
 import DeleteModal from '../DeleteModal';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
-export default function CustomTable({ rows, header, cellWidth, tablewidth, onEdit, isEditDelete }) {
+export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,12 +30,13 @@ export default function CustomTable({ rows, header, cellWidth, tablewidth, onEdi
     setPage(0);
   };
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
-  const onDelete = () => {
+  const onRowDelete = () => {
     setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
+    onDelete(currentSelectedRow);
   };
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
-      {isEditDelete && <DeleteModal handleClose={handleClose} onDelete={onDelete} open={open} />}
+      {isEditDelete && <DeleteModal handleClose={handleClose} onRowDelete={onRowDelete} open={open} />}
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
