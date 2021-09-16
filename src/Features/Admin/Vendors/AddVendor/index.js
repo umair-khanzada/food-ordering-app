@@ -146,7 +146,7 @@ const AddVendor = () => {
       isValid: true,
       errorMessage: '',
       onChange: (event, index) => {
-        setTiming(event.target.value);
+        setBuilding(event.target.value);
         fields[index].value = event.target.value;
       },
     },

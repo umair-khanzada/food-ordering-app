@@ -15,7 +15,6 @@ const RouteNames = {
   users: '/users',
   editUser: '/users/edit',
   addUser: '/users/add',
-  vendors: '/vendors',
   editVendor: '/vendors/edit',
   addVendor: '/vendors/add',
   categories: '/categories',

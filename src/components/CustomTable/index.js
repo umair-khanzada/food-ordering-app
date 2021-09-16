@@ -9,7 +9,7 @@ import { Edit } from '@material-ui/icons';
 import DeleteModal from '../DeleteModal';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
-export default function CustomTable({ rows, header, cellWidth, tablewidth, onEdit, isEditDelete }) {
+export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
