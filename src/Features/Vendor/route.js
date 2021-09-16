@@ -3,7 +3,7 @@ import RouteNames from '../../routes/RouteNames';
 import CategoryList from './CategoryList/CategoryList';
 
 export const CategoryListRoute = {
-  path: RouteNames.categorylist,
+  path: RouteNames.vendorcategorylist,
   permissions: isPublicRoute, // to intimate it is public route
   component: CategoryList,
 };
