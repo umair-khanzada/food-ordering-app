@@ -5,16 +5,8 @@ import { profileRoute } from '../Features/Profile';
 import { CategoryListRoute } from '../Features/Vendor/route';
 
 const routeConfig = {
-  auth: [
-    loginRoute,
-    homeRoute,
-    signUpRoute,
-    resetPasswordRoute,
-    resetPasswordRoute,
-    forgetPasswordRoute,
-    CategoryListRoute,
-  ],
-  orderPlacer: [dashboardRoute],
+  auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
+  orderPlacer: [dashboardRoute, CategoryListRoute],
   officeBoy: [],
   common: [profileRoute, resetPasswordRoute],
 };

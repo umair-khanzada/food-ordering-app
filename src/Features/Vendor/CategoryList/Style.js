@@ -5,7 +5,7 @@ export const CategoriesTitleContainer = styled.div`
   display: flex;
 
   justify-content: space-between;
-  width: 50%;
+  width: 90%;
   margin: 20px auto;
 `;
 
