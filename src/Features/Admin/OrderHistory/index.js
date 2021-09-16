@@ -1,71 +1,31 @@
 import React from 'react';
 
-import IconButton from '@material-ui/core/IconButton';
-import { Edit } from '@material-ui/icons';
+import { useHistory } from 'react-router';
 
+import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { VendorTitleContainer, VendorTitle, DeleteIcon } from './style';
-
+import { ordersHistoryList } from '../../../Mock/OrdersHistoryList';
+import { OrdersHistoryTitleContainer, OrdersHistoryTitle } from './style';
 function OrderHistory() {
-  const tableData = [
-    {
-      id: 1,
-      name: 'Adnan',
-      contact: '13131232',
-    },
-    {
-      id: 2,
-      name: 'Yousuf',
+  const history = useHistory();
 
-      contact: '13131232',
-    },
-    {
-      id: 3,
-      name: 'Baber',
-      contact: '1309232',
-    },
-    {
-      id: 4,
-      name: 'Dilawer',
-      contact: '23131232',
-    },
-    {
-      id: 5,
-      name: 'Naem',
+  const onEdit = (row) => {
+    history.push({
+      pathname: '/editorderhistory',
+      state: { data: row },
+    });
+  };
 
-      contact: '10901232',
-    },
-    {
-      id: 6,
-      name: 'Kashif',
-      contact: '13131232',
-    },
-    {
-      id: 7,
-      name: 'Dilawer',
-      contact: '13131232',
-    },
-  ];
-
-  const editDelete = (
-    <>
-      <IconButton>
-        <Edit />
-      </IconButton>
-      <IconButton>
-        <DeleteIcon />
-      </IconButton>
-    </>
-  );
-  const header = ['Id', 'Name', 'Contact', 'Edit'];
+  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date', 'Edit'];
 
   return (
     <>
-      <VendorTitleContainer>
-        <VendorTitle>Orders</VendorTitle>
-      </VendorTitleContainer>
+      <OrdersHistoryTitleContainer>
+        <OrdersHistoryTitle>Orders</OrdersHistoryTitle>
+        <CommonButton onClick={() => history.push('/addhistory')} property="Add History" />
+      </OrdersHistoryTitleContainer>
 
-      <CustomTable editDelete={editDelete} header={header} rows={tableData} />
+      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={ordersHistoryList} tablewidth="80%" />
     </>
   );
 }

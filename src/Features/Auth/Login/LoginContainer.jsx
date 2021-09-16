@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LoginForm from './index';
+import LoginForm from '.';
 
 function LoginContainer() {
   return <LoginForm />;
