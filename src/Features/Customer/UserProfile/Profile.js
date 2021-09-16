@@ -1,137 +1,169 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Grid } from '@material-ui/core';
-import { Paper } from '@material-ui/core';
-import { Button } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import CreateIcon from '@material-ui/icons/Create';
+import AddEditForm from '../../../components/AddEditForm';
+import { TEXT_FIELD } from '../../../components/AddEditForm/FieldTypes';
+import { emailRegex } from '../../../redux/ActionTypes';
+import { contactRegex } from '../../../scripts/constants';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    padding: '16px',
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
+const AddUser = () => {
+  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const [isEdit, setIsEdit] = useState(true);
+  const validateOnSubmit = () => {
+    let isValid = true;
 
-      width: '44ch',
-      display: 'flex',
-      flexDirection: 'column',
+    const ValidateArray = fields.map((field) => {
+      console.log(field.value);
+
+      if (
+        field.value === '' ||
+        field.value === undefined ||
+        field.value === null ||
+        (field.value.constructor.name == 'Array' && field.value.length === 0)
+      ) {
+        isValid = false;
+
+        field.errorMessage = field.label + ' field cannot be empty';
+
+        field.isValid = false;
+
+        return field;
+      }
+
+      field.isValid = true;
+
+      field.errorMessage = '';
+
+      !isValid ? null : (isValid = field.isValid);
+
+      return field;
+    });
+
+    setFields(ValidateArray);
+
+    return isValid;
+  };
+
+  const [email, setEmail] = useState('');
+
+  const [contact, setContact] = useState('');
+
+  const [name, setName] = useState('');
+
+  const [fields, setFields] = useState([
+    {
+      type: TEXT_FIELD,
+
+      textFieldType: 'text',
+
+      label: 'Name',
+
+      variant: 'standard',
+
+      value: 'User',
+      disabled: isEdit,
+      isValid: true,
+
+      errorMessage: '',
+
+      onChange: (event, index) => {
+        setName(event.target.value);
+
+        fields[index].value = event.target.value;
+      },
     },
-  },
-  paper: {
-    width: '100%',
-    borderRadius: '24px 0 24px 0',
-    height: '84vh',
-  },
-  main: {
-    padding: '20px',
-  },
-  avatar: {
-    width: '150px',
-    height: '150px',
-  },
-  icon: {
-    fontSize: '1rem',
-  },
-  gird: {
-    marginTop: '11px',
-  },
-  btncontainer: {
-    width: '44ch',
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  btn: {
-    backgroundColor: '#e91e63',
-    color: 'white',
-    padding: '9px',
-  },
-}));
 
-const Profile = () => {
-  const classes = useStyles();
-  return (
-    <Grid container>
-      <Grid className={classes.grid} item md={12}>
-        <div className={classes.main}>
-          <Paper className={classes.paper}>
-            <form autoComplete="off" className={classes.root} noValidate>
-              <Avatar className={classes.avatar} src="/broken-image.jpg" />
-              <TextField
-                className={classes.text}
-                defaultValue="Fahad"
-                id="standard-read-only-input"
-                InputProps={{
-                  readOnly: true,
+    {
+      type: TEXT_FIELD,
 
-                  className: classes.text,
-                  endAdornment: (
-                    <InputAdornment>
-                      <CreateIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="First Name"
-              />
-              <TextField
-                defaultValue="Ali"
-                id="standard-read-only-input"
-                InputProps={{
-                  readOnly: true,
+      textFieldType: 'email',
 
-                  className: classes.text,
-                  endAdornment: (
-                    <InputAdornment>
-                      <CreateIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="Last Name"
-              />
-              <TextField
-                defaultValue="fahadqureshy23@gmail.com"
-                id="standard-read-only-input"
-                InputProps={{
-                  readOnly: true,
-                  className: classes.text,
-                  endAdornment: (
-                    <InputAdornment>
-                      <CreateIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="Email"
-              />
-              <TextField
-                defaultValue="03161359848"
-                id="standard-read-only-input"
-                InputProps={{
-                  readOnly: true,
+      label: 'Email',
 
-                  className: classes.text,
-                  endAdornment: (
-                    <InputAdornment>
-                      <CreateIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-                label="Number"
-              />
-              <div className={classes.btncontainer}>
-                <Button className={classes.btn}>Edit Profile</Button>{' '}
-              </div>
-            </form>
-          </Paper>
-        </div>
-      </Grid>
-    </Grid>
-  );
+      variant: 'standard',
+
+      value: 'user@gmail.com',
+      disabled: isEdit,
+      isValid: true,
+
+      errorMessage: '',
+
+      onChange: (event, index) => {
+        setEmail(event.target.value);
+
+        fields[index].value = event.target.value;
+
+        fields[index].getValidation(event.target.value, index);
+      },
+
+      getValidation: (value, index) => {
+        if (!emailRegex.test(value)) {
+          fields[index].errorMessage = 'Email type is not valid';
+
+          fields[index].isValid = false;
+        } else {
+          fields[index].errorMessage = '';
+
+          fields[index].isValid = true;
+        }
+      },
+    },
+
+    {
+      type: TEXT_FIELD,
+
+      textFieldType: 'text',
+
+      label: 'Contact',
+
+      variant: 'standard',
+
+      value: '03412132212',
+      disabled: isEdit,
+      isValid: true,
+
+      errorMessage: '',
+
+      onChange: (event, index) => {
+        setContact(event.target.value);
+
+        fields[index].value = event.target.value;
+
+        fields[index].getValidation(event.target.value, index);
+      },
+
+      getValidation: (value, index) => {
+        if (!contactRegex.test(value)) {
+          fields[index].errorMessage = 'Contact length or Type is not valid';
+
+          fields[index].isValid = false;
+        } else {
+          fields[index].errorMessage = '';
+
+          fields[index].isValid = true;
+        }
+      },
+    },
+  ]);
+
+  const saveHandler = () => {
+    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+  };
+
+  const buttons = {
+    button: [
+      {
+        type: 'button',
+
+        name: 'Edit',
+
+        minWidth: '100%',
+
+        clickHandler: saveHandler,
+      },
+    ],
+  };
+
+  return <AddEditForm buttons={buttons} fields={fields} heading="Profile" onSaveSuccess={onSaveSuccess} />;
 };
-export default Profile;
+
+export default AddUser;

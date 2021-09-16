@@ -18,7 +18,7 @@ function MainContainer() {
 
   return (
     <Router history={history}>
-      {isLoggedIn && <AppBar />}
+      {!isLoggedIn && <AppBar />}
       {/* TopNav should be there*/}
       {/* SideNav should be there */}
       <BaseRouter />
