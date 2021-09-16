@@ -6,11 +6,12 @@ import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from
 import { profileRoute } from '../Features/Customer/route';
 import { dashboardRoute } from '../Features/Dashboard/route';
 import { homeRoute } from '../Features/Home';
+import { OrderListRoute } from '../Features/Vendor/route';
 
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
 
-  orderPlacer: [dashboardRoute],
+  orderPlacer: [dashboardRoute, OrderListRoute],
 
   admin: [
     orderHistorydRoute,
