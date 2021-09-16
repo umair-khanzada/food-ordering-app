@@ -13,6 +13,9 @@ export const Form = styled.form`
 export const InputBox = styled.div`
   margin-bottom: 30px;
 `;
+export const Error = styled.span`
+  color: red;
+`;
 export const FormHeading = styled.h1`
   margin-bottom: 20px;
   color: #e91e63;
