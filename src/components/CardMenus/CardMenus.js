@@ -16,9 +16,11 @@ const useStyles = makeStyles((theme) => ({
 const CardMenu = () => {
   const classes = useStyles();
 
+  const { control } = classes;
+
   return (
     <div>
-      <Grid className={classes.control} container elevation={3} spacing={3}>
+      <Grid className={control} container elevation={3} spacing={3}>
         {UserData.map((usedata) => {
           const { id, name, price, resturantName, img } = usedata;
 

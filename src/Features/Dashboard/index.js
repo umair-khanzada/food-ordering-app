@@ -35,6 +35,9 @@ function Dashboard() {
     },
   }));
   const classes = useStyles();
+
+  const { header, orderDetails, orderHeading, orderRef, userInfo, tabs } = classes;
+
   return (
     <div>
       <Grid container>
@@ -43,20 +46,20 @@ function Dashboard() {
         </Grid>
         <Grid item md={9}>
           <Box>
-            <div className={classes.header}>
-              <div className={classes.orderDetails}>
+            <div className={header}>
+              <div className={orderDetails}>
                 <ArrowBackIcon fontSize="large" style={{ color: '#e91e63' }} />
 
-                <Typography className={classes.orderHeading} noWrap style={{ marginLeft: '40px' }} variant="h2">
+                <Typography className={orderHeading} noWrap style={{ marginLeft: '40px' }} variant="h2">
                   New Order
                 </Typography>
 
-                <Typography className={classes.orderRef} noWrap paragraph>
+                <Typography className={orderRef} noWrap paragraph>
                   #023025
                 </Typography>
               </div>
 
-              <div className={classes.userInfo}>
+              <div className={userInfo}>
                 <Typography variant="h4">
                   <b> Arham Ahmed</b>
                 </Typography>
@@ -65,7 +68,7 @@ function Dashboard() {
                 </Typography>
               </div>
             </div>
-            <div className={classes.tabs}>
+            <div className={tabs}>
               <MainTab />
             </div>
             <div />
