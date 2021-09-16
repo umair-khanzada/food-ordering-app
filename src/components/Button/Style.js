@@ -10,7 +10,11 @@ const StyledButton = styled(Button)`
   background-color: #00b3e3;
   color: white;
   ${({ theme }) => `
-  
+  background-color: ${theme.palette.primary.main};
+  &:hover {
+    background-color: white;
+    color: #00B3E3;
+  }
    ${theme.breakpoints.up('sm')} {
   
   }
