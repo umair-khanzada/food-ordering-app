@@ -24,7 +24,6 @@ export const addtocartReducers = (state = initialData, action) => {
         img,
         qty,
       };
-      // state.cart.slice(id, 0, obj);
 
       if (filter.length > 0) {
         state.cart.map((element, index) => {
@@ -69,7 +68,6 @@ export const addtocartReducers = (state = initialData, action) => {
       });
       return { ...state, cart: [...state.cart] };
     case 'DELETE_ITEM':
-      // eslint-disable-next-line no-case-declarations
       const updCart = state.cart.filter((element) => element.id !== action.payload.id);
       return {
         ...state,
