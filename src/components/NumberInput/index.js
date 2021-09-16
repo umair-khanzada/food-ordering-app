@@ -1,10 +1,13 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 
 import Input from '@material-ui/core/Input';
 
-export default function NumberInput(props) {
-  const { value, setValue } = props;
+export default function NumberInput({ width }) {
+  const [value, setValue] = React.useState(30);
+
+  const handleInputChange = (event) => {
+    setValue(event.target.value === '' ? '' : Number(event.target.value));
+  };
 
   const handleBlur = () => {
     if (value < 0) {
@@ -23,8 +26,8 @@ export default function NumberInput(props) {
         type: 'number',
       }}
       onBlur={handleBlur}
-      {...props}
-      fullWidth
+      onChange={handleInputChange}
+      style={{ width }}
       value={value}
     />
   );

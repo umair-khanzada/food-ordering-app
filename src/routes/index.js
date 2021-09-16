@@ -46,6 +46,10 @@ export default function BaseRouter() {
           RouteConfig.common.map((route, index) => {
             return <Route key={index} component={() => route.component()} exact path={route.path} />;
           })}
+        {!isLoggedIn &&
+          RouteConfig.admin.map((route, index) => {
+            return <Route key={index} component={() => route.component()} exact path={route.path} />;
+          })}
         {isLoggedIn ? (
           <Route>
             <Redirect to="/home" />
