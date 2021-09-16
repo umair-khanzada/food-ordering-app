@@ -14,7 +14,7 @@ function CategoryList() {
         <CommonButton property="Add Category" />
       </CategoriesTitleContainer>
 
-      <CustomTable cellWidth="400px" header={header} rows={categoryList} tablewidth="90%" />
+      <CustomTable cellWidth="400px" header={header} isEditDelete rows={categoryList} tablewidth="90%" />
     </>
   );
 }

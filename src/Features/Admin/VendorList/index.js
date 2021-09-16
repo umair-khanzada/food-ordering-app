@@ -15,7 +15,7 @@ function VendorList() {
         <CommonButton property="Add Vendor" />
       </VendorTitleContainer>
 
-      <CustomTable header={header} rows={vendorList} tablewidth="90%" />
+      <CustomTable header={header} isEditDelete rows={vendorList} tablewidth="90%" />
     </div>
   );
 }

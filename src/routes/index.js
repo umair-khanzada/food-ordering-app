@@ -20,14 +20,14 @@ export default function BaseRouter() {
   });
 
   const getAuthenticatedRoute = (route, index) => {
-    if (!isLoggedIn && route.permissions === isProtectedRoute) {
+    if (isLoggedIn && route.permissions === isProtectedRoute) {
       return <Route key={index} component={() => route.component()} exact path={route.path} />;
     }
-    if (isLoggedIn && route.permissions === isPublicRoute) {
+    if (!isLoggedIn && route.permissions === isPublicRoute) {
       return <Route key={index} component={() => route.component()} exact path={route.path} />;
     }
 
-    if (!isLoggedIn) return <Route key={index} component={() => <HomeContainer />} exact path="/home" />;
+    if (isLoggedIn) return <Route key={index} component={() => <HomeContainer />} exact path="/home" />;
     return <Route key={index} component={() => <LoginContainer />} exact path="/login" />;
   };
 
@@ -44,6 +44,10 @@ export default function BaseRouter() {
           : null}
         {isLoggedIn &&
           RouteConfig.common.map((route, index) => {
+            return <Route key={index} component={() => route.component()} exact path={route.path} />;
+          })}
+        {!isLoggedIn &&
+          RouteConfig.admin.map((route, index) => {
             return <Route key={index} component={() => route.component()} exact path={route.path} />;
           })}
         {isLoggedIn ? (

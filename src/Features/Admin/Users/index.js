@@ -13,7 +13,7 @@ function UsersList() {
         <CommonButton property="Add Users" />
       </UsersTitleContainer>
 
-      <CustomTable header={header} rows={userList} tablewidth="90%" />
+      <CustomTable header={header} isEditDelete rows={userList} tablewidth="90%" />
     </>
   );
 }
