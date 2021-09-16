@@ -3,7 +3,7 @@ export const ordersHistoryList = [
     id: 1,
     name: 'Adnan',
     contact: '13131232',
-    items: 'roti, keema',
+    items: ['roti', 'karhai'].join(),
     price: 'Rs 250',
     date: '25-9-2021',
   },
@@ -12,7 +12,7 @@ export const ordersHistoryList = [
     name: 'Yousuf',
     contact: '13131232',
 
-    items: 'roti, karhai',
+    items: ['roti', 'karhai'].join(),
     price: 'Rs 200',
     date: '25-9-2021',
   },
@@ -21,7 +21,7 @@ export const ordersHistoryList = [
     name: 'Baber',
     contact: '1309232',
 
-    items: 'burger',
+    items: ['roti', 'karhai'].join(),
     price: 'Rs 350',
     date: '24-9-2021',
   },
@@ -30,7 +30,7 @@ export const ordersHistoryList = [
     name: 'Dilawer',
     contact: '23131232',
 
-    items: 'biryani, coldrink',
+    items: ['roti', 'karhai'].join(),
     price: 'Rs 200',
     date: '24-9-2021',
   },
@@ -39,7 +39,7 @@ export const ordersHistoryList = [
     name: 'Naem',
     contact: '10901232',
 
-    items: 'biryani',
+    items: ['roti', 'karhai'].join(),
     price: 'Rs 150',
     date: '23-9-2021',
   },
@@ -48,7 +48,7 @@ export const ordersHistoryList = [
     name: 'Kashif',
     contact: '13131232',
 
-    items: 'karhai, coldrink, roti',
+    items: ['roti', 'karhai'].join(),
     price: 'Rs 450',
     date: '23-9-2021',
   },
@@ -57,7 +57,7 @@ export const ordersHistoryList = [
     name: 'Dilawer',
     contact: '13131232',
 
-    items: 'biryani, coldrink, salad',
+    items: ['roti', 'karhai', 'briyani'].join(),
     price: 'Rs 400',
     date: '22-9-2021',
   },

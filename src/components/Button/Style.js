@@ -7,6 +7,7 @@ const StyledButton = styled(Button)`
   margin-bottom: 10px;
   max-width: ${({ maxwidth }) => maxwidth};
   min-width: ${({ minwidth }) => minwidth};
+  background-color: #00b3e3;
   color: white;
   ${({ theme }) => `
   background-color: ${theme.palette.primary.main};

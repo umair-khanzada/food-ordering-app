@@ -37,7 +37,7 @@ function OrderHistory() {
         onDelete={onDelete}
         onEdit={onEdit}
         rows={ordersHistoryList}
-        tablewidth="80%"
+        tablewidth="90%"
       />
     </>
   );

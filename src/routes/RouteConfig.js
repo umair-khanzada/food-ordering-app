@@ -8,15 +8,8 @@ import { homeRoute } from '../Features/Home';
 import { profileRoute } from '../Features/Profile';
 
 const routeConfig = {
-  auth: [
-    loginRoute,
-    homeRoute,
-    signUpRoute,
-    resetPasswordRoute,
-    resetPasswordRoute,
-    forgetPasswordRoute,
-    resetPasswordRoute,
-  ],
+  auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
+
   orderPlacer: [dashboardRoute],
   admin: [
     orderHistorydRoute,

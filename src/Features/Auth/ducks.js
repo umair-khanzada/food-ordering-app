@@ -1,5 +1,4 @@
-/* eslint-disable no-case-declarations */
-import { LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT_SUCCESS, MESSAGE, FORGOT_PASSWORD } from '../../redux/ActionTypes';
+import { LOGIN_SUCCESS, LOGIN_ERROR, FORGOT_PASSWORD, MESSAGE, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
 
 const initialAuthState = { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
 const initialForgotPasswordState = { message: '', status: 0 };
