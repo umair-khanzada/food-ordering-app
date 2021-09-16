@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
   const classes = useStyles();
-  const { root, content, header, image, Price, btn } = classes;
+  const { root, content, header, image, Price, btn, foodTitle } = classes;
   const [showButton, setShowButton] = useState(false);
   return (
     <Grid item md={3}>
@@ -86,7 +86,7 @@ const CommonCard = ({ name, price, resturantName, img, buttonText }) => {
           className={header}
           subheader={<h4>{resturantName}</h4>}
           title={
-            <Typography className={classes.foodTitle} variant="h2">
+            <Typography className={foodTitle} variant="h2">
               {name}
             </Typography>
           }

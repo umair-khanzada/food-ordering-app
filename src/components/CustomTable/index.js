@@ -1,42 +1,15 @@
 import React, { useState } from 'react';
 
-import { TableRow, Table, TableBody, TablePagination } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
+import { TableRow, Table, TableBody, TablePagination, IconButton } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import { useTheme } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableFooter from '@material-ui/core/TableFooter';
 import { Edit } from '@material-ui/icons';
-import { Delete } from '@material-ui/icons';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import { CustomTableHead, IconContainer, EditDeleteCell, CustomTableContainer } from './style';
-function TablePaginationActions(props) {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
-  const handleBackButtonClick = (event) => {
-    onPageChange(event, page - 1);
-  };
-  const handleNextButtonClick = (event) => {
-    onPageChange(event, page + 1);
-  };
-  return (
-    <IconContainer>
-      <IconButton aria-label="previous page" disabled={page === 0} onClick={handleBackButtonClick}>
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-      </IconButton>
-      <IconButton
-        aria-label="next page"
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        onClick={handleNextButtonClick}
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-      </IconButton>
-    </IconContainer>
-  );
-}
-export default function CustomTable({ rows, header, tablewidth, onEdit, isEditDelete }) {
+import DeleteModal from '../DeleteModal';
+import TablePaginationActions from './Pagination';
+import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
+export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,18 +30,18 @@ export default function CustomTable({ rows, header, tablewidth, onEdit, isEditDe
     setPage(0);
   };
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
-  const onDelete = () => {
+  const onRowDelete = () => {
     setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
+    onDelete(currentSelectedRow);
   };
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
+      {isEditDelete && <DeleteModal handleClose={handleClose} onRowDelete={onRowDelete} open={open} />}
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
             {header.map((head, index) => (
-              <TableCell key={index} style={{ color: 'white' }}>
-                {head}
-              </TableCell>
+              <TableHeader key={index}>{head}</TableHeader>
             ))}
           </TableRow>
         </CustomTableHead>
@@ -77,12 +50,12 @@ export default function CustomTable({ rows, header, tablewidth, onEdit, isEditDe
             (row) => (
               <TableRow key={row.name}>
                 {Object.keys(row).map((data, index) => (
-                  <TableCell key={index} style={{ width: 200 }}>
+                  <TableCell key={index} style={{ width: cellWidth }}>
                     {row[data]}
                   </TableCell>
                 ))}
                 {isEditDelete ? (
-                  <EditDeleteCell>
+                  <TableCell>
                     <IconButton onClick={() => onEdit(row)}>
                       <Edit />
                     </IconButton>
@@ -92,9 +65,9 @@ export default function CustomTable({ rows, header, tablewidth, onEdit, isEditDe
                         handleClickOpen();
                       }}
                     >
-                      <Delete />
+                      <DeleteIcon />
                     </IconButton>
-                  </EditDeleteCell>
+                  </TableCell>
                 ) : null}
               </TableRow>
             ),

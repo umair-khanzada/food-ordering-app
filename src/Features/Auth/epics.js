@@ -18,9 +18,15 @@ export const loginEpic = (action$) =>
         mergeMap((res) => {
           const {
             user: { name },
-            token: { access },
+            tokens: { refresh, access },
           } = res.response;
-          return of(loginSuccess({ name, token: access }));
+          return of(
+            loginSuccess({
+              name,
+              refreshToken: refresh,
+              accessToken: access,
+            }),
+          );
         }),
         catchError(() => {
           return of(loginError());
@@ -33,6 +39,7 @@ export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
     mergeMap(({ payload }) => {
+      delete payload['contact'];
       return ajax({
         url: 'http://localhost:4000/v1/auth/register',
         method: 'POST',
@@ -40,9 +47,16 @@ export const signUpEpic = (action$) =>
       }).pipe(
         mergeMap((res) => {
           const {
-            tokens: { access },
+            user: { name },
+            tokens: { refresh, access },
           } = res.response;
-          return of(loginSuccess(access));
+          return of(
+            loginSuccess({
+              name,
+              refreshToken: refresh,
+              accessToken: access,
+            }),
+          );
         }),
         catchError(() => {
           return of(loginError());
@@ -82,18 +96,23 @@ export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
     mergeMap(() => {
-      const refreshToken = { refreshToken: state.value.authReducer.token.token };
+      const {
+        state: {
+          value: {
+            authReducer: { token },
+          },
+        },
+      } = state;
+      const refreshToken = { refreshToken: token };
       return ajax({
         url: 'http://localhost:4000/v1/auth/logout',
         method: 'POST',
         body: refreshToken,
       }).pipe(
-        mergeMap((res) => {
-          console.log(res);
+        mergeMap(() => {
           return of(logoutSuccess());
         }),
-        catchError((err) => {
-          console.log(err);
+        catchError(() => {
           return of(logoutSuccess());
         }),
       );
