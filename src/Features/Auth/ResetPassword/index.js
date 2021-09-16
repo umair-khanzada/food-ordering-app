@@ -33,7 +33,6 @@ function ResetPassword() {
       resetForm.map(({ name, value }) => {
         userData[name] = value;
       });
-      console.log(userData);
     }
   };
   const textFiledChangeHandler = (e, index) => {

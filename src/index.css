@@ -5,6 +5,7 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
@@ -42,6 +43,7 @@ code {
   font-weight: 400;
   font-display: swap;
   src: url('./theme/fonts/Lato-BoldItalic.ttf') format('woff2');
+  overflow-x: hidden;
 }
 
 @font-face {

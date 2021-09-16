@@ -2,9 +2,9 @@ import { green, grey, red, yellow } from '@material-ui/core/colors';
 
 export const MaterialPalleteColours = {
   primary: {
-    light: '#e91e63',
-    main: '#e91e63',
-    dark: '#e91e63',
+    light: '#00B3E3',
+    main: '#00B3E3',
+    dark: '#00B3E3',
     contrastText: '#ffffff',
   },
   secondary: {
@@ -34,7 +34,7 @@ export const MaterialPalleteColours = {
     dark: green[300],
   },
   background: {
-    default: '#f0f0f0',
+    default: '#ffffff',
   },
   action: {
     hover: grey[200],

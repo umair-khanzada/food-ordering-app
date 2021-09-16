@@ -59,7 +59,7 @@ function SignUpForm() {
     {
       required: true,
       label: 'UserName',
-      name: 'username',
+      name: 'name',
       type: 'text',
       value: '',
       isValid: true,
