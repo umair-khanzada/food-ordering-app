@@ -4,7 +4,17 @@ import { Grid } from '@material-ui/core';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
-import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, Label, BasicLink, Error } from './styles';
+import {
+  FormHeading,
+  ForgotPassword,
+  Form,
+  FormContainer,
+  InputBox,
+  Label,
+  BasicLink,
+  Error,
+  GridContainer,
+} from './styles';
 
 const FormComponent = ({
   inputFields,
@@ -18,8 +28,8 @@ const FormComponent = ({
 }) => {
   return (
     <FormContainer>
-      <Grid alignItems="center" container justifyContent="center" style={{ padding: '0 5px', height: '100vh' }}>
-        <Grid item md={4} xs={12}>
+      <GridContainer alignItems="center" container justifyContent="flex-end">
+        <Grid item md={4} style={{ marginRight: '50px' }} xs={12}>
           <Form>
             <FormHeading>{formTitle}</FormHeading>
             {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
@@ -58,7 +68,7 @@ const FormComponent = ({
             <Error>{responseError}</Error>
           </Form>
         </Grid>
-      </Grid>
+      </GridContainer>
     </FormContainer>
   );
 };

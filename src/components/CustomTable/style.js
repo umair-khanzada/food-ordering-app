@@ -1,4 +1,5 @@
-import { TableHead, TableContainer, TableCell } from '@material-ui/core';
+import { TableHead, TableContainer } from '@material-ui/core';
+import { TableCell } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import styled from 'styled-components';
 export const CustomTableHead = styled(TableHead)`
@@ -8,14 +9,9 @@ export const CustomTableHead = styled(TableHead)`
     font-weight: bold;
   }
 `;
-export const TableHeader = styled(TableCell)`
-  font-size: 16px;
-  color: white;
-`;
 export const IconContainer = styled.div`
   flex-shrink: 0;
 `;
-
 export const CustomTableContainer = styled(TableContainer)`
   width: ${({ tablewidth }) => tablewidth};
   & .MuiTableCell-root {
@@ -26,4 +22,8 @@ export const CustomTableContainer = styled(TableContainer)`
 `;
 export const DeleteIcon = styled(Delete)`
   color: #00b3e3;
+`;
+export const TableHeader = styled(TableCell)`
+  font-size: 16px;
+  color: white;
 `;
