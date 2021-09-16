@@ -6,6 +6,7 @@ const RouteNames = {
   resetPassword: '/reset-password',
   profile: '/profile',
   dashboard: '/dashboard',
+  vendorcategorylist: '/categorylist',
   vendors: '/vendors',
   usersList: '/userslist',
   categoryList: '/category-list',
