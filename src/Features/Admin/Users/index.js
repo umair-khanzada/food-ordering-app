@@ -18,6 +18,10 @@ function UsersList() {
     });
   };
 
+  const onDelete = (row) => {
+    row;
+  };
+
   const history = useHistory();
 
   return (

@@ -21,6 +21,10 @@ function VendorList() {
     });
   };
 
+  const onDelete = (row) => {
+    row;
+  };
+
   return (
     <>
       <VendorTitleContainer>
@@ -28,7 +32,14 @@ function VendorList() {
         <CommonButton onClick={() => history.push(addVendor)} property="Add Vendor" />
       </VendorTitleContainer>
 
-      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={vendorList} tablewidth="80%" />
+      <CustomTable
+        header={header}
+        isEditDelete
+        onDelete={onDelete}
+        onEdit={onEdit}
+        rows={vendorList}
+        tablewidth="90%"
+      />
     </>
   );
 }

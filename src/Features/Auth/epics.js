@@ -97,10 +97,8 @@ export const logoutEpic = (action$, state) =>
     ofType(LOGOUT),
     mergeMap(() => {
       const {
-        state: {
-          value: {
-            authReducer: { token },
-          },
+        value: {
+          authReducer: { token },
         },
       } = state;
       const refreshToken = { refreshToken: token };

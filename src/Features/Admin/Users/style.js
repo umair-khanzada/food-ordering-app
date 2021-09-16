@@ -1,3 +1,4 @@
+import { Delete } from '@material-ui/icons';
 import styled from 'styled-components';
 export const UsersTitleContainer = styled.div`
   display: flex;
@@ -11,4 +12,7 @@ export const UsersTitle = styled.div`
   font-size: 25px;
 
   font-weight: 500;
+`;
+export const DeleteIcon = styled(Delete)`
+  color: #ff4d4d;
 `;

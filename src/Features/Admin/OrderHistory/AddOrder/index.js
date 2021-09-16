@@ -103,7 +103,7 @@ const AddOrder = () => {
     ],
   };
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add History" onSaveSuccess={onSaveSuccess} />;
+  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Order" onSaveSuccess={onSaveSuccess} />;
 };
 
 export default AddOrder;
