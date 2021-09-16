@@ -1,49 +1,42 @@
 import React from 'react';
 
-import { Drawer, Typography } from '@material-ui/core';
+import { Button, Drawer } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
+
+import RouteNames from '../../routes/RouteNames';
 
 function SideMenu() {
-  // const drawerWidth = 300;
   const useStyles = makeStyles(() => ({
-    drawer: {
-      // position: 'relative',
-      // width: '100%',
-      // height: '100%',
-      // flexShrink: 0,
-      // top: 0,
-      // bottom: 0,
-      overflow: 'hidden',
-    },
     drawerPaper: {
-      position: 'relative',
+      position: 'static',
       height: '100vh',
       backgroundColor: '#F0F0F0',
     },
-
-    logo: {
-      textAlign: 'center',
-      marginTop: '30px',
-    },
-    logoNisum: {
-      color: '#e91e63',
-      fontWeight: '600',
-    },
     navigation: {
-      marginTop: '100px',
-      padding: '0 50px',
+      marginTop: '50px',
     },
     list: {
       fontSize: '22px',
       paddingBottom: '40px',
     },
     link: {
-      textDecoration: 'none',
+      borderRadius: '0px',
+      color: 'black',
+      fontSize: '20px',
+      fontWeight: '200',
+      width: '100%',
+      '&:hover': {
+        backgroundColor: '#e91e63',
+        color: 'white',
+      },
     },
   }));
   const classes = useStyles();
-  const { drawer, drawerPaper, logo, logoNisum, navigation, list, link } = classes;
+  const { orderHistory } = RouteNames;
+  const history = useHistory();
+
+  const { drawer, drawerPaper, navigation, list, link } = classes;
   return (
     <div style={{ width: '100%' }}>
       <Drawer
@@ -54,31 +47,26 @@ function SideMenu() {
         className={drawer}
         variant="permanent"
       >
-        <div className={logo}>
-          <Typography variant="h2">
-            <span className={logoNisum}>Nisum Foods</span>
-          </Typography>
-        </div>
         <div className={navigation} style={{ position: 'relative', wordWrap: 'break-word' }}>
           <p className={list}>
-            <Link className={link} to="/">
+            <Button className={link} onClick={() => history.push(orderHistory)}>
               Order History
-            </Link>
+            </Button>
           </p>
           <p className={list}>
-            <Link className={link} to="/">
+            <Button className={link} to="/">
               Vendor List
-            </Link>
+            </Button>
           </p>
           <p className={list}>
-            <Link className={link} to="/">
+            <Button className={link} to="/">
               Users List
-            </Link>
+            </Button>
           </p>
           <p className={list}>
-            <Link className={link} to="/">
+            <Button className={link} to="/">
               Category List
-            </Link>
+            </Button>
           </p>
         </div>
       </Drawer>

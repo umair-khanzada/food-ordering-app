@@ -1,32 +1,31 @@
 import React from 'react';
 
-import IconButton from '@material-ui/core/IconButton';
-import { Edit } from '@material-ui/icons';
+import { useHistory } from 'react-router';
 
+import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { OrderHistoryList } from '../../../Mock/OrderHistory';
-import { VendorTitleContainer, VendorTitle, DeleteIcon } from './style';
-
+import { ordersHistoryList } from '../../../Mock/OrdersHistoryList';
+import { OrdersHistoryTitleContainer, OrdersHistoryTitle } from './style';
 function OrderHistory() {
-  const editDelete = (
-    <>
-      <IconButton>
-        <Edit />
-      </IconButton>
-      <IconButton>
-        <DeleteIcon />
-      </IconButton>
-    </>
-  );
-  const header = ['Id', 'Name', 'Contact', 'Edit'];
+  const history = useHistory();
+
+  const onEdit = (row) => {
+    history.push({
+      pathname: '/editorderhistory',
+      state: { data: row },
+    });
+  };
+
+  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date', 'Edit'];
 
   return (
     <>
-      <VendorTitleContainer>
-        <VendorTitle>Orders</VendorTitle>
-      </VendorTitleContainer>
+      <OrdersHistoryTitleContainer>
+        <OrdersHistoryTitle>Orders</OrdersHistoryTitle>
+        <CommonButton onClick={() => history.push('/addhistory')} property="Add History" />
+      </OrdersHistoryTitleContainer>
 
-      <CustomTable editDelete={editDelete} header={header} rows={OrderHistoryList} />
+      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={ordersHistoryList} tablewidth="80%" />
     </>
   );
 }

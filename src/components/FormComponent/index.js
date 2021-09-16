@@ -4,20 +4,29 @@ import { Grid } from '@material-ui/core';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
-import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, Label, BasicLink } from './styles';
+import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, Label, BasicLink, Error } from './styles';
 
-const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, label, navigationPath }) => {
+const FormComponent = ({
+  inputFields,
+  basicButtons,
+  formTitle,
+  forgotPassword,
+  label,
+  navigationPath,
+  changeHandler,
+  responseError,
+}) => {
   return (
     <FormContainer>
       <Grid alignItems="center" container justifyContent="center" style={{ padding: '0 5px', height: '100vh' }}>
         <Grid item md={4} xs={12}>
           <Form>
             <FormHeading>{formTitle}</FormHeading>
-            {inputFields.fields.map(({ changeHandler, required, label, name, type, value }, i) => (
+            {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
               <InputBox key={name + '-' + i} className="inputFields">
                 <BasicTextFields
                   key={name + '-' + i}
-                  changeHandler={changeHandler}
+                  changeHandler={(e) => changeHandler(e, i)}
                   label={label}
                   name={name}
                   required={required}
@@ -26,6 +35,7 @@ const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, l
                   variant="outlined"
                   width="100%"
                 />
+                <Error style={{ justifyContent: 'top' }}>{errorMessage}</Error>
               </InputBox>
             ))}
             {basicButtons.button.map(({ clickHandler, minWidth, name, type }, i) => (
@@ -45,6 +55,7 @@ const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, l
 
               <ForgotPassword to="/forget-password">{forgotPassword}</ForgotPassword>
             </BasicLink>
+            <Error>{responseError}</Error>
           </Form>
         </Grid>
       </Grid>
