@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
-import CustomTable from '../../../components/CustomTable';
+import CustomTable from '../../../components/CustomTable/index';
 import CategoryData from '../../../Mock/CategoryListData';
 import { CategoriesTitleContainer } from './Style';
 
