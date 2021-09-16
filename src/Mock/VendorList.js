@@ -51,6 +51,7 @@ export const vendorList = [
     id: 7,
     name: 'Dilawer',
     email: 'Dilawer@gmail.com',
+    contact: '13131232',
     timing: '1:10',
     building: 'main',
   },
