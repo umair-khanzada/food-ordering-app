@@ -8,26 +8,26 @@ import History from '../../util/History';
 import CardMenus from './CardMenus';
 
 const MainTab = () => {
-  const [value, setValue] = useState();
+  const [tabValue, setTabValue] = useState();
   const params = new URLSearchParams(useLocation().search);
-  const handleChange = (event, newValue) => {
+  const onTabChange = (event, tabIndex) => {
     const {
       target: { innerText },
     } = event;
 
-    History.push('/dashboard?category=' + innerText + '&&index=' + newValue);
+    History.push('/dashboard?category=' + innerText + '&&index=' + tabIndex);
 
-    setValue(parseInt(newValue));
+    setTabValue(parseInt(tabIndex));
   };
   useEffect(() => {
-    const index = params.get('index');
+    const tabIndex = params.get('index');
 
-    setValue(index ? parseInt(index) : 0);
+    setTabValue(tabIndex ? parseInt(tabIndex) : 0);
   }, []);
   return (
     <>
       <Paper square>
-        <Tabs indicatorColor="secondary" onChange={handleChange} textColor="secondary" value={value}>
+        <Tabs indicatorColor="secondary" onChange={onTabChange} textColor="secondary" value={tabValue}>
           {TabData.map((tab, index) => {
             const { label } = tab;
             return <Tab key={index} label={label} />;
