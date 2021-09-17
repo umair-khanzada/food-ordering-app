@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable indent */
 import React, { Fragment } from 'react';
 
 import { Grid, Input, Typography } from '@material-ui/core';
