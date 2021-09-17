@@ -4,12 +4,13 @@ import { Grid } from '@material-ui/core';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
-import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, Label, BasicLink } from './styles';
+import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, Label, BasicLink, GridItem } from './styles';
 
 const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, label, navigationPath }) => {
   return (
     <FormContainer>
-      <Grid alignItems="center" container justifyContent="center" style={{ padding: '0 5px', height: '100vh' }}>
+      {/* <Grid alignItems="center" container justifyContent="center" style={{ padding: '0 5px', height: '100vh' }}> */}
+      <GridItem>
         <Grid item md={4} xs={12}>
           <Form>
             <FormHeading>{formTitle}</FormHeading>
@@ -47,7 +48,7 @@ const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, l
             </BasicLink>
           </Form>
         </Grid>
-      </Grid>
+      </GridItem>
     </FormContainer>
   );
 };

@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 
-import { Drawer, Fade, Backdrop } from '@material-ui/core';
+import { Fade, Backdrop } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,13 +17,16 @@ import {
   DrawerHeadingText,
   DrawerPrice,
   Add,
-  DrawerItemPrice,
   PositiveIcon,
   CheckoutButton,
   CancelButton,
   ModalButton,
   Modaltext,
-  ImageContainer,
+  NegativeIcon,
+  DeleteIcon,
+  DrawerItemPrice,
+  CartPrice,
+  CartCancel,
 } from './style';
 const TemporaryDrawer = () => {
   const cart = useSelector((state) => state.addtocartReducers.cart);
@@ -54,39 +57,52 @@ const TemporaryDrawer = () => {
   return (
     <>
       <React.Fragment key="right">
-        <Drawer anchor="right" onClose={() => dispatch(closeDrawer())} open={isDrawerOpen} variant="persistent">
+        <MainDrawer anchor="right" onClose={() => dispatch(closeDrawer())} open={isDrawerOpen} variant="persistent">
           <div>
             <DrwaerIcon>
               <DrawerHeadingText>My Cart</DrawerHeadingText>
               <DrawerText onClick={() => dispatch(closeDrawer())} />{' '}
             </DrwaerIcon>
-            <div style={{ height: '85vh', overflowY: 'scroll', marginBottom: '10px', width: '370px' }}>
+            <div>
               {cart.length > 0 ? (
                 <>
                   {cart.map((cartdata) => {
                     return (
                       <DrawerCard key={cartdata.id}>
-                        <ImageContainer alt="cart" src={cartdata.img} />
+                        <img
+                          alt="cart"
+                          src={cartdata.img}
+                          style={{ width: '20%', display: 'flex', borderRadius: '10px' }}
+                        />
 
                         <DrawerPrice>
-                          <MainDrawer>
+                          {/* <MainDrawer>
+                            {/* <div>
+                              <h4>{cartdata.name}</h4>
+                            </div>
+
+                            {/* <DrawerItemPrice> */}
+                          {/* <span> {cartdata.price}</span> */}
+                          {/* </DrawerItemPrice>
+
+                            <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
+                          </MainDrawer> */}
+
+                          <Add>
                             <div>
                               <h4>{cartdata.name}</h4>
                             </div>
 
                             <DrawerItemPrice>
-                              <span style={{ marginLeft: '20px' }}> {cartdata.price}</span>
+                              <CartPrice> {cartdata.price}</CartPrice>
                             </DrawerItemPrice>
-                            <span style={{ marginLeft: '75px' }}>
-                              <CloseIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
-                            </span>
-                          </MainDrawer>
-
-                          <Add>
+                            <CartCancel>
+                              <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
+                            </CartCancel>
                             <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
 
                             {cartdata.qty}
-                            <PositiveIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
+                            <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
                           </Add>
                         </DrawerPrice>
                       </DrawerCard>
@@ -140,7 +156,7 @@ const TemporaryDrawer = () => {
           </DrawerModal>
 
           {/* click={toggleDrawer('right', true)} */}
-        </Drawer>
+        </MainDrawer>
       </React.Fragment>
     </>
   );

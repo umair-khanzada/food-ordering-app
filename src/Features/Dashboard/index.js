@@ -5,7 +5,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useDispatch } from 'react-redux';
 
 import MainTab from '../../components/CardMenus/Tabs';
-import TemporaryDrawer from '../../components/Drawer';
+import TemporaryDrawer from '../../components/Drawer/index';
 import SideMenu from '../../components/sideMenu';
 import { Header, OrderHeading, OrderRef, OrderDetails, UserInfo, FirstTab } from './style';
 
@@ -35,7 +35,7 @@ function Dashboard() {
         </Grid>
         <Grid item md={9}>
           <Box>
-            <Header className="header">
+            <Header>
               <OrderDetails>
                 <ArrowBackIcon fontSize="large" style={{ color: '#e91e63' }} />
 

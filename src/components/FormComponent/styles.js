@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -29,6 +30,11 @@ export const ForgotPassword = styled(Link)`
   @media (max-width: 768px) {
     font-size: 14px;
   }
+`;
+
+export const GridItem = styled(Grid)`
+  padding: 0 5px;
+  height: 100vh;
 `;
 export const BasicLink = styled.div`
   padding-top: 10px;

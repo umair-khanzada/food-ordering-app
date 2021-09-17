@@ -1,21 +1,22 @@
 import React from 'react';
 
-import { Typography, Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 import { addtocart } from '../../Features/Dashboard/Reducer/action';
 import CommonButton from '../Button/Button';
-import { Root, FoodTitle, Content, HeaderCard, Image } from './style';
+import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content } from './style';
 
 const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
   const dispatch = useDispatch();
 
   return (
     <Grid item md={3}>
-      <Root>
-        <Image alt="js" src={img} title={name} />
+      <CardRoot>
+        <ImageDiv src={img} title={name} />
 
         <HeaderCard subheader={<h4>{resturantName}</h4>} title={<FoodTitle variant="h2">{name}</FoodTitle>} />
+
         <Content>
           <div style={{ marginTop: '20px', display: 'flex' }}>
             <div>
@@ -32,7 +33,7 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
             </Typography>
           </div>
         </Content>
-      </Root>
+      </CardRoot>
     </Grid>
   );
 };
