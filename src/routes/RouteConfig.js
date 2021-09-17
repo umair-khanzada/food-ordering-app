@@ -6,6 +6,7 @@ import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from
 import { dashboardRoute } from '../Features/Dashboard/route';
 import { homeRoute } from '../Features/Home';
 import { OrderListRoute } from '../Features/Vendor/route';
+import { RestaurantRoute } from '../Features/Vendor/route';
 
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
@@ -38,7 +39,7 @@ const routeConfig = {
     editCategoriesRoute,
   ],
 
-  officeBoy: [],
+  officeBoy: [RestaurantRoute],
 
   common: [],
 };
