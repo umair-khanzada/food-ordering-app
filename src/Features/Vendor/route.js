@@ -1,9 +1,9 @@
 import { isPublicRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
-import CategoryList from './CategoryList/CategoryList';
+import OrderList from './OrderList/OrderList';
 
-export const CategoryListRoute = {
-  path: RouteNames.vendorcategorylist,
+export const OrderListRoute = {
+  path: RouteNames.orderlist,
   permissions: isPublicRoute, // to intimate it is public route
-  component: CategoryList,
+  component: OrderList,
 };

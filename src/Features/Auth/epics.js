@@ -16,9 +16,10 @@ export const loginEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          const { user, tokens } = res.response;
-          const { name } = user;
-          const { refresh, access } = tokens;
+          const {
+            user: { name },
+            tokens: { refresh, access },
+          } = res.response;
           return of(
             loginSuccess({
               name,
@@ -45,9 +46,10 @@ export const signUpEpic = (action$) =>
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          const { user, tokens } = res.response;
-          const { name } = user;
-          const { refresh, access } = tokens;
+          const {
+            user: { name },
+            tokens: { refresh, access },
+          } = res.response;
           return of(
             loginSuccess({
               name,
@@ -94,7 +96,12 @@ export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
     mergeMap(() => {
-      const refreshToken = { refreshToken: state.value.authReducer.refreshToken.token };
+      const {
+        value: {
+          authReducer: { token },
+        },
+      } = state;
+      const refreshToken = { refreshToken: token };
       return ajax({
         url: 'http://localhost:4000/v1/auth/logout',
         method: 'POST',
