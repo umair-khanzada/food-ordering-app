@@ -11,26 +11,20 @@ const MainTab = () => {
   const [tabValue, setTabValue] = useState();
   const params = new URLSearchParams(useLocation().search);
   const onTabChange = (event, tabIndex) => {
-    const {
-      target: { innerText },
-    } = event;
-
-    History.push('/dashboard?category=' + innerText + '&&index=' + tabIndex);
-
-    setTabValue(parseInt(tabIndex));
+    History.push(`/dashboard?category=${tabIndex}`);
+    setTabValue(tabIndex);
   };
   useEffect(() => {
-    const tabIndex = params.get('index');
-
-    setTabValue(tabIndex ? parseInt(tabIndex) : 0);
+    const tabIndex = params.get('category');
+    const [{ label }] = TabData;
+    setTabValue(tabIndex ? tabIndex : label);
   }, []);
   return (
     <>
       <Paper square>
         <Tabs indicatorColor="secondary" onChange={onTabChange} textColor="secondary" value={tabValue}>
-          {TabData.map((tab, index) => {
-            const { label } = tab;
-            return <Tab key={index} label={label} />;
+          {TabData.map(({ label }, index) => {
+            return <Tab key={index} label={label} value={label} />;
           })}
         </Tabs>
       </Paper>
