@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 
-import { TableRow, Table, TableBody, TablePagination, IconButton } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter';
+import {
+  TableRow,
+  Table,
+  TableBody,
+  TablePagination,
+  IconButton,
+  TableCell,
+  TableFooter,
+  Paper,
+} from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
 
 import DeleteModal from '../DeleteModal';
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
+import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, TableCellContainer } from './style';
 export default function CustomTable({ rows, header, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -20,7 +26,7 @@ export default function CustomTable({ rows, header, cellWidth, tablewidth, onEdi
   const [rowsData, setRowsData] = useState([...rows]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -49,9 +55,9 @@ export default function CustomTable({ rows, header, cellWidth, tablewidth, onEdi
             (row) => (
               <TableRow key={row.name}>
                 {Object.keys(row).map((data, index) => (
-                  <TableCell key={index} style={{ width: cellWidth }}>
+                  <TableCellContainer key={index} cellWidth={cellWidth}>
                     {row[data]}
-                  </TableCell>
+                  </TableCellContainer>
                 ))}
                 {isEditDelete ? (
                   <TableCell>
@@ -70,11 +76,6 @@ export default function CustomTable({ rows, header, cellWidth, tablewidth, onEdi
                 ) : null}
               </TableRow>
             ),
-          )}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
           )}
         </TableBody>
         <TableFooter>

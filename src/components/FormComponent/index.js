@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Grid } from '@material-ui/core';
-
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
 import {
@@ -14,6 +12,7 @@ import {
   BasicLink,
   Error,
   GridContainer,
+  GridItem,
 } from './styles';
 
 const FormComponent = ({
@@ -29,7 +28,7 @@ const FormComponent = ({
   return (
     <FormContainer>
       <GridContainer alignItems="center" container justifyContent="flex-end">
-        <Grid item md={4} style={{ marginRight: '50px' }} xs={12}>
+        <GridItem item md={4} xs={12}>
           <Form>
             <FormHeading>{formTitle}</FormHeading>
             {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
@@ -45,7 +44,7 @@ const FormComponent = ({
                   variant="outlined"
                   width="100%"
                 />
-                <Error style={{ justifyContent: 'top' }}>{errorMessage}</Error>
+                <Error>{errorMessage}</Error>
               </InputBox>
             ))}
             {basicButtons.button.map(({ clickHandler, minWidth, name, type }, i) => (
@@ -67,7 +66,7 @@ const FormComponent = ({
             </BasicLink>
             <Error>{responseError}</Error>
           </Form>
-        </Grid>
+        </GridItem>
       </GridContainer>
     </FormContainer>
   );

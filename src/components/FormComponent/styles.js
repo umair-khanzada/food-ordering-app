@@ -17,6 +17,7 @@ export const InputBox = styled.div`
   margin-bottom: 30px;
 `;
 export const Error = styled.span`
+  justify-content: top;
   color: red;
 `;
 export const FormHeading = styled.h1`
@@ -63,4 +64,7 @@ export const GridContainer = styled(Grid)`
   padding: 0 5px;
   height: 100vh;
   box-shadow: 0 0 10px lightgrey;
+`;
+export const GridItem = styled(Grid)`
+  margin-right: 50px;
 `;
