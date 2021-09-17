@@ -22,6 +22,7 @@ const RouteNames = {
   categories: '/categories',
   addCategory: '/categories/add',
   editCategory: '/categories/edit',
+  menuList: '/menu',
 };
 
 export default RouteNames;

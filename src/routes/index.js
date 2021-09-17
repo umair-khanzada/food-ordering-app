@@ -37,7 +37,7 @@ export default function BaseRouter() {
         {RouteConfig.auth.map((route, index) => {
           return getAuthenticatedRoute(route, index);
         })}
-        {!isLoggedIn
+        {isLoggedIn
           ? RouteConfig.orderPlacer.map((route, index) => {
               return <Route key={index} component={() => route.component()} exact path={route.path} />;
             })
