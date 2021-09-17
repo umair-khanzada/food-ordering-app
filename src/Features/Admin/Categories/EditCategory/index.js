@@ -36,6 +36,7 @@ const EditCategory = () => {
       },
     ],
   };
+
   return (
     <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={onSaveSuccess} />
   );
