@@ -4,13 +4,12 @@ import React, { Fragment } from 'react';
 
 import { Grid, Input, Typography } from '@material-ui/core';
 
-import Button from '../Button/Button';
 import MultipleSelect from '../MultiSelect';
 import NumberInput from '../NumberInput';
 import SelectTag from '../Select';
 import TextField from '../TextField/TextField';
 import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD } from './FieldTypes';
-import { StyledMainContainerGrid, Error, StyledGridItem } from './style';
+import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, StyledFormButton } from './style';
 
 const AddEditForm = ({ fields, buttons, responseError, heading, onSaveSuccess }) => {
   const WIDTH = '100%';
@@ -67,19 +66,19 @@ const AddEditForm = ({ fields, buttons, responseError, heading, onSaveSuccess })
           <hr />
         </Typography>
       </Grid>
-      <Grid item style={{ width: '50%', marginTop: '30px' }}>
+      <StyledGridColumnItem item>
         <Grid container direction="row" justifyContent="space-around" spacing={3}>
           {fields &&
             fields.map((data, index) => {
               return (
                 <Fragment key={index}>
                   <StyledGridItem item xs={6}>
-                    <Typography style={{ color: '#717271' }} variant="h4">
+                    <Typography color="secondary" variant="h4">
                       {data.label}
                     </Typography>
                     {getField(data.type, data, index)}
                     <br />
-                    <Error style={{ justifyContent: 'top' }}>{data.errorMessage}</Error>
+                    <Error>{data.errorMessage}</Error>
                   </StyledGridItem>
                 </Fragment>
               );
@@ -88,19 +87,18 @@ const AddEditForm = ({ fields, buttons, responseError, heading, onSaveSuccess })
         {buttons
           ? buttons.button.map(({ clickHandler, minWidth, name, type }, i) => (
               <div key={name + '-' + i}>
-                <Button
+                <StyledFormButton
                   key={name + '-' + i}
                   fontSize="16px"
                   minwidth={minWidth}
                   onClick={clickHandler}
                   property={name}
-                  style={{ padding: '10px 100px' }}
                   type={type}
                 />
               </div>
             ))
           : null}
-      </Grid>
+      </StyledGridColumnItem>
       {responseError && <Error>{responseError}</Error>}
       {onSaveSuccess && (
         <Typography color="primary" variant="h4">

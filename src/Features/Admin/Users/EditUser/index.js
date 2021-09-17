@@ -18,7 +18,6 @@ const AddUser = () => {
       label: 'Role',
       values: ['User', 'Vendor'],
       value: role,
-      isValid: true,
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
@@ -32,7 +31,6 @@ const AddUser = () => {
       label: 'Email',
       variant: 'standard',
       value: email,
-      isValid: true,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setEmail(value);
@@ -42,10 +40,8 @@ const AddUser = () => {
       getValidation: (value, index) => {
         if (!emailRegex.test(value)) {
           fields[index].errorMessage = 'Email type is not valid';
-          fields[index].isValid = false;
         } else {
           fields[index].errorMessage = '';
-          fields[index].isValid = true;
         }
       },
     },
@@ -55,7 +51,6 @@ const AddUser = () => {
       label: 'Password',
       variant: 'standard',
       value: password,
-      isValid: true,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setPassword(value);
@@ -65,10 +60,8 @@ const AddUser = () => {
       getValidation: (value, index) => {
         if (value.length < 8) {
           fields[index].errorMessage = 'Password must be 8 characters long';
-          fields[index].isValid = false;
         } else {
           fields[index].errorMessage = '';
-          fields[index].isValid = true;
         }
       },
     },
@@ -78,7 +71,6 @@ const AddUser = () => {
       label: 'Contact',
       variant: 'standard',
       value: contact,
-      isValid: true,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setContact(value);
@@ -88,10 +80,8 @@ const AddUser = () => {
       getValidation: (value, index) => {
         if (!contactRegex.test(value)) {
           fields[index].errorMessage = 'Contact length or Type is not valid';
-          fields[index].isValid = false;
         } else {
           fields[index].errorMessage = '';
-          fields[index].isValid = true;
         }
       },
     },

@@ -21,7 +21,6 @@ const AddVendor = () => {
       label: 'Role',
       values: ['User', 'Vendor'],
       value: role,
-      isValid: true,
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
@@ -35,7 +34,6 @@ const AddVendor = () => {
       label: 'Email',
       variant: 'standard',
       value: email,
-      isValid: true,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setEmail(value);
@@ -45,10 +43,8 @@ const AddVendor = () => {
       getValidation: (value, index) => {
         if (!emailRegex.test(value)) {
           fields[index].errorMessage = 'Email type is not valid';
-          fields[index].isValid = false;
         } else {
           fields[index].errorMessage = '';
-          fields[index].isValid = true;
         }
       },
     },
@@ -58,7 +54,6 @@ const AddVendor = () => {
       label: 'Password',
       variant: 'standard',
       value: password,
-      isValid: true,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setPassword(value);
@@ -68,10 +63,8 @@ const AddVendor = () => {
       getValidation: (value, index) => {
         if (value.length < 8) {
           fields[index].errorMessage = 'Password must be 8 characters long';
-          fields[index].isValid = false;
         } else {
           fields[index].errorMessage = '';
-          fields[index].isValid = true;
         }
       },
     },
@@ -81,7 +74,6 @@ const AddVendor = () => {
       label: 'Contact',
       variant: 'standard',
       value: contact,
-      isValid: true,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setContact(value);
@@ -91,10 +83,8 @@ const AddVendor = () => {
       getValidation: (value, index) => {
         if (!contactRegex.test(value)) {
           fields[index].errorMessage = 'Contact length or Type is not valid';
-          fields[index].isValid = false;
         } else {
           fields[index].errorMessage = '';
-          fields[index].isValid = true;
         }
       },
     },
@@ -104,7 +94,6 @@ const AddVendor = () => {
       label: 'Timing',
       variant: 'standard',
       value: timing,
-      isValid: true,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setTiming(value);
@@ -116,7 +105,6 @@ const AddVendor = () => {
       label: 'Building',
       values: ['Main', 'Cherry', 'Qasre Sheeren'],
       value: building,
-      isValid: true,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setBuilding(value);

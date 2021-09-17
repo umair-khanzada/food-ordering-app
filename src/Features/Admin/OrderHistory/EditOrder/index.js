@@ -17,7 +17,6 @@ const EditOrder = () => {
       label: 'Vendor',
       values: ['Yousuf', 'Dilawer'],
       value: vendor,
-      isValid: true,
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
@@ -30,7 +29,6 @@ const EditOrder = () => {
       label: 'Menus',
       values: ['Karhai', 'Biryani', 'Salad'],
       value: menus,
-      isValid: true,
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
@@ -42,7 +40,6 @@ const EditOrder = () => {
       type: PRICE,
       label: 'Price',
       value: price,
-      isValid: true,
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
@@ -54,7 +51,6 @@ const EditOrder = () => {
       type: DATE,
       label: 'Date',
       value: date,
-      isValid: true,
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {

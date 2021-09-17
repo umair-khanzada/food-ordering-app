@@ -1,4 +1,4 @@
-import { MenuItem } from '@material-ui/core';
+import { MenuItem, AppBar } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const StyledDiv = styled.div`
@@ -14,4 +14,15 @@ export const StyledMenuItem = styled(MenuItem)`
     }
    }
   `};
+`;
+
+export const StyledAppBar = styled(AppBar)`
+  background: white;
+  border-bottom: 5px solid #00b3e3;
+`;
+
+export const StyledLogo = styled.img`
+  height: 80px;
+  min-width: 160px;
+  margin-left: 20px;
 `;
