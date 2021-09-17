@@ -27,3 +27,6 @@ export const TableHeader = styled(TableCell)`
   font-size: 16px;
   color: white;
 `;
+export const TableCellContainer = styled(TableCell)`
+  width: ${({ cellWidth }) => cellWidth};
+`;
