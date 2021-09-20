@@ -5,7 +5,7 @@ import React from 'react';
 import { Select, MenuItem } from '@material-ui/core';
 
 const SelectTag = (props) => {
-  const { values, width, onChange, index, value } = props;
+  const { values, onChange, index, value } = props;
 
   return (
     <Select {...props} fullWidth onChange={(e) => onChange(e, index)} value={value}>

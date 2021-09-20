@@ -6,18 +6,18 @@ import Categories from './index';
 
 export const categoriesRoute = {
   path: RouteNames.categories,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: Categories,
 };
 
 export const addCategoriesRoute = {
   path: RouteNames.addCategory,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: AddCategory,
 };
 
 export const editCategoriesRoute = {
   path: RouteNames.editCategory,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: EditCategory,
 };

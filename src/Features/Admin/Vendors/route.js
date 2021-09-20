@@ -7,7 +7,7 @@ import Vendors from './index';
 export const vendorsRoute = {
   path: RouteNames.vendors,
 
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
 
   component: Vendors,
 };
@@ -15,7 +15,7 @@ export const vendorsRoute = {
 export const editVendorsRoute = {
   path: RouteNames.editVendor,
 
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
 
   component: EditVendor,
 };
@@ -23,7 +23,7 @@ export const editVendorsRoute = {
 export const addVendorsRoute = {
   path: RouteNames.addVendor,
 
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
 
   component: AddVendor,
 };

@@ -10,8 +10,8 @@ import RouteNames from '../../routes/RouteNames';
 function SideMenu() {
   const useStyles = makeStyles(() => ({
     drawerPaper: {
-      position: 'static',
-      height: '88vh',
+      position: 'relative',
+      // height: '88vh',
       backgroundColor: 'white',
     },
     navigation: {
@@ -44,13 +44,14 @@ function SideMenu() {
 
   const { drawer, drawerPaper, navigation, list, link, icon } = classes;
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <Drawer
         anchor="left"
         classes={{
           paper: drawerPaper,
         }}
         className={drawer}
+        style={{ height: '100%' }}
         variant="permanent"
       >
         <div className={navigation}>

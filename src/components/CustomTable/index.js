@@ -14,7 +14,7 @@ import { Edit } from '@material-ui/icons';
 
 import DeleteModal from '../DeleteModal';
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, TableCellContainer } from './style';
+import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -31,8 +31,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
-    // eslint-disable-next-line radix
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(event.target.value, 10);
     setPage(0);
   };
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
@@ -56,11 +55,11 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
             (row) => (
               <TableRow key={row.name}>
                 {Object.keys(row).map((data, index) => (
-                  <TableCellContainer key={index} cellWidth={cellWidth}>
+                  <TableCell key={index} cellWidth={cellWidth}>
                     {row[data]}
-                  </TableCellContainer>
+                  </TableCell>
                 ))}
-                {isEditDelete ? (
+                {isEditDelete && (
                   <TableCell>
                     <IconButton onClick={() => onEdit(row)}>
                       <Edit />
@@ -74,7 +73,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                ) : null}
+                )}
               </TableRow>
             ),
           )}
