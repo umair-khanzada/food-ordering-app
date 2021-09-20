@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   TableRow,
@@ -27,6 +27,10 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  useEffect(() => {
+    setRowsData([...rows]);
+  }, [rows]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -52,11 +56,11 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
         </CustomTableHead>
         <TableBody>
           {(rowsPerPage > 0 ? rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rowsData).map(
-            (row) => (
-              <TableRow key={row.name}>
+            (row, index) => (
+              <TableRow key={index}>
                 {Object.keys(row).map((data, index) => (
                   <TableCell key={index} cellWidth={cellWidth}>
-                    {row[data]}
+                    {typeof row[data] === 'boolean' ? row[data].toString() : row[data]}
                   </TableCell>
                 ))}
                 {isEditDelete && (
