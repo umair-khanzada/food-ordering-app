@@ -2,60 +2,56 @@ import React, { useState } from 'react';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { DATE, MULTI_SELECT, PRICE, SELECT } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
+import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 
 const AddOrder = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
-  const [vendor, setVendor] = useState([]);
-  const [menus, setMenus] = useState([]);
-  const [price, setPrice] = useState(30);
-  const [date, setDate] = useState();
   const [fields, setFields] = useState([
     {
       type: SELECT,
       label: 'Vendor',
       values: ['Yousuf', 'Dilawer'],
-      value: vendor,
+      value: [],
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
-        setVendor(value);
-        fields[index].value = value;
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
       type: MULTI_SELECT,
       label: 'Menus',
       values: ['Karhai', 'Biryani', 'Salad'],
-      value: menus,
+      value: [],
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
-        setMenus(value);
-        fields[index].value = value;
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
       type: PRICE,
       label: 'Price',
-      value: price,
+      value: '',
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
-        setPrice(value);
-        fields[index].value = value;
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
       type: DATE,
       label: 'Date',
-      value: date,
+      value: '',
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
-        setDate(value);
-        fields[index].value = value;
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
   ]);
