@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { Grid } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import AppBar from '../../components/AppBar/AppBar';
 import SideMenu from '../../components/sideMenu';
+import History from '../../util/History';
 import BaseRouter from '../index';
 function MainContainer() {
   const { isLoggedIn } = useSelector((state) => {
@@ -15,12 +16,12 @@ function MainContainer() {
     return {
       isLoggedIn,
     };
-  });
+  }, shallowEqual);
 
   const baseRouter = <BaseRouter />;
 
   return (
-    <Router>
+    <Router history={History}>
       {isLoggedIn ? (
         <>
           <AppBar />
