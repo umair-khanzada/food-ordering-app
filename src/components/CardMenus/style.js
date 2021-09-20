@@ -33,3 +33,7 @@ export const ImageDiv = styled.img`
   border-radius: 10px;
   padding: 14px;
 `;
+export const ItemPrice = styled.span`
+  margin-left: 45px;
+  margin-top: '30px';
+`;

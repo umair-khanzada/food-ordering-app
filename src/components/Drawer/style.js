@@ -29,7 +29,7 @@ export const DrawerCard = styled(Card)`
 export const Paper = styled.div`
   background-color: white;
   border-radius: 12px;
-  padding: 40px 40px 17px 40px;
+  padding: 20px 20px 17px 20px;
 `;
 export const DrwaerIcon = styled.div`
   display: flex;
@@ -85,7 +85,7 @@ export const CheckoutButton = styled(Button)`
   color: white;
 `;
 export const CancelButton = styled(Button)`
-  color: white;
+  color: black;
 `;
 export const ModalButton = styled(Button)`
   backgroundcolor: #00b3e3;
@@ -112,6 +112,9 @@ export const CartPrice = styled.span`
   margin-left: 20px;
 `;
 export const CartCancel = styled.span`
-  margin-left: 1px;
-  width: 20%;
+  margin-botton: 50px;
+  width: 60%;
+`;
+export const CountQuantity = styled.span`
+  margin-left: 50px;
 `;

@@ -20,7 +20,6 @@ import {
   PositiveIcon,
   CheckoutButton,
   CancelButton,
-  ModalButton,
   Modaltext,
   NegativeIcon,
   DeleteIcon,
@@ -96,14 +95,15 @@ const TemporaryDrawer = () => {
                             <DrawerItemPrice>
                               <CartPrice> {cartdata.price}</CartPrice>
                             </DrawerItemPrice>
-                            <CartCancel>
-                              <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
-                            </CartCancel>
-                            <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
+                            <span style={{ margin: '20px' }} />
 
+                            <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
                             {cartdata.qty}
                             <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
                           </Add>
+                          <CartCancel>
+                            <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
+                          </CartCancel>
                         </DrawerPrice>
                       </DrawerCard>
                     );
@@ -127,7 +127,11 @@ const TemporaryDrawer = () => {
               {/* close here */}
             </div>
           </div>
-          {cart.length > 0 && <CheckoutButton onClick={handleOpen}>Checkout</CheckoutButton>}
+          {cart.length > 0 && (
+            <CheckoutButton color="secondary" onClick={handleOpen} variant="contained">
+              Checkout
+            </CheckoutButton>
+          )}
           <DrawerModal
             aria-describedby="transition-modal-description"
             aria-labelledby="transition-modal-title"
@@ -142,14 +146,24 @@ const TemporaryDrawer = () => {
               <Paper>
                 <Modaltext>Are You Sure You Want To Confirm Your Order</Modaltext>
                 <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-around' }}>
-                  <CancelButton onClick={() => handleClose()} style={{ marginRight: '20px' }} variant="contained">
+                  <CancelButton
+                    color="black"
+                    onClick={() => handleClose()}
+                    style={{ marginRight: '20px' }}
+                    variant="contained"
+                  >
                     <CloseIcon />
                     Cancel
                   </CancelButton>
-                  <ModalButton>
+                  <CheckoutButton
+                    color="secondary"
+                    onClick={() => handleClose()}
+                    style={{ marginRight: '20px' }}
+                    variant="contained"
+                  >
                     <DoneIcon />
                     Confirm
-                  </ModalButton>
+                  </CheckoutButton>
                 </div>
               </Paper>
             </Fade>

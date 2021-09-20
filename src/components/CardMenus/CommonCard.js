@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { addtocart } from '../../Features/Dashboard/Reducer/action';
 import CommonButton from '../Button/Button';
-import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content } from './style';
+import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice } from './style';
 
 const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
             </div>
 
             <Typography color="textSecondary" component="p" variant="h4">
-              <span>{price}</span>
+              <ItemPrice>{price}</ItemPrice>
             </Typography>
           </div>
         </Content>
