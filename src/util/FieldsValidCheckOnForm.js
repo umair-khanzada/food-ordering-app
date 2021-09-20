@@ -1,6 +1,6 @@
-export const validateOnSubmit = (fields, setFields) => {
+export const validateOnSubmit = (fields) => {
   let isValid = true;
-  const ValidateArray = fields.map((field) => {
+  const validateArray = fields.map((field) => {
     if (!field.value?.length) {
       isValid = false;
       field.errorMessage = field.label + ' field cannot be empty';
@@ -12,6 +12,6 @@ export const validateOnSubmit = (fields, setFields) => {
 
     return field;
   });
-  setFields(ValidateArray);
-  return isValid;
+
+  return { validateArray, isValid };
 };
