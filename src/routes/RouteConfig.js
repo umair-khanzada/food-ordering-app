@@ -5,36 +5,42 @@ import { addVendorsRoute, editVendorsRoute, vendorsRoute } from '../Features/Adm
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { dashboardRoute } from '../Features/Customer/Dashboard/route';
 import { homeRoute } from '../Features/Home';
-import { profileRoute } from '../Features/Profile';
+import { OrderListRoute } from '../Features/Vendor/route';
 
 const routeConfig = {
-  auth: [
-    loginRoute,
-    homeRoute,
-    signUpRoute,
-    resetPasswordRoute,
-    resetPasswordRoute,
-    forgetPasswordRoute,
-    addUserRoute,
-    editUserRoute,
-  ],
-  orderPlacer: [dashboardRoute],
+  auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
+
+  orderPlacer: [dashboardRoute, OrderListRoute],
+
   admin: [
     orderHistorydRoute,
+
     addOrderdRoute,
+
     editOrderdRoute,
+
     usersRoute,
+
     editUserRoute,
+
     addUserRoute,
+
     vendorsRoute,
+
     editVendorsRoute,
+
     addVendorsRoute,
+
     categoriesRoute,
+
     addCategoriesRoute,
+
     editCategoriesRoute,
   ],
+
   officeBoy: [],
-  common: [profileRoute],
+
+  common: [],
 };
 
 export default routeConfig;

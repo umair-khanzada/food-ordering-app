@@ -5,41 +5,17 @@ import {
   Table,
   TableBody,
   TablePagination,
-  TableFooter,
-  TableCell,
-  Paper,
   IconButton,
+  TableCell,
+  TableFooter,
+  Paper,
 } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-import { KeyboardArrowLeft, KeyboardArrowRight, Delete, Edit } from '@material-ui/icons';
+import { Edit } from '@material-ui/icons';
 
 import DeleteModal from '../DeleteModal';
-import { CustomTableHead, IconContainer, EditDeleteCell, CustomTableContainer } from './style';
-function TablePaginationActions(props) {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
-  const handleBackButtonClick = (event) => {
-    onPageChange(event, page - 1);
-  };
-  const handleNextButtonClick = (event) => {
-    onPageChange(event, page + 1);
-  };
-  return (
-    <IconContainer>
-      <IconButton aria-label="previous page" disabled={page === 0} onClick={handleBackButtonClick}>
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-      </IconButton>
-      <IconButton
-        aria-label="next page"
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        onClick={handleNextButtonClick}
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-      </IconButton>
-    </IconContainer>
-  );
-}
-export default function CustomTable({ rows, onDelete, header, tablewidth, onEdit, isEditDelete }) {
+import TablePaginationActions from './Pagination';
+import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
+export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,13 +26,12 @@ export default function CustomTable({ rows, onDelete, header, tablewidth, onEdit
   const [rowsData, setRowsData] = useState([...rows]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
-    // eslint-disable-next-line radix
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(event.target.value, 10);
     setPage(0);
   };
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
@@ -71,9 +46,7 @@ export default function CustomTable({ rows, onDelete, header, tablewidth, onEdit
         <CustomTableHead>
           <TableRow>
             {header.map((head, index) => (
-              <TableCell key={index} style={{ color: 'white' }}>
-                {head}
-              </TableCell>
+              <TableHeader key={index}>{head}</TableHeader>
             ))}
           </TableRow>
         </CustomTableHead>
@@ -82,12 +55,12 @@ export default function CustomTable({ rows, onDelete, header, tablewidth, onEdit
             (row) => (
               <TableRow key={row.name}>
                 {Object.keys(row).map((data, index) => (
-                  <TableCell key={index} style={{ width: 200 }}>
+                  <TableCell key={index} cellWidth={cellWidth}>
                     {row[data]}
                   </TableCell>
                 ))}
                 {isEditDelete && (
-                  <EditDeleteCell>
+                  <TableCell>
                     <IconButton onClick={() => onEdit(row)}>
                       <Edit />
                     </IconButton>
@@ -97,17 +70,12 @@ export default function CustomTable({ rows, onDelete, header, tablewidth, onEdit
                         handleClickOpen();
                       }}
                     >
-                      <Delete />
+                      <DeleteIcon />
                     </IconButton>
-                  </EditDeleteCell>
+                  </TableCell>
                 )}
               </TableRow>
             ),
-          )}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
           )}
         </TableBody>
         <TableFooter>

@@ -7,7 +7,6 @@ import CustomTable from '../../../components/CustomTable';
 import { categoryList } from '../../../Mock/CategoryList';
 import RouteNames from '../../../routes/RouteNames';
 import { CategoriesTitleContainer, CategoriesTitle } from './style';
-
 function CategoryList() {
   const { addCategory, editCategory } = RouteNames;
   const history = useHistory();
@@ -38,7 +37,7 @@ function CategoryList() {
         onDelete={onDelete}
         onEdit={onEdit}
         rows={categoryList}
-        tablewidth="80%"
+        tablewidth="90%"
       />
     </>
   );

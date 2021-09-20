@@ -9,7 +9,7 @@ import TextField from '../TextField/TextField';
 import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD } from './FieldTypes';
 import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, StyledFormButton } from './style';
 
-const AddEditForm = ({ fields, buttons, responseError, heading, onSaveSuccess }) => {
+const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSuccess }) => {
   const WIDTH = '100%';
 
   const getField = (field, props, index) => {
@@ -106,4 +106,4 @@ const AddEditForm = ({ fields, buttons, responseError, heading, onSaveSuccess })
     </StyledMainContainerGrid>
   );
 };
-export default AddEditForm;
+export default CommonGridBasedForm;

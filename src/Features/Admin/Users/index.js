@@ -8,6 +8,7 @@ import { userList } from '../../../Mock/UserList';
 import RouteNames from '../../../routes/RouteNames';
 import { UsersTitleContainer, UsersTitle } from './style';
 function UsersList() {
+  const header = ['Id', 'Name', 'Email', 'Contact', 'Edit'];
   const { addUser, editUser } = RouteNames;
 
   const onEdit = (row) => {
@@ -21,7 +22,6 @@ function UsersList() {
     row;
   };
 
-  const header = ['No', 'Name', 'Email', 'Contact', 'Edit'];
   const history = useHistory();
 
   return (

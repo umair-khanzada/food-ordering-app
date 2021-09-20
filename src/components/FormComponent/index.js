@@ -1,10 +1,19 @@
 import React from 'react';
 
-import { Grid } from '@material-ui/core';
-
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
-import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, Label, BasicLink, Error } from './styles';
+import {
+  FormHeading,
+  ForgotPassword,
+  Form,
+  FormContainer,
+  InputBox,
+  Label,
+  BasicLink,
+  Error,
+  GridContainer,
+  GridItem,
+} from './styles';
 
 const FormComponent = ({
   inputFields,
@@ -18,8 +27,8 @@ const FormComponent = ({
 }) => {
   return (
     <FormContainer>
-      <Grid alignItems="center" container justifyContent="center" style={{ padding: '0 5px', height: '100vh' }}>
-        <Grid item md={4} xs={12}>
+      <GridContainer alignItems="center" container justifyContent="flex-end">
+        <GridItem item md={4} xs={12}>
           <Form>
             <FormHeading>{formTitle}</FormHeading>
             {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
@@ -35,7 +44,7 @@ const FormComponent = ({
                   variant="outlined"
                   width="100%"
                 />
-                <Error style={{ justifyContent: 'top' }}>{errorMessage}</Error>
+                <Error>{errorMessage}</Error>
               </InputBox>
             ))}
             {basicButtons.button.map(({ clickHandler, minWidth, name, type }, i) => (
@@ -57,8 +66,8 @@ const FormComponent = ({
             </BasicLink>
             <Error>{responseError}</Error>
           </Form>
-        </Grid>
-      </Grid>
+        </GridItem>
+      </GridContainer>
     </FormContainer>
   );
 };
