@@ -12,11 +12,12 @@ import {
 } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
 
-import DeleteModal from '../DeleteModal';
+import AlertModal from '../Modal/inex';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, TableCellContainer } from './style';
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
-  const [open, setOpen] = React.useState(false);
+  const content = 'Are you sure you want to delete ?';
+  const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -31,8 +32,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
-    // eslint-disable-next-line radix
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage((event.target.value, 10));
     setPage(0);
   };
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
@@ -42,7 +42,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
   };
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
-      {isEditDelete && <DeleteModal handleClose={handleClose} onRowDelete={onRowDelete} open={open} />}
+      {isEditDelete && <AlertModal content={content} handleClose={handleClose} onConfirm={onRowDelete} open={open} />}
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
@@ -56,7 +56,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
             (row) => (
               <TableRow key={row.name}>
                 {Object.keys(row).map((data, index) => (
-                  <TableCellContainer key={index} cellWidth={cellWidth}>
+                  <TableCellContainer key={index} cellwidth={cellWidth}>
                     {row[data]}
                   </TableCellContainer>
                 ))}
