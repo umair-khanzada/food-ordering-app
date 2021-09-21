@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import { vendorList } from '../../../Mock/VendorList';
 import RouteNames from '../../../routes/RouteNames';
+import { fetchVendors } from './actions';
 import { VendorTitleContainer, VendorTitle } from './style';
-
 function VendorList() {
   const history = useHistory();
   const { editVendor, addVendor } = RouteNames;
-
-  const header = ['No', 'Name', 'Email', 'Contact', 'Timing', 'Building', 'Edit'];
 
   const onEdit = (row) => {
     history.push({
@@ -24,6 +23,25 @@ function VendorList() {
   const onDelete = (row) => {
     row;
   };
+
+  const [vendors, setVendors] = useState([]);
+
+  const getVendorsResponseFromEpic = (response) => {
+    setVendors(response);
+  };
+
+  const [header, setHeader] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchVendors(getVendorsResponseFromEpic));
+  }, []);
+
+  useEffect(() => {
+    if (vendors.length > 0) {
+      setHeader([...Object.keys(vendors[0]), 'Edit']);
+    }
+  }, [vendors]);
 
   return (
     <>

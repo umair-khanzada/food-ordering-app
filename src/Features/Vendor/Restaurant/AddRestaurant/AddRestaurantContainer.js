@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
+import { validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 const AddRestaurant = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 

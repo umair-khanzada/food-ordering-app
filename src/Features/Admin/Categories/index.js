@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { categoryList } from '../../../Mock/CategoryList';
 import RouteNames from '../../../routes/RouteNames';
+import { fetchCategories } from './actions';
 import { CategoriesTitleContainer, CategoriesTitle } from './style';
 function CategoryList() {
   const { addCategory, editCategory } = RouteNames;
@@ -21,7 +22,24 @@ function CategoryList() {
     row;
   };
 
-  const header = ['No', 'Category', 'Edit'];
+  const [categories, setCategories] = useState([]);
+
+  const getCategoriesResponseFromEpic = (response) => {
+    setCategories(response);
+  };
+
+  const [header, setHeader] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories(getCategoriesResponseFromEpic));
+  }, []);
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setHeader([...Object.keys(categories[0]), 'Edit']);
+    }
+  }, [categories]);
 
   return (
     <>
@@ -36,7 +54,7 @@ function CategoryList() {
         isEditDelete
         onDelete={onDelete}
         onEdit={onEdit}
-        rows={categoryList}
+        rows={categories}
         tablewidth="90%"
       />
     </>

@@ -3,14 +3,14 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { FETCH_USERS } from './ActionTypes';
+import { FETCH_CATEGORIES } from './ActionTypes';
 
-export const fetchUsersEpic = (action$, state) =>
+export const fetchCategoriesEpic = (action$, state) =>
   action$.pipe(
-    ofType(FETCH_USERS),
+    ofType(FETCH_CATEGORIES),
     mergeMap(({ payload }) => {
       return ajax({
-        url: 'http://localhost:5000/usersList',
+        url: 'http://localhost:5000/categories',
         method: 'GET',
       }).pipe(
         mergeMap((res) => {
