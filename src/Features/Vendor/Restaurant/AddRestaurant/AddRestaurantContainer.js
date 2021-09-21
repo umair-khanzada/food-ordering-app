@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import AddEditForm from '../../../../components/AddEditForm';
-import { TEXT_FIELD } from '../../../../components/AddEditForm/FieldTypes';
+import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
+import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 
 const AddRestaurant = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
@@ -63,7 +63,9 @@ const AddRestaurant = () => {
       },
     ],
   };
-  return <AddEditForm buttons={buttons} fields={fields} heading="Add Restaurant" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" onSaveSuccess={onSaveSuccess} />
+  );
 };
 
 export default AddRestaurant;

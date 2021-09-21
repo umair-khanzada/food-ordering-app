@@ -31,7 +31,7 @@ function UsersList() {
         <CommonButton onClick={() => history.push(addUser)} property="Add Users" />
       </UsersTitleContainer>
 
-      <CustomTable header={header} isEditDelete onEdit={onEdit} rows={userList} tablewidth="90%" />
+      <CustomTable header={header} isEditDelete onDelete={onDelete} onEdit={onEdit} rows={userList} tablewidth="90%" />
     </>
   );
 }

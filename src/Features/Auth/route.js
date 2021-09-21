@@ -7,18 +7,18 @@ import SignUpContainer from './SignUp/SignUpContainer';
 
 export const loginRoute = {
   path: RouteNames.login,
-  permissions: isPublicRoute, // to intimate it is public route
+  permissions: isPublicRoute,
   component: LoginContainer,
 };
 export const signUpRoute = {
   path: RouteNames.signup,
-  permissions: isPublicRoute, // to intimate it is public route
+  permissions: isPublicRoute,
   component: SignUpContainer,
 };
 
 export const forgetPasswordRoute = {
   path: RouteNames.forgetPassword,
-  permissions: isPublicRoute, // to intimate it is public route
+  permissions: isPublicRoute,
   component: ForgetPasswordContainer,
 };
 
