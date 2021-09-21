@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
-import { fetchUsers } from './actions';
+import { deleteUserById, fetchUsers } from './actions';
 import { UsersTitleContainer, UsersTitle } from './style';
 function UsersList() {
   const { addUser, editUser } = RouteNames;
@@ -14,17 +14,15 @@ function UsersList() {
   const onEdit = (row) => {
     history.push({
       pathname: editUser,
-      state: { data: row },
+      search: '?id=' + row.id,
     });
   };
-
-  const onDelete = (row) => {
-    row;
-  };
-
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const onDelete = (row) => {
+    console.log(row);
+    dispatch(deleteUserById(row.id));
+  };
   const [users, setUsers] = useState([]);
   const [header, setHeader] = useState([]);
 
@@ -38,7 +36,7 @@ function UsersList() {
 
   useEffect(() => {
     if (users.length > 0) {
-      setHeader(Object.keys(users[0]));
+      setHeader([...Object.keys(users[0]), 'Edit']);
     }
   }, [users]);
 
