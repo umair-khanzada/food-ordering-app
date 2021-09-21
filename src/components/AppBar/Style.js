@@ -1,6 +1,8 @@
 import { MenuItem, AppBar } from '@material-ui/core';
 import styled from 'styled-components';
 
+import { NISUM_BLUE } from '../../util/Color';
+
 export const StyledDiv = styled.div`
   flex-grow: 1;
 `;
@@ -18,7 +20,7 @@ export const StyledMenuItem = styled(MenuItem)`
 
 export const StyledAppBar = styled(AppBar)`
   background: white;
-  border-bottom: 5px solid #00b3e3;
+  border-bottom: 5px solid ${NISUM_BLUE};
 `;
 
 export const StyledLogo = styled.img`
