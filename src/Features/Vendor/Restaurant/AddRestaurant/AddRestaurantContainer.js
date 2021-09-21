@@ -2,35 +2,9 @@ import React, { useState } from 'react';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-
+import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
 const AddRestaurant = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
-  const validateOnSubmit = () => {
-    let isValid = true;
-    const ValidateArray = fields.map((field) => {
-      if (
-        field.value === '' ||
-        field.value === undefined ||
-        field.value === null ||
-        (field.value.constructor.name == 'Array' && field.value.length === 0)
-      ) {
-        isValid = false;
-        field.errorMessage = field.label + ' field cannot be empty';
-        field.isValid = false;
-
-        return field;
-      }
-
-      field.isValid = true;
-      field.errorMessage = '';
-
-      !isValid ? null : (isValid = field.isValid);
-      return field;
-    });
-    setFields(ValidateArray);
-    return isValid;
-  };
 
   const [restaurant, setRestaurant] = useState('');
   const [fields, setFields] = useState([
@@ -50,7 +24,9 @@ const AddRestaurant = () => {
   ]);
 
   const saveHandler = () => {
-    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    const { validateArray, isValid } = validateOnSubmit(fields);
+    setFields(validateArray);
+    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
   };
 
   const buttons = {
