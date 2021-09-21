@@ -34,24 +34,30 @@ function SideMenu() {
         color: 'white',
       },
     },
+    mainDiv: {
+      width: '100%',
+      height: '100%',
+    },
     icon: {
       marginRight: '10px',
+    },
+    drawer: {
+      height: '100%',
     },
   }));
   const classes = useStyles();
   const { orderHistory, users, vendors, categories } = RouteNames;
   const history = useHistory();
 
-  const { drawer, drawerPaper, navigation, list, link, icon } = classes;
+  const { drawer, drawerPaper, navigation, list, link, icon, mainDiv } = classes;
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div className={mainDiv}>
       <Drawer
         anchor="left"
         classes={{
           paper: drawerPaper,
         }}
         className={drawer}
-        style={{ height: '100%' }}
         variant="permanent"
       >
         <div className={navigation}>
