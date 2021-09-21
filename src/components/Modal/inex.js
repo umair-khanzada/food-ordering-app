@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import { closeModal } from './action';
 import { ContentTextConatiner, DialogContainer } from './style';
-const AlertModal = ({ buttons, children }) => {
+const AlertModal = ({ modalButtons, children }) => {
   const dispatch = useDispatch();
   const toggleModal = useSelector(({ modalReducer }) => {
     return modalReducer.isToggleModal;
@@ -26,7 +26,7 @@ const AlertModal = ({ buttons, children }) => {
           <ContentTextConatiner>{children}</ContentTextConatiner>
         </DialogContent>
         <DialogActions>
-          {buttons.map(({ property, clickHandler }) => {
+          {modalButtons.map(({ property, clickHandler }) => {
             return <Button key={property} onClick={clickHandler} property={property} />;
           })}
         </DialogActions>

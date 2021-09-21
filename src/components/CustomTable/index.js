@@ -14,7 +14,7 @@ import { Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 
 import { closeModal, openModal } from '../Modal/action';
-import AlertModal from '../Modal/inex';
+import ConfirmDeletModal from '../Modal/inex';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 
@@ -28,7 +28,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
     dispatch(closeModal());
   };
 
-  const buttons = [
+  const deletModalButtons = [
     { property: 'Cancel', clickHandler: onCancel },
     { property: 'Confirm', clickHandler: onRowDelete },
   ];
@@ -60,9 +60,9 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
       {isEditDelete && (
-        <AlertModal buttons={buttons}>
+        <ConfirmDeletModal modalButtons={deletModalButtons}>
           <div>Are you sure you want to delete ?</div>
-        </AlertModal>
+        </ConfirmDeletModal>
       )}
 
       <Table aria-label="custom pagination table">
