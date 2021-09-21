@@ -6,15 +6,15 @@ import Input from '@material-ui/core/Input';
 export default function NumberInput(props) {
   let { value } = props;
 
-  const setValue = (no) => {
-    value = no;
+  const setInputNumberValue = (inputNumberValue) => {
+    value = inputNumberValue;
   };
 
   const handleBlur = () => {
     if (value < 0) {
-      setValue(0);
+      setInputNumberValue(0);
     } else if (value > 100) {
-      setValue(100);
+      setInputNumberValue(100);
     }
   };
 
