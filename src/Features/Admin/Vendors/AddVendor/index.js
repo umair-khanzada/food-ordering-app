@@ -11,7 +11,6 @@ const AddVendor = () => {
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = fields.map((field) => {
-      console.log(field.value);
       if (
         field.value === '' ||
         field.value === undefined ||
