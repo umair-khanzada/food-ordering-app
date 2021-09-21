@@ -40,16 +40,6 @@ const TemporaryDrawer = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const [state, setState] = useState({
-    right: false,
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    // if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-    //   return;
-    // }
-    setState({ ...state, [anchor]: open });
-  };
 
   const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
 

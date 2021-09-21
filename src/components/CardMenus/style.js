@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Typography } from '@material-ui/core';
+import { Card, CardContent, CardHeader, Grid, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const CardRoot = styled(Card)`
@@ -35,5 +35,13 @@ export const ImageDiv = styled.img`
 `;
 export const ItemPrice = styled.span`
   margin-left: 45px;
-  margin-top: '30px';
+  margin-top: 30px;
+`;
+export const ControlGrid = styled(Grid)`
+  padding: 20px;
+  margin-top: 50px;
+`;
+export const InsideContent = styled.div`
+  margin-top: 20px;
+  display: flex;
 `;

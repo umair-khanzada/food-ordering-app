@@ -10,7 +10,7 @@ import TabData from '../../Mock/TabList';
 import History from '../../util/History';
 import CardMenus from './CardMenus';
 
-const MainTab = (props) => {
+const MainTab = () => {
   const [tabValue, setTabValue] = useState('Gravy');
   const params = new URLSearchParams(useLocation().search);
 

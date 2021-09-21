@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { addtocart } from '../../Features/Customer/actions';
 import CommonButton from '../Button/Button';
-import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice } from './style';
+import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice, InsideContent } from './style';
 
 const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
   const dispatch = useDispatch();
@@ -18,20 +18,20 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
         <HeaderCard subheader={<h4>{resturantName}</h4>} title={<FoodTitle variant="h2">{name}</FoodTitle>} />
 
         <Content>
-          <div style={{ marginTop: '20px', display: 'flex' }}>
+          <InsideContent>
             <div>
               <CommonButton
                 fontSize={16}
+                minwidth="40px"
                 onClick={() => dispatch(addtocart({ id, name, price, img, qty: 1 }))}
                 property={buttonText}
-                style={{ width: '50px' }}
               />
             </div>
 
             <Typography color="textSecondary" component="p" variant="h4">
               <ItemPrice>{price}</ItemPrice>
             </Typography>
-          </div>
+          </InsideContent>
         </Content>
       </CardRoot>
     </Grid>

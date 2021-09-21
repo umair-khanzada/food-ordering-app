@@ -1,29 +1,14 @@
 import React from 'react';
 
-import { Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
-import UserData from '../../Mock/Data';
+import CardData from '../../Mock/Data';
 import CommonCard from './CommonCard';
-const useStyles = makeStyles((theme) => ({
-  control: {
-    padding: theme.spacing(3),
-    marginTop: '50px',
-  },
-}));
+import { ControlGrid } from './style';
 
 const CardMenu = ({ foodType }) => {
-  const classes = useStyles();
-  // const cart = useSelector((state) => state.addtocartReducers.cart);
-
-  const { control } = classes;
-  console.log('food', foodType);
   return (
     <div>
-      <Grid className={classes.control} container elevation={3} spacing={3}>
-        {UserData.map((usedata, index) => {
-          const { id, name, price, type, resturantName, img } = usedata;
-          console.log('type', type);
+      <ControlGrid container elevation={3} spacing={3}>
+        {CardData.map(({ id, name, price, type, resturantName, img }, index) => {
           if (type === foodType) {
             return (
               <CommonCard
@@ -38,7 +23,7 @@ const CardMenu = ({ foodType }) => {
             );
           }
         })}
-      </Grid>
+      </ControlGrid>
     </div>
   );
 };
