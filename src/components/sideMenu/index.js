@@ -64,7 +64,7 @@ function SideMenu() {
 
   const { vendor, admin } = Roles;
   const classes = useStyles();
-  const { orderHistory, users, vendors, categories } = RouteNames;
+  const { orderHistory, users, vendors, categories, categoryList } = RouteNames;
   const history = useHistory();
 
   const { drawer, drawerPaper, navigation, list, link, icon, mainDiv } = classes;
@@ -159,7 +159,7 @@ function SideMenu() {
                 </IconButton>
               </p>
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push('/categorylist')}>
+                <IconButton className={link} onClick={() => history.push(categoryList)}>
                   <Icon className={icon}>
                     <Category />
                   </Icon>

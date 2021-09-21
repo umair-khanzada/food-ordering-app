@@ -5,12 +5,10 @@ import { addVendorsRoute, editVendorsRoute, vendorsRoute } from '../Features/Adm
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { dashboardRoute, profileRoute } from '../Features/Customer/route';
 import { homeRoute } from '../Features/Home';
-import { MenuListRoute } from '../Features/Vendor/route';
+import { CategoryListRoute, MenuListRoute, OrderListRoute } from '../Features/Vendor/route';
 
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
-
-  orderPlacer: [dashboardRoute],
 
   admin: [
     orderHistorydRoute,
@@ -39,7 +37,7 @@ const routeConfig = {
   ],
 
   customer: [dashboardRoute, profileRoute],
-  // vendor: [AddMenuRoute, MenuRoute, OrderListRoute, CategoryListRoute, AddCategoryRoute, EditMenuRoute, RestrauntRoute],
+  vendor: [OrderListRoute, MenuListRoute, CategoryListRoute],
   officeBoy: [],
 
   common: [MenuListRoute],

@@ -51,11 +51,11 @@ export default function BaseRouter() {
           routeConfig.common.map((route, index) => {
             return <Route key={index} component={() => route.component()} exact path={route.path} />;
           })} */}
-        {/* {isLoggedIn && role === vendor
+        {isLoggedIn && role === vendor
           ? routeConfig.vendor.map((route, index) => {
               return <Route key={index} component={() => route.component()} exact path={route.path} />;
             })
-          : null} */}
+          : null}
         {isLoggedIn && role === admin
           ? routeConfig.admin.map((route, index) => {
               return <Route key={index} component={() => route.component()} exact path={route.path} />;
