@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     borderRadius: '24px 0 24px 0',
   },
 });
-const OrderHistory = () => {
+const OrdersHistory = () => {
   const classes = useStyles();
   return (
     <Grid container>
@@ -44,4 +44,4 @@ const OrderHistory = () => {
   );
 };
 
-export default OrderHistory;
+export default OrdersHistory;

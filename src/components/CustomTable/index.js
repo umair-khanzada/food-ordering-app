@@ -16,33 +16,47 @@ import DeleteModal from '../DeleteModal';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const [rowsData, setRowsData] = useState([...rows]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [toggleModal, setToggleModal] = React.useState(false);
 
+  const toggleDeleteModel = () => {
+    setToggleModal(!toggleModal);
+  };
+
+  const [rowsData, setRowsData] = useState([...rows]);
+
+  const [page, setPage] = useState(0);
+
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
   const handleChangeRowsPerPage = (event) => {
-    // eslint-disable-next-line radix
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(event.target.value, 10);
+
     setPage(0);
   };
+
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
+
   const onRowDelete = () => {
     setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
+
     onDelete(currentSelectedRow);
   };
+
+  const RowPerPage = (rowsPerPage, rowsData, page) => {
+    if (rowsPerPage > 0) {
+      return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    }
+
+    return rowsData;
+  };
+
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
-      {isEditDelete && <DeleteModal handleClose={handleClose} onRowDelete={onRowDelete} open={open} />}
+      {isEditDelete && <DeleteModal handleClose={toggleDeleteModel} onRowDelete={onRowDelete} open={toggleModal} />}
+
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
@@ -51,34 +65,36 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
             ))}
           </TableRow>
         </CustomTableHead>
+
         <TableBody>
-          {(rowsPerPage > 0 ? rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rowsData).map(
-            (row) => (
-              <TableRow key={row.name}>
-                {Object.keys(row).map((data, index) => (
-                  <TableRow key={index} cellWidth={cellWidth}>
-                    {row[data]}
-                  </TableRow>
-                ))}
-                {isEditDelete ? (
-                  <TableCell>
-                    <IconButton onClick={() => onEdit(row)}>
-                      <Edit />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        setCurrentSelectedRow(row);
-                        handleClickOpen();
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                ) : null}
-              </TableRow>
-            ),
-          )}
+          {RowPerPage(rowsPerPage, rowsData, page).map((row) => (
+            <TableRow key={row.name}>
+              {Object.keys(row).map((data, index) => (
+                <TableCell key={index} cellwidth={cellWidth}>
+                  {row[data]}
+                </TableCell>
+              ))}
+
+              {isEditDelete && (
+                <TableCell>
+                  <IconButton onClick={() => onEdit(row)}>
+                    <Edit />
+                  </IconButton>
+
+                  <IconButton
+                    onClick={() => {
+                      setCurrentSelectedRow(row);
+                      toggleDeleteModel();
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              )}
+            </TableRow>
+          ))}
         </TableBody>
+
         <TableFooter>
           <TableRow>
             <TablePagination

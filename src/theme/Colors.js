@@ -8,9 +8,9 @@ export const MaterialPalleteColours = {
     contrastText: '#ffffff',
   },
   secondary: {
-    light: '#3385ff',
-    main: '#3385ff',
-    dark: '#3385ff',
+    light: '#717271',
+    main: '#717271',
+    dark: '#717271',
     contrastText: '#ffffff',
   },
   error: {
