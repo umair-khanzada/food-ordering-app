@@ -1,42 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Grid, Typography, Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useDispatch } from 'react-redux';
 
 import MainTab from '../../../components/CardMenus/Tabs';
+import TemporaryDrawer from '../../../components/Drawer';
 import SideMenu from '../../../components/sideMenu';
+import { Header, OrderHeading, OrderRef, OrderDetails, UserInfo, FirstTab } from './style';
 
 function Dashboard() {
-  const useStyles = makeStyles(() => ({
-    header: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginTop: '30px',
-    },
-    orderHeading: {
-      fontWeight: '700',
-      marginLeft: '40px',
-    },
-    orderRef: {
-      color: 'lightgrey',
-      paddingLeft: '10px',
-      paddingTop: '8px',
-      fontSize: '18px',
-    },
-    orderDetails: {
-      display: 'flex',
-    },
-    userInfo: {
-      paddingRight: '40px',
-    },
-    tabs: {
-      paddingRight: '30px',
-    },
-  }));
-  const classes = useStyles();
+  const [isDrawerOpen, setOpenDrawer] = useState(false);
 
-  const { header, orderDetails, orderHeading, orderRef, userInfo, tabs } = classes;
+  const dispatch = useDispatch();
+  const [value, setValue] = useState(0);
+
+  function toggleDrawer() {
+    setOpenDrawer(!isDrawerOpen);
+  }
+
+  const openDrawer = () => {
+    setOpenDrawer(true);
+  };
+
+  const closeDrawer = () => {
+    setOpenDrawer(false);
+  };
 
   return (
     <div>
@@ -46,32 +35,32 @@ function Dashboard() {
         </Grid>
         <Grid item md={9}>
           <Box>
-            <div className={header}>
-              <div className={orderDetails}>
+            <Header>
+              <OrderDetails>
                 <ArrowBackIcon fontSize="large" style={{ color: '#e91e63' }} />
 
-                <Typography className={orderHeading} noWrap style={{ marginLeft: '40px' }} variant="h2">
+                <OrderHeading noWrap variant="h2">
                   New Order
-                </Typography>
+                </OrderHeading>
 
-                <Typography className={orderRef} noWrap paragraph>
+                <OrderRef noWrap paragraph>
                   #023025
-                </Typography>
-              </div>
+                </OrderRef>
+              </OrderDetails>
 
-              <div className={userInfo}>
+              <UserInfo>
                 <Typography variant="h4">
                   <b> Arham Ahmed</b>
                 </Typography>
                 <Typography color="textSecondary" component="p" variant="h4">
                   Waiter
                 </Typography>
-              </div>
-            </div>
-            <div className={tabs}>
-              <MainTab />
-            </div>
-            <div />
+              </UserInfo>
+            </Header>
+            <FirstTab>
+              <TemporaryDrawer />
+              <MainTab setOpenDrawer={() => dispatch(openDrawer())} setTabValue={setValue} value={value} />
+            </FirstTab>
           </Box>
         </Grid>
       </Grid>
