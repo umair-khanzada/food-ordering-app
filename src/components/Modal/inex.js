@@ -1,16 +1,16 @@
 import React from 'react';
 
 import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../Button/Button';
 import { closeModal } from './action';
 import { ContentTextConatiner, DialogContainer } from './style';
-const AlertModal = ({ onConfirm, content }) => {
+const AlertModal = ({ buttons, children }) => {
   const dispatch = useDispatch();
   const toggleModal = useSelector(({ modalReducer }) => {
     return modalReducer.isToggleModal;
-  }, shallowEqual);
+  });
 
   return (
     <DialogContainer>
@@ -23,18 +23,12 @@ const AlertModal = ({ onConfirm, content }) => {
         open={toggleModal}
       >
         <DialogContent>
-          <ContentTextConatiner>{content}</ContentTextConatiner>
+          <ContentTextConatiner>{children}</ContentTextConatiner>
         </DialogContent>
         <DialogActions>
-          <Button color="red" onClick={() => dispatch(closeModal())} property="Cancel" />
-          <Button
-            autoFocus
-            color="primary"
-            onClick={() => {
-              onConfirm();
-            }}
-            property="Confirm"
-          />
+          {buttons.map(({ property, clickHandler }) => {
+            return <Button key={property} onClick={clickHandler} property={property} />;
+          })}
         </DialogActions>
       </Dialog>
     </DialogContainer>

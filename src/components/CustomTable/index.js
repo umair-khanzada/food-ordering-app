@@ -20,7 +20,18 @@ import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from '
 
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const dispatch = useDispatch();
+  const onCancel = () => dispatch(closeModal());
+  const onRowDelete = () => {
+    setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
 
+    onDelete(currentSelectedRow);
+    dispatch(closeModal());
+  };
+
+  const buttons = [
+    { property: 'Cancel', clickHandler: onCancel },
+    { property: 'Confirm', clickHandler: onRowDelete },
+  ];
   const [rowsData, setRowsData] = useState([...rows]);
 
   const [page, setPage] = useState(0);
@@ -36,15 +47,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
     setPage(0);
   };
 
-  const modalContentText = 'Are you sure you want to delete ?';
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
-
-  const onRowDelete = () => {
-    setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
-
-    onDelete(currentSelectedRow);
-    dispatch(closeModal());
-  };
 
   const RowPerPage = (rowsPerPage, rowsData, page) => {
     if (rowsPerPage > 0) {
@@ -56,7 +59,11 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
 
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
-      {isEditDelete && <AlertModal content={modalContentText} onConfirm={onRowDelete} />}
+      {isEditDelete && (
+        <AlertModal buttons={buttons}>
+          <div>Are you sure you want to delete ?</div>
+        </AlertModal>
+      )}
 
       <Table aria-label="custom pagination table">
         <CustomTableHead>
