@@ -14,7 +14,7 @@ import { Edit } from '@material-ui/icons';
 
 import DeleteModal from '../DeleteModal';
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, TableCellContainer } from './style';
+import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -56,9 +56,9 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
             (row) => (
               <TableRow key={row.name}>
                 {Object.keys(row).map((data, index) => (
-                  <TableCellContainer key={index} cellWidth={cellWidth}>
+                  <TableRow key={index} cellWidth={cellWidth}>
                     {row[data]}
-                  </TableCellContainer>
+                  </TableRow>
                 ))}
                 {isEditDelete ? (
                   <TableCell>

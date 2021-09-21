@@ -8,6 +8,10 @@ export const Form = styled.form`
   background-color: white;
   padding: 10px 15px 10px 15px;
   border-radius: 5px;
+  width: 400px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 export const InputBox = styled.div`
   height: 95px;
@@ -30,8 +34,10 @@ export const ForgotPassword = styled(Link)`
   text-decoration: none;
   float: right;
   color: #00b3e3;
+
   @media (max-width: 768px) {
     font-size: 14px;
+    margin-left: 20px;
   }
 `;
 export const BasicLink = styled.div`
@@ -64,7 +70,6 @@ export const GridContainer = styled(Grid)`
   justify-content: start;
   align-items: center;
   height: 100vh;
-  box-shadow: 0 0 10px lightgrey;
 `;
 export const GridItem = styled(Grid)`
   margin-left: 150px;

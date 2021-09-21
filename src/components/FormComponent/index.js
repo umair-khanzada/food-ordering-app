@@ -30,7 +30,7 @@ const FormComponent = ({
   changeHandler,
   responseError,
 }) => {
-  const paperStyle = { padding: 20, height: '100%', width: 450, opacity: 0.9 };
+  const paperStyle = { padding: 20, height: '100%', width: 400, opacity: 0.9 };
   const [checked, setChecked] = useState(false);
   useEffect(() => {
     setChecked(true);
@@ -43,10 +43,10 @@ const FormComponent = ({
         </NisumText>
       </NavTitle>
       <FormContainer>
-        <GridContainer alignItems="center" container justifyContent="flex-end">
-          <GridItem item md={4} xs={12}>
+        <GridContainer>
+          <GridItem>
             <Collapse in={checked} timeout={1000}>
-              <Form elevation={10} style={paperStyle}>
+              <Form elevation={10}>
                 <FormHeading>{formTitle}</FormHeading>
                 {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
                   <InputBox key={name + '-' + i} className="inputFields">
