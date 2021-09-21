@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import AppBar from '../../components/AppBar/AppBar';
 import SideMenu from '../../components/sideMenu';
+import History from '../../util/History';
 import BaseRouter from '../index';
 function MainContainer() {
   const { isLoggedIn } = useSelector((state) => {
@@ -20,7 +21,7 @@ function MainContainer() {
   const baseRouter = <BaseRouter />;
 
   return (
-    <Router>
+    <Router history={History}>
       {isLoggedIn ? (
         <>
           <AppBar />
