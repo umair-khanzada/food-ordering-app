@@ -15,7 +15,6 @@ import { Edit } from '@material-ui/icons';
 import DeleteModal from '../DeleteModal';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
-
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const [toggleModal, setToggleModal] = React.useState(false);
 
