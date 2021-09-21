@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import { closeModal, openModal } from '../Modal/action';
 import AlertModal from '../Modal/inex';
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './Style';
+import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
     setPage(0);
   };
 
-  const modalContentText = 'Are you sure to delete ?';
+  const modalContentText = 'Are you sure you want to delete ?';
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
 
   const onRowDelete = () => {

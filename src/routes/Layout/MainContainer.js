@@ -26,7 +26,7 @@ function MainContainer() {
         <>
           <AppBar />
           <Grid container direction="row">
-            <Grid item xs={2}>
+            <Grid item style={{ position: 'relative' }} xs={2}>
               <SideMenu />
             </Grid>
             <Grid item xs={10}>

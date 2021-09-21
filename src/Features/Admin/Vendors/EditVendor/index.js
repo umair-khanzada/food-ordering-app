@@ -4,35 +4,10 @@ import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
+import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
 
 const EditVendor = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
-  const validateOnSubmit = () => {
-    let isValid = true;
-    const ValidateArray = fields.map((field) => {
-      if (
-        field.value === '' ||
-        field.value === undefined ||
-        field.value === null ||
-        (field.value.constructor.name == 'Array' && field.value.length === 0)
-      ) {
-        isValid = false;
-        field.errorMessage = field.label + ' field cannot be empty';
-        field.isValid = false;
-
-        return field;
-      }
-
-      field.isValid = true;
-      field.errorMessage = '';
-
-      !isValid ? null : (isValid = field.isValid);
-      return field;
-    });
-    setFields(ValidateArray);
-    return isValid;
-  };
 
   const [role, setRole] = useState([]);
   const [email, setEmail] = useState('');
@@ -46,12 +21,11 @@ const EditVendor = () => {
       label: 'Role',
       values: ['User', 'Vendor'],
       value: role,
-      isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setRole(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setRole(value);
+        fields[index].value = value;
       },
     },
     {
@@ -60,20 +34,17 @@ const EditVendor = () => {
       label: 'Email',
       variant: 'standard',
       value: email,
-      isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setEmail(event.target.value);
-        fields[index].value = event.target.value;
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        setEmail(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
       },
       getValidation: (value, index) => {
         if (!emailRegex.test(value)) {
           fields[index].errorMessage = 'Email type is not valid';
-          fields[index].isValid = false;
         } else {
           fields[index].errorMessage = '';
-          fields[index].isValid = true;
         }
       },
     },
@@ -83,20 +54,17 @@ const EditVendor = () => {
       label: 'Password',
       variant: 'standard',
       value: password,
-      isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setPassword(event.target.value);
-        fields[index].value = event.target.value;
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        setPassword(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
       },
       getValidation: (value, index) => {
         if (value.length < 8) {
           fields[index].errorMessage = 'Password must be 8 characters long';
-          fields[index].isValid = false;
         } else {
           fields[index].errorMessage = '';
-          fields[index].isValid = true;
         }
       },
     },
@@ -106,20 +74,17 @@ const EditVendor = () => {
       label: 'Contact',
       variant: 'standard',
       value: contact,
-      isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setContact(event.target.value);
-        fields[index].value = event.target.value;
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        setContact(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
       },
       getValidation: (value, index) => {
         if (!contactRegex.test(value)) {
           fields[index].errorMessage = 'Contact length or Type is not valid';
-          fields[index].isValid = false;
         } else {
           fields[index].errorMessage = '';
-          fields[index].isValid = true;
         }
       },
     },
@@ -129,11 +94,10 @@ const EditVendor = () => {
       label: 'Timing',
       variant: 'standard',
       value: timing,
-      isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setTiming(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setTiming(value);
+        fields[index].value = value;
       },
     },
     {
@@ -142,17 +106,18 @@ const EditVendor = () => {
       label: 'Building',
       variant: 'standard',
       value: building,
-      isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setTiming(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setBuilding(value);
+        fields[index].value = value;
       },
     },
   ]);
 
   const saveHandler = () => {
-    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    const { validateArray, isValid } = validateOnSubmit(fields);
+    setFields(validateArray);
+    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
   };
 
   const buttons = {

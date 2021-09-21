@@ -5,7 +5,7 @@ import { useTheme } from '@material-ui/core/styles';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import { IconContainer } from './Style';
+import { IconContainer } from './style';
 
 function TablePaginationActions(props) {
   const theme = useTheme();

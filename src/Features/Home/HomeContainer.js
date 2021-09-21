@@ -1,7 +1,7 @@
 import React from 'react';
 
 function HomeContainer() {
-  return <h1>Home</h1>;
+  return <button type="button">Home</button>;
 }
 
 export default HomeContainer;

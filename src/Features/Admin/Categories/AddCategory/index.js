@@ -2,36 +2,10 @@ import React, { useState } from 'react';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
 
 const AddCategory = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
-  const validateOnSubmit = () => {
-    let isValid = true;
-    const ValidateArray = fields.map((field) => {
-      if (
-        field.value === '' ||
-        field.value === undefined ||
-        field.value === null ||
-        (field.value.constructor.name == 'Array' && field.value.length === 0)
-      ) {
-        isValid = false;
-        field.errorMessage = field.label + ' field cannot be empty';
-        field.isValid = false;
-
-        return field;
-      }
-
-      field.isValid = true;
-      field.errorMessage = '';
-
-      !isValid ? null : (isValid = field.isValid);
-      return field;
-    });
-    setFields(ValidateArray);
-    return isValid;
-  };
-
   const [category, setCategory] = useState('');
   const [fields, setFields] = useState([
     {
@@ -40,17 +14,18 @@ const AddCategory = () => {
       label: 'Category Name',
       variant: 'standard',
       value: category,
-      isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
-        setCategory(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        setCategory(value);
+        fields[index].value = value;
       },
     },
   ]);
 
   const saveHandler = () => {
-    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    const { validateArray, isValid } = validateOnSubmit(fields);
+    setFields(validateArray);
+    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
   };
 
   const buttons = {
