@@ -4,13 +4,17 @@ import React from 'react';
 import Input from '@material-ui/core/Input';
 
 export default function NumberInput(props) {
-  const { value, setValue } = props;
+  let { value } = props;
+
+  const setInputNumberValue = (inputNumberValue) => {
+    value = inputNumberValue;
+  };
 
   const handleBlur = () => {
     if (value < 0) {
-      setValue(0);
+      setInputNumberValue(0);
     } else if (value > 100) {
-      setValue(100);
+      setInputNumberValue(100);
     }
   };
 

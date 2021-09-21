@@ -6,18 +6,18 @@ import OrderHistory from './index';
 
 export const orderHistorydRoute = {
   path: RouteNames.orderHistory,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: OrderHistory,
 };
 
 export const addOrderdRoute = {
   path: RouteNames.addOrderHistory,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: AddOrder,
 };
 
 export const editOrderdRoute = {
   path: RouteNames.editOrderHistory,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: EditOrder,
 };
