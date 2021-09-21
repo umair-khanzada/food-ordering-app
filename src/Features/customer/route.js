@@ -1,6 +1,6 @@
 import { isPublicRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
-import Dashboard from '../Dashboard';
+import Dashboard from './Dashboard';
 import Profile from './UserProfile/Profile';
 
 export const dashboardRoute = {
