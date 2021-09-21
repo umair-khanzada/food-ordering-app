@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
+import { fetchUserById, updateUserById } from '../actions';
 
 const AddUser = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
@@ -12,6 +16,7 @@ const AddUser = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [contact, setContact] = useState('');
+  const [name, setName] = useState('');
   const [fields, setFields] = useState([
     {
       type: SELECT,
@@ -43,6 +48,18 @@ const AddUser = () => {
         } else {
           fields[index].errorMessage = '';
         }
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: name,
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        setEmail(value);
+        fields[index].value = value;
       },
     },
     {
@@ -90,8 +107,46 @@ const AddUser = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    if (isValid) {
+      console.log('clicked');
+      dispatch(
+        updateUserById({
+          id: history.location.search.split('=')[1],
+          body: {
+            name: fields[2].value,
+            email: fields[1].value,
+            password: fields[3].value,
+          },
+        }),
+      );
+      setOnSaveSuccess(true);
+    } else {
+      setOnSaveSuccess(false);
+    }
   };
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const [user, setUser] = useState({});
+
+  const getUserResponseFromEpic = (response) => {
+    setUser(response);
+    fields.map((field) => {
+      if (field.label === 'Email') {
+        field.value = response.email;
+      } else if (field.label === 'Name') {
+        field.value = response.name;
+      } else if (field.label === 'Password') {
+        field.value = response.password;
+      }
+    });
+    setFields(fields);
+  };
+
+  useEffect(() => {
+    dispatch(fetchUserById({ id: history.location.search.split('=')[1], getUserResponseFromEpic }));
+  }, []);
 
   const buttons = {
     button: [

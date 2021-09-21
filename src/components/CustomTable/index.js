@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-undef */
+import React, { useEffect, useState } from 'react';
 
 import {
   TableRow,
@@ -26,7 +27,10 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
 
   const [page, setPage] = useState(0);
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  useEffect(() => {
+    setRowsData([...rows]);
+  }, [rows]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -67,32 +71,32 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
         </CustomTableHead>
 
         <TableBody>
-          {RowPerPage(rowsPerPage, rowsData, page).map((row) => (
-            <TableRow key={row.name}>
-              {Object.keys(row).map((data, index) => (
-                <TableCell key={index} cellwidth={cellWidth}>
-                  {row[data]}
-                </TableCell>
-              ))}
-
-              {isEditDelete && (
-                <TableCell>
-                  <IconButton onClick={() => onEdit(row)}>
-                    <Edit />
-                  </IconButton>
-
-                  <IconButton
-                    onClick={() => {
-                      setCurrentSelectedRow(row);
-                      toggleDeleteModel();
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              )}
-            </TableRow>
-          ))}
+          {(rowsPerPage > 0 ? rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rowsData).map(
+            (row, index) => (
+              <TableRow key={index}>
+                {Object.keys(row).map((data, index) => (
+                  <TableCell key={index} cellWidth={cellWidth}>
+                    {typeof row[data] === 'boolean' ? row[data].toString() : row[data]}
+                  </TableCell>
+                ))}
+                {isEditDelete && (
+                  <TableCell>
+                    <IconButton onClick={() => onEdit(row)}>
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setCurrentSelectedRow(row);
+                        handleClickOpen();
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                )}
+              </TableRow>
+            ),
+          )}
         </TableBody>
 
         <TableFooter>
