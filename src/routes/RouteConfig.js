@@ -5,7 +5,7 @@ import { addVendorsRoute, editVendorsRoute, vendorsRoute } from '../Features/Adm
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { dashboardRoute } from '../Features/Dashboard/route';
 import { homeRoute } from '../Features/Home';
-import { OrderListRoute } from '../Features/Vendor/route';
+import { MenuListRoute, OrderListRoute } from '../Features/Vendor/route';
 
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
@@ -40,7 +40,7 @@ const routeConfig = {
 
   officeBoy: [],
 
-  common: [],
+  common: [MenuListRoute],
 };
 
 export default routeConfig;

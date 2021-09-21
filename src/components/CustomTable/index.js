@@ -11,38 +11,53 @@ import {
   Paper,
 } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
 
+import { closeModal, openModal } from '../Modal/action';
 import AlertModal from '../Modal/inex';
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, TableCellContainer } from './style';
-export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
-  const content = 'Are you sure you want to delete ?';
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const [rowsData, setRowsData] = useState([...rows]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './Style';
 
+export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
+  const dispatch = useDispatch();
+
+  const [rowsData, setRowsData] = useState([...rows]);
+
+  const [page, setPage] = useState(0);
+
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage((event.target.value, 10));
+    setRowsPerPage(event.target.value, 10);
+
     setPage(0);
   };
+
+  const modalContentText = 'Are you sure to delete ?';
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
+
   const onRowDelete = () => {
     setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
+
     onDelete(currentSelectedRow);
+    dispatch(closeModal());
   };
+
+  const RowPerPage = (rowsPerPage, rowsData, page) => {
+    if (rowsPerPage > 0) {
+      return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    }
+
+    return rowsData;
+  };
+
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
-      {isEditDelete && <AlertModal content={content} handleClose={handleClose} onConfirm={onRowDelete} open={open} />}
+      {isEditDelete && <AlertModal content={modalContentText} onConfirm={onRowDelete} />}
+
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
@@ -51,34 +66,36 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
             ))}
           </TableRow>
         </CustomTableHead>
+
         <TableBody>
-          {(rowsPerPage > 0 ? rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rowsData).map(
-            (row) => (
-              <TableRow key={row.name}>
-                {Object.keys(row).map((data, index) => (
-                  <TableCellContainer key={index} cellwidth={cellWidth}>
-                    {row[data]}
-                  </TableCellContainer>
-                ))}
-                {isEditDelete ? (
-                  <TableCell>
-                    <IconButton onClick={() => onEdit(row)}>
-                      <Edit />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        setCurrentSelectedRow(row);
-                        handleClickOpen();
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                ) : null}
-              </TableRow>
-            ),
-          )}
+          {RowPerPage(rowsPerPage, rowsData, page).map((row) => (
+            <TableRow key={row.name}>
+              {Object.keys(row).map((data, index) => (
+                <TableCell key={index} cellwidth={cellWidth}>
+                  {row[data]}
+                </TableCell>
+              ))}
+
+              {isEditDelete && (
+                <TableCell>
+                  <IconButton onClick={() => onEdit(row)}>
+                    <Edit />
+                  </IconButton>
+
+                  <IconButton
+                    onClick={() => {
+                      setCurrentSelectedRow(row);
+                      dispatch(openModal());
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              )}
+            </TableRow>
+          ))}
         </TableBody>
+
         <TableFooter>
           <TableRow>
             <TablePagination
