@@ -12,7 +12,7 @@ import { MenuListRoute } from '../Features/Vendor/route';
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
 
-  orderPlacer: [dashboardRoute, OrderListRoute],
+  orderPlacer: [dashboardRoute, MenuListRoute, OrderListRoute],
 
   admin: [
     orderHistorydRoute,

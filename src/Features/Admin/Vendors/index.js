@@ -37,6 +37,7 @@ function VendorList() {
         isEditDelete
         onDelete={onDelete}
         onEdit={onEdit}
+        padding="5px 11px"
         rows={vendorList}
         tablewidth="90%"
       />

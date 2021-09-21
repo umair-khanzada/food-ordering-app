@@ -16,7 +16,7 @@ import DeleteModal from '../DeleteModal';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 
-export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
+export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete, padding }) {
   const [toggleModal, setToggleModal] = React.useState(false);
 
   const toggleDeleteModel = () => {
@@ -55,7 +55,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
   };
 
   return (
-    <CustomTableContainer component={Paper} tablewidth={tablewidth}>
+    <CustomTableContainer component={Paper} padding={padding} tablewidth={tablewidth}>
       {isEditDelete && <DeleteModal handleClose={toggleDeleteModel} onRowDelete={onRowDelete} open={toggleModal} />}
 
       <Table aria-label="custom pagination table">
