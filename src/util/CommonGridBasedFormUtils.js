@@ -20,10 +20,12 @@ export const fieldChangeHandler = (prev, value, index) => {
   const prevForm = [...prev];
   const currentTextField = prevForm[index];
 
+  currentTextField.value = value;
+
   if (currentTextField.getValidation) {
     const getValidationError = currentTextField.getValidation(currentTextField.value);
     currentTextField.errorMessage = getValidationError;
   }
-  currentTextField.value = value;
+
   return prevForm;
 };
