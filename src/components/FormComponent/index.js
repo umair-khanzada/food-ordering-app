@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { Collapse } from '@material-ui/core';
-import { useSelector } from 'react-redux';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
@@ -19,6 +18,7 @@ import {
   NavTitle,
   NisumText,
   NisumTextColor,
+  ErrorRespose,
 } from './styles';
 
 const FormComponent = ({
@@ -31,11 +31,6 @@ const FormComponent = ({
   changeHandler,
   responseError,
 }) => {
-  const message = useSelector((state) => {
-    console.log('state message', state.responseMessage.message);
-    return state.responseMessage.message;
-  });
-  console.log('message', message);
   const [checked, setChecked] = useState(false);
   useEffect(() => {
     setChecked(true);
@@ -53,6 +48,7 @@ const FormComponent = ({
             <Collapse in={checked} timeout={1000}>
               <Form elevation={10}>
                 <FormHeading>{formTitle}</FormHeading>
+                <ErrorRespose>{responseError}</ErrorRespose>
                 {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
                   <InputBox key={name + '-' + i} className="inputFields">
                     <BasicTextFields
@@ -80,12 +76,12 @@ const FormComponent = ({
                     />
                   </div>
                 ))}
+
                 <BasicLink>
                   <Label to={navigationPath}>{label}</Label>
 
                   <ForgotPassword to="/forget-password">{forgotPassword}</ForgotPassword>
                 </BasicLink>
-                <Error>{responseError}</Error>
               </Form>
             </Collapse>
           </GridItem>
