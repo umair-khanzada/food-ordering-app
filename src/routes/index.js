@@ -35,51 +35,49 @@ export default function BaseRouter() {
   };
 
   return (
-    <>
-      <Switch>
-        {routeConfig.auth.map((route, index) => {
-          return getAuthenticatedRoute(route, index);
+    <Switch>
+      {routeConfig.auth.map((route, index) => {
+        return getAuthenticatedRoute(route, index);
+      })}
+      {isLoggedIn && role === user
+        ? routeConfig.customer.map((route, index) => {
+            return <Route key={index} component={() => route.component()} exact path={route.path} />;
+          })
+        : null}
+      {isLoggedIn &&
+        routeConfig.common.map((route, index) => {
+          return <Route key={index} component={() => route.component()} exact path={route.path} />;
         })}
-        {isLoggedIn && role === user
-          ? routeConfig.customer.map((route, index) => {
-              return <Route key={index} component={() => route.component()} exact path={route.path} />;
-            })
-          : null}
-        {isLoggedIn &&
-          routeConfig.common.map((route, index) => {
-            return <Route key={index} component={() => route.component()} exact path={route.path} />;
-          })}
-        {isLoggedIn &&
-          role === vendor &&
-          routeConfig.vendor.map((route, index) => {
-            return <Route key={index} component={() => route.component()} exact path={route.path} />;
-          })}
-        {isLoggedIn &&
-          role === admin &&
-          routeConfig.admin.map((route, index) => {
-            return <Route key={index} component={() => route.component()} exact path={route.path} />;
-          })}
-        {isLoggedIn && role === admin && (
-          <Route>
-            <Redirect to="/orderhistory" />
-          </Route>
-        )}
-        {isLoggedIn && role === vendor && (
-          <Route>
-            <Redirect to="/menu" />
-          </Route>
-        )}
-        {isLoggedIn && role === user && (
-          <Route>
-            <Redirect to="/dashboard" />
-          </Route>
-        )}
-        {!isLoggedIn && (
-          <Route>
-            <Redirect to="/login" />
-          </Route>
-        )}
-      </Switch>
-    </>
+      {isLoggedIn &&
+        role === vendor &&
+        routeConfig.vendor.map((route, index) => {
+          return <Route key={index} component={() => route.component()} exact path={route.path} />;
+        })}
+      {isLoggedIn &&
+        role === admin &&
+        routeConfig.admin.map((route, index) => {
+          return <Route key={index} component={() => route.component()} exact path={route.path} />;
+        })}
+      {isLoggedIn && role === admin && (
+        <Route>
+          <Redirect to="/orderhistory" />
+        </Route>
+      )}
+      {isLoggedIn && role === vendor && (
+        <Route>
+          <Redirect to="/menu" />
+        </Route>
+      )}
+      {isLoggedIn && role === user && (
+        <Route>
+          <Redirect to="/dashboard" />
+        </Route>
+      )}
+      {!isLoggedIn && (
+        <Route>
+          <Redirect to="/login" />
+        </Route>
+      )}
+    </Switch>
   );
 }
