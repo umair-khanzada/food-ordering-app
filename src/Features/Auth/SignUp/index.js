@@ -4,7 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex, contactRegex } from '../../../scripts/constants';
-import { formMessage, signup } from '../actions';
+import { setFormMessage, signup } from '../actions';
 
 function SignUpForm() {
   const { message, status } = useSelector((state) => {
@@ -13,7 +13,7 @@ function SignUpForm() {
   }, shallowEqual);
   useEffect(() => {
     return () => {
-      dispatch(formMessage({ message: '', status: 0 }));
+      dispatch(setFormMessage({ message: '', status: 0 }));
     };
   }, []);
   const validateOnSubmit = () => {

@@ -4,7 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
-import { formMessage, login } from '../actions';
+import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
   const { message, status } = useSelector((state) => {
@@ -103,7 +103,7 @@ function LoginForm() {
   };
   useEffect(() => {
     return () => {
-      dispatch(formMessage({ message: '', status: 0 }));
+      dispatch(setFormMessage({ message: '', status: 0 }));
     };
   }, []);
 

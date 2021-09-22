@@ -4,7 +4,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { dispatch } from 'rxjs/internal/observable/pairs';
 
 import FormComponent from '../../../components/FormComponent';
-import { formMessage } from '../actions';
+import { setFormMessage } from '../actions';
 
 function ResetPassword() {
   const { message, status } = useSelector((state) => {
@@ -13,7 +13,7 @@ function ResetPassword() {
   }, shallowEqual);
   useEffect(() => {
     return () => {
-      dispatch(formMessage({ message: '', status: 0 }));
+      dispatch(setFormMessage({ message: '', status: 0 }));
     };
   }, []);
   let newPassword = '';

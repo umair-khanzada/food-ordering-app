@@ -4,7 +4,7 @@ import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
-import { loginSuccess, logoutSuccess, formMessage } from './actions';
+import { loginSuccess, logoutSuccess, setFormMessage } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
@@ -34,7 +34,7 @@ export const loginEpic = (action$) =>
             status,
           } = err;
 
-          return of(formMessage({ message, status }));
+          return of(setFormMessage({ message, status }));
         }),
       );
     }),
@@ -69,7 +69,7 @@ export const signUpEpic = (action$) =>
             status,
           } = err;
 
-          return of(formMessage({ message, status }));
+          return of(setFormMessage({ message, status }));
         }),
       );
     }),
@@ -89,7 +89,7 @@ export const forgotPasswordEpic = (action$) =>
             response: { message },
             status,
           } = res;
-          return of(formMessage({ message, status }));
+          return of(setFormMessage({ message, status }));
         }),
         catchError((err) => {
           const {
@@ -97,7 +97,7 @@ export const forgotPasswordEpic = (action$) =>
             status,
           } = err;
 
-          return of(formMessage({ message, status }));
+          return of(setFormMessage({ message, status }));
         }),
       );
     }),

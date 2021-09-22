@@ -18,6 +18,6 @@ export const loginError = () => ({ type: LOGIN_ERROR });
 export const forgotPassword = (data) => ({ type: FORGOT_PASSWORD, payload: data });
 
 export const signup = (data) => ({ type: SIGNUP, payload: data });
-export const formMessage = (data) => ({ type: MESSAGE, payload: data });
+export const setFormMessage = (data) => ({ type: MESSAGE, payload: data });
 
 export const logoutSuccess = () => ({ type: LOGOUT_SUCCESS });

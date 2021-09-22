@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
-import { forgotPassword, formMessage } from '../actions';
+import { forgotPassword, setFormMessage } from '../actions';
 
 function ForgetPassword() {
   const history = useHistory();
@@ -16,7 +16,7 @@ function ForgetPassword() {
   }, shallowEqual);
   useEffect(() => {
     return () => {
-      dispatch(formMessage({ message: '', status: 0 }));
+      dispatch(setFormMessage({ message: '', status: 0 }));
     };
   }, []);
   const validateOnSubmit = () => {

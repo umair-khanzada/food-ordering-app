@@ -41,11 +41,10 @@ export const responseMessage = (state = { ...initialResponseMessageState }, acti
     case MESSAGE:
       // eslint-disable-next-line no-case-declarations
       const { message, status } = action.payload;
-      console.log('fetch ');
+
       return { ...state, message, status };
 
     default:
-      console.log('default');
       return state;
   }
 };
