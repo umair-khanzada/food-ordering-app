@@ -10,6 +10,7 @@ export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
     mergeMap(({ payload }) => {
+      console.log('payload', payload);
       return ajax({
         url: 'http://localhost:4000/v1/auth/login',
         method: 'POST',

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
+import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex, contactRegex } from '../../../scripts/constants';
 import { signup } from '../actions';
-
 function SignUpForm() {
+  const mutation = useMutation((newTodo) => fetch('/todos', newTodo));
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = signUpForm.map((textField) => {

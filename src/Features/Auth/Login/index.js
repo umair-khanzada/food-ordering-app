@@ -1,10 +1,48 @@
 import React, { useState } from 'react';
 
+import axios from 'axios';
+import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
-import { login } from '../actions';
+import { loginSuccess, loginError } from '../actions';
+
+async function loginUser(userData) {
+  console.log('userdata', userData);
+  // eslint-disable-next-line no-return-await
+  // try {
+  //   return await (
+  //     await fetch('http://localhost:4000/v1/auth/login', {
+  //       method: 'POST',
+  //       body: JSON.stringify(userData),
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json',
+  //       },
+  //     })
+  //       .then()
+  //       .catch()
+  //   ).json();
+  // } catch (err) {
+  //   throw new Error(err);
+  // }
+  //
+  // const res = await fetch('http://localhost:4000/v1/auth/login', {
+  //   method: 'POST',
+  //   body: JSON.stringify(userData),
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json',
+  //   },
+  // });
+  // if (!res.ok) {
+  //   throw new Error('error has been occured');
+  // }
+  // return res.json();
+  const res = await axios.post('http://localhost:4000/v1/auth/login', userData);
+  return res;
+}
 
 function LoginForm() {
   const validateOnSubmit = () => {
@@ -36,7 +74,8 @@ function LoginForm() {
         userData[name] = value;
       });
 
-      dispatch(login(userData));
+      // dispatch(login(userData));
+      mutate(userData);
     }
   };
   const textFiledChangeHandler = (e, index) => {
@@ -97,6 +136,29 @@ function LoginForm() {
     ],
   };
 
+  const { mutate, mutateAsync, isLoading, error } = useMutation(loginUser, {
+    onSuccess: (response) => {
+      // console.log('done user');
+      const {
+        data: {
+          user: { name },
+          tokens: { refresh, access },
+        },
+      } = response;
+      dispatch(
+        loginSuccess({
+          name,
+          refreshToken: refresh,
+          accessToken: access,
+        }),
+      );
+    },
+    onError: () => {
+      dispatch(loginError());
+    },
+  });
+  console.log('loading', isLoading);
+  console.log('error', error);
   return (
     <div>
       <FormComponent
