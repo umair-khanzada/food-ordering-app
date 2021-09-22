@@ -49,36 +49,36 @@ export default function BaseRouter() {
           routeConfig.common.map((route, index) => {
             return <Route key={index} component={() => route.component()} exact path={route.path} />;
           })}
-        {isLoggedIn && role === vendor
-          ? routeConfig.vendor.map((route, index) => {
-              return <Route key={index} component={() => route.component()} exact path={route.path} />;
-            })
-          : null}
-        {isLoggedIn && role === admin
-          ? routeConfig.admin.map((route, index) => {
-              return <Route key={index} component={() => route.component()} exact path={route.path} />;
-            })
-          : null}
-        {isLoggedIn && role === admin ? (
+        {isLoggedIn &&
+          role === vendor &&
+          routeConfig.vendor.map((route, index) => {
+            return <Route key={index} component={() => route.component()} exact path={route.path} />;
+          })}
+        {isLoggedIn &&
+          role === admin &&
+          routeConfig.admin.map((route, index) => {
+            return <Route key={index} component={() => route.component()} exact path={route.path} />;
+          })}
+        {isLoggedIn && role === admin && (
           <Route>
             <Redirect to="/orderhistory" />
           </Route>
-        ) : null}
-        {isLoggedIn && role === vendor ? (
+        )}
+        {isLoggedIn && role === vendor && (
           <Route>
             <Redirect to="/menu" />
           </Route>
-        ) : null}
-        {isLoggedIn && role === Roles.user ? (
+        )}
+        {isLoggedIn && role === Roles.user && (
           <Route>
             <Redirect to="/dashboard" />
           </Route>
-        ) : null}
-        {!isLoggedIn ? (
+        )}
+        {!isLoggedIn && (
           <Route>
             <Redirect to="/login" />
           </Route>
-        ) : null}
+        )}
       </Switch>
     </>
   );
