@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import { vendorList } from '../../../Mock/VendorList';
 import RouteNames from '../../../routes/RouteNames';
+import { fetchVendors } from './actions';
 import { VendorTitleContainer, VendorTitle } from './style';
 
 function VendorList() {
+  const dispatch = useDispatch();
+  const [vendors, setVendors] = useState('');
+  const getVendors = (response) => {
+    console.log(response);
+    setVendors(response);
+  };
+  useEffect(() => {
+    dispatch(fetchVendors(getVendors));
+  }, []);
   const history = useHistory();
   const { editVendor, addVendor } = RouteNames;
 
