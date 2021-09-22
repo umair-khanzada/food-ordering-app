@@ -17,12 +17,13 @@ export const loginEpic = (action$) =>
       }).pipe(
         mergeMap((res) => {
           const {
-            user: { name },
+            user: { name, role },
             tokens: { refresh, access },
           } = res.response;
           return of(
             loginSuccess({
               name,
+              role,
               refreshToken: refresh,
               accessToken: access,
             }),
