@@ -68,7 +68,14 @@ function Menu() {
           </ButtonsContainer>
 
           <div style={{ padding: '20px', marginTop: '10px' }}>
-            <CustomTable header={header} isEditDelete onEdit={onEdit} rows={MenuList} tablewidth="90%" />
+            <CustomTable
+              header={header}
+              isEditDelete
+              onEdit={onEdit}
+              padding="5px 11px"
+              rows={MenuList}
+              tablewidth="90%"
+            />
           </div>
         </Grid>
       </Grid>

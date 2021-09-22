@@ -60,7 +60,7 @@
         }
       }
     ],
-    "linebreak-style": ["warn", "unix"],
+    "linebreak-style": ["warn", "windows"],
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "semi": ["error", "always"],
     "semi-spacing": "error",

@@ -2,59 +2,87 @@
   "users": [
     {
       "id": 1,
-      "email": "example@example.com",
-      "password": "something",
-      "role": "Office_Boy"
+      "email": "admin@gmail.com",
+      "password": "12345678",
+      "role": "Admin"
     },
     {
-      "email": "ex@ex.com",
-      "password": "ex",
+      "email": "vendor@gmail.com",
+      "password": "12345678",
       "id": 2,
-      "role": "Order_Placer"
+      "role": "Vendor"
+    },
+    {
+      "email": "user@gmail.com",
+      "password": "12345678",
+      "id": 2,
+      "role": "User"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "name": "Adnan",
+      "contact": "12345678",
+      "items": "Karahi, Daal",
+      "price": "30"
+    },
+    {
+      "id": 2,
+      "name": "Yousuf",
+      "contact": "12345678",
+      "items": "Karahi, Daal",
+      "price": "30"
+    },
+    {
+      "id": 3,
+      "name": "Dilawer",
+      "contact": "12345678",
+      "items": "Karahi, Daal",
+      "price": "30"
     }
   ],
   "vendors": [
     {
-      "id": 1,
-      "name": "Yousuf",
-      "timing": "12:00",
+      "id": "1",
+      "name": "Adnan",
+      "email": "adnan@gmail.com",
+      "contact": "13131232",
+      "timing": "1:40",
       "building": "main"
     },
     {
-      "id": 2,
-      "name": "Arif",
-      "timing": "12:00",
-      "building": "qasre sheeren"
-    },
-    {
-      "name": "asva",
-      "timing": "12:00",
-      "building": "main",
-      "id": 3
+      "id": "2",
+      "name": "Yousuf",
+      "email": "yousuf@gmail.com",
+      "contact": "13131232",
+      "timing": "1:40",
+      "building": "main"
     }
   ],
-  "menus": [
+  "usersList": [
     {
-      "id": 1,
-      "name": "daal",
-      "price": "80",
-      "restaurant": "abc"
+      "id": "1",
+      "name": "Adnan",
+      "email": "adnan@gmail.com",
+      "contact": "13131232"
     },
     {
-      "id": 2,
-      "name": "roti",
-      "price": "20",
-      "restaurant": "xyz"
+      "id": "2",
+      "name": "Yousuf",
+      "email": "yousuf@gmail.com",
+      "contact": "13131232"
     }
   ],
-  "restaurants": [
+  "categories": [
     {
-      "id": 1,
-      "name": "abc"
+      "id": "1",
+      "category": "greavy"
     },
     {
-      "id": 2,
-      "name": "asdasd"
+      "id": "2",
+      "category": "bread"
     }
   ]
+  
 }
