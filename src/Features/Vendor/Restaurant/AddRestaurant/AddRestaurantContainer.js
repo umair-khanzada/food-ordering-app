@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
+import { addRestaurant } from '../../action';
 const AddRestaurant = () => {
+  const dispatch = useDispatch();
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const [restaurant, setRestaurant] = useState('');
@@ -26,7 +30,16 @@ const AddRestaurant = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    // isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    if (isValid) {
+      setOnSaveSuccess(true);
+      const name = fields.map(({ value }, index) => value);
+      dispatch(
+        addRestaurant({
+          name: name[0],
+        }),
+      );
+    }
   };
 
   const buttons = {

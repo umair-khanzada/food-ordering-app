@@ -10,7 +10,7 @@ export const fetchUsersEpic = (action$, state) =>
     ofType(FETCH_USERS),
     mergeMap(({ payload }) => {
       return ajax({
-        url: 'http://localhost:5000/usersList',
+        url: 'http://localhost:4000/usersList',
         method: 'GET',
       }).pipe(
         mergeMap((res) => {

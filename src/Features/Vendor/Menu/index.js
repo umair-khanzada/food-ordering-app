@@ -32,7 +32,7 @@ function Menu() {
     history.push('/addmenu');
   }
   function showAddRestraunt() {
-    history.push('/restraunt');
+    history.push('/restaurant');
   }
 
   return (

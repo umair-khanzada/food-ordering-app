@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import AddEditForm from '../../../../components/AddEditForm';
-import { PRICE, SELECT, TEXT_FIELD } from '../../../../components/AddEditForm/FieldTypes';
-import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
+import AddEditForm from '../../../../components/CommonGridBasedForm';
+import { PRICE, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 
 const EditMenu = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);

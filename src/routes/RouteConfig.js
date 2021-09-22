@@ -5,7 +5,14 @@ import { addVendorsRoute, editVendorsRoute, vendorsRoute } from '../Features/Adm
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { customerOrderHistoryRoute, dashboardRoute, profileRoute } from '../Features/Customer/route';
 import { homeRoute } from '../Features/Home';
-import { CategoryListRoute, MenuListRoute, OrderListRoute } from '../Features/Vendor/route';
+import {
+  CategoryListRoute,
+  MenuListRoute,
+  OrderListRoute,
+  RestaurantRoute,
+  AddMenuRoute,
+  EditMenuRoute,
+} from '../Features/Vendor/route';
 
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
@@ -36,8 +43,8 @@ const routeConfig = {
     editCategoriesRoute,
   ],
 
-  customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute],
-  vendor: [OrderListRoute, MenuListRoute, CategoryListRoute],
+  customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute, AddMenuRoute, EditMenuRoute, RestaurantRoute],
+  vendor: [OrderListRoute, MenuListRoute, CategoryListRoute, RestaurantRoute],
   officeBoy: [],
 
   common: [MenuListRoute],

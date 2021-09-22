@@ -5,6 +5,7 @@ import { fetchOrdersEpic } from '../../Features/Admin/OrderHistory/epics';
 import { fetchUsersEpic } from '../../Features/Admin/Users/epics';
 import { fetchVendorsEpic } from '../../Features/Admin/Vendors/epics';
 import { loginEpic, logoutEpic, signUpEpic, forgotPasswordEpic } from '../../Features/Auth/epics';
+import addRestaurantEpic from '../../Features/Vendor/epic';
 
 const rootEpic = combineEpics(
   loginEpic,
@@ -15,6 +16,7 @@ const rootEpic = combineEpics(
   fetchVendorsEpic,
   fetchUsersEpic,
   fetchCategoriesEpic,
+  addRestaurantEpic,
 );
 
 export default rootEpic;

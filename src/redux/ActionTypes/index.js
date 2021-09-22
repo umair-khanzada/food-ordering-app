@@ -11,3 +11,4 @@ export const MESSAGE = 'MESSAGE';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const OPENMODAL = 'OPENMODAL';
 export const CLOSEMODAL = 'CLOSEMODAL';
+export const ADD_RESTAURANT = 'ADD_RESTAURANT';
