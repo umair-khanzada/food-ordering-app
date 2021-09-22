@@ -69,7 +69,7 @@ export default function BaseRouter() {
             <Redirect to="/menu" />
           </Route>
         )}
-        {isLoggedIn && role === Roles.user && (
+        {isLoggedIn && role === user && (
           <Route>
             <Redirect to="/dashboard" />
           </Route>
