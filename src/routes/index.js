@@ -20,7 +20,7 @@ export default function BaseRouter() {
     };
   }, shallowEqual);
 
-  const { vendor, admin } = Roles;
+  const { vendor, admin, user } = Roles;
 
   const getAuthenticatedRoute = (route, index) => {
     if (isLoggedIn && route.permissions === isProtectedRoute) {
@@ -40,15 +40,15 @@ export default function BaseRouter() {
         {routeConfig.auth.map((route, index) => {
           return getAuthenticatedRoute(route, index);
         })}
-        {isLoggedIn && role === Roles.user
+        {isLoggedIn && role === user
           ? routeConfig.customer.map((route, index) => {
               return <Route key={index} component={() => route.component()} exact path={route.path} />;
             })
           : null}
-        {/* {isLoggedIn &&
+        {isLoggedIn &&
           routeConfig.common.map((route, index) => {
             return <Route key={index} component={() => route.component()} exact path={route.path} />;
-          })} */}
+          })}
         {isLoggedIn && role === vendor
           ? routeConfig.vendor.map((route, index) => {
               return <Route key={index} component={() => route.component()} exact path={route.path} />;

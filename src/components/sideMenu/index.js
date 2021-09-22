@@ -60,7 +60,7 @@ function SideMenu() {
     };
   });
 
-  const { vendor, admin } = Roles;
+  const { vendor, admin, user } = Roles;
   const classes = useStyles();
   const { orderHistory, users, vendors, categories, categoryList } = RouteNames;
   const history = useHistory();
@@ -115,7 +115,7 @@ function SideMenu() {
             </>
           ) : null}
 
-          {role === Roles.user ? (
+          {role === user ? (
             <>
               {' '}
               <p className={list}>
