@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Collapse } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
@@ -30,7 +31,11 @@ const FormComponent = ({
   changeHandler,
   responseError,
 }) => {
-  const paperStyle = { padding: 20, height: '100%', width: 400, opacity: 0.9 };
+  const message = useSelector((state) => {
+    console.log('state message', state.responseMessage.message);
+    return state.responseMessage.message;
+  });
+  console.log('message', message);
   const [checked, setChecked] = useState(false);
   useEffect(() => {
     setChecked(true);

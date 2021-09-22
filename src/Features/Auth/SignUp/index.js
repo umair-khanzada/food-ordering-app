@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex, contactRegex } from '../../../scripts/constants';
-import { signup } from '../actions';
+import { formMessage, signup } from '../actions';
 
 function SignUpForm() {
+  const { message, status } = useSelector((state) => {
+    const { message, status } = state.responseMessage;
+    return { message, status };
+  }, shallowEqual);
+  useEffect(() => {
+    return () => {
+      dispatch(formMessage({ message: '', status: 0 }));
+    };
+  }, []);
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = signUpForm.map((textField) => {
@@ -141,6 +150,7 @@ function SignUpForm() {
         inputFields={signUpForm}
         label="Login?"
         navigationPath="/login"
+        responseError={message}
       />
     </div>
   );
