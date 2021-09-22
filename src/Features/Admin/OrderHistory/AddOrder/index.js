@@ -2,94 +2,64 @@ import React, { useState } from 'react';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { DATE, MULTI_SELECT, PRICE, SELECT } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 
 const AddOrder = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
-  const validateOnSubmit = () => {
-    let isValid = true;
-    const ValidateArray = fields.map((field) => {
-      if (
-        field.value === '' ||
-        field.value === undefined ||
-        field.value === null ||
-        (field.value.constructor.name == 'Array' && field.value.length === 0)
-      ) {
-        isValid = false;
-        field.errorMessage = field.label + ' field cannot be empty';
-        field.isValid = false;
-
-        return field;
-      }
-      field.isValid = true;
-      field.errorMessage = '';
-
-      !isValid ? null : (isValid = field.isValid);
-      return field;
-    });
-    setFields(ValidateArray);
-    return isValid;
-  };
-
-  const [vendor, setVendor] = useState([]);
-  const [menus, setMenus] = useState([]);
-  const [price, setPrice] = useState(30);
-  const [date, setDate] = useState();
   const [fields, setFields] = useState([
     {
       type: SELECT,
       label: 'Vendor',
       values: ['Yousuf', 'Dilawer'],
-      value: vendor,
-      isValid: true,
+      value: [],
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setVendor(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
       type: MULTI_SELECT,
       label: 'Menus',
       values: ['Karhai', 'Biryani', 'Salad'],
-      value: menus,
-      isValid: true,
+      value: [],
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setMenus(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
       type: PRICE,
       label: 'Price',
-      value: price,
-      isValid: true,
+      value: '',
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setPrice(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
       type: DATE,
       label: 'Date',
-      value: date,
-      isValid: true,
+      value: '',
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setDate(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
   ]);
 
   const saveHandler = () => {
-    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    const { validateArray, isValid } = validateOnSubmit(fields);
+    setFields(validateArray);
+    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
   };
 
   const buttons = {

@@ -1,7 +1,6 @@
-/* eslint-disable indent */
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import LoginContainer from '../Features/Auth/Login/LoginContainer';
@@ -17,7 +16,7 @@ export default function BaseRouter() {
     return {
       isLoggedIn,
     };
-  });
+  }, shallowEqual);
 
   const getAuthenticatedRoute = (route, index) => {
     if (isLoggedIn && route.permissions === isProtectedRoute) {
@@ -45,7 +44,7 @@ export default function BaseRouter() {
         {RouteConfig.common.map((route, index) => {
           return <Route key={index} component={() => route.component()} exact path={route.path} />;
         })}
-        {isLoggedIn &&
+        {!isLoggedIn &&
           RouteConfig.admin.map((route, index) => {
             return <Route key={index} component={() => route.component()} exact path={route.path} />;
           })}

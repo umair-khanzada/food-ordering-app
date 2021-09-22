@@ -10,8 +10,8 @@ import RouteNames from '../../routes/RouteNames';
 function SideMenu() {
   const useStyles = makeStyles(() => ({
     drawerPaper: {
-      position: 'static',
-      height: '88vh',
+      position: 'relative',
+      // height: '88vh',
       backgroundColor: 'white',
     },
     navigation: {
@@ -34,17 +34,24 @@ function SideMenu() {
         color: 'white',
       },
     },
+    mainDiv: {
+      width: '100%',
+      height: '100%',
+    },
     icon: {
       marginRight: '10px',
+    },
+    drawer: {
+      height: '100%',
     },
   }));
   const classes = useStyles();
   const { orderHistory, users, vendors, categories } = RouteNames;
   const history = useHistory();
 
-  const { drawer, drawerPaper, navigation, list, link, icon } = classes;
+  const { drawer, drawerPaper, navigation, list, link, icon, mainDiv } = classes;
   return (
-    <div style={{ width: '100%' }}>
+    <div className={mainDiv}>
       <Drawer
         anchor="left"
         classes={{

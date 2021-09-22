@@ -10,7 +10,6 @@ import { CategoriesTitleContainer, CategoriesTitle } from './style';
 function CategoryList() {
   const { addCategory, editCategory } = RouteNames;
   const history = useHistory();
-  ``;
   const onEdit = (row) => {
     history.push({
       pathname: editCategory,
