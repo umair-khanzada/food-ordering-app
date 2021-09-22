@@ -2,22 +2,21 @@ import React, { useState } from 'react';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
+import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 
 const EditCategory = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const [category, setCategory] = useState('');
   const [fields, setFields] = useState([
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
       label: 'Category Name',
       variant: 'standard',
-      value: category,
+      value: '',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        setCategory(value);
-        fields[index].value = value;
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
   ]);

@@ -1,31 +1,25 @@
 import React, { useState } from 'react';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
-import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { MULTI_SELECT, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
-import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
+import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 
 const EditVendor = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
-  const [role, setRole] = useState([]);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [contact, setContact] = useState('');
-  const [timing, setTiming] = useState('');
-  const [building, setBuilding] = useState('');
   const [fields, setFields] = useState([
     {
       type: SELECT,
       label: 'Role',
       values: ['User', 'Vendor'],
-      value: role,
+      value: [],
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
-        setRole(value);
-        fields[index].value = value;
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
@@ -33,19 +27,17 @@ const EditVendor = () => {
       textFieldType: 'email',
       label: 'Email',
       variant: 'standard',
-      value: email,
+      value: '',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        setEmail(value);
-        fields[index].value = value;
-        fields[index].getValidation(value, index);
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
-      getValidation: (value, index) => {
+      getValidation: (value) => {
         if (!emailRegex.test(value)) {
-          fields[index].errorMessage = 'Email type is not valid';
-        } else {
-          fields[index].errorMessage = '';
+          return 'Email type is not valid';
         }
+        return '';
       },
     },
     {
@@ -53,19 +45,17 @@ const EditVendor = () => {
       textFieldType: 'password',
       label: 'Password',
       variant: 'standard',
-      value: password,
+      value: '',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        setPassword(value);
-        fields[index].value = value;
-        fields[index].getValidation(value, index);
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
-      getValidation: (value, index) => {
+      getValidation: (value) => {
         if (value.length < 8) {
-          fields[index].errorMessage = 'Password must be 8 characters long';
-        } else {
-          fields[index].errorMessage = '';
+          return 'Password must be 8 characters long';
         }
+        return '';
       },
     },
     {
@@ -73,19 +63,17 @@ const EditVendor = () => {
       textFieldType: 'text',
       label: 'Contact',
       variant: 'standard',
-      value: contact,
+      value: '',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        setContact(value);
-        fields[index].value = value;
-        fields[index].getValidation(value, index);
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
-      getValidation: (value, index) => {
+      getValidation: (value) => {
         if (!contactRegex.test(value)) {
-          fields[index].errorMessage = 'Contact length or Type is not valid';
-        } else {
-          fields[index].errorMessage = '';
+          return 'Contact length or Type is not valid';
         }
+        return '';
       },
     },
     {
@@ -93,23 +81,22 @@ const EditVendor = () => {
       textFieldType: 'text',
       label: 'Timing',
       variant: 'standard',
-      value: timing,
+      value: '',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        setTiming(value);
-        fields[index].value = value;
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
-      type: TEXT_FIELD,
-      textFieldType: 'text',
+      type: MULTI_SELECT,
       label: 'Building',
-      variant: 'standard',
-      value: building,
+      values: ['Main', 'Cherry', 'Qasre Sheeren'],
+      value: [],
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        setBuilding(value);
-        fields[index].value = value;
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
   ]);

@@ -1,1 +1,5 @@
-export const NISUM_BLUE = '#00b3e3';
+const Color = {
+  lightBlue: '#00b3e3',
+};
+
+export default Color;
