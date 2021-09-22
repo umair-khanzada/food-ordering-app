@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
+import Loader from '../../../components/Loader';
 import { ordersHistoryList } from '../../../Mock/OrdersHistoryList';
 import RouteNames from '../../../routes/RouteNames';
 import { OrdersHistoryTitleContainer, OrdersHistoryTitle } from './style';
@@ -24,6 +26,13 @@ function OrderHistory() {
 
   const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date', 'Edit'];
 
+  const isLoading = useSelector((state) => state.loaderReducer.isLoading);
+
+  useEffect(() => {
+    console.log(isLoading);
+  }, []);
+
+  if (isLoading) return <Loader />;
   return (
     <>
       <OrdersHistoryTitleContainer>

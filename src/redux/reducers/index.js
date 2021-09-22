@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
+import { loaderReducer } from '../../components/Loader/ducks';
 import { forgotPassword, responseMessage, authReducer } from '../../Features/Auth/ducks';
 
 const persistConfig = {
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   forgotPassword,
   responseMessage,
   authReducer,
+  loaderReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
