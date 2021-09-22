@@ -11,3 +11,6 @@ export const MESSAGE = 'MESSAGE';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const OPENMODAL = 'OPENMODAL';
 export const CLOSEMODAL = 'CLOSEMODAL';
+export const ADD_CATEGORY = 'ADD_CATEGORY';
+export const EDIT_CATEGORY = 'EDIT_CATEGORY0';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
