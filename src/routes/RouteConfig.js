@@ -5,12 +5,12 @@ import { addVendorsRoute, editVendorsRoute, vendorsRoute } from '../Features/Adm
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { dashboardRoute } from '../Features/Customer/Dashboard/route';
 import { homeRoute } from '../Features/Home';
-import { OrderListRoute } from '../Features/Vendor/route';
+import { MenuListRoute } from '../Features/Vendor/route';
 
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
 
-  orderPlacer: [dashboardRoute, OrderListRoute],
+  orderPlacer: [dashboardRoute],
 
   admin: [
     orderHistorydRoute,
@@ -40,7 +40,7 @@ const routeConfig = {
 
   officeBoy: [],
 
-  common: [],
+  common: [MenuListRoute],
 };
 
 export default routeConfig;
