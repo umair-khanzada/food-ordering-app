@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { LOGIN_SUCCESS, LOGIN_ERROR, FORGOT_PASSWORD, MESSAGE, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
 
 const initialAuthState = { isLoggedIn: '', accessToken: '', refreshToken: '', name: '', role: '' };
@@ -10,13 +11,15 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
       return { ...initialAuthState };
 
     case LOGIN_SUCCESS:
+      const { accessToken, refreshToken, name, role } = action.payload;
+
       return {
         ...state,
         isLoggedIn: true,
-        accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken,
-        name: action.payload.name,
-        role: action.payload.role,
+        accessToken,
+        refreshToken,
+        name,
+        role,
       };
 
     case LOGIN_ERROR:
