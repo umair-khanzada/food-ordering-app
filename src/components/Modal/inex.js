@@ -8,9 +8,7 @@ import { closeModal } from './action';
 import { ContentTextConatiner, DialogContainer } from './style';
 const AlertModal = ({ modalButtons, children }) => {
   const dispatch = useDispatch();
-  const toggleModal = useSelector(({ modalReducer }) => {
-    return modalReducer.isToggleModal;
-  });
+  const toggleModal = useSelector(({ modalReducer }) => modalReducer.isToggleModal);
 
   return (
     <DialogContainer>
