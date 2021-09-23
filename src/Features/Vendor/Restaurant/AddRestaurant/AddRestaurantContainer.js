@@ -30,15 +30,17 @@ const AddRestaurant = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    // isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+
     if (isValid) {
       setOnSaveSuccess(true);
-      const name = fields.map(({ value }, index) => value);
+      const name = fields.map(({ value }) => value);
       dispatch(
         addRestaurant({
           name: name[0],
         }),
       );
+    } else {
+      setOnSaveSuccess(false);
     }
   };
 

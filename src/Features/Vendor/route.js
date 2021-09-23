@@ -41,9 +41,3 @@ export const EditMenuRoute = {
   permissions: isPublicRoute,
   component: EditMenu,
 };
-
-export const CategoryListRoute = {
-  path: RouteNames.categoryList,
-  permissions: isPublicRoute,
-  component: CategoryList,
-};

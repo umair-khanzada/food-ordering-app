@@ -4,48 +4,42 @@ import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
 import { ADD_RESTAURANT } from '../../redux/ActionTypes';
-import { formMessage } from './action';
+import { formMessage } from '../Auth/actions';
 const addRestaurantEpic = (action$, state) =>
   action$.pipe(
     ofType(ADD_RESTAURANT),
     mergeMap(({ payload }) => {
-      console.log('payload', payload);
-      //   const {
-      //     value: {
-      //       authReducer: { accessToken },
-      //     },
-      //   } = state;
-      //   const {
-      //     token: { token },
-      //   } = { token: accessToken };
-      //   console.log('token', token);
+      const {
+        value: {
+          authReducer: { accessToken },
+        },
+      } = state;
+      const {
+        token: { token },
+      } = { token: accessToken };
+
       return ajax({
         url: 'http://localhost:4000/v1/kitchens',
         method: 'POST',
         headers: {
-          Authorization:
-            'Bearer ' +
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTQxYTJkYjdhOGJkYjQzZDhlNTkzNWIiLCJpYXQiOjE2MzIzMzIxNDAsImV4cCI6MTYzNDkyNDE0MCwidHlwZSI6InJlZnJlc2gifQ.LuvRvrzT05zruMsLL7JH0VElWa3ffFD-J-5KvuRH4Zw',
+          Authorization: `Bearer ${token}`,
         },
         body: payload,
       }).pipe(
         mergeMap((res) => {
-          //   const {
-          //     response: { message },
-          //     status,
-          //   } = res;
+          const {
+            response: { message },
+            status,
+          } = res;
 
-          const { response } = res;
-          const { name, id } = response;
-
-          return of(formMessage({ name, id }));
+          return of(formMessage({ message, status }));
         }),
         catchError((err) => {
           const {
             response: { message },
             status,
           } = err;
-          console.log('failed');
+
           return of(formMessage({ message, status }));
         }),
       );

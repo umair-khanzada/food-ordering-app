@@ -10,7 +10,7 @@ export const fetchCategoriesEpic = (action$, state) =>
     ofType(FETCH_CATEGORIES),
     mergeMap(({ payload }) => {
       return ajax({
-        url: 'http://localhost:5000/categories',
+        url: 'http://localhost:4000/categories',
         method: 'GET',
       }).pipe(
         mergeMap((res) => {

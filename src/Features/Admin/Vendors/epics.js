@@ -10,7 +10,7 @@ export const fetchVendorsEpic = (action$, state) =>
     ofType(FETCH_VENDORS),
     mergeMap(({ payload }) => {
       return ajax({
-        url: 'http://localhost:5000/vendors',
+        url: 'http://localhost:4000/vendors',
         method: 'GET',
       }).pipe(
         mergeMap((res) => {
