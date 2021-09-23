@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { addCategory } from '../../actions';
 
 const AddCategory = () => {
+  const dispatch = useDispatch();
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const [fields, setFields] = useState([
@@ -25,7 +29,23 @@ const AddCategory = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    // isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+
+    if (isValid) {
+      setOnSaveSuccess(true);
+      const name = fields.map(({ value }, index) => value);
+      // console.log(name[0]);
+      dispatch(
+        addCategory({
+          name: name[0],
+          description: 'sjdhsj',
+          createdBy: '613617938f70a058b41406de',
+          kitchenId: '614b449d74d9603870512b13',
+        }),
+      );
+    } else {
+      setOnSaveSuccess(false);
+    }
   };
 
   const buttons = {
