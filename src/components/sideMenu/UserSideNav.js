@@ -5,7 +5,7 @@ import { History, Dashboard, Person } from '@material-ui/icons';
 import RouteNames from '../../routes/RouteNames';
 import { StyledIcon, StyledLink } from './style';
 const UserSideNav = () => {
-  const { orderHistory, dashboard, profile } = RouteNames;
+  const { orderHistories, dashboard, profile } = RouteNames;
 
   return (
     <>
@@ -23,7 +23,7 @@ const UserSideNav = () => {
         Profile
       </StyledLink>
 
-      <StyledLink to={orderHistory}>
+      <StyledLink to={orderHistories}>
         <StyledIcon>
           <History />
         </StyledIcon>
