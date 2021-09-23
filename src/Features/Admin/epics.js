@@ -24,9 +24,7 @@ export const createCategoryEpic = (action$, state) =>
         url: 'http://localhost:4000/v1/categories',
         method: 'POST',
         headers: {
-          Authorization:
-            'Bearer ' +
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTQxYTJkYjdhOGJkYjQzZDhlNTkzNWIiLCJpYXQiOjE2MzIzMjQ4ODIsImV4cCI6MTYzMjMyNjY4MiwidHlwZSI6ImFjY2VzcyJ9.ItS4zt03g71nzCRyMKPErH56TIYqTyV_cj-3VKeql-I',
+          Authorization: `Bearer ${token}`,
         },
         body: payload,
       }).pipe(
