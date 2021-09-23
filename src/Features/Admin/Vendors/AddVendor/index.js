@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { MULTI_SELECT, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
+import { createVendor } from '../actions';
 
 const AddVendor = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
+  const dispatch = useDispatch();
   const [role, setRole] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [contact, setContact] = useState('');
-  const [timing, setTiming] = useState('');
+  const [name, setName] = useState('');
   const [building, setBuilding] = useState([]);
   const [fields, setFields] = useState([
     {
@@ -50,6 +53,18 @@ const AddVendor = () => {
     },
     {
       type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: name,
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        setName(value);
+        fields[index].value = value;
+      },
+    },
+    {
+      type: TEXT_FIELD,
       textFieldType: 'password',
       label: 'Password',
       variant: 'standard',
@@ -68,6 +83,7 @@ const AddVendor = () => {
         }
       },
     },
+
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -88,18 +104,7 @@ const AddVendor = () => {
         }
       },
     },
-    {
-      type: TEXT_FIELD,
-      textFieldType: 'text',
-      label: 'Timing',
-      variant: 'standard',
-      value: timing,
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        setTiming(value);
-        fields[index].value = value;
-      },
-    },
+
     {
       type: MULTI_SELECT,
       label: 'Building',
@@ -116,7 +121,22 @@ const AddVendor = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    // isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    if (isValid) {
+      dispatch(
+        createVendor({
+          body: {
+            email: fields[1].value,
+            name: fields[2].value,
+            password: fields[3].value,
+            role: 'user',
+          },
+        }),
+      );
+      setOnSaveSuccess(true);
+    } else {
+      setOnSaveSuccess(false);
+    }
   };
 
   const buttons = {

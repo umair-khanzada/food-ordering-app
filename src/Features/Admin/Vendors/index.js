@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
-import { fetchVendors } from './actions';
+import { deleteVendorById, fetchVendors } from './actions';
 import { VendorTitleContainer, VendorTitle } from './style';
 
 function VendorList() {
@@ -37,8 +37,8 @@ function VendorList() {
     });
   };
 
-  const onDelete = (row) => {
-    row;
+  const onDelete = ({ id }) => {
+    dispatch(deleteVendorById(id));
   };
 
   return (

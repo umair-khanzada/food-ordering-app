@@ -42,8 +42,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
 
   const onRowDelete = () => {
-    setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
-
+    console.log(currentSelectedRow);
     onDelete(currentSelectedRow);
   };
 

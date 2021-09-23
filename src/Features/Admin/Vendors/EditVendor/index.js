@@ -8,7 +8,7 @@ import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/F
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
-import { fetchVendorById } from '../actions';
+import { fetchVendorById, updateVendorById } from '../actions';
 
 const EditVendor = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
@@ -17,9 +17,11 @@ const EditVendor = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [contact, setContact] = useState('');
-  const [timing, setTiming] = useState('');
+  const [name, setName] = useState('');
   const [building, setBuilding] = useState('');
   const dispatch = useDispatch();
+  const params = new URLSearchParams(history.location.search);
+  const id = params.get('id');
   const [fields, setFields] = useState([
     {
       type: SELECT,
@@ -76,6 +78,19 @@ const EditVendor = () => {
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: name,
+      name: 'name',
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        setName(value);
+        fields[index].value = value;
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
       label: 'Contact',
       variant: 'standard',
       value: contact,
@@ -93,18 +108,7 @@ const EditVendor = () => {
         }
       },
     },
-    {
-      type: TEXT_FIELD,
-      textFieldType: 'text',
-      label: 'Timing',
-      variant: 'standard',
-      value: timing,
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        setTiming(value);
-        fields[index].value = value;
-      },
-    },
+
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -133,14 +137,29 @@ const EditVendor = () => {
     setFields(fields);
   };
   useEffect(() => {
-    const params = new URLSearchParams(history.location.search);
-    const id = params.get('id');
     dispatch(fetchVendorById({ id, getUserResponseFromEpic }));
   }, []);
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+
+    if (isValid) {
+      dispatch(
+        updateVendorById({
+          id,
+          body: {
+            email: fields[1].value,
+            password: fields[2].value,
+            name: fields[3].value,
+          },
+        }),
+      );
+
+      setOnSaveSuccess(true);
+      history.push('/vendors');
+    } else {
+      setOnSaveSuccess(false);
+    }
   };
 
   const buttons = {

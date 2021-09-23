@@ -1,7 +1,13 @@
 // export * as Epics from './login-logout';
 import { combineEpics } from 'redux-observable';
 
-import { fetchVendorByIdEpic, fetchVendorsEpic } from '../../Features/Admin/Vendors/epics';
+import {
+  createVendoEpic,
+  deleteVendorByIdEpic,
+  fetchVendorByIdEpic,
+  fetchVendorsEpic,
+  updateVendorByIdEpic,
+} from '../../Features/Admin/Vendors/epics';
 import { loginEpic, logoutEpic, signUpEpic, forgotPasswordEpic } from '../../Features/Auth/epics';
 
 const rootEpic = combineEpics(
@@ -11,6 +17,9 @@ const rootEpic = combineEpics(
   forgotPasswordEpic,
   fetchVendorsEpic,
   fetchVendorByIdEpic,
+  updateVendorByIdEpic,
+  deleteVendorByIdEpic,
+  createVendoEpic,
 );
 
 export default rootEpic;
