@@ -13,6 +13,7 @@ function VendorList() {
   const dispatch = useDispatch();
   const [vendors, setVendors] = useState('');
   const [header, setHeader] = useState([]);
+  const removeElements = ['role', 'password', 'isEmailVerified'];
   const getVendors = (response) => {
     setVendors(response);
   };
@@ -21,7 +22,10 @@ function VendorList() {
   }, []);
   useEffect(() => {
     if (vendors) {
-      ['role', 'password', 'isEmailVerified'].map((e) => delete vendors[0][e]);
+      vendors.map((vendor) => {
+        removeElements.map((removeElement) => delete vendor[removeElement]);
+      });
+
       const headers = [...Object.keys(vendors[0]), 'Edit'];
 
       setHeader(headers);

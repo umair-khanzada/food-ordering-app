@@ -42,7 +42,6 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
 
   const onRowDelete = () => {
-    console.log(currentSelectedRow);
     onDelete(currentSelectedRow);
   };
 
@@ -72,7 +71,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
 
         <TableBody>
           {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell>{index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
                 if (data != 'id') {

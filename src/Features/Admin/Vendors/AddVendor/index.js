@@ -22,8 +22,9 @@ const AddVendor = () => {
     {
       type: SELECT,
       label: 'Role',
-      values: ['User', 'Vendor'],
+      values: ['user', 'vendor'],
       value: role,
+      name: 'role',
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
@@ -36,6 +37,7 @@ const AddVendor = () => {
       textFieldType: 'email',
       label: 'Email',
       variant: 'standard',
+      name: 'email',
       value: email,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
@@ -57,6 +59,7 @@ const AddVendor = () => {
       label: 'Name',
       variant: 'standard',
       value: name,
+      name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setName(value);
@@ -69,6 +72,7 @@ const AddVendor = () => {
       label: 'Password',
       variant: 'standard',
       value: password,
+      name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setPassword(value);
@@ -90,6 +94,7 @@ const AddVendor = () => {
       label: 'Contact',
       variant: 'standard',
       value: contact,
+      name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setContact(value);
@@ -110,6 +115,7 @@ const AddVendor = () => {
       label: 'Building',
       values: ['Main', 'Cherry', 'Qasre Sheeren'],
       value: building,
+      name: 'building',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setBuilding(value);
@@ -123,14 +129,22 @@ const AddVendor = () => {
     setFields(validateArray);
     // isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
     if (isValid) {
+      const vendorData = {};
+      fields.map(({ name, value }) => {
+        if (name !== 'building' && name !== 'contact') {
+          vendorData[name] = value;
+        }
+      });
+
       dispatch(
         createVendor({
-          body: {
-            email: fields[1].value,
-            name: fields[2].value,
-            password: fields[3].value,
-            role: 'user',
-          },
+          // body: {
+          //   email: fields[1].value,
+          //   name: fields[2].value,
+          //   password: fields[3].value,
+          //   role: 'user',
+          // },
+          vendorData,
         }),
       );
       setOnSaveSuccess(true);

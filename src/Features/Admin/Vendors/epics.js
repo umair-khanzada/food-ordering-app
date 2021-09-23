@@ -15,6 +15,7 @@ export const createVendoEpic = (action$, state) =>
   action$.pipe(
     ofType(CREATE_VENDOR),
     mergeMap(({ payload }) => {
+      console.log(payload);
       const {
         value: {
           authReducer: { accessToken },
@@ -29,9 +30,10 @@ export const createVendoEpic = (action$, state) =>
         headers: {
           Authorization: 'Bearer ' + token,
         },
-        body: payload.body,
+        body: payload.vendorData,
       }).pipe(
         mergeMap((res) => {
+          console.log('success');
           return of();
         }),
         catchError((error) => {
@@ -62,7 +64,7 @@ export const fetchVendorsEpic = (action$, state) =>
       }).pipe(
         mergeMap((res) => {
           const { results } = res.response;
-          const vendors = results.filter((vendor) => vendor.role === 'vendor');
+          const vendors = results.filter((vendor) => vendor.role === 'user');
           payload(vendors);
           return of();
         }),
