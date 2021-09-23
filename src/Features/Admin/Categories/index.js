@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
-import { fetchCategories } from './actions';
+import { fetchCategories } from '../actions';
 import { CategoriesTitleContainer, CategoriesTitle } from './style';
 function CategoryList() {
   const { addCategory, editCategory } = RouteNames;

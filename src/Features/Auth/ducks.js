@@ -2,7 +2,7 @@
 import { LOGIN_SUCCESS, LOGIN_ERROR, FORGOT_PASSWORD, MESSAGE, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
 // { isLoggedIn: false, token: '', name: '' }
 
-const initialAuthState = { isLoggedIn: '', accessToken: '', refreshToken: '', name: '', role: '' };
+const initialAuthState = { isLoggedIn: '', accessToken: '', refreshToken: '', name: '', role: '', id: '' };
 const initialForgotPasswordState = { message: '', status: 0 };
 const initialResponseMessageState = { message: '', status: 0 };
 
@@ -13,7 +13,7 @@ export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => 
       return { isLoggedIn: '', user: '' };
 
     case LOGIN_SUCCESS:
-      const { accessToken, refreshToken, name, role } = action.payload;
+      const { accessToken, refreshToken, name, role, id } = action.payload;
 
       return {
         ...state,
@@ -22,6 +22,7 @@ export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => 
         refreshToken,
         name,
         role,
+        id,
       };
     case LOGIN_ERROR:
       // return { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };

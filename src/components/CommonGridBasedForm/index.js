@@ -11,7 +11,7 @@ import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, S
 
 const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSuccess }) => {
   const WIDTH = '100%';
-
+  console.log('fields', fields);
   const getField = (field, props, index) => {
     switch (field) {
       case SELECT:

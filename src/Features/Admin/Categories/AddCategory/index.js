@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
@@ -10,6 +10,12 @@ import { addCategory } from '../../actions';
 const AddCategory = () => {
   const dispatch = useDispatch();
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const adminId = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
 
   const [fields, setFields] = useState([
     {
@@ -21,6 +27,7 @@ const AddCategory = () => {
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
+
         setFields(updatedFields);
       },
     },
@@ -38,9 +45,7 @@ const AddCategory = () => {
       dispatch(
         addCategory({
           name: name[0],
-          description: 'sjdhsj',
-          createdBy: '613617938f70a058b41406de',
-          kitchenId: '614b449d74d9603870512b13',
+          createdBy: adminId,
         }),
       );
     } else {
