@@ -29,6 +29,7 @@ const MainTab = () => {
 
     setTabValue(tabIndex ? tabIndex : label);
   }, []);
+
   return (
     <>
       <Paper square>
@@ -36,7 +37,7 @@ const MainTab = () => {
           {TabData.map(({ label }, index) => {
             return <Tab key={index} label={label} value={label} />;
           })}
-          <Tab icon={<AddShoppingCartIcon />} onClick={() => dispatch(openDrawer())} value="addCart" />
+          <Tab icon={<AddShoppingCartIcon onClick={() => dispatch(openDrawer())} />} value="addCart" />
         </Tabs>
       </Paper>
       {TabData.map(({ label }, index) => {

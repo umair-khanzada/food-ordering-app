@@ -81,6 +81,7 @@ export const NegativeIcon = styled(RemoveCircleRoundedIcon)`
 export const CheckoutButton = styled(Button)`
   backgroundcolor: #00b3e3;
 
+  align-items: center;
   margin: 0 10px;
   color: white;
 `;
@@ -117,4 +118,24 @@ export const CartCancel = styled.span`
 `;
 export const CountQuantity = styled.span`
   margin-left: 50px;
+`;
+export const EmptyCart = styled.div`
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+`;
+export const AddToCartImg = styled.img`
+  width: 20%;
+  display: flex;
+  border-radius: 10px;
+`;
+export const ModalIcons = styled.div`
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+`;
+export const PriceSpan = styled.span`
+  margin: 20px;
 `;

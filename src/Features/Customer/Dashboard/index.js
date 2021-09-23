@@ -9,7 +9,6 @@ import TemporaryDrawer from '../../../components/Drawer';
 import SideMenu from '../../../components/sideMenu';
 import { openDrawer } from '../actions';
 import { Header, OrderHeading, OrderRef, OrderDetails, UserInfo, FirstTab } from './style';
-
 function Dashboard() {
   const dispatch = useDispatch();
 

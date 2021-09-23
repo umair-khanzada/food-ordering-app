@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 
 import { Fade, Backdrop } from '@material-ui/core';
@@ -26,11 +25,16 @@ import {
   DrawerItemPrice,
   CartPrice,
   CartCancel,
+  EmptyCart,
+  AddToCartImg,
+  ModalIcons,
+  PriceSpan,
 } from './style';
 const TemporaryDrawer = () => {
   const cart = useSelector((state) => state.addtocartReducers.cart);
+  const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
   const dispatch = useDispatch();
-  // const classes = useStyles();
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -41,8 +45,6 @@ const TemporaryDrawer = () => {
     setOpen(false);
   };
 
-  const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
-
   return (
     <>
       <React.Fragment key="right">
@@ -50,7 +52,7 @@ const TemporaryDrawer = () => {
           <div>
             <DrwaerIcon>
               <DrawerHeadingText>My Cart</DrawerHeadingText>
-              <DrawerText onClick={() => dispatch(closeDrawer())} />{' '}
+              <DrawerText onClick={() => dispatch(closeDrawer())} />
             </DrwaerIcon>
             <div>
               {cart.length > 0 ? (
@@ -58,25 +60,9 @@ const TemporaryDrawer = () => {
                   {cart.map((cartdata) => {
                     return (
                       <DrawerCard key={cartdata.id}>
-                        <img
-                          alt="cart"
-                          src={cartdata.img}
-                          style={{ width: '20%', display: 'flex', borderRadius: '10px' }}
-                        />
+                        <AddToCartImg alt="cart" src={cartdata.img} />
 
                         <DrawerPrice>
-                          {/* <MainDrawer>
-                            {/* <div>
-                              <h4>{cartdata.name}</h4>
-                            </div>
-
-                            {/* <DrawerItemPrice> */}
-                          {/* <span> {cartdata.price}</span> */}
-                          {/* </DrawerItemPrice>
-
-                            <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
-                          </MainDrawer> */}
-
                           <Add>
                             <div>
                               <h4>{cartdata.name}</h4>
@@ -85,7 +71,7 @@ const TemporaryDrawer = () => {
                             <DrawerItemPrice>
                               <CartPrice> {cartdata.price}</CartPrice>
                             </DrawerItemPrice>
-                            <span style={{ margin: '20px' }} />
+                            <PriceSpan />
 
                             <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
                             {cartdata.qty}
@@ -100,21 +86,11 @@ const TemporaryDrawer = () => {
                   })}
                 </>
               ) : (
-                <div
-                  style={{
-                    height: '100%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
+                <EmptyCart>
                   <h2>No Item in your cart </h2>
                   <p>Your favorite items are just a click away</p>
-                </div>
+                </EmptyCart>
               )}
-
-              {/* close here */}
             </div>
           </div>
           {cart.length > 0 && (
@@ -135,31 +111,19 @@ const TemporaryDrawer = () => {
             <Fade in={open}>
               <Paper>
                 <Modaltext>Are You Sure You Want To Confirm Your Order</Modaltext>
-                <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-around' }}>
-                  <CancelButton
-                    color="black"
-                    onClick={() => handleClose()}
-                    style={{ marginRight: '20px' }}
-                    variant="contained"
-                  >
+                <ModalIcons>
+                  <CancelButton color="black" onClick={() => handleClose()} variant="contained">
                     <CloseIcon />
                     Cancel
                   </CancelButton>
-                  <CheckoutButton
-                    color="secondary"
-                    onClick={() => handleClose()}
-                    style={{ marginRight: '20px' }}
-                    variant="contained"
-                  >
+                  <CheckoutButton color="secondary" onClick={() => handleClose()} variant="contained">
                     <DoneIcon />
                     Confirm
                   </CheckoutButton>
-                </div>
+                </ModalIcons>
               </Paper>
             </Fade>
           </DrawerModal>
-
-          {/* click={toggleDrawer('right', true)} */}
         </MainDrawer>
       </React.Fragment>
     </>
