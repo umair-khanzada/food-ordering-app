@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   TableRow,
@@ -23,7 +23,9 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
   };
 
   const [rowsData, setRowsData] = useState([...rows]);
-
+  useEffect(() => {
+    setRowsData([...rows]);
+  }, [rows]);
   const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -60,20 +62,28 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
-            {header.map((head, index) => (
-              <TableHeader key={index}>{head}</TableHeader>
-            ))}
+            <TableHeader>S.No</TableHeader>
+            {header.map((head, index) => {
+              if (head != 'id') {
+                return <TableHeader key={index}>{head}</TableHeader>;
+              }
+            })}
           </TableRow>
         </CustomTableHead>
 
         <TableBody>
-          {RowPerPage(rowsPerPage, rowsData, page).map((row) => (
+          {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
             <TableRow key={row.name}>
-              {Object.keys(row).map((data, index) => (
-                <TableCell key={index} cellwidth={cellWidth}>
-                  {row[data]}
-                </TableCell>
-              ))}
+              <TableCell>{index + 1}</TableCell>
+              {Object.keys(row).map((data, index) => {
+                if (data != 'id') {
+                  return (
+                    <TableCell key={index} cellwidth={cellWidth}>
+                      {row[data]}
+                    </TableCell>
+                  );
+                }
+              })}
 
               {isEditDelete && (
                 <TableCell>

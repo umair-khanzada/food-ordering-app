@@ -5,7 +5,6 @@ import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { vendorList } from '../../../Mock/VendorList';
 import RouteNames from '../../../routes/RouteNames';
 import { fetchVendors } from './actions';
 import { VendorTitleContainer, VendorTitle } from './style';
@@ -13,22 +12,28 @@ import { VendorTitleContainer, VendorTitle } from './style';
 function VendorList() {
   const dispatch = useDispatch();
   const [vendors, setVendors] = useState('');
+  const [header, setHeader] = useState([]);
   const getVendors = (response) => {
-    console.log(response);
     setVendors(response);
   };
   useEffect(() => {
     dispatch(fetchVendors(getVendors));
   }, []);
+  useEffect(() => {
+    if (vendors) {
+      ['role', 'password', 'isEmailVerified'].map((e) => delete vendors[0][e]);
+      const headers = [...Object.keys(vendors[0]), 'Edit'];
+
+      setHeader(headers);
+    }
+  }, [vendors]);
   const history = useHistory();
   const { editVendor, addVendor } = RouteNames;
 
-  const header = ['No', 'Name', 'Email', 'Contact', 'Timing', 'Building', 'Edit'];
-
-  const onEdit = (row) => {
+  const onEdit = ({ id }) => {
     history.push({
       pathname: editVendor,
-      state: { data: row },
+      search: '?id=' + id,
     });
   };
 
@@ -43,14 +48,7 @@ function VendorList() {
         <CommonButton onClick={() => history.push(addVendor)} property="Add Vendor" />
       </VendorTitleContainer>
 
-      <CustomTable
-        header={header}
-        isEditDelete
-        onDelete={onDelete}
-        onEdit={onEdit}
-        rows={vendorList}
-        tablewidth="90%"
-      />
+      <CustomTable header={header} isEditDelete onDelete={onDelete} onEdit={onEdit} rows={vendors} tablewidth="90%" />
     </>
   );
 }

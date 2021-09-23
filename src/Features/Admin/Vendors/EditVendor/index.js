@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit } from '../../../../util/FieldsValidCheckOnForm';
+import { fetchVendorById } from '../actions';
 
 const EditVendor = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
+  const history = useHistory();
   const [role, setRole] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [contact, setContact] = useState('');
   const [timing, setTiming] = useState('');
   const [building, setBuilding] = useState('');
+  const dispatch = useDispatch();
   const [fields, setFields] = useState([
     {
       type: SELECT,
@@ -113,7 +118,25 @@ const EditVendor = () => {
       },
     },
   ]);
-
+  const [vendor, setVendor] = useState('');
+  const getUserResponseFromEpic = (response) => {
+    setVendor(response);
+    fields.map((field) => {
+      if (field.label === 'Email') {
+        field.value = response.email;
+      } else if (field.label === 'Name') {
+        field.value = response.name;
+      } else if (field.label === 'Password') {
+        field.value = response.password;
+      }
+    });
+    setFields(fields);
+  };
+  useEffect(() => {
+    const params = new URLSearchParams(history.location.search);
+    const id = params.get('id');
+    dispatch(fetchVendorById({ id, getUserResponseFromEpic }));
+  }, []);
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
