@@ -43,8 +43,8 @@ const routeConfig = {
     editCategoriesRoute,
   ],
 
-  customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute, AddMenuRoute, EditMenuRoute, RestaurantRoute],
-  vendor: [OrderListRoute, MenuListRoute, CategoryListRoute, RestaurantRoute],
+  customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute],
+  vendor: [OrderListRoute, MenuListRoute, CategoryListRoute, RestaurantRoute, AddMenuRoute, EditMenuRoute],
   officeBoy: [],
 
   common: [MenuListRoute],
