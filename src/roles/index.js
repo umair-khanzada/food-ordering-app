@@ -1,6 +1,7 @@
 const Roles = {
-  officeBoy: 'Office_Boy',
-  orderPlacer: 'Order_Placer',
+  vendor: 'vendor',
+  user: 'user',
+  admin: 'admin',
 };
 
 export default Roles;

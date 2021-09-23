@@ -1,10 +1,13 @@
 import React from 'react';
 
-import { Drawer, Icon, IconButton } from '@material-ui/core';
+import { Drawer, Icon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Category, History, PeopleAlt } from '@material-ui/icons';
+import { Category, Dashboard, Edit, History, MenuOutlined, PeopleAlt, Person } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
+import Roles from '../../roles';
 import RouteNames from '../../routes/RouteNames';
 
 function SideMenu() {
@@ -22,6 +25,8 @@ function SideMenu() {
       paddingBottom: '40px',
     },
     link: {
+      paddingLeft: '10px',
+      textDecoration: 'none',
       borderRadius: '0px',
       color: '#717271',
       fontSize: '20px',
@@ -30,6 +35,8 @@ function SideMenu() {
       display: 'flex',
       justifyContent: 'left',
       '&:hover': {
+        textDecoration: 'none',
+        cursor: 'pointer',
         backgroundColor: '#00B3E3',
         color: 'white',
       },
@@ -45,8 +52,23 @@ function SideMenu() {
       height: '100%',
     },
   }));
+
+  const { isLoggedIn, role } = useSelector((state) => {
+    const {
+      authReducer: { isLoggedIn, role },
+    } = state;
+
+    return {
+      role,
+
+      isLoggedIn,
+    };
+  });
+
+  const { vendor, admin, user } = Roles;
   const classes = useStyles();
-  const { orderHistory, users, vendors, categories } = RouteNames;
+  const { orderHistory, users, vendors, categories, categoryList, dashboard, profile, orderList, menuList } =
+    RouteNames;
   const history = useHistory();
 
   const { drawer, drawerPaper, navigation, list, link, icon, mainDiv } = classes;
@@ -61,38 +83,102 @@ function SideMenu() {
         variant="permanent"
       >
         <div className={navigation}>
-          <p className={list}>
-            <IconButton className={link} onClick={() => history.push(orderHistory)}>
-              <Icon className={icon}>
-                <History />
-              </Icon>
-              Order History
-            </IconButton>
-          </p>
-          <p className={list}>
-            <IconButton className={link} onClick={() => history.push(vendors)}>
-              <Icon className={icon}>
-                <PeopleAlt />
-              </Icon>
-              Vendors
-            </IconButton>
-          </p>
-          <p className={list}>
-            <IconButton className={link} onClick={() => history.push(users)}>
-              <Icon className={icon}>
-                <PeopleAlt />
-              </Icon>
-              Users
-            </IconButton>
-          </p>
-          <p className={list}>
-            <IconButton className={link} onClick={() => history.push(categories)}>
-              <Icon className={icon}>
-                <Category />
-              </Icon>
-              Categories
-            </IconButton>
-          </p>
+          {role === admin ? (
+            <>
+              <p className={list}>
+                <Link className={link} to={orderHistory}>
+                  <Icon className={icon}>
+                    <History />
+                  </Icon>
+                  Order History
+                </Link>
+              </p>
+              <p className={list}>
+                <Link className={link} to={vendors}>
+                  <Icon className={icon}>
+                    <PeopleAlt />
+                  </Icon>
+                  Vendors
+                </Link>
+              </p>
+              <p className={list}>
+                <Link className={link} to={users}>
+                  <Icon className={icon}>
+                    <PeopleAlt />
+                  </Icon>
+                  Users
+                </Link>
+              </p>
+              <p className={list}>
+                <Link className={link} to={categories}>
+                  <Icon className={icon}>
+                    <Category />
+                  </Icon>
+                  Category
+                </Link>
+              </p>{' '}
+            </>
+          ) : null}
+
+          {role === user ? (
+            <>
+              {' '}
+              <p className={list}>
+                <Link className={link} to={dashboard}>
+                  <Icon className={icon}>
+                    <Dashboard />
+                  </Icon>
+                  Dashboard
+                </Link>
+              </p>
+              <p className={list}>
+                <Link className={link} to={profile}>
+                  <Icon className={icon}>
+                    <Person />
+                  </Icon>
+                  Profile
+                </Link>
+              </p>
+              <p className={list}>
+                <Link className={link} to={orderHistory}>
+                  <Icon className={icon}>
+                    <History />
+                  </Icon>
+                  Order History
+                </Link>
+              </p>
+            </>
+          ) : null}
+
+          {role === vendor ? (
+            <>
+              {' '}
+              <p className={list}>
+                <Link className={link} to={menuList}>
+                  <Icon className={icon}>
+                    <MenuOutlined />
+                  </Icon>
+                  Menu
+                </Link>
+              </p>
+              <p className={list}>
+                <Link className={link} to={categoryList}>
+                  <Icon className={icon}>
+                    <Category />
+                  </Icon>
+                  Category
+                </Link>
+              </p>
+              <p className={list}>
+                <Link className={link} to={orderList}>
+                  <Icon className={icon}>
+                    <Edit />
+                  </Icon>
+                  Order
+                </Link>
+              </p>
+            </>
+          ) : null}
         </div>
       </Drawer>
     </div>
