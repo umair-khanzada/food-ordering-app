@@ -1,7 +1,7 @@
 const Roles = {
-  vendor: 'Vendor',
-  user: 'User',
-  admin: 'Admin',
+  vendor: 'vendor',
+  user: 'user',
+  admin: 'admin',
 };
 
 export default Roles;

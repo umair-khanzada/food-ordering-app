@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Drawer, Icon, IconButton } from '@material-ui/core';
+import { Drawer, Icon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Category, Dashboard, Edit, History, MenuOutlined, PeopleAlt, Person } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import Roles from '../../roles';
 import RouteNames from '../../routes/RouteNames';
@@ -24,6 +25,8 @@ function SideMenu() {
       paddingBottom: '40px',
     },
     link: {
+      paddingLeft: '10px',
+      textDecoration: 'none',
       borderRadius: '0px',
       color: '#717271',
       fontSize: '20px',
@@ -32,6 +35,8 @@ function SideMenu() {
       display: 'flex',
       justifyContent: 'left',
       '&:hover': {
+        textDecoration: 'none',
+        cursor: 'pointer',
         backgroundColor: '#00B3E3',
         color: 'white',
       },
@@ -48,23 +53,22 @@ function SideMenu() {
     },
   }));
 
-  const { isLoggedIn, user } = useSelector((state) => {
+  const { isLoggedIn, role } = useSelector((state) => {
     const {
-      authReducer: { isLoggedIn, user },
+      authReducer: { isLoggedIn, role },
     } = state;
 
     return {
-      user,
+      role,
 
       isLoggedIn,
     };
   });
 
-  const { role } = user;
-
-  const { vendor, admin } = Roles;
+  const { vendor, admin, user } = Roles;
   const classes = useStyles();
-  const { orderHistory, users, vendors, categories, categoryList } = RouteNames;
+  const { orderHistory, users, vendors, categories, categoryList, dashboard, profile, orderList, menuList } =
+    RouteNames;
   const history = useHistory();
 
   const { drawer, drawerPaper, navigation, list, link, icon, mainDiv } = classes;
@@ -81,68 +85,67 @@ function SideMenu() {
         <div className={navigation}>
           {role === admin ? (
             <>
-              {' '}
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push('/orderhistory')}>
+                <Link className={link} to={orderHistory}>
                   <Icon className={icon}>
                     <History />
                   </Icon>
                   Order History
-                </IconButton>
+                </Link>
               </p>
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push('/vendors')}>
+                <Link className={link} to={vendors}>
                   <Icon className={icon}>
                     <PeopleAlt />
                   </Icon>
                   Vendors
-                </IconButton>
+                </Link>
               </p>
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push('/users')}>
+                <Link className={link} to={users}>
                   <Icon className={icon}>
                     <PeopleAlt />
                   </Icon>
                   Users
-                </IconButton>
+                </Link>
               </p>
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push('/categories')}>
+                <Link className={link} to={categories}>
                   <Icon className={icon}>
                     <Category />
                   </Icon>
                   Category
-                </IconButton>
+                </Link>
               </p>{' '}
             </>
           ) : null}
 
-          {role === Roles.user ? (
+          {role === user ? (
             <>
               {' '}
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push('/dashboard')}>
+                <Link className={link} to={dashboard}>
                   <Icon className={icon}>
                     <Dashboard />
                   </Icon>
                   Dashboard
-                </IconButton>
+                </Link>
               </p>
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push('/profile')}>
+                <Link className={link} to={profile}>
                   <Icon className={icon}>
                     <Person />
                   </Icon>
                   Profile
-                </IconButton>
+                </Link>
               </p>
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push(orderHistory)}>
+                <Link className={link} to={orderHistory}>
                   <Icon className={icon}>
                     <History />
                   </Icon>
                   Order History
-                </IconButton>
+                </Link>
               </p>
             </>
           ) : null}
@@ -151,28 +154,28 @@ function SideMenu() {
             <>
               {' '}
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push('/menu')}>
+                <Link className={link} to={menuList}>
                   <Icon className={icon}>
                     <MenuOutlined />
                   </Icon>
                   Menu
-                </IconButton>
+                </Link>
               </p>
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push(categoryList)}>
+                <Link className={link} to={categoryList}>
                   <Icon className={icon}>
                     <Category />
                   </Icon>
                   Category
-                </IconButton>
+                </Link>
               </p>
               <p className={list}>
-                <IconButton className={link} onClick={() => history.push('/orderlist')}>
+                <Link className={link} to={orderList}>
                   <Icon className={icon}>
                     <Edit />
                   </Icon>
                   Order
-                </IconButton>
+                </Link>
               </p>
             </>
           ) : null}
