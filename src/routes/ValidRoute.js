@@ -1,10 +1,9 @@
 import React from 'react';
 
 import { useSelector, shallowEqual } from 'react-redux';
-import { Route } from 'react-router';
 
 import Unauthorized from '../Features/Unauthorized';
-import { isProtectedRoute, isPublicRoute } from './Permission';
+import { isProtectedRoute } from './Permission';
 
 const ValidRoute = ({ route, authorizedRole }) => {
   const { isLoggedIn, role } = useSelector((state) => {
@@ -17,15 +16,13 @@ const ValidRoute = ({ route, authorizedRole }) => {
     };
   }, shallowEqual);
 
-  const { permissions, component, path } = route;
+  const { permissions, component: Component } = route;
 
   if (isLoggedIn && permissions === isProtectedRoute && role === authorizedRole) {
-    return <Route component={() => component()} exact path={path} />;
+    return <Component />;
   }
-  if (!isLoggedIn && permissions === isPublicRoute && role === authorizedRole) {
-    return <Route component={() => component()} exact path={path} />;
-  }
-  return <Route component={Unauthorized} exact path={path} />;
+
+  return <Unauthorized />;
 };
 
 export default ValidRoute;

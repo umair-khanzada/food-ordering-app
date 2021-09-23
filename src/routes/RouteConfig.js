@@ -40,7 +40,7 @@ const routeConfig = {
   vendor: [OrderListRoute, MenuListRoute, CategoryListRoute],
   officeBoy: [],
 
-  common: [MenuListRoute],
+  common: [],
 };
 
 export default routeConfig;

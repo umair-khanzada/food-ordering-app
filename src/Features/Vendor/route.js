@@ -1,4 +1,4 @@
-import { isPublicRoute } from '../../routes/Permission';
+import { isProtectedRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
 import CategoryList from './CategoryList/CategoryList';
 import Menu from './Menu';
@@ -6,18 +6,18 @@ import OrderList from './OrderList/OrderList';
 
 export const OrderListRoute = {
   path: RouteNames.orderList,
-  permissions: isPublicRoute, // to intimate it is public route
+  permissions: isProtectedRoute, // to intimate it is public route
   component: OrderList,
 };
 
 export const MenuListRoute = {
   path: RouteNames.menuList,
-  permissions: isPublicRoute,
+  permissions: isProtectedRoute,
   component: Menu,
 };
 
 export const CategoryListRoute = {
   path: RouteNames.categoryList,
-  permissions: isPublicRoute,
+  permissions: isProtectedRoute,
   component: CategoryList,
 };
