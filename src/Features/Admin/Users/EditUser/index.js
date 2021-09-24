@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { fetchUserById, updateUserById } from '../actions';
 
 const AddUser = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const params = new URLSearchParams(history.location.search);
+  const id = params.get('id');
   const [fields, setFields] = useState([
     {
       type: SELECT,
@@ -37,6 +45,19 @@ const AddUser = () => {
           return 'Email type is not valid';
         }
         return '';
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: '',
+      name: 'name',
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
@@ -77,10 +98,48 @@ const AddUser = () => {
     },
   ]);
 
+  const [user, setUser] = useState('');
+  const getUserResponseFromEpic = (response) => {
+    setUser(response);
+    console.log('resp', response);
+    fields.map((field) => {
+      if (field.label === 'Email') {
+        field.value = response.email;
+      } else if (field.label === 'Name') {
+        field.value = response.name;
+      } else if (field.label === 'Password') {
+        field.value = response.password;
+      }
+    });
+    setFields(fields);
+  };
+  useEffect(() => {
+    console.log('user');
+    dispatch(fetchUserById({ id, getUserResponseFromEpic }));
+  }, []);
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+
+    if (isValid) {
+      const userData = {};
+      fields.map(({ name, value }) => {
+        if (name !== 'building' && name !== 'contact' && name !== 'role') {
+          userData[name] = value;
+        }
+      });
+      dispatch(
+        updateUserById({
+          id,
+          userData,
+        }),
+      );
+
+      setOnSaveSuccess(true);
+      history.push('/vendors');
+    } else {
+      setOnSaveSuccess(false);
+    }
   };
 
   const buttons = {

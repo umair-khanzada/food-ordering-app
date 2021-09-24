@@ -13,7 +13,7 @@ const AddUser = () => {
     {
       type: SELECT,
       label: 'Role',
-      values: ['User', 'Vendor'],
+      values: ['user', 'vendor'],
       value: [],
       errorMessage: '',
 

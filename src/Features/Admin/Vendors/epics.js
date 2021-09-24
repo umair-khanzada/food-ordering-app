@@ -3,11 +3,17 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { catchError, mergeMap } from 'rxjs/operators';
 
-import { CREATE_USER, DELETE_USER_BY_ID, FETCH_USERS, FETCH_USER_BY_ID, UPDATE_USER_BY_ID } from './ActionTypes';
+import {
+  CREATE_VENDOR,
+  DELETE_VENDOR_BY_ID,
+  FETCH_VENDORS,
+  FETCH_VENDOR_BY_ID,
+  UPDATE_VENDOR_BY_ID,
+} from './ActionTypes';
 
-export const createUserEpic = (action$, state) =>
+export const createVendoEpic = (action$, state) =>
   action$.pipe(
-    ofType(CREATE_USER),
+    ofType(CREATE_VENDOR),
     mergeMap(({ payload }) => {
       const {
         value: {
@@ -35,9 +41,9 @@ export const createUserEpic = (action$, state) =>
       );
     }),
   );
-export const fetchUsersEpic = (action$, state) =>
+export const fetchVendorsEpic = (action$, state) =>
   action$.pipe(
-    ofType(FETCH_USERS),
+    ofType(FETCH_VENDORS),
     mergeMap(({ payload }) => {
       const {
         value: {
@@ -54,7 +60,7 @@ export const fetchUsersEpic = (action$, state) =>
         },
       }).pipe(
         mergeMap((res) => {
-          const users = res.response.filter((user) => user.role === 'user');
+          const users = res.response.filter((user) => user.role === 'vendor');
           payload(users);
           return of();
         }),
@@ -65,9 +71,9 @@ export const fetchUsersEpic = (action$, state) =>
     }),
   );
 
-export const fetchUserByIdEpic = (action$, state) =>
+export const fetchVendorByIdEpic = (action$, state) =>
   action$.pipe(
-    ofType(FETCH_USER_BY_ID),
+    ofType(FETCH_VENDOR_BY_ID),
     mergeMap(({ payload }) => {
       const {
         value: {
@@ -96,9 +102,9 @@ export const fetchUserByIdEpic = (action$, state) =>
     }),
   );
 
-export const updateUserByIdEpic = (action$, state) =>
+export const updateVendorByIdEpic = (action$, state) =>
   action$.pipe(
-    ofType(UPDATE_USER_BY_ID),
+    ofType(UPDATE_VENDOR_BY_ID),
     mergeMap(({ payload }) => {
       const {
         value: {
@@ -114,7 +120,7 @@ export const updateUserByIdEpic = (action$, state) =>
         headers: {
           Authorization: 'Bearer ' + token,
         },
-        body: payload.userData,
+        body: payload.vendorData,
       }).pipe(
         mergeMap((res) => {
           return of();
@@ -125,9 +131,9 @@ export const updateUserByIdEpic = (action$, state) =>
       );
     }),
   );
-export const deleteUserByIdEpic = (action$, state) =>
+export const deleteVendorByIdEpic = (action$, state) =>
   action$.pipe(
-    ofType(DELETE_USER_BY_ID),
+    ofType(DELETE_VENDOR_BY_ID),
     mergeMap(({ payload }) => {
       const {
         value: {

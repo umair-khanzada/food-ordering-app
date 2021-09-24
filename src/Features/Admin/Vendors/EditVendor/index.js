@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { MULTI_SELECT, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { fetchVendorById, updateVendorById } from '../actions';
 
 const EditVendor = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const params = new URLSearchParams(history.location.search);
+  const id = params.get('id');
   const [fields, setFields] = useState([
     {
       type: SELECT,
       label: 'Role',
-      values: ['User', 'Vendor'],
+      values: ['user', 'vendor'],
       value: [],
       errorMessage: '',
-
+      name: 'role',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
         setFields(updatedFields);
@@ -28,6 +36,7 @@ const EditVendor = () => {
       label: 'Email',
       variant: 'standard',
       value: '',
+      name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -42,10 +51,24 @@ const EditVendor = () => {
     },
     {
       type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: '',
+      name: 'name',
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+    },
+    {
+      type: TEXT_FIELD,
       textFieldType: 'password',
       label: 'Password',
       variant: 'standard',
       value: '',
+      name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -58,12 +81,14 @@ const EditVendor = () => {
         return '';
       },
     },
+
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
       label: 'Contact',
       variant: 'standard',
       value: '',
+      name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -77,22 +102,13 @@ const EditVendor = () => {
       },
     },
     {
-      type: TEXT_FIELD,
-      textFieldType: 'text',
-      label: 'Timing',
-      variant: 'standard',
-      value: '',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
-        setFields(updatedFields);
-      },
-    },
-    {
       type: MULTI_SELECT,
       label: 'Building',
       values: ['Main', 'Cherry', 'Qasre Sheeren'],
       value: [],
+      variant: 'standard',
+
+      name: 'building',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -100,11 +116,46 @@ const EditVendor = () => {
       },
     },
   ]);
-
+  const [vendor, setVendor] = useState('');
+  const getUserResponseFromEpic = (response) => {
+    setVendor(response);
+    fields.map((field) => {
+      if (field.label === 'Email') {
+        field.value = response.email;
+      } else if (field.label === 'Name') {
+        field.value = response.name;
+      } else if (field.label === 'Password') {
+        field.value = response.password;
+      }
+    });
+    setFields(fields);
+  };
+  useEffect(() => {
+    dispatch(fetchVendorById({ id, getUserResponseFromEpic }));
+  }, []);
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+
+    if (isValid) {
+      const vendorData = {};
+      fields.map(({ name, value }) => {
+        if (name !== 'building' && name !== 'contact' && name !== 'role') {
+          vendorData[name] = value;
+        }
+      });
+      dispatch(
+        updateVendorById({
+          id,
+          vendorData,
+        }),
+      );
+
+      setOnSaveSuccess(true);
+      history.push('/vendors');
+    } else {
+      setOnSaveSuccess(false);
+    }
   };
 
   const buttons = {
