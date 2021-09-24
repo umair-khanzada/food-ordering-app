@@ -15,25 +15,24 @@ export const createVendoEpic = (action$, state) =>
   action$.pipe(
     ofType(CREATE_VENDOR),
     mergeMap(({ payload }) => {
-      console.log(payload);
       const {
         value: {
-          authReducer: { accessToken },
+          authReducer: {
+            accessToken: { token },
+          },
         },
       } = state;
-      const {
-        token: { token },
-      } = { token: accessToken };
+
       return ajax({
         url: 'http://localhost:4000/v1/users',
         method: 'POST',
         headers: {
           Authorization: 'Bearer ' + token,
         },
-        body: payload.vendorData,
+        body: payload,
       }).pipe(
         mergeMap((res) => {
-          console.log('success');
+          console.log('response', res.response);
           return of();
         }),
         catchError((error) => {
@@ -48,13 +47,11 @@ export const fetchVendorsEpic = (action$, state) =>
     mergeMap(({ payload }) => {
       const {
         value: {
-          authReducer: { accessToken },
+          authReducer: {
+            accessToken: { token },
+          },
         },
       } = state;
-      const {
-        token: { token },
-      } = { token: accessToken };
-
       return ajax({
         url: 'http://localhost:4000/v1/users',
         method: 'GET',
@@ -81,12 +78,11 @@ export const fetchVendorByIdEpic = (action$, state) =>
     mergeMap(({ payload }) => {
       const {
         value: {
-          authReducer: { accessToken },
+          authReducer: {
+            accessToken: { token },
+          },
         },
       } = state;
-      const {
-        token: { token },
-      } = { token: accessToken };
 
       return ajax({
         url: 'http://localhost:4000/v1/users/' + payload.id,
@@ -113,19 +109,19 @@ export const updateVendorByIdEpic = (action$, state) =>
     mergeMap(({ payload }) => {
       const {
         value: {
-          authReducer: { accessToken },
+          authReducer: {
+            accessToken: { token },
+          },
         },
       } = state;
-      const {
-        token: { token },
-      } = { token: accessToken };
+
       return ajax({
         url: 'http://localhost:4000/v1/users/' + payload.id,
         method: 'PATCH',
         headers: {
           Authorization: 'Bearer ' + token,
         },
-        body: payload.body,
+        body: payload.vendorData,
       }).pipe(
         mergeMap((res) => {
           return of();
@@ -142,12 +138,11 @@ export const deleteVendorByIdEpic = (action$, state) =>
     mergeMap(({ payload }) => {
       const {
         value: {
-          authReducer: { accessToken },
+          authReducer: {
+            accessToken: { token },
+          },
         },
       } = state;
-      const {
-        token: { token },
-      } = { token: accessToken };
 
       return ajax({
         url: 'http://localhost:4000/v1/users/' + payload,
@@ -157,11 +152,9 @@ export const deleteVendorByIdEpic = (action$, state) =>
         },
       }).pipe(
         mergeMap((res) => {
-          console.log('delete');
           return of();
         }),
         catchError((error) => {
-          console.log('error');
           return of();
         }),
       );

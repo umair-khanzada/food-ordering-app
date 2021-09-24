@@ -29,7 +29,7 @@ const EditVendor = () => {
       values: ['User', 'Vendor'],
       value: role,
       errorMessage: '',
-
+      name: 'role',
       onChange: ({ target: { value } }, index) => {
         setRole(value);
         fields[index].value = value;
@@ -41,6 +41,7 @@ const EditVendor = () => {
       label: 'Email',
       variant: 'standard',
       value: email,
+      name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setEmail(value);
@@ -50,26 +51,6 @@ const EditVendor = () => {
       getValidation: (value, index) => {
         if (!emailRegex.test(value)) {
           fields[index].errorMessage = 'Email type is not valid';
-        } else {
-          fields[index].errorMessage = '';
-        }
-      },
-    },
-    {
-      type: TEXT_FIELD,
-      textFieldType: 'password',
-      label: 'Password',
-      variant: 'standard',
-      value: password,
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        setPassword(value);
-        fields[index].value = value;
-        fields[index].getValidation(value, index);
-      },
-      getValidation: (value, index) => {
-        if (value.length < 8) {
-          fields[index].errorMessage = 'Password must be 8 characters long';
         } else {
           fields[index].errorMessage = '';
         }
@@ -90,10 +71,33 @@ const EditVendor = () => {
     },
     {
       type: TEXT_FIELD,
+      textFieldType: 'password',
+      label: 'Password',
+      variant: 'standard',
+      value: password,
+      name: 'password',
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        setPassword(value);
+        fields[index].value = value;
+        fields[index].getValidation(value, index);
+      },
+      getValidation: (value, index) => {
+        if (value.length < 8) {
+          fields[index].errorMessage = 'Password must be 8 characters long';
+        } else {
+          fields[index].errorMessage = '';
+        }
+      },
+    },
+
+    {
+      type: TEXT_FIELD,
       textFieldType: 'text',
       label: 'Contact',
       variant: 'standard',
       value: contact,
+      name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setContact(value);
@@ -115,6 +119,7 @@ const EditVendor = () => {
       label: 'Building',
       variant: 'standard',
       value: building,
+      name: 'building',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         setBuilding(value);
@@ -144,14 +149,16 @@ const EditVendor = () => {
     setFields(validateArray);
 
     if (isValid) {
+      const vendorData = {};
+      fields.map(({ name, value }) => {
+        if (name !== 'building' && name !== 'contact' && name !== 'role') {
+          vendorData[name] = value;
+        }
+      });
       dispatch(
         updateVendorById({
           id,
-          body: {
-            email: fields[1].value,
-            password: fields[2].value,
-            name: fields[3].value,
-          },
+          vendorData,
         }),
       );
 

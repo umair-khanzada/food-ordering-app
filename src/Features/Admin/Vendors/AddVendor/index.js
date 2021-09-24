@@ -32,6 +32,20 @@ const AddVendor = () => {
         fields[index].value = value;
       },
     },
+
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: name,
+      name: 'name',
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        setName(value);
+        fields[index].value = value;
+      },
+    },
     {
       type: TEXT_FIELD,
       textFieldType: 'email',
@@ -51,19 +65,6 @@ const AddVendor = () => {
         } else {
           fields[index].errorMessage = '';
         }
-      },
-    },
-    {
-      type: TEXT_FIELD,
-      textFieldType: 'text',
-      label: 'Name',
-      variant: 'standard',
-      value: name,
-      name: 'name',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        setName(value);
-        fields[index].value = value;
       },
     },
     {
@@ -127,7 +128,7 @@ const AddVendor = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    // isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+
     if (isValid) {
       const vendorData = {};
       fields.map(({ name, value }) => {
@@ -136,17 +137,7 @@ const AddVendor = () => {
         }
       });
 
-      dispatch(
-        createVendor({
-          // body: {
-          //   email: fields[1].value,
-          //   name: fields[2].value,
-          //   password: fields[3].value,
-          //   role: 'user',
-          // },
-          vendorData,
-        }),
-      );
+      dispatch(createVendor(vendorData));
       setOnSaveSuccess(true);
     } else {
       setOnSaveSuccess(false);
