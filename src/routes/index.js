@@ -5,7 +5,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import LoginContainer from '../Features/Auth/Login/LoginContainer';
 import { HomeContainer } from '../Features/Home';
-import Unauthorized from '../Features/Unauthorized';
 import Unauthorize from '../Features/Unauthorized';
 import Roles from '../roles';
 import { isProtectedRoute, isPublicRoute } from './Permission';
@@ -37,15 +36,6 @@ export default function BaseRouter() {
     return <Route key={index} component={() => <LoginContainer />} exact path="/login" />;
   };
 
-  const getValidRoute = (route, index, authorizedRole) => {
-    console.log(authorizedRole, role);
-    if (isLoggedIn && route.permissions === isProtectedRoute && role === authorizedRole) {
-      console.log('called');
-      return route.component();
-    }
-    return <Unauthorized />;
-  };
-
   return (
     <Switch>
       <Route component={Unauthorize} exact path="/unauthorize" />
@@ -55,36 +45,30 @@ export default function BaseRouter() {
       {routeConfig.common.map((route, index) => {
         return <Route key={index} component={() => route.component()} exact path={route.path} />;
       })}
-      {routeConfig.customer.map((route, index) => {
-        return (
-          <Route
-            key={index}
-            component={() => <ValidRoute authorizedRole={user} route={route} />}
-            exact
-            path={route.path}
-          />
-        );
-      })}
-      {routeConfig.vendor.map((route, index) => {
-        return (
-          <Route
-            key={index}
-            component={() => <ValidRoute authorizedRole={vendor} route={route} />}
-            exact
-            path={route.path}
-          />
-        );
-      })}
-      {routeConfig.admin.map((route, index) => {
-        return (
-          <Route
-            key={index}
-            component={() => <ValidRoute authorizedRole={admin} route={route} />}
-            exact
-            path={route.path}
-          />
-        );
-      })}
+      {routeConfig.customer.map((route, index) => (
+        <Route
+          key={index}
+          component={() => <ValidRoute authorizedRole={user} route={route} />}
+          exact
+          path={route.path}
+        />
+      ))}
+      {routeConfig.vendor.map((route, index) => (
+        <Route
+          key={index}
+          component={() => <ValidRoute authorizedRole={vendor} route={route} />}
+          exact
+          path={route.path}
+        />
+      ))}
+      {routeConfig.admin.map((route, index) => (
+        <Route
+          key={index}
+          component={() => <ValidRoute authorizedRole={admin} route={route} />}
+          exact
+          path={route.path}
+        />
+      ))}
       {role === admin && (
         <Route>
           <Redirect to="/orderHistory" />

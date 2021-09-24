@@ -19,7 +19,6 @@ function MainContainer() {
   }, shallowEqual);
 
   const baseRouter = <BaseRouter />;
-
   return (
     <Router history={History}>
       {isLoggedIn ? (
