@@ -15,3 +15,5 @@ export const DECREMENT = 'DECREMENT';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const OPEN_DRAWER = 'OPEN_DRAWER';
 export const CLOSE_DRAWER = 'CLOSE_DRAWER';
+export const OPENMODAL = 'OPENMODAL';
+export const CLOSEMODAL = 'CLOSEMODAL';

@@ -11,18 +11,26 @@ import {
   Paper,
 } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
 
-import DeleteModal from '../DeleteModal';
+import { closeModal, openModal } from '../Modal/action';
+import ConfirmDeletModal from '../Modal/inex';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
-
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
-  const [toggleModal, setToggleModal] = React.useState(false);
+  const dispatch = useDispatch();
+  const onCancel = () => dispatch(closeModal());
+  const onRowDelete = () => {
+    setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
 
-  const toggleDeleteModel = () => {
-    setToggleModal(!toggleModal);
+    onDelete(currentSelectedRow);
+    dispatch(closeModal());
   };
 
+  const deletModalButtons = [
+    { property: 'Cancel', clickHandler: onCancel },
+    { property: 'Confirm', clickHandler: onRowDelete },
+  ];
   const [rowsData, setRowsData] = useState([...rows]);
 
   const [page, setPage] = useState(0);
@@ -40,12 +48,6 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
 
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
 
-  const onRowDelete = () => {
-    setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
-
-    onDelete(currentSelectedRow);
-  };
-
   const RowPerPage = (rowsPerPage, rowsData, page) => {
     if (rowsPerPage > 0) {
       return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
@@ -56,7 +58,11 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
 
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
-      {isEditDelete && <DeleteModal handleClose={toggleDeleteModel} onRowDelete={onRowDelete} open={toggleModal} />}
+      {isEditDelete && (
+        <ConfirmDeletModal modalButtons={deletModalButtons}>
+          <div>Are you sure you want to delete ?</div>
+        </ConfirmDeletModal>
+      )}
 
       <Table aria-label="custom pagination table">
         <CustomTableHead>
@@ -85,7 +91,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
                   <IconButton
                     onClick={() => {
                       setCurrentSelectedRow(row);
-                      toggleDeleteModel();
+                      dispatch(openModal());
                     }}
                   >
                     <DeleteIcon />
