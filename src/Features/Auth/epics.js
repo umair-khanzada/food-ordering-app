@@ -4,6 +4,7 @@ import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
+import History from '../../util/History';
 import { loginSuccess, loginError, logoutSuccess, formMessage } from './actions';
 
 export const loginEpic = (action$) =>
@@ -109,9 +110,11 @@ export const logoutEpic = (action$, state) =>
         body: refreshToken,
       }).pipe(
         mergeMap(() => {
+          History.push('/login');
           return of(logoutSuccess());
         }),
         catchError(() => {
+          History.push('/login');
           return of(logoutSuccess());
         }),
       );
