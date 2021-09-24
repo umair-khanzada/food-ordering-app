@@ -1,20 +1,21 @@
+/* eslint-disable no-debugger */
 import { ofType } from 'redux-observable';
 import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
-import History from '../../util/History';
+import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS } from '../../redux/ActionTypes';
+import { defaultRouteForRoles } from '../../scripts/constants';
 import { loginSuccess, loginError, logoutSuccess, formMessage } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
-    mergeMap(({ payload }) => {
+    mergeMap(({ payload: { userData, history } }) => {
       return ajax({
         url: 'http://localhost:4000/v1/auth/login',
         method: 'POST',
-        body: payload,
+        body: userData,
       }).pipe(
         mergeMap((res) => {
           const {
@@ -27,6 +28,7 @@ export const loginEpic = (action$) =>
               role,
               refreshToken: refresh,
               accessToken: access,
+              history,
             }),
           );
         }),
@@ -34,6 +36,16 @@ export const loginEpic = (action$) =>
           return of(loginError());
         }),
       );
+    }),
+  );
+
+export const loginSuccessEpic = (action$) =>
+  action$.pipe(
+    ofType(LOGIN_SUCCESS),
+    mergeMap(({ payload: { role, history } }) => {
+      const defaultRouteAfterLogin = defaultRouteForRoles[role];
+      history.push(defaultRouteAfterLogin || '/');
+      return of();
     }),
   );
 
@@ -97,7 +109,7 @@ export const forgotPasswordEpic = (action$) =>
 export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
-    mergeMap(() => {
+    mergeMap(({ payload: { history } }) => {
       const {
         value: {
           authReducer: { token },
@@ -110,11 +122,12 @@ export const logoutEpic = (action$, state) =>
         body: refreshToken,
       }).pipe(
         mergeMap(() => {
-          History.push('/login');
+          history.push('/login');
           return of(logoutSuccess());
         }),
         catchError(() => {
-          History.push('/login');
+          history.push('/login');
+
           return of(logoutSuccess());
         }),
       );

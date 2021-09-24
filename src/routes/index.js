@@ -1,13 +1,9 @@
 import React from 'react';
 
 import { useSelector, shallowEqual } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
-import LoginContainer from '../Features/Auth/Login/LoginContainer';
-import { HomeContainer } from '../Features/Home';
-import Unauthorize from '../Features/Unauthorized';
 import Roles from '../roles';
-import { isProtectedRoute, isPublicRoute } from './Permission';
 import routeConfig from './RouteConfig';
 import ValidRoute from './ValidRoute';
 
@@ -24,26 +20,27 @@ export default function BaseRouter() {
 
   const { vendor, admin, user } = Roles;
 
-  const getAuthenticatedRoute = (route, index) => {
-    if (isLoggedIn && route.permissions === isProtectedRoute) {
-      return <Route key={index} component={() => route.component()} exact path={route.path} />;
-    }
-    if (!isLoggedIn && route.permissions === isPublicRoute) {
-      return <Route key={index} component={() => route.component()} exact path={route.path} />;
-    }
-
-    if (isLoggedIn) return <Route key={index} component={() => <HomeContainer />} exact path="/home" />;
-    return <Route key={index} component={() => <LoginContainer />} exact path="/login" />;
-  };
-
   return (
     <Switch>
-      <Route component={Unauthorize} exact path="/unauthorize" />
       {routeConfig.auth.map((route, index) => {
-        return getAuthenticatedRoute(route, index);
+        return (
+          <Route
+            key={index}
+            component={() => <ValidRoute authorizedRole={null} route={route} />}
+            exact
+            path={route.path}
+          />
+        );
       })}
       {routeConfig.common.map((route, index) => {
-        return <Route key={index} component={() => route.component()} exact path={route.path} />;
+        return (
+          <Route
+            key={index}
+            component={() => <ValidRoute authorizedRole={user} route={route} />}
+            exact
+            path={route.path}
+          />
+        );
       })}
       {routeConfig.customer.map((route, index) => (
         <Route
@@ -69,7 +66,7 @@ export default function BaseRouter() {
           path={route.path}
         />
       ))}
-      {role === admin && (
+      {/* {role === admin && (
         <Route>
           <Redirect to="/orderHistory" />
         </Route>
@@ -88,7 +85,7 @@ export default function BaseRouter() {
         <Route>
           <Redirect to="/login" />
         </Route>
-      )}
+      )} */}
     </Switch>
   );
 }

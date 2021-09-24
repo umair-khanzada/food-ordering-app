@@ -11,7 +11,7 @@ import {
 
 export const login = (data) => ({ type: LOGIN, payload: data });
 
-export const logout = () => ({ type: LOGOUT });
+export const logout = (data) => ({ type: LOGOUT, payload: data });
 
 export const loginSuccess = (data) => ({ type: LOGIN_SUCCESS, payload: data });
 export const loginError = () => ({ type: LOGIN_ERROR });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
@@ -27,6 +28,7 @@ function LoginForm() {
     return isValid;
   };
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const loginClickHandler = (e) => {
     e.preventDefault();
@@ -36,7 +38,7 @@ function LoginForm() {
         userData[name] = value;
       });
 
-      dispatch(login(userData));
+      dispatch(login({ userData, history }));
     }
   };
   const textFiledChangeHandler = (e, index) => {

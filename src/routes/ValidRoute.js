@@ -4,9 +4,9 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import Unauthorized from '../Features/Unauthorized';
-import { isProtectedRoute } from './Permission';
 
 const ValidRoute = ({ route, authorizedRole }) => {
+  console.log({ route, authorizedRole });
   const { isLoggedIn, role } = useSelector((state) => {
     const {
       authReducer: { isLoggedIn, role },
@@ -16,16 +16,10 @@ const ValidRoute = ({ route, authorizedRole }) => {
       isLoggedIn,
     };
   }, shallowEqual);
-
   const history = useHistory();
-  const { permissions, component: Component } = route;
-
-  if (isLoggedIn && permissions === isProtectedRoute && role === authorizedRole) {
-    return <Component />;
-  }
-
-  if (!isLoggedIn && window.location.pathname === '/login') history.push('/login');
-
+  const { component: Component } = route;
+  if (!authorizedRole && Boolean(!isLoggedIn)) return <Component />;
+  if (Boolean(isLoggedIn) && role === authorizedRole) return <Component />;
   return <Unauthorized />;
 };
 
