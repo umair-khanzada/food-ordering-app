@@ -26,12 +26,11 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
     onDelete(currentSelectedRow);
     dispatch(closeModal());
   };
-
+  console.log('rows', rows);
   const deletModalButtons = [
     { property: 'Cancel', clickHandler: onCancel },
     { property: 'Confirm', clickHandler: onRowDelete },
   ];
-  const [rowsData, setRowsData] = useState([...rows]);
 
   const [page, setPage] = useState(0);
 
@@ -45,7 +44,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
 
     setPage(0);
   };
-
+  const [rowsData, setRowsData] = useState([...rows]);
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
 
   const RowPerPage = (rowsPerPage, rowsData, page) => {
@@ -74,7 +73,8 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
         </CustomTableHead>
 
         <TableBody>
-          {RowPerPage(rowsPerPage, rowsData, page).map((row) => (
+          {console.log('row', rowsData)}
+          {RowPerPage(rowsPerPage, rows, page).map((row) => (
             <TableRow key={row.name}>
               {Object.keys(row).map((data, index) => (
                 <TableCell key={index} cellwidth={cellWidth}>

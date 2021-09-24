@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { ADD_RESTAURANT, FETCH_RESTAURANTS, FETCH_CATEGORIES, ADD_ITEM } from '../../redux/ActionTypes';
+import { ADD_RESTAURANT, FETCH_RESTAURANTS, FETCH_CATEGORIES, ADD_ITEM, FETCH_ITEMS } from '../../redux/ActionTypes';
 import { formMessage } from '../Auth/actions';
 const addRestaurantEpic = (action$, state) =>
   action$.pipe(
@@ -150,6 +150,41 @@ export const addItemEpic = (action$, state) =>
           console.log('error');
 
           return of(formMessage({ message: '', status: 0 }));
+        }),
+      );
+    }),
+  );
+
+export const fetchItemsEpic = (action$, state) =>
+  action$.pipe(
+    ofType(FETCH_ITEMS),
+    mergeMap(({ payload }) => {
+      const {
+        value: {
+          authReducer: { accessToken },
+        },
+      } = state;
+      const {
+        token: { token },
+      } = { token: accessToken };
+
+      return ajax({
+        url: 'http://localhost:4000/v1/items',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: payload,
+      }).pipe(
+        mergeMap((res) => {
+          const {
+            response: { results },
+          } = res;
+          payload(results);
+          return of();
+        }),
+        catchError((err) => {
+          return of();
         }),
       );
     }),

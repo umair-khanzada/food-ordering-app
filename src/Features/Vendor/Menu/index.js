@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import { Grid } from '@material-ui/core';
 import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { MenuList } from '../../../Mock/MenuList';
+import { fetchitems } from '../action';
 import { ButtonContainer, ButtonsContainer, FilterButton, HeaderLeftContainer, HeaderRightContainer } from './style';
 
 function Menu() {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [items, setSaveItems] = useState([]);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
+  useEffect(() => {
+    dispatch(fetchitems(saveItems));
+  }, []);
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const saveItems = (data) => {
+    setSaveItems(data);
+
+    console.log('items', data);
+  };
+
+  const handleDateChange = (data) => {
+    setSelectedDate(data);
   };
 
   const onEdit = (row) => {
@@ -34,6 +46,7 @@ function Menu() {
   function showAddRestraunt() {
     history.push('/restaurant');
   }
+  console.log('itemsss', items);
 
   return (
     <div>
@@ -73,7 +86,7 @@ function Menu() {
               isEditDelete
               onEdit={onEdit}
               padding="5px 11px"
-              rows={MenuList}
+              rows={items}
               tablewidth="90%"
             />
           </div>

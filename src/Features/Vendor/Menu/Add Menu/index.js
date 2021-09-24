@@ -3,15 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddEditForm from '../../../../components/CommonGridBasedForm';
-import { PRICE, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { validateOnSubmit, SelectChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { fetchRestaurant, fetchCategories, additem } from '../../action';
 
 const AddMenu = () => {
   const dispatch = useDispatch();
   const a = 7;
-  const [restaurants, saveRestaurantData] = useState([]);
-  const [categories, saveCategoryData] = useState([]);
+  // const [restaurants, saveRestaurantData] = useState([]);
+  // const [categories, saveCategoryData] = useState([]);
 
   const vendorId = useSelector((state) => {
     const {
@@ -26,62 +26,58 @@ const AddMenu = () => {
   }, []);
 
   const saveRestaurant = (data) => {
-    saveRestaurantData(data);
-
-    // const resName = data.map(({ name }) => name);
-
-    const updatedFields = SelectChangeHandler(fields, data, 1);
+    const resData = data.map(({ name, id }) => ({ label: name, id }));
+    const updatedFields = SelectChangeHandler(fields, resData, 1);
+    console.log(resData);
+    console.log(updatedFields);
     setFields(updatedFields);
     // saveRestaurantData(data);
   };
 
   const saveCategories = (data) => {
-    // const resName = data.map(({ name }) => name);
+    const resData = data.map(({ name, id }) => ({ label: name, id }));
     // console.log(resName, 'saveCategories');
-    const updatedFields = SelectChangeHandler(fields, data, 0);
-    console.log(updatedFields);
-    setFields(updatedFields);
+    const updatedFields = SelectChangeHandler(fields, resData, 0);
 
-    saveCategoryData(data);
+    setFields(updatedFields);
   };
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  // const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState([]);
   // const [restaurant, setRestaurant] = useState([]);
   const [price, setPrice] = useState(null);
   const [name, setName] = useState();
   const [fields, setFields] = useState([
     {
-      type: SELECT,
-      label: 'Categories',
-
+      type: AUTO_COMPLETE,
+      label: '',
       values: [],
+      placeholder: 'Categories',
       value: '',
       isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        // setCategory(event.target.value);
-        console.log('categoryvalue', event.target.value);
-        fields[index].value = event.target.value;
-
-        // fields[index].value = event.target.value;
+      onChange: (event, value) => {
+        if (value !== null) {
+          fields[0].value = value.id;
+        }
       },
     },
     {
-      type: SELECT,
-      label: 'Restaurant',
+      type: AUTO_COMPLETE,
+      label: '',
+      placeholder: 'Restaurants',
       values: [],
       value: '',
       isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
+      onChange: (event, value) => {
         // setRestaurant(event.target.value);
-        console.log('value', event.target.value);
-        console.log(restaurants, 'onchange');
-        // console.log(fields);
-        console.log('a', a);
-        fields[index].value = event.target.value;
+        console.log('value', value);
+        if (value !== null) {
+          fields[1].value = value.id;
+        }
+
         // const restaurantId = restaurants.filter(({ name, id }) => {
         //   if (name === event.target.value) {
         //     return id;
@@ -149,7 +145,6 @@ const AddMenu = () => {
 
   return (
     <>
-      {restaurants.name}
       <AddEditForm buttons={buttons} fields={fields} heading="Add Item" onSaveSuccess={onSaveSuccess} />;
     </>
   );
