@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, shallowEqual, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
-import { login } from '../actions';
+import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
+  const { message, status } = useSelector((state) => {
+    const { message, status } = state.responseMessage;
+    return { message, status };
+  }, shallowEqual);
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = loginForm.map((textField) => {
@@ -41,6 +45,7 @@ function LoginForm() {
       dispatch(login({ userData, history }));
     }
   };
+
   const textFiledChangeHandler = (e, index) => {
     const { value } = e.target;
 
@@ -98,6 +103,11 @@ function LoginForm() {
       },
     ],
   };
+  useEffect(() => {
+    return () => {
+      dispatch(setFormMessage({ message: '', status: 0 }));
+    };
+  }, []);
 
   return (
     <div>
@@ -109,6 +119,7 @@ function LoginForm() {
         inputFields={loginForm}
         label="Create New Account?"
         navigationPath="/signup"
+        responseError={message}
       />
     </div>
   );

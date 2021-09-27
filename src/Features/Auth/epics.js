@@ -6,7 +6,7 @@ import { mergeMap, catchError } from 'rxjs/operators';
 
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS } from '../../redux/ActionTypes';
 import { defaultRouteForRoles } from '../../scripts/constants';
-import { loginSuccess, loginError, logoutSuccess, formMessage } from './actions';
+import { loginSuccess, logoutSuccess, setFormMessage } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
@@ -32,8 +32,13 @@ export const loginEpic = (action$) =>
             }),
           );
         }),
-        catchError(() => {
-          return of(loginError());
+        catchError((err) => {
+          const {
+            response: { message },
+            status,
+          } = err;
+
+          return of(setFormMessage({ message, status }));
         }),
       );
     }),
@@ -72,8 +77,13 @@ export const signUpEpic = (action$) =>
             }),
           );
         }),
-        catchError(() => {
-          return of(loginError());
+        catchError((err) => {
+          const {
+            response: { message },
+            status,
+          } = err;
+
+          return of(setFormMessage({ message, status }));
         }),
       );
     }),
@@ -93,7 +103,7 @@ export const forgotPasswordEpic = (action$) =>
             response: { message },
             status,
           } = res;
-          return of(formMessage({ message, status }));
+          return of(setFormMessage({ message, status }));
         }),
         catchError((err) => {
           const {
@@ -101,7 +111,7 @@ export const forgotPasswordEpic = (action$) =>
             status,
           } = err;
 
-          return of(formMessage({ message, status }));
+          return of(setFormMessage({ message, status }));
         }),
       );
     }),
