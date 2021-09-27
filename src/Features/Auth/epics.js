@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import { ofType } from 'redux-observable';
 import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
