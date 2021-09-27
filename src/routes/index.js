@@ -1,13 +1,27 @@
 import React from 'react';
 
-import { Switch, Route } from 'react-router-dom';
+import { useSelector, shallowEqual } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Roles from '../roles';
 import routeConfig from './RouteConfig';
+import RouteNames from './RouteNames';
 import ValidRoute from './ValidRoute';
 
 export default function BaseRouter() {
   const { vendor, admin, user } = Roles;
+
+  const { isLoggedIn, role } = useSelector((state) => {
+    const {
+      authReducer: { isLoggedIn, role },
+    } = state;
+    return {
+      role,
+      isLoggedIn,
+    };
+  }, shallowEqual);
+
+  const { orderHistory, menuList, dashboard, login } = RouteNames;
 
   return (
     <Switch>
@@ -48,6 +62,26 @@ export default function BaseRouter() {
           path={route.path}
         />
       ))}
+      {isLoggedIn && role === admin && (
+        <Route>
+          <Redirect to={orderHistory} />
+        </Route>
+      )}
+      {isLoggedIn && role === vendor && (
+        <Route>
+          <Redirect to={menuList} />
+        </Route>
+      )}
+      {isLoggedIn && role === Roles.user && (
+        <Route>
+          <Redirect to={dashboard} />
+        </Route>
+      )}
+      {!isLoggedIn && (
+        <Route>
+          <Redirect to={login} />
+        </Route>
+      )}
     </Switch>
   );
 }

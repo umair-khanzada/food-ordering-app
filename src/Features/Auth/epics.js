@@ -121,14 +121,15 @@ export const logoutEpic = (action$, state) =>
     mergeMap(({ payload: { history } }) => {
       const {
         value: {
-          authReducer: { token },
+          authReducer: {
+            refreshToken: { token },
+          },
         },
       } = state;
-      const refreshToken = { refreshToken: token };
       return ajax({
         url: 'http://localhost:4000/v1/auth/logout',
         method: 'POST',
-        body: refreshToken,
+        body: { refreshToken: token },
       }).pipe(
         mergeMap(() => {
           history.push('/login');
