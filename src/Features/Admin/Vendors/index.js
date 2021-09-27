@@ -17,18 +17,18 @@ function VendorList() {
 
   const removeElements = ['role', 'password', 'isEmailVerified'];
 
-  const usersData = FetchUsers('vendor');
+  const vendorsData = FetchUsers('vendor');
 
   useEffect(() => {
-    if (usersData !== undefined) {
-      usersData.map((user) => {
+    if (vendorsData !== undefined) {
+      vendorsData.map((user) => {
         const removeElements = ['password', 'isEmailVerified'];
 
         removeElements.map((removeElement) => delete user[removeElement]);
       });
-      setVendors(usersData);
+      setVendors(vendorsData);
     }
-  }, [usersData]);
+  }, [vendorsData]);
   const history = useHistory();
   const { editVendor, addVendor } = RouteNames;
 
