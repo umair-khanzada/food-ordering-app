@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 
 import { modalReducer } from '../../components/Modal/ducks';
 import { forgotPassword, responseMessage, authReducer } from '../../Features/Auth/ducks';
+import { addtocartReducers } from '../../Features/Customer/ducks';
 
 const persistConfig = {
   key: 'root',
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   forgotPassword,
   responseMessage,
   authReducer,
+  addtocartReducers,
   modalReducer,
 });
 
