@@ -6,7 +6,7 @@ import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 
-const AddUser = () => {
+const EditUser = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const [fields, setFields] = useState([
     {
@@ -97,4 +97,4 @@ const AddUser = () => {
   return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={onSaveSuccess} />;
 };
 
-export default AddUser;
+export default EditUser;
