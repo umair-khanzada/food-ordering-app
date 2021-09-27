@@ -8,9 +8,9 @@ import { emailRegex } from '../../../scripts/constants';
 import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const { message, status } = useSelector((state) => {
-    const { message, status } = state.responseMessage;
-    return { message, status };
+  const { message } = useSelector((state) => {
+    const { message } = state.responseMessage;
+    return { message };
   }, shallowEqual);
   const validateOnSubmit = () => {
     let isValid = true;
@@ -107,6 +107,7 @@ function LoginForm() {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

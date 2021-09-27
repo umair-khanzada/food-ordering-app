@@ -1,26 +1,24 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-
 import CustomTable from '../../../components/CustomTable/index';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 500,
-  },
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-  },
-  reference: {
-    color: 'cornflowerblue',
-  },
-  status: {
-    backgroundColor: '#17be9a',
-    color: 'white',
-  },
-});
+// const useStyles = makeStyles({
+//   table: {
+//     minWidth: 500,
+//   },
+//   container: {
+//     display: 'flex',
+//     alignItems: 'center',
+//     width: '100%',
+//   },
+//   reference: {
+//     color: 'cornflowerblue',
+//   },
+//   status: {
+//     backgroundColor: '#17be9a',
+//     color: 'white',
+//   },
+// });
 const header = ['reference', 'order', 'placed', 'placedby', 'status', 'description', 'cost'];
 const tableData = [
   {

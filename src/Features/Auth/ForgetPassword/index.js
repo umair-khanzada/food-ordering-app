@@ -18,6 +18,7 @@ function ForgetPassword() {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const validateOnSubmit = () => {
     let isValid = true;
