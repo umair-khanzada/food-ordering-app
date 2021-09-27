@@ -3,6 +3,7 @@ import React from 'react';
 
 import { CssBaseline } from '@material-ui/core';
 import ReactDOM from 'react-dom';
+import { QueryClientProvider, QueryClient } from 'react-query';
 import { Provider } from 'react-redux';
 import persistStore from 'redux-persist/es/persistStore';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -12,6 +13,13 @@ import store from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import MaterialThemeWrapper from './theme';
 import GlobalStyles from './theme/GlobalStyles';
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const persistor = persistStore(store);
 
@@ -22,10 +30,13 @@ ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <App />
+          <QueryClientProvider client={queryClient}>
+            <App />
+          </QueryClientProvider>
         </PersistGate>
       </Provider>
     </React.StrictMode>
+    ,
   </MaterialThemeWrapper>,
   document.getElementById('root'),
 );

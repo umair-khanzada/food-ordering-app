@@ -6,7 +6,7 @@ import { fetchUsersEpic } from '../../Features/Admin/Users/epics';
 import { fetchVendorsEpic } from '../../Features/Admin/Vendors/epics';
 import { loginEpic, logoutEpic, signUpEpic, forgotPasswordEpic } from '../../Features/Auth/epics';
 import addRestaurantEpic from '../../Features/Vendor/epic';
-import { fetchRestaurantEpic, fetchCategoriesEpic, addItemEpic, fetchItemsEpic } from '../../Features/Vendor/epic';
+import { addItemEpic, deleteItemEpic } from '../../Features/Vendor/epic';
 
 const rootEpic = combineEpics(
   loginEpic,
@@ -16,12 +16,13 @@ const rootEpic = combineEpics(
   // fetchOrdersEpic,
   fetchVendorsEpic,
   fetchUsersEpic,
-  fetchCategoriesEpic,
+
   addRestaurantEpic,
   createCategoryEpic,
-  fetchRestaurantEpic,
+
   addItemEpic,
-  fetchItemsEpic,
+
+  deleteItemEpic,
 );
 
 export default rootEpic;

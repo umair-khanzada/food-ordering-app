@@ -4,7 +4,6 @@ import { Autocomplete } from '@mui/material';
 import { TextField } from '@mui/material';
 const AutoComplete = (props) => {
   const { values, onChange, index, value, options, label, placeholder } = props;
-  console.log('values', values);
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading

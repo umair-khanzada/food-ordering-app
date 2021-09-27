@@ -9,7 +9,7 @@ import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { fetchitems } from '../action';
+import { FetchItems } from '../request';
 import { ButtonContainer, ButtonsContainer, FilterButton, HeaderLeftContainer, HeaderRightContainer } from './style';
 
 function Menu() {
@@ -18,14 +18,17 @@ function Menu() {
   const [items, setSaveItems] = useState([]);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
+  const itemsData = FetchItems();
+
   useEffect(() => {
-    dispatch(fetchitems(saveItems));
-  }, []);
+    // dispatch(fetchitems(saveItems));
+    if (itemsData !== undefined) {
+      saveItems(itemsData);
+    }
+  }, [itemsData]);
 
-  const saveItems = (data) => {
-    setSaveItems(data);
-
-    console.log('items', data);
+  const saveItems = ({ data: { results } }) => {
+    setSaveItems(results);
   };
 
   const handleDateChange = (data) => {
@@ -46,7 +49,17 @@ function Menu() {
   function showAddRestraunt() {
     history.push('/restaurant');
   }
-  console.log('itemsss', items);
+  function deleteItem(itemId) {
+    // dispatch(deleteitem(currentSelectedRow));
+    // onDelete(currentSelectedRow);
+    // dispatch(closeModal());
+    // const updatedItem=items.filter(()=>{})
+    console.log('id', itemId);
+    console.log('items', items);
+    const updatedItem = items.filter(({ id }) => id !== itemId);
+    console.log('updtaed', updatedItem);
+    setSaveItems(updatedItem);
+  }
 
   return (
     <div>
@@ -82,6 +95,7 @@ function Menu() {
 
           <div style={{ padding: '20px', marginTop: '10px' }}>
             <CustomTable
+              deleteItem={deleteItem}
               header={header}
               isEditDelete
               onEdit={onEdit}

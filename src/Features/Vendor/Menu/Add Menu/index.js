@@ -5,7 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { validateOnSubmit, SelectChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { fetchRestaurant, fetchCategories, additem } from '../../action';
+import { additem } from '../../action';
+import { FetchCategories, FetchRestaurants } from '../../request';
+
+// const fetchRestaurants = async () => {
+//   const res = await axios.get('http://localhost:4000/v1/kitchens');
+//   return res;
+// };
 
 const AddMenu = () => {
   const dispatch = useDispatch();
@@ -19,24 +25,39 @@ const AddMenu = () => {
     } = state;
     return id;
   });
-
+  const restaurantsData = FetchRestaurants();
+  const categoriesData = FetchCategories();
+  // saveRestaurant(restaurantsData);
+  // saveCategories(categoriesData);
   useEffect(() => {
-    dispatch(fetchCategories(saveCategories));
-    dispatch(fetchRestaurant(saveRestaurant));
-  }, []);
+    if (restaurantsData !== undefined) {
+      saveRestaurant(restaurantsData);
+    }
+    if (categoriesData !== undefined) {
+      saveCategories(categoriesData);
+    }
 
-  const saveRestaurant = (data) => {
-    const resData = data.map(({ name, id }) => ({ label: name, id }));
+    // dispatch(fetchCategories(saveCategories));
+    // dispatch(fetchRestaurant(saveRestaurant));
+  }, [restaurantsData, categoriesData]);
+
+  // const [page, setPage] = useState(1);
+  // const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery(
+  //   ['restaurant'],
+  //   () => fetchRestaurants(),
+  //   { keepPreviousData: true },
+  // );
+
+  const saveRestaurant = ({ data: { results } }) => {
+    const resData = results.map(({ name, id }) => ({ label: name, id }));
     const updatedFields = SelectChangeHandler(fields, resData, 1);
-    console.log(resData);
-    console.log(updatedFields);
+
     setFields(updatedFields);
-    // saveRestaurantData(data);
   };
 
-  const saveCategories = (data) => {
-    const resData = data.map(({ name, id }) => ({ label: name, id }));
-    // console.log(resName, 'saveCategories');
+  const saveCategories = ({ data: { results } }) => {
+    const resData = results.map(({ name, id }) => ({ label: name, id }));
+
     const updatedFields = SelectChangeHandler(fields, resData, 0);
 
     setFields(updatedFields);
@@ -73,7 +94,7 @@ const AddMenu = () => {
 
       onChange: (event, value) => {
         // setRestaurant(event.target.value);
-        console.log('value', value);
+
         if (value !== null) {
           fields[1].value = value.id;
         }
@@ -83,7 +104,7 @@ const AddMenu = () => {
         //     return id;
         //   }
         // });
-        // console.log('res', restaurantId);
+
         // fields[index].value = restaurantId;
       },
     },

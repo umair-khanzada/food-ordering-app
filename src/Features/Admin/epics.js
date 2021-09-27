@@ -10,7 +10,6 @@ export const createCategoryEpic = (action$, state) =>
   action$.pipe(
     ofType(ADD_CATEGORY),
     mergeMap(({ payload }) => {
-      console.log('payload', payload);
       const {
         value: {
           authReducer: { accessToken },
@@ -19,7 +18,7 @@ export const createCategoryEpic = (action$, state) =>
       const {
         token: { token },
       } = { token: accessToken };
-      console.log('token', token);
+
       return ajax({
         url: 'http://localhost:4000/v1/categories',
         method: 'POST',
@@ -33,7 +32,7 @@ export const createCategoryEpic = (action$, state) =>
             response: { message },
             status,
           } = res;
-          console.log('success');
+
           return of(formMessage({ message, status }));
         }),
         catchError((err) => {
@@ -41,7 +40,7 @@ export const createCategoryEpic = (action$, state) =>
             response: { message },
             status,
           } = err;
-          console.log('failed');
+
           return of(formMessage({ message, status }));
         }),
       );

@@ -39,7 +39,6 @@ function UsersList() {
 
   useEffect(() => {
     if (users.length > 0) {
-      console.log(users);
       setHeader([...Object.keys(users[0]), 'Edit']);
     }
   }, [users]);

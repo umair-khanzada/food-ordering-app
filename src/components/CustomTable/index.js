@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   TableRow,
@@ -13,20 +13,35 @@ import {
 import { Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 
+import { deleteitem } from '../../Features/Vendor/action';
 import { closeModal, openModal } from '../Modal/action';
 import ConfirmDeletModal from '../Modal/inex';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
-export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
+export default function CustomTable({
+  rows,
+  header,
+  onDelete,
+  cellWidth,
+  tablewidth,
+  onEdit,
+  isEditDelete,
+  deleteItem,
+}) {
   const dispatch = useDispatch();
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
     setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
 
-    onDelete(currentSelectedRow);
+    dispatch(deleteitem(currentSelectedRow));
+    deleteItem(currentSelectedRow);
+    // onDelete(currentSelectedRow);
     dispatch(closeModal());
   };
-  console.log('rows', rows);
+  useEffect(() => {
+    setRowsData(rows);
+  }, [rows]);
+
   const deletModalButtons = [
     { property: 'Cancel', clickHandler: onCancel },
     { property: 'Confirm', clickHandler: onRowDelete },
@@ -44,7 +59,9 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
 
     setPage(0);
   };
+
   const [rowsData, setRowsData] = useState([...rows]);
+
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
 
   const RowPerPage = (rowsPerPage, rowsData, page) => {
@@ -73,8 +90,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
         </CustomTableHead>
 
         <TableBody>
-          {console.log('row', rowsData)}
-          {RowPerPage(rowsPerPage, rows, page).map((row) => (
+          {RowPerPage(rowsPerPage, rowsData, page).map((row) => (
             <TableRow key={row.name}>
               {Object.keys(row).map((data, index) => (
                 <TableCell key={index} cellwidth={cellWidth}>
@@ -90,7 +106,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
 
                   <IconButton
                     onClick={() => {
-                      setCurrentSelectedRow(row);
+                      setCurrentSelectedRow(row.id);
                       dispatch(openModal());
                     }}
                   >
