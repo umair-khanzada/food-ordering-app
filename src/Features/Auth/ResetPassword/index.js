@@ -7,9 +7,9 @@ import FormComponent from '../../../components/FormComponent';
 import { setFormMessage } from '../actions';
 
 function ResetPassword() {
-  const { message, status } = useSelector((state) => {
-    const { message, status } = state.responseMessage;
-    return { message, status };
+  const { message } = useSelector((state) => {
+    const { message } = state.responseMessage;
+    return { message };
   }, shallowEqual);
   useEffect(() => {
     return () => {
