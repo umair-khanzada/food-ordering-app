@@ -4,7 +4,7 @@ import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
 import { ADD_RESTAURANT, ADD_ITEM, DELETE_ITEM } from '../../redux/ActionTypes';
-import { formMessage } from '../Auth/actions';
+import { setFormMessage } from '../Auth/actions';
 const addRestaurantEpic = (action$, state) =>
   action$.pipe(
     ofType(ADD_RESTAURANT),
@@ -32,10 +32,10 @@ const addRestaurantEpic = (action$, state) =>
             status,
           } = res;
 
-          return of(formMessage({ message, status }));
+          return of(setFormMessage({ message, status }));
         }),
         catchError((err) => {
-          return of(formMessage({ message: '', status: 0 }));
+          return of(setFormMessage({ message: '', status: 0 }));
         }),
       );
     }),
@@ -69,10 +69,10 @@ export const addItemEpic = (action$, state) =>
             status,
           } = res;
 
-          return of(formMessage({ message, status }));
+          return of(setFormMessage({ message, status }));
         }),
         catchError((err) => {
-          return of(formMessage({ message: '', status: 0 }));
+          return of(setFormMessage({ message: '', status: 0 }));
         }),
       );
     }),

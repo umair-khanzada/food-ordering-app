@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { ADD_TOCART, CLOSE_DRAWER, DECREMENT, DELETE_ITEM, INCREMENT, OPEN_DRAWER } from '../../redux/ActionTypes';
 
 const initialData = {
