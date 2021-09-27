@@ -6,7 +6,8 @@ import { useHistory } from 'react-router';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
-import { deleteVendorById, fetchVendors } from './actions';
+import { FetchUsers } from '../Common Requests/request';
+import { deleteVendorById } from './actions';
 import { VendorTitleContainer, VendorTitle } from './style';
 
 function VendorList() {
@@ -16,21 +17,18 @@ function VendorList() {
 
   const removeElements = ['role', 'password', 'isEmailVerified'];
 
-  const getVendors = (response) => {
-    setVendors(response);
-  };
+  const usersData = FetchUsers('vendor');
 
   useEffect(() => {
-    dispatch(fetchVendors(getVendors));
-  }, []);
+    if (usersData !== undefined) {
+      usersData.map((user) => {
+        const removeElements = ['password', 'isEmailVerified'];
 
-  useEffect(() => {
-    if (vendors) {
-      vendors.map((vendor) => {
-        removeElements.map((removeElement) => delete vendor[removeElement]);
+        removeElements.map((removeElement) => delete user[removeElement]);
       });
+      setVendors(usersData);
     }
-  }, [vendors]);
+  }, [usersData]);
   const history = useHistory();
   const { editVendor, addVendor } = RouteNames;
 

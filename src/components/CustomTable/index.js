@@ -78,7 +78,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
             <TableRow key={row.id}>
               <TableCell>{index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
-                if (data != 'id') {
+                if (data != 'id' && data !== 'role') {
                   return (
                     <TableCell key={index} cellwidth={cellWidth}>
                       {row[data]}

@@ -8,7 +8,8 @@ import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/F
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { fetchUserById, updateUserById } from '../actions';
+import { FetchUserById } from '../../Common Requests/request';
+import { updateUserById } from '../actions';
 
 const AddUser = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
@@ -16,6 +17,7 @@ const AddUser = () => {
   const dispatch = useDispatch();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
+  const [user, setUser] = useState('');
   const [fields, setFields] = useState([
     {
       type: SELECT,
@@ -102,24 +104,23 @@ const AddUser = () => {
     },
   ]);
 
-  const [user, setUser] = useState('');
-  const getUserResponseFromEpic = (response) => {
-    setUser(response);
-    console.log('resp', response);
-    fields.map((field) => {
-      if (field.label === 'Email') {
-        field.value = response.email;
-      } else if (field.label === 'Name') {
-        field.value = response.name;
-      } else if (field.label === 'Password') {
-        field.value = response.password;
-      }
-    });
-    setFields(fields);
-  };
+  const userById = FetchUserById(id);
+
   useEffect(() => {
-    dispatch(fetchUserById({ id, getUserResponseFromEpic }));
-  }, []);
+    if (userById !== undefined) {
+      setUser(userById);
+      fields.map((field) => {
+        if (field.label === 'Email') {
+          field.value = userById.email;
+        } else if (field.label === 'Name') {
+          field.value = userById.name;
+        } else if (field.label === 'Password') {
+          field.value = userById.password;
+        }
+      });
+      setFields(fields);
+    }
+  }, [userById]);
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);

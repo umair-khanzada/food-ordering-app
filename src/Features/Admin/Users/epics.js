@@ -4,7 +4,7 @@ import { ajax } from 'rxjs/ajax';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 import { baseUrl } from '../../../scripts/constants';
-import { CREATE_USER, DELETE_USER_BY_ID, FETCH_USERS, FETCH_USER_BY_ID, UPDATE_USER_BY_ID } from './ActionTypes';
+import { CREATE_USER, DELETE_USER_BY_ID, FETCH_USER_BY_ID, UPDATE_USER_BY_ID } from './ActionTypes';
 
 export const createUserEpic = (action$, state) =>
   action$.pipe(
@@ -31,35 +31,6 @@ export const createUserEpic = (action$, state) =>
           return of();
         }),
         catchError((error) => {
-          return of();
-        }),
-      );
-    }),
-  );
-export const fetchUsersEpic = (action$, state) =>
-  action$.pipe(
-    ofType(FETCH_USERS),
-    mergeMap(({ payload }) => {
-      const {
-        value: {
-          authReducer: {
-            accessToken: { token },
-          },
-        },
-      } = state;
-      return ajax({
-        url: baseUrl + 'users',
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      }).pipe(
-        mergeMap((res) => {
-          const users = res.response.filter((user) => user.role === 'user');
-          payload(users);
-          return of();
-        }),
-        catchError(() => {
           return of();
         }),
       );

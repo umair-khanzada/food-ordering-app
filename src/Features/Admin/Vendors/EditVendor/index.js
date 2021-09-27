@@ -8,7 +8,8 @@ import { MULTI_SELECT, SELECT, TEXT_FIELD } from '../../../../components/CommonG
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { fetchVendorById, updateVendorById } from '../actions';
+import { FetchUserById } from '../../Common Requests/request';
+import { updateVendorById } from '../actions';
 
 const EditVendor = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
@@ -117,22 +118,24 @@ const EditVendor = () => {
     },
   ]);
   const [vendor, setVendor] = useState('');
-  const getUserResponseFromEpic = (response) => {
-    setVendor(response);
-    fields.map((field) => {
-      if (field.label === 'Email') {
-        field.value = response.email;
-      } else if (field.label === 'Name') {
-        field.value = response.name;
-      } else if (field.label === 'Password') {
-        field.value = response.password;
-      }
-    });
-    setFields(fields);
-  };
+
+  const vendorById = FetchUserById(id);
+
   useEffect(() => {
-    dispatch(fetchVendorById({ id, getUserResponseFromEpic }));
-  }, []);
+    if (vendorById !== undefined) {
+      setVendor(vendorById);
+      fields.map((field) => {
+        if (field.label === 'Email') {
+          field.value = vendorById.email;
+        } else if (field.label === 'Name') {
+          field.value = vendorById.name;
+        } else if (field.label === 'Password') {
+          field.value = vendorById.password;
+        }
+      });
+      setFields(fields);
+    }
+  }, [vendorById]);
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);

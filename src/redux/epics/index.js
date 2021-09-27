@@ -5,7 +5,6 @@ import {
   createUserEpic,
   deleteUserByIdEpic,
   fetchUserByIdEpic,
-  fetchUsersEpic,
   updateUserByIdEpic,
 } from '../../Features/Admin/Users/epics';
 import {
@@ -27,7 +26,7 @@ const rootEpic = combineEpics(
   updateVendorByIdEpic,
   deleteVendorByIdEpic,
   createVendoEpic,
-  fetchUsersEpic,
+
   fetchUserByIdEpic,
   updateUserByIdEpic,
   deleteUserByIdEpic,
