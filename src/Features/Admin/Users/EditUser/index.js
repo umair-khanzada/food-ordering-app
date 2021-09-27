@@ -22,6 +22,7 @@ const AddUser = () => {
       label: 'Role',
       values: ['User', 'Vendor'],
       value: [],
+      name: 'role',
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
@@ -35,6 +36,7 @@ const AddUser = () => {
       label: 'Email',
       variant: 'standard',
       value: '',
+      name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -66,6 +68,7 @@ const AddUser = () => {
       label: 'Password',
       variant: 'standard',
       value: '',
+      name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -84,6 +87,7 @@ const AddUser = () => {
       label: 'Contact',
       variant: 'standard',
       value: '',
+      name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -114,7 +118,6 @@ const AddUser = () => {
     setFields(fields);
   };
   useEffect(() => {
-    console.log('user');
     dispatch(fetchUserById({ id, getUserResponseFromEpic }));
   }, []);
   const saveHandler = () => {

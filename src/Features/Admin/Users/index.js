@@ -6,15 +6,15 @@ import { useHistory } from 'react-router';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
-import { fetchUsers } from './actions';
+import { deleteUserById, fetchUsers } from './actions';
 import { UsersTitleContainer, UsersTitle } from './style';
 function UsersList() {
   const dispatch = useDispatch();
 
   const [users, setUsers] = useState('');
-  const [header, setHeader] = useState([]);
-  const removeElements = ['role', 'password', 'isEmailVerified'];
 
+  const removeElements = ['role', 'password', 'isEmailVerified'];
+  const header = ['S.No', 'name', 'email', 'Edit'];
   const getUsers = (response) => {
     setUsers(response);
   };
@@ -28,9 +28,6 @@ function UsersList() {
       users.map((user) => {
         removeElements.map((removeElement) => delete user[removeElement]);
       });
-      const headers = [...Object.keys(users[0]), 'Edit'];
-
-      setHeader(headers);
     }
   }, [users]);
 
@@ -43,8 +40,8 @@ function UsersList() {
     });
   };
 
-  const onDelete = (row) => {
-    row;
+  const onDelete = ({ id }) => {
+    dispatch(deleteUserById(id));
   };
 
   const history = useHistory();

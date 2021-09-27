@@ -12,7 +12,7 @@ import { VendorTitleContainer, VendorTitle } from './style';
 function VendorList() {
   const dispatch = useDispatch();
   const [vendors, setVendors] = useState('');
-  const [header, setHeader] = useState([]);
+  const header = ['S.No', 'name', 'email', 'Edit'];
 
   const removeElements = ['role', 'password', 'isEmailVerified'];
 
@@ -29,9 +29,6 @@ function VendorList() {
       vendors.map((vendor) => {
         removeElements.map((removeElement) => delete vendor[removeElement]);
       });
-      const headers = [...Object.keys(vendors[0]), 'Edit'];
-
-      setHeader(headers);
     }
   }, [vendors]);
   const history = useHistory();

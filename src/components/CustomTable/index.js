@@ -67,11 +67,8 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
-            <TableHeader>S.No</TableHeader>
             {header.map((head, index) => {
-              if (head != 'id') {
-                return <TableHeader key={index}>{head}</TableHeader>;
-              }
+              return <TableHeader key={index}>{head}</TableHeader>;
             })}
           </TableRow>
         </CustomTableHead>

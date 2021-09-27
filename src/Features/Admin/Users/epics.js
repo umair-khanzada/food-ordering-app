@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { catchError, mergeMap } from 'rxjs/operators';
 
+import { baseUrl } from '../../../scripts/constants';
 import { CREATE_USER, DELETE_USER_BY_ID, FETCH_USERS, FETCH_USER_BY_ID, UPDATE_USER_BY_ID } from './ActionTypes';
 
 export const createUserEpic = (action$, state) =>
@@ -18,7 +19,7 @@ export const createUserEpic = (action$, state) =>
       } = state;
 
       return ajax({
-        url: 'http://localhost:4000/v1/users',
+        url: baseUrl + 'users',
         method: 'POST',
         headers: {
           Authorization: 'Bearer ' + token,
@@ -47,7 +48,7 @@ export const fetchUsersEpic = (action$, state) =>
         },
       } = state;
       return ajax({
-        url: `http://localhost:4000/v1/users`,
+        url: baseUrl + 'users',
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,
@@ -78,7 +79,7 @@ export const fetchUserByIdEpic = (action$, state) =>
       } = state;
 
       return ajax({
-        url: 'http://localhost:4000/v1/users/' + payload.id,
+        url: baseUrl + 'users/' + payload.id,
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,
@@ -109,7 +110,7 @@ export const updateUserByIdEpic = (action$, state) =>
       } = state;
 
       return ajax({
-        url: 'http://localhost:4000/v1/users/' + payload.id,
+        url: baseUrl + 'users/' + payload.id,
         method: 'PATCH',
         headers: {
           Authorization: 'Bearer ' + token,
@@ -138,7 +139,7 @@ export const deleteUserByIdEpic = (action$, state) =>
       } = state;
 
       return ajax({
-        url: 'http://localhost:4000/v1/users/' + payload,
+        url: baseUrl + 'users/' + payload,
         method: 'DELETE',
         headers: {
           Authorization: 'Bearer ' + token,
