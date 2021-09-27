@@ -7,6 +7,7 @@ import {
   SIGNUP,
   MESSAGE,
   LOGOUT_SUCCESS,
+  LOGOUT_ERROR,
 } from '../../redux/ActionTypes';
 
 export const login = (data) => ({ type: LOGIN, payload: data });
@@ -21,3 +22,4 @@ export const signup = (data) => ({ type: SIGNUP, payload: data });
 export const setFormMessage = (data) => ({ type: MESSAGE, payload: data });
 
 export const logoutSuccess = () => ({ type: LOGOUT_SUCCESS });
+export const logoutError = () => ({ type: LOGOUT_ERROR });

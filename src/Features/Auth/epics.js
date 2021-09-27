@@ -5,7 +5,7 @@ import { mergeMap, catchError } from 'rxjs/operators';
 
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS } from '../../redux/ActionTypes';
 import { defaultRouteForRoles } from '../../scripts/constants';
-import { loginSuccess, logoutSuccess, setFormMessage } from './actions';
+import { loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
@@ -135,9 +135,7 @@ export const logoutEpic = (action$, state) =>
           return of(logoutSuccess());
         }),
         catchError(() => {
-          history.push('/login');
-
-          return of(logoutSuccess());
+          return of(logoutError());
         }),
       );
     }),
