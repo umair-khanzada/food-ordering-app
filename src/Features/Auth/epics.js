@@ -11,25 +11,26 @@ import { loginSuccess, loginError, logoutSuccess, setFormMessage } from './actio
 export const loginEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGIN),
-    mergeMap(({ payload }) => {
+    mergeMap(({ payload: { history, userData } }) => {
       return concat(
         of(showLoader()),
         ajax({
           url: 'http://localhost:4000/v1/auth/login',
           method: 'POST',
-          body: payload,
+          body: userData,
         }).pipe(
           mergeMap((res) => {
             const {
-              user: { name },
+              user: { name, role },
               tokens: { refresh, access },
             } = res.response;
-
             return of(
               loginSuccess({
                 name,
+                role,
                 refreshToken: refresh,
                 accessToken: access,
+                history,
               }),
             );
           }),
@@ -125,21 +126,19 @@ export const logoutEpic = (action$, state) =>
         },
       } = state;
       const refreshToken = { refreshToken: token };
-      return concat(
-        of(showLoader()),
-        ajax({
-          url: 'http://localhost:4000/v1/auth/logout',
-          method: 'POST',
-          body: refreshToken,
-        }).pipe(
-          mergeMap(() => {
-            return of(logoutSuccess());
-          }),
-          catchError(() => {
-            return of(logoutSuccess());
-          }),
-        ),
-        of(hideLoader()),
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/logout',
+        method: 'POST',
+        body: refreshToken,
+      }).pipe(
+        mergeMap(() => {
+          history.push('/login');
+          return of(logoutSuccess());
+        }),
+        catchError(() => {
+          history.push('/login');
+          return of(logoutSuccess());
+        }),
       );
     }),
   );
