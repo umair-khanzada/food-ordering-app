@@ -3,7 +3,9 @@ import React from 'react';
 import { History, Dashboard, Person } from '@material-ui/icons';
 
 import RouteNames from '../../routes/RouteNames';
-import { StyledIcon, StyledLink } from './style';
+import StyledLink from '../ReactRouterStyledLink';
+import { StyledIcon } from './style';
+
 const UserSideNav = () => {
   const { orderHistories, dashboard, profile } = RouteNames;
 

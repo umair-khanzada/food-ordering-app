@@ -3,7 +3,8 @@ import React from 'react';
 import { History, PeopleAlt, Category } from '@material-ui/icons';
 
 import RouteNames from '../../routes/RouteNames';
-import { StyledLink, StyledIcon } from './style';
+import StyledLink from '../ReactRouterStyledLink';
+import { StyledIcon } from './style';
 const AdminSideNav = () => {
   const { orderHistory, users, vendors, categories } = RouteNames;
 

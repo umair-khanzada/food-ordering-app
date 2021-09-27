@@ -3,7 +3,8 @@ import React from 'react';
 import { MenuOutlined, Category, Edit } from '@material-ui/icons';
 
 import RouteNames from '../../routes/RouteNames';
-import { StyledIcon, StyledLink } from './style';
+import StyledLink from '../ReactRouterStyledLink';
+import { StyledIcon } from './style';
 
 const VendorSideNav = () => {
   const { categoryList, orderList, menuList } = RouteNames;
