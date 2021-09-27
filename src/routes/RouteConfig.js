@@ -10,7 +10,7 @@ import { MenuListRoute } from '../Features/Vendor/route';
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
 
-  orderPlacer: [dashboardRoute],
+  orderPlacer: [dashboardRoute, MenuListRoute],
 
   admin: [
     orderHistorydRoute,
@@ -40,7 +40,7 @@ const routeConfig = {
 
   officeBoy: [],
 
-  common: [MenuListRoute],
+  common: [],
 };
 
 export default routeConfig;

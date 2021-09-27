@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import MainTab from '../../../components/CardMenus/Tabs';
-import SideMenu from '../../../components/sideMenu';
 
 function Dashboard() {
   const useStyles = makeStyles(() => ({
@@ -41,9 +40,6 @@ function Dashboard() {
   return (
     <div>
       <Grid container>
-        <Grid item md={3}>
-          <SideMenu />
-        </Grid>
         <Grid item md={9}>
           <Box>
             <div className={header}>
