@@ -1,9 +1,14 @@
 import React from 'react';
 
-import { StyledLink } from './style';
+import { StyledIcon, StyledLink } from './style';
 
-const ReactRouterStyledLink = ({ to }) => {
-  return <StyledLink to={to} />;
+const ReactRouterStyledLink = ({ to, icon, label }) => {
+  return (
+    <StyledLink to={to}>
+      <StyledIcon>{icon}</StyledIcon>
+      {label}
+    </StyledLink>
+  );
 };
 
 export default ReactRouterStyledLink;

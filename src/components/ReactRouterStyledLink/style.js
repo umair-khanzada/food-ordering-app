@@ -1,3 +1,4 @@
+import Icon from '@material-ui/core/Icon';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -18,4 +19,8 @@ export const StyledLink = styled(Link)`
     background-color: #00b3e3;
     color: white;
   }
+`;
+
+export const StyledIcon = styled(Icon)`
+  margin-right: 20px;
 `;
