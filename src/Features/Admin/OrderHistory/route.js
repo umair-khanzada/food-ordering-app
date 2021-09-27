@@ -1,4 +1,4 @@
-import { isPublicRoute } from '../../../routes/Permission';
+import { isProtectedRoute } from '../../../routes/Permission';
 import RouteNames from '../../../routes/RouteNames';
 import AddOrder from './AddOrder';
 import EditOrder from './EditOrder';
@@ -6,18 +6,18 @@ import OrderHistory from './index';
 
 export const orderHistorydRoute = {
   path: RouteNames.orderHistory,
-  permissions: isPublicRoute,
+  permissions: isProtectedRoute,
   component: OrderHistory,
 };
 
 export const addOrderdRoute = {
   path: RouteNames.addOrderHistory,
-  permissions: isPublicRoute,
+  permissions: isProtectedRoute,
   component: AddOrder,
 };
 
 export const editOrderdRoute = {
   path: RouteNames.editOrderHistory,
-  permissions: isPublicRoute,
+  permissions: isProtectedRoute,
   component: EditOrder,
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, shallowEqual, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
@@ -31,6 +32,7 @@ function LoginForm() {
     return isValid;
   };
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const loginClickHandler = (e) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ function LoginForm() {
         userData[name] = value;
       });
 
-      dispatch(login(userData));
+      dispatch(login({ userData, history }));
     }
   };
 

@@ -1,16 +1,23 @@
-import { isPublicRoute } from '../../routes/Permission';
+import { isProtectedRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
-import Dashboard from '../Dashboard';
+import Dashboard from './Dashboard';
+import CustomerOrderHistory from './OrderHistory/OrderHistory';
 import Profile from './UserProfile/Profile';
 
 export const dashboardRoute = {
   path: RouteNames.dashboard,
-  permissions: isPublicRoute, // to intimate it is public route
+  permissions: isProtectedRoute, // to intimate it is public route
   component: Dashboard,
 };
 
 export const profileRoute = {
   path: RouteNames.profile,
-  permissions: isPublicRoute, // to intimate it is public route
+  permissions: isProtectedRoute, // to intimate it is public route
   component: Profile,
+};
+
+export const customerOrderHistoryRoute = {
+  path: RouteNames.orderHistories,
+  permissions: isProtectedRoute, // to intimate it is public route
+  component: CustomerOrderHistory,
 };

@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { Drawer, Icon, IconButton } from '@material-ui/core';
+import { Drawer } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Category, History, PeopleAlt } from '@material-ui/icons';
-import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 
-import RouteNames from '../../routes/RouteNames';
+import Roles from '../../roles';
+import AdminSideNav from './AdminSideNav';
+import UserSideNav from './UserSideNav';
+import VendorSideNav from './VendorSideNav';
 
 function SideMenu() {
   const useStyles = makeStyles(() => ({
@@ -17,39 +19,30 @@ function SideMenu() {
     navigation: {
       marginTop: '50px',
     },
-    list: {
-      fontSize: '22px',
-      paddingBottom: '40px',
-    },
-    link: {
-      borderRadius: '0px',
-      color: '#717271',
-      fontSize: '20px',
-      fontWeight: '200',
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'left',
-      '&:hover': {
-        backgroundColor: '#00B3E3',
-        color: 'white',
-      },
-    },
+
     mainDiv: {
       width: '100%',
       height: '100%',
-    },
-    icon: {
-      marginRight: '10px',
     },
     drawer: {
       height: '100%',
     },
   }));
-  const classes = useStyles();
-  const { orderHistory, users, vendors, categories } = RouteNames;
-  const history = useHistory();
 
-  const { drawer, drawerPaper, navigation, list, link, icon, mainDiv } = classes;
+  const { role } = useSelector((state) => {
+    const {
+      authReducer: { role },
+    } = state;
+
+    return {
+      role,
+    };
+  });
+
+  const { vendor, admin, user } = Roles;
+  const classes = useStyles();
+
+  const { drawer, drawerPaper, navigation, mainDiv } = classes;
   return (
     <div className={mainDiv}>
       <Drawer
@@ -61,38 +54,11 @@ function SideMenu() {
         variant="permanent"
       >
         <div className={navigation}>
-          <p className={list}>
-            <IconButton className={link} onClick={() => history.push(orderHistory)}>
-              <Icon className={icon}>
-                <History />
-              </Icon>
-              Order History
-            </IconButton>
-          </p>
-          <p className={list}>
-            <IconButton className={link} onClick={() => history.push(vendors)}>
-              <Icon className={icon}>
-                <PeopleAlt />
-              </Icon>
-              Vendors
-            </IconButton>
-          </p>
-          <p className={list}>
-            <IconButton className={link} onClick={() => history.push(users)}>
-              <Icon className={icon}>
-                <PeopleAlt />
-              </Icon>
-              Users
-            </IconButton>
-          </p>
-          <p className={list}>
-            <IconButton className={link} onClick={() => history.push(categories)}>
-              <Icon className={icon}>
-                <Category />
-              </Icon>
-              Categories
-            </IconButton>
-          </p>
+          {role === admin && <AdminSideNav />}
+
+          {role === user && <UserSideNav />}
+
+          {role === vendor && <VendorSideNav />}
         </div>
       </Drawer>
     </div>
