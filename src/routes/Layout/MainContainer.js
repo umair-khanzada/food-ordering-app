@@ -5,16 +5,19 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import AppBar from '../../components/AppBar/AppBar';
+import Loader from '../../components/Loader';
 import SideMenu from '../../components/sideMenu';
 import History from '../../util/History';
 import BaseRouter from '../index';
 function MainContainer() {
-  const { isLoggedIn } = useSelector((state) => {
+  const { isLoggedIn, isLoading } = useSelector((state) => {
     const {
       authReducer: { isLoggedIn },
+      loaderReducer: { isLoading },
     } = state;
     return {
       isLoggedIn,
+      isLoading,
     };
   }, shallowEqual);
 
@@ -34,7 +37,7 @@ function MainContainer() {
           </Grid>
         </>
       ) : (
-        baseRouter
+        <>{isLoading ? <Loader /> : baseRouter}</>
       )}
     </Router>
   );
