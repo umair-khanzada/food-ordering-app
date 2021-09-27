@@ -6,8 +6,9 @@ import { useHistory } from 'react-router';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
-import { fetchCategories } from '../actions';
+import { FetchCategories } from '../../Vendor/request';
 import { CategoriesTitleContainer, CategoriesTitle } from './style';
+
 function CategoryList() {
   const { addCategory, editCategory } = RouteNames;
   const history = useHistory();
@@ -17,29 +18,38 @@ function CategoryList() {
       state: { data: row },
     });
   };
+  const [categories, setCategories] = useState([]);
+
+  const categoriesData = FetchCategories();
+  // saveRestaurant(restaurantsData);
+  // saveCategories(categoriesData);
+  useEffect(() => {
+    if (categoriesData !== undefined) {
+      saveCategories(categoriesData);
+    }
+  }, [categoriesData]);
+
+  const saveCategories = ({ data: { results } }) => {
+    console.log('results', results);
+    const resData = results.map(({ name }) => ({ name }));
+    setCategories(resData);
+    console.log(resData);
+
+    // const updatedFields = SelectChangeHandler(fields, resData, 0);
+
+    // setFields(updatedFields);
+  };
 
   const onDelete = (row) => {
     row;
-  };
-
-  const [categories, setCategories] = useState([]);
-
-  const getCategoriesResponseFromEpic = (response) => {
-    setCategories(response);
   };
 
   const [header, setHeader] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCategories(getCategoriesResponseFromEpic));
+    setHeader(['No', 'Categories', 'Edit']);
   }, []);
-
-  useEffect(() => {
-    if (categories.length > 0) {
-      setHeader([...Object.keys(categories[0]), 'Edit']);
-    }
-  }, [categories]);
 
   return (
     <>

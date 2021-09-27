@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { ADD_CATEGORY, FETCH_CATEGORIES } from '../../redux/ActionTypes';
+import { ADD_CATEGORY } from '../../redux/ActionTypes';
 import { formMessage } from './actions';
 
 export const createCategoryEpic = (action$, state) =>
@@ -47,21 +47,21 @@ export const createCategoryEpic = (action$, state) =>
     }),
   );
 
-export const fetchCategoriesEpic = (action$, state) =>
-  action$.pipe(
-    ofType(FETCH_CATEGORIES),
-    mergeMap(({ payload }) => {
-      return ajax({
-        url: 'http://localhost:4000/categories',
-        method: 'GET',
-      }).pipe(
-        mergeMap((res) => {
-          payload(res.response);
-          return of();
-        }),
-        catchError(() => {
-          return of();
-        }),
-      );
-    }),
-  );
+// export const fetchCategoriesEpic = (action$, state) =>
+//   action$.pipe(
+//     ofType(FETCH_CATEGORIES),
+//     mergeMap(({ payload }) => {
+//       return ajax({
+//         url: 'http://localhost:4000/categories',
+//         method: 'GET',
+//       }).pipe(
+//         mergeMap((res) => {
+//           payload(res.response);
+//           return of();
+//         }),
+//         catchError(() => {
+//           return of();
+//         }),
+//       );
+//     }),
+//   );

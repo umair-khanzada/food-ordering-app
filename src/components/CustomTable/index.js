@@ -90,8 +90,9 @@ export default function CustomTable({
         </CustomTableHead>
 
         <TableBody>
-          {RowPerPage(rowsPerPage, rowsData, page).map((row) => (
+          {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
             <TableRow key={row.name}>
+              <TableCell>{index + 1}</TableCell>
               {Object.keys(row).map((data, index) => (
                 <TableCell key={index} cellwidth={cellWidth}>
                   {row[data]}
