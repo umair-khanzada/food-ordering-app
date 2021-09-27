@@ -18,6 +18,7 @@ import {
   NavTitle,
   NisumText,
   NisumTextColor,
+  ErrorRespose,
 } from './styles';
 
 const FormComponent = ({
@@ -30,7 +31,6 @@ const FormComponent = ({
   changeHandler,
   responseError,
 }) => {
-  const paperStyle = { padding: 20, height: '100%', width: 400, opacity: 0.9 };
   const [checked, setChecked] = useState(false);
   useEffect(() => {
     setChecked(true);
@@ -48,6 +48,7 @@ const FormComponent = ({
             <Collapse in={checked} timeout={1000}>
               <Form elevation={10}>
                 <FormHeading>{formTitle}</FormHeading>
+                <ErrorRespose>{responseError}</ErrorRespose>
                 {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
                   <InputBox key={name + '-' + i} className="inputFields">
                     <BasicTextFields
@@ -75,12 +76,12 @@ const FormComponent = ({
                     />
                   </div>
                 ))}
+
                 <BasicLink>
                   <Label to={navigationPath}>{label}</Label>
 
                   <ForgotPassword to="/forget-password">{forgotPassword}</ForgotPassword>
                 </BasicLink>
-                <Error>{responseError}</Error>
               </Form>
             </Collapse>
           </GridItem>

@@ -15,8 +15,8 @@ export const IconContainer = styled.div`
 export const CustomTableContainer = styled(TableContainer)`
   width: ${({ tablewidth }) => tablewidth};
   & .MuiTableCell-root {
-    padding: ${({ padding }) => padding};
-    line-height: 25px;
+    padding: 5px 14px;
+    line-height: 38px;
   }
   margin: auto;
 `;
