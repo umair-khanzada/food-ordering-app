@@ -33,7 +33,7 @@ export const loginEpic = (action$) =>
             response: { message },
             status,
           } = err;
-          console.log(message);
+
           return of(setFormMessage({ message, status }));
         }),
       );

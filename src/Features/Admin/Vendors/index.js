@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
+import { GetHeader } from '../../../scripts/constants';
 import { deleteUserById } from '../Common Requests/mutation';
 import { FetchUsers } from '../Common Requests/request';
 import { VendorTitleContainer, VendorTitle } from './style';
 
 function VendorList() {
-  const { token } = useSelector((state) => {
-    const {
-      authReducer: {
-        accessToken: { token },
-      },
-    } = state;
-    return {
-      token,
-    };
-  });
+  const { headers } = GetHeader();
 
   const [vendors, setVendors] = useState('');
   const header = ['S.No', 'name', 'email', 'Edit'];
-  const { isLoading, isError, data: vendorsData, error, refetch } = FetchUsers('vendor');
+  const { isLoading, isError, data: vendorsData, error, refetch: refetchVendor } = FetchUsers('vendor');
   const Deletevendor = useMutation(deleteUserById, {
     onError: () => {},
     onSuccess: () => {
-      refetch();
+      refetchVendor();
     },
   });
   useEffect(() => {
@@ -53,7 +44,7 @@ function VendorList() {
   };
 
   const onDelete = ({ id }) => {
-    Deletevendor.mutateAsync({ id, token });
+    Deletevendor.mutateAsync({ id, headers });
   };
 
   return (

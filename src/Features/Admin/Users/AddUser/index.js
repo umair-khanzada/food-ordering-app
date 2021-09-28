@@ -6,12 +6,12 @@ import { useSelector } from 'react-redux';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex } from '../../../../scripts/constants';
+import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 
 const AddUser = () => {
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const { headers } = GetHeader();
   const { token } = useSelector((state) => {
     const {
       authReducer: {
@@ -24,10 +24,10 @@ const AddUser = () => {
   });
   const AddUser = useMutation(createUser, {
     onError: (error) => {
-      console.log(`rolling back optimistic add with id `, error);
+      console.log(error);
     },
     onSuccess: (data) => {
-      console.log(`add with id`, data);
+      console.log('data', data);
     },
   });
   const [fields, setFields] = useState([
@@ -129,11 +129,7 @@ const AddUser = () => {
         }
       });
 
-      AddUser.mutateAsync({ token, userData });
-
-      setOnSaveSuccess(true);
-    } else {
-      setOnSaveSuccess(false);
+      AddUser.mutateAsync({ headers, userData });
     }
   };
 
@@ -148,7 +144,7 @@ const AddUser = () => {
     ],
   };
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" onSaveSuccess={onSaveSuccess} />;
+  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" onSaveSuccess={AddUser.isSuccess} />;
 };
 
 export default AddUser;

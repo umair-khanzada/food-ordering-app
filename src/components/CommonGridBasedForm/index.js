@@ -65,7 +65,7 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSu
         </Typography>
       </Grid>
       <StyledGridColumnItem item>
-        <Grid container direction="row" justifyContent="space-around" spacing={3}>
+        <Grid container direction="row" spacing={3}>
           {fields &&
             fields.map((data, index) => {
               return (

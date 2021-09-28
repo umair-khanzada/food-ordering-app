@@ -1,36 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex } from '../../../../scripts/constants';
+import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
 const EditVendor = () => {
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const { token } = useSelector((state) => {
-    const {
-      authReducer: {
-        accessToken: { token },
-      },
-    } = state;
-    return {
-      token,
-    };
-  });
+  const { headers } = GetHeader();
   const EditVendor = useMutation(editUserById, {
-    onError: (error) => {
-      console.log(`rolling back optimistic update with id `, error);
-    },
-    onSuccess: (data) => {
-      console.log(`update with id`, data);
-    },
+    onError: () => {},
+    onSuccess: () => {},
   });
   const history = useHistory();
 
@@ -145,20 +130,6 @@ const EditVendor = () => {
       setVendor(vendorById);
       fields.map((field) => {
         field.value = vendorById[field.name];
-
-        // if (field.label === 'Email') {
-        //   console.log(vendorById[field.name]);
-        //   field.value = vendorById.email;
-        //   console.log('value', field.value);
-        // } else if (field.label === 'Name') {
-        //   console.log(vendorById[field.name]);
-        //   field.value = vendorById.name;
-        //   console.log('value', field.value);
-        // } else if (field.label === 'Password') {
-        //   console.log(vendorById[field.name]);
-        //   field.value = vendorById.password;
-        //   console.log('value', field.value);
-        // }
       });
       setFields(fields);
     }
@@ -174,10 +145,7 @@ const EditVendor = () => {
           vendorData[name] = value;
         }
       });
-      EditVendor.mutateAsync({ id, token, vendorData });
-      setOnSaveSuccess(true);
-    } else {
-      setOnSaveSuccess(false);
+      EditVendor.mutateAsync({ id, headers, vendorData });
     }
   };
 
@@ -192,7 +160,9 @@ const EditVendor = () => {
     ],
   };
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={EditVendor.isSuccess} />
+  );
 };
 
 export default EditVendor;

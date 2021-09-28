@@ -1,29 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex } from '../../../../scripts/constants';
+import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
 const AddUser = () => {
-  const { token } = useSelector((state) => {
-    const {
-      authReducer: {
-        accessToken: { token },
-      },
-    } = state;
-    return {
-      token,
-    };
-  });
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const { headers } = GetHeader();
   const history = useHistory();
 
   const params = new URLSearchParams(history.location.search);
@@ -128,12 +117,8 @@ const AddUser = () => {
   }, [userById]);
 
   const EditUser = useMutation(editUserById, {
-    onError: (error) => {
-      console.log(`rolling back optimistic update with id `, error);
-    },
-    onSuccess: (data) => {
-      console.log(`update with id`, data);
-    },
+    onError: (error) => {},
+    onSuccess: (data) => {},
   });
 
   const saveHandler = () => {
@@ -148,11 +133,7 @@ const AddUser = () => {
         }
       });
 
-      EditUser.mutateAsync({ id, token, userData });
-
-      setOnSaveSuccess(true);
-    } else {
-      setOnSaveSuccess(false);
+      EditUser.mutateAsync({ id, headers, userData });
     }
   };
 
@@ -170,7 +151,7 @@ const AddUser = () => {
   return EditUser.isLoading ? (
     <img alt="loader" src="https://flevix.com/wp-content/uploads/2020/01/Bounce-Bar-Preloader-1.gif" />
   ) : (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={onSaveSuccess} />
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={EditUser.isSuccess} />
   );
 };
 

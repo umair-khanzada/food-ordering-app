@@ -1,33 +1,18 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex } from '../../../../scripts/constants';
+import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 const AddVendor = () => {
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const { token } = useSelector((state) => {
-    const {
-      authReducer: {
-        accessToken: { token },
-      },
-    } = state;
-    return {
-      token,
-    };
-  });
+  const { headers } = GetHeader();
   const AddVendor = useMutation(createUser, {
-    onError: (error) => {
-      console.log(`rolling back optimistic add with id `, error);
-    },
-    onSuccess: (data) => {
-      console.log(`add with id`, data);
-    },
+    onError: (error) => {},
+    onSuccess: (data) => {},
   });
   const [fields, setFields] = useState([
     {
@@ -140,11 +125,7 @@ const AddVendor = () => {
           vendorData[name] = value;
         }
       });
-      AddVendor.mutateAsync({ token, vendorData });
-
-      setOnSaveSuccess(true);
-    } else {
-      setOnSaveSuccess(false);
+      AddVendor.mutateAsync({ headers, vendorData });
     }
   };
 
@@ -159,7 +140,9 @@ const AddVendor = () => {
     ],
   };
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={AddVendor.isSuccess} />
+  );
 };
 
 export default AddVendor;
