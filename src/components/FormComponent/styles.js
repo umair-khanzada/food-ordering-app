@@ -16,8 +16,14 @@ export const Form = styled.form`
 export const InputBox = styled.div`
   height: 95px;
 `;
+export const ErrorRespose = styled.div`
+  margin-bottom: 32px;
+  margin-left: 10px;
+  color: red;
+  font-size: 16px;
+`;
 export const Error = styled.span`
-  justify-content: top;
+  margin: 10px;
   color: red;
 `;
 export const FormHeading = styled.h1`
