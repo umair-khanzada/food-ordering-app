@@ -1,14 +1,13 @@
+import axios from 'axios';
+
 import { baseBackEndURL } from '../../../scripts/constants';
 
 export const editUser = async ({ id, body, token }) => {
-  const res = await fetch(baseBackEndURL + '/users/' + id, {
-    method: 'PATCH',
+  const res = await axios.patch(baseBackEndURL + '/users/' + id, body, {
     headers: {
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(body),
   });
-  const data = await res.json();
-  return data;
+
+  return res;
 };
