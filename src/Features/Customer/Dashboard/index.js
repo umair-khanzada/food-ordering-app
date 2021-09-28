@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Box } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 import MainTab from '../../../components/CardMenus/Tabs';

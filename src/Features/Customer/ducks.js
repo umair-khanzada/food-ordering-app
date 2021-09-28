@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 import { ADD_TOCART, CLOSE_DRAWER, DECREMENT, DELETE_ITEM, INCREMENT, OPEN_DRAWER } from '../../redux/ActionTypes';
 
 const initialData = {
@@ -16,7 +15,7 @@ export const addtocartReducers = (state = initialData, action) => {
     case CLOSE_DRAWER:
       return { ...state, isDrawerOpen: false };
 
-    case ADD_TOCART:
+    case ADD_TOCART: {
       const { id, name, price, img, qty } = action.payload;
 
       const filter = state.cart.filter((elem) => elem.id === id);
@@ -49,7 +48,7 @@ export const addtocartReducers = (state = initialData, action) => {
         isDrawerOpen: true,
         count: state.cart.length + 1,
       };
-
+    }
     case INCREMENT:
       state.cart.map((element, index) => {
         if (element.id == action.payload.id) {
@@ -72,13 +71,13 @@ export const addtocartReducers = (state = initialData, action) => {
       });
       return { ...state, cart: [...state.cart] };
 
-    case DELETE_ITEM:
+    case DELETE_ITEM: {
       const updCart = state.cart.filter((element) => element.id !== action.payload.id);
       return {
         ...state,
         cart: updCart,
       };
-
+    }
     default:
       return state;
   }

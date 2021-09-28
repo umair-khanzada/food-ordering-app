@@ -68,11 +68,10 @@ const TemporaryDrawer = () => {
                           <AddToCartImg alt="cart" src={cartdata.img} />
 
                           <DrawerPrice>
-                            <div style={{ position: 'relative', marginLeft: '5vh' }}>
-                              <CartCancel>
-                                <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
-                              </CartCancel>
-                            </div>
+                            <CartCancel>
+                              <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
+                            </CartCancel>
+
                             <Add>
                               <div>
                                 <h4>{cartdata.name}</h4>

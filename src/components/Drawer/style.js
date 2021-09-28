@@ -1,4 +1,4 @@
-import { Button, Card, Drawer, Modal } from '@material-ui/core';
+import { Button, Card, Drawer, Modal, Typography } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
@@ -151,7 +151,7 @@ export const ModalIcons = styled.div`
 export const PriceSpan = styled.span`
   margin: 20px;
 `;
-export const EmptyCartHeading = styled.h2`
+export const EmptyCartHeading = styled(Typography)`
   color: #00b3e3;
 `;
 export const EmptyCartPara = styled.p`
