@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
@@ -8,13 +9,23 @@ import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/F
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
-import { updateUserById } from '../actions';
 
 const AddUser = () => {
+  const { token } = useSelector((state) => {
+    const {
+      authReducer: {
+        accessToken: { token },
+      },
+    } = state;
+    return {
+      token,
+    };
+  });
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const history = useHistory();
-  const dispatch = useDispatch();
+
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [user, setUser] = useState('');
@@ -104,23 +115,27 @@ const AddUser = () => {
     },
   ]);
 
-  const userById = FetchUserById(id);
+  const { data: userById, isLoading } = FetchUserById(id);
 
   useEffect(() => {
     if (userById !== undefined) {
       setUser(userById);
       fields.map((field) => {
-        if (field.label === 'Email') {
-          field.value = userById.email;
-        } else if (field.label === 'Name') {
-          field.value = userById.name;
-        } else if (field.label === 'Password') {
-          field.value = userById.password;
-        }
+        field.value = userById[field.name];
       });
       setFields(fields);
     }
   }, [userById]);
+
+  const EditUser = useMutation(editUserById, {
+    onError: (error) => {
+      console.log(`rolling back optimistic update with id `, error);
+    },
+    onSuccess: (data) => {
+      console.log(`update with id`, data);
+    },
+  });
+
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
@@ -132,15 +147,10 @@ const AddUser = () => {
           userData[name] = value;
         }
       });
-      dispatch(
-        updateUserById({
-          id,
-          userData,
-        }),
-      );
+
+      EditUser.mutateAsync({ id, token, userData });
 
       setOnSaveSuccess(true);
-      history.push('/vendors');
     } else {
       setOnSaveSuccess(false);
     }
@@ -157,7 +167,11 @@ const AddUser = () => {
     ],
   };
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={onSaveSuccess} />;
+  return EditUser.isLoading ? (
+    <img alt="loader" src="https://flevix.com/wp-content/uploads/2020/01/Bounce-Bar-Preloader-1.gif" />
+  ) : (
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={onSaveSuccess} />
+  );
 };
 
 export default AddUser;

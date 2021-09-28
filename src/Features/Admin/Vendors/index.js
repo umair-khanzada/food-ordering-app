@@ -1,26 +1,39 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
+import { deleteUserById } from '../Common Requests/mutation';
 import { FetchUsers } from '../Common Requests/request';
-import { deleteVendorById } from './actions';
 import { VendorTitleContainer, VendorTitle } from './style';
 
 function VendorList() {
-  const dispatch = useDispatch();
+  const { token } = useSelector((state) => {
+    const {
+      authReducer: {
+        accessToken: { token },
+      },
+    } = state;
+    return {
+      token,
+    };
+  });
+
   const [vendors, setVendors] = useState('');
   const header = ['S.No', 'name', 'email', 'Edit'];
-
-  const removeElements = ['role', 'password', 'isEmailVerified'];
-
-  const vendorsData = FetchUsers('vendor');
-
+  const { isLoading, isError, data: vendorsData, error, refetch } = FetchUsers('vendor');
+  const Deletevendor = useMutation(deleteUserById, {
+    onError: () => {},
+    onSuccess: () => {
+      refetch();
+    },
+  });
   useEffect(() => {
-    if (vendorsData !== undefined) {
+    if (Array.isArray(vendorsData)) {
       vendorsData.map((user) => {
         const removeElements = ['password', 'isEmailVerified'];
 
@@ -40,7 +53,7 @@ function VendorList() {
   };
 
   const onDelete = ({ id }) => {
-    dispatch(deleteVendorById(id));
+    Deletevendor.mutateAsync({ id, token });
   };
 
   return (

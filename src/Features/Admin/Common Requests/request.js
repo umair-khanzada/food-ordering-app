@@ -14,8 +14,7 @@ const userList = async (token, userType) => {
 };
 export const FetchUsers = (userType) => {
   const { token } = AuthToken();
-  const { data, status } = useQuery('users', () => userList(token, userType));
-  return data;
+  return useQuery('users', () => userList(token, userType));
 };
 
 const userById = async (token, id) => {
@@ -29,7 +28,6 @@ const userById = async (token, id) => {
 };
 export const FetchUserById = (id) => {
   const { token } = AuthToken();
-  const { data, status } = useQuery('usersById', () => userById(token, id));
 
-  return data;
+  return useQuery('usersById', () => userById(token, id));
 };

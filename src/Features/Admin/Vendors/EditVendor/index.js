@@ -1,21 +1,39 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
-import { MULTI_SELECT, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
-import { updateVendorById } from '../actions';
 
 const EditVendor = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
+  const { token } = useSelector((state) => {
+    const {
+      authReducer: {
+        accessToken: { token },
+      },
+    } = state;
+    return {
+      token,
+    };
+  });
+  const EditVendor = useMutation(editUserById, {
+    onError: (error) => {
+      console.log(`rolling back optimistic update with id `, error);
+    },
+    onSuccess: (data) => {
+      console.log(`update with id`, data);
+    },
+  });
   const history = useHistory();
-  const dispatch = useDispatch();
+
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [fields, setFields] = useState([
@@ -26,6 +44,19 @@ const EditVendor = () => {
       value: [],
       errorMessage: '',
       name: 'role',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: '',
+      name: 'name',
+      errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
         setFields(updatedFields);
@@ -50,19 +81,7 @@ const EditVendor = () => {
         return '';
       },
     },
-    {
-      type: TEXT_FIELD,
-      textFieldType: 'text',
-      label: 'Name',
-      variant: 'standard',
-      value: '',
-      name: 'name',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
-        setFields(updatedFields);
-      },
-    },
+
     {
       type: TEXT_FIELD,
       textFieldType: 'password',
@@ -103,7 +122,7 @@ const EditVendor = () => {
       },
     },
     {
-      type: MULTI_SELECT,
+      type: SELECT,
       label: 'Building',
       values: ['Main', 'Cherry', 'Qasre Sheeren'],
       value: [],
@@ -119,19 +138,27 @@ const EditVendor = () => {
   ]);
   const [vendor, setVendor] = useState('');
 
-  const vendorById = FetchUserById(id);
+  const { data: vendorById } = FetchUserById(id);
 
   useEffect(() => {
     if (vendorById !== undefined) {
       setVendor(vendorById);
       fields.map((field) => {
-        if (field.label === 'Email') {
-          field.value = vendorById.email;
-        } else if (field.label === 'Name') {
-          field.value = vendorById.name;
-        } else if (field.label === 'Password') {
-          field.value = vendorById.password;
-        }
+        field.value = vendorById[field.name];
+
+        // if (field.label === 'Email') {
+        //   console.log(vendorById[field.name]);
+        //   field.value = vendorById.email;
+        //   console.log('value', field.value);
+        // } else if (field.label === 'Name') {
+        //   console.log(vendorById[field.name]);
+        //   field.value = vendorById.name;
+        //   console.log('value', field.value);
+        // } else if (field.label === 'Password') {
+        //   console.log(vendorById[field.name]);
+        //   field.value = vendorById.password;
+        //   console.log('value', field.value);
+        // }
       });
       setFields(fields);
     }
@@ -147,15 +174,8 @@ const EditVendor = () => {
           vendorData[name] = value;
         }
       });
-      dispatch(
-        updateVendorById({
-          id,
-          vendorData,
-        }),
-      );
-
+      EditVendor.mutateAsync({ id, token, vendorData });
       setOnSaveSuccess(true);
-      history.push('/vendors');
     } else {
       setOnSaveSuccess(false);
     }
