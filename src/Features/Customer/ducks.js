@@ -6,7 +6,7 @@ const initialData = {
   count: 0,
 };
 export const addtocartReducers = (state = initialData, action) => {
-  const updatedCart = [];
+  // const updatedCart = [];
 
   switch (action.type) {
     case OPEN_DRAWER:
@@ -20,13 +20,13 @@ export const addtocartReducers = (state = initialData, action) => {
 
       const filter = state.cart.filter((elem) => elem.id === id);
 
-      const obj = {
-        id,
-        name,
-        price,
-        img,
-        qty,
-      };
+      // const obj = {
+      //   id,
+      //   name,
+      //   price,
+      //   img,
+      //   qty,
+      // };
 
       if (filter.length > 0) {
         state.cart.map((element, index) => {

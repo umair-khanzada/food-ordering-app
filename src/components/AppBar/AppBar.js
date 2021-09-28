@@ -14,10 +14,12 @@ import { StyledAppBar, StyledDiv, StyledLogo, StyledMenuItem } from './Style';
 const NavBar = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const history = useHistory();
   const logOut = () => {
-    dispatch(logout());
+    dispatch(logout({ history }));
   };
 
+<<<<<<< HEAD
   const cartItemCount = useSelector((state) => {
     const {
       addtocartReducers: { cart },
@@ -28,6 +30,8 @@ const NavBar = () => {
 
   const history = useHistory();
 
+=======
+>>>>>>> db1ceb786c3180234b623f4c9151aae094ea015f
   const { resetPassword } = RouteNames;
 
   return (

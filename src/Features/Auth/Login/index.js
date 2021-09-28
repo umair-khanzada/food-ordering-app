@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, shallowEqual, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
 import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const { message, status } = useSelector((state) => {
-    const { message, status } = state.responseMessage;
-    return { message, status };
+  const { message } = useSelector((state) => {
+    const { message } = state.responseMessage;
+    return { message };
   }, shallowEqual);
   const validateOnSubmit = () => {
     let isValid = true;
@@ -31,6 +32,7 @@ function LoginForm() {
     return isValid;
   };
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const loginClickHandler = (e) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ function LoginForm() {
         userData[name] = value;
       });
 
-      dispatch(login(userData));
+      dispatch(login({ userData, history }));
     }
   };
 
@@ -105,6 +107,7 @@ function LoginForm() {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
