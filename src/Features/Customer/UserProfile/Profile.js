@@ -116,7 +116,7 @@ const AddUser = () => {
     const [{ value: name }, { value: email }, { value: password }] = fields;
 
     isValid &&
-      editUserQuery.mutateAsync({
+      editUserQuery.mutate({
         id,
         body: {
           name,
