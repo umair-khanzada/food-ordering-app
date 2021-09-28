@@ -6,3 +6,4 @@ export const defaultRouteForRoles = {
   vendor: RouteNames.menuList,
   user: RouteNames.dashboard,
 };
+export const baseBackEndURL = 'http://localhost:4000/v1';

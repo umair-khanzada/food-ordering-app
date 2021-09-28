@@ -3,6 +3,7 @@ import React from 'react';
 
 import { CssBaseline } from '@material-ui/core';
 import ReactDOM from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import persistStore from 'redux-persist/es/persistStore';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -15,6 +16,8 @@ import GlobalStyles from './theme/GlobalStyles';
 
 const persistor = persistStore(store);
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <MaterialThemeWrapper>
     <CssBaseline />
@@ -22,7 +25,9 @@ ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <App />
+          <QueryClientProvider client={queryClient}>
+            <App />
+          </QueryClientProvider>
         </PersistGate>
       </Provider>
     </React.StrictMode>

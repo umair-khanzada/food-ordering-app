@@ -2,11 +2,12 @@ import React, { Fragment } from 'react';
 
 import { Grid, Input, Typography } from '@material-ui/core';
 
+import Loader from '../Loader';
 import MultipleSelect from '../MultiSelect';
 import NumberInput from '../NumberInput';
 import SelectTag from '../Select';
 import TextField from '../TextField/TextField';
-import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD } from './FieldTypes';
+import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD, LOADER } from './FieldTypes';
 import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, StyledFormButton } from './style';
 
 const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSuccess }) => {
@@ -51,6 +52,9 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSu
           />
         );
 
+      case LOADER:
+        return <Loader />;
+
       default:
         return null;
     }
@@ -82,20 +86,21 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSu
               );
             })}
         </Grid>
-        {buttons
-          ? buttons.button.map(({ clickHandler, minWidth, name, type }, i) => (
-              <div key={name + '-' + i}>
-                <StyledFormButton
-                  key={name + '-' + i}
-                  fontSize="16px"
-                  minwidth={minWidth}
-                  onClick={clickHandler}
-                  property={name}
-                  type={type}
-                />
-              </div>
-            ))
-          : null}
+        {buttons &&
+          buttons.button.map(({ clickHandler, minWidth, name, type, isLoading, color }, i) => (
+            <div key={name + '-' + i}>
+              <StyledFormButton
+                key={name + '-' + i}
+                color={color}
+                fontSize="16px"
+                loading={isLoading}
+                minwidth={minWidth}
+                onClick={clickHandler}
+                property={name}
+                type={type}
+              />
+            </div>
+          ))}
       </StyledGridColumnItem>
       {responseError && <Error>{responseError}</Error>}
       {onSaveSuccess && (

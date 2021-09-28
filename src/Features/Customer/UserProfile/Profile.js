@@ -1,162 +1,141 @@
 import React, { useState } from 'react';
 
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../redux/ActionTypes';
 import { contactRegex } from '../../../scripts/constants';
+import { fieldChangeHandler, validateOnSubmit } from '../../../util/CommonGridBasedFormUtils';
+import { editUser } from './queryMethods';
 
 const AddUser = () => {
+  const { id, email, name, token } = useSelector((state) => {
+    const {
+      authReducer: {
+        id,
+        email,
+        name,
+        accessToken: { token },
+      },
+    } = state;
+    return {
+      id,
+      email,
+      name,
+      token,
+    };
+  });
+
+  const editUserQuery = useMutation(editUser, {
+    onSuccess: async (data) => {
+      !data.code ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    },
+  });
+
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const [isEdit] = useState(true);
-  const validateOnSubmit = () => {
-    let isValid = true;
-
-    const ValidateArray = fields.map((field) => {
-      if (
-        field.value === '' ||
-        field.value === undefined ||
-        field.value === null ||
-        (field.value.constructor.name == 'Array' && field.value.length === 0)
-      ) {
-        isValid = false;
-
-        field.errorMessage = field.label + ' field cannot be empty';
-
-        field.isValid = false;
-
-        return field;
-      }
-
-      field.isValid = true;
-
-      field.errorMessage = '';
-
-      !isValid ? null : (isValid = field.isValid);
-
-      return field;
-    });
-
-    setFields(ValidateArray);
-
-    return isValid;
-  };
-
-  const [, setEmail] = useState('');
-
-  const [, setContact] = useState('');
-
-  const [, setName] = useState('');
-
   const [fields, setFields] = useState([
     {
       type: TEXT_FIELD,
-
       textFieldType: 'text',
-
       label: 'Name',
-
       variant: 'standard',
-
-      value: 'User',
-      disabled: isEdit,
-      isValid: true,
-
+      value: name,
       errorMessage: '',
-
-      onChange: (event, index) => {
-        setName(event.target.value);
-
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+      getValidation: (value) => {
+        if (value.length < 3) {
+          return 'Name must be of length 3 atleast';
+        }
+        return '';
       },
     },
-
     {
       type: TEXT_FIELD,
-
       textFieldType: 'email',
-
       label: 'Email',
-
       variant: 'standard',
-
-      value: 'user@gmail.com',
-      disabled: isEdit,
-      isValid: true,
-
+      value: email,
       errorMessage: '',
-
-      onChange: (event, index) => {
-        setEmail(event.target.value);
-
-        fields[index].value = event.target.value;
-
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
-
-      getValidation: (value, index) => {
+      getValidation: (value) => {
         if (!emailRegex.test(value)) {
-          fields[index].errorMessage = 'Email type is not valid';
-
-          fields[index].isValid = false;
-        } else {
-          fields[index].errorMessage = '';
-
-          fields[index].isValid = true;
+          return 'Email type is not valid';
         }
+        return '';
       },
     },
-
     {
       type: TEXT_FIELD,
-
-      textFieldType: 'text',
-
-      label: 'Contact',
-
+      textFieldType: 'password',
+      label: 'Password',
       variant: 'standard',
-
-      value: '03412132212',
-      disabled: isEdit,
-      isValid: true,
-
+      value: '',
       errorMessage: '',
-
-      onChange: (event, index) => {
-        setContact(event.target.value);
-
-        fields[index].value = event.target.value;
-
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
-
-      getValidation: (value, index) => {
-        if (!contactRegex.test(value)) {
-          fields[index].errorMessage = 'Contact length or Type is not valid';
-
-          fields[index].isValid = false;
-        } else {
-          fields[index].errorMessage = '';
-
-          fields[index].isValid = true;
+      getValidation: (value) => {
+        if (value.length < 8) {
+          return 'Password must be 8 characters long';
         }
+        return '';
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Contact',
+      variant: 'standard',
+      value: '',
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+      getValidation: (value) => {
+        if (!contactRegex.test(value)) {
+          return 'Contact length or Type is not valid';
+        }
+        return '';
       },
     },
   ]);
 
   const saveHandler = () => {
-    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    const { validateArray, isValid } = validateOnSubmit(fields);
+    setFields(validateArray);
+    const [{ value: name }, { value: email }, { value: password }] = fields;
+
+    isValid &&
+      editUserQuery.mutateAsync({
+        id,
+        body: {
+          name,
+          email,
+          password,
+        },
+        token,
+      });
   };
 
   const buttons = {
     button: [
       {
         type: 'button',
-
-        name: 'Edit',
-
+        name: 'save',
         minWidth: '100%',
-
+        color: 'primary',
         clickHandler: saveHandler,
+        isLoading: editUserQuery.isLoading,
       },
     ],
   };
