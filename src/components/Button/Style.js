@@ -6,10 +6,10 @@ const StyledButton = styled(LoadingButton)`
   letter-spacing: 2px;
   margin-bottom: 10px;
   max-width: ${({ maxwidth }) => maxwidth};
-  min-width: ${({ minwidth }) => minwidth};
-  width: ${({ minwidth }) => minwidth};
+  min-width: ${({ minwidth }) => minwidth} !important;
   background-color: #00b3e3;
   color: white;
+  white-space: nowrap;
   font-weight: bold;
   background-color: ${({ loading }) => !loading && '#00B3E3 !important'};
   ${({ theme }) => `
