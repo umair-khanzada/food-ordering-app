@@ -41,6 +41,8 @@ const AddUser = () => {
     },
   });
 
+  const { isLoading, mutate: editUserMutate } = editUserQuery;
+
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const [fields, setFields] = useState([
     {
@@ -123,7 +125,7 @@ const AddUser = () => {
     const [{ value: name }, { value: email }, { value: password }] = fields;
 
     isValid &&
-      editUserQuery.mutate({
+      editUserMutate({
         id,
         body: {
           name,
@@ -142,7 +144,7 @@ const AddUser = () => {
         minWidth: '100%',
         color: 'primary',
         clickHandler: saveHandler,
-        isLoading: editUserQuery.isLoading,
+        isLoading,
       },
     ],
   };
