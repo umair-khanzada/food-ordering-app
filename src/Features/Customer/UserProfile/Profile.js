@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../redux/ActionTypes';
 import { contactRegex } from '../../../scripts/constants';
 import { fieldChangeHandler, validateOnSubmit } from '../../../util/CommonGridBasedFormUtils';
+import { updateUserData } from '../../Auth/actions';
 import { editUser } from './queryMethods';
 
 const AddUser = () => {
@@ -28,9 +29,15 @@ const AddUser = () => {
     };
   });
 
+  const dispatch = useDispatch();
+
   const editUserQuery = useMutation(editUser, {
     onSuccess: async (data) => {
-      !data.code ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+      if (!data.code) {
+        const { name, email } = { data: { data } };
+        dispatch(updateUserData({ name, email }));
+        setOnSaveSuccess(true);
+      } else setOnSaveSuccess(false);
     },
   });
 

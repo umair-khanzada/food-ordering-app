@@ -18,3 +18,4 @@ export const OPEN_DRAWER = 'OPEN_DRAWER';
 export const CLOSE_DRAWER = 'CLOSE_DRAWER';
 export const OPENMODAL = 'OPENMODAL';
 export const CLOSEMODAL = 'CLOSEMODAL';
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';

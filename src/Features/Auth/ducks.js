@@ -1,5 +1,12 @@
 /* eslint-disable no-case-declarations */
-import { LOGIN_SUCCESS, LOGIN_ERROR, FORGOT_PASSWORD, MESSAGE, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
+import {
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  FORGOT_PASSWORD,
+  MESSAGE,
+  LOGOUT_SUCCESS,
+  UPDATE_USER_DATA,
+} from '../../redux/ActionTypes';
 
 const initialAuthState = {
   isLoggedIn: false,
@@ -18,7 +25,7 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
     case LOGOUT_SUCCESS:
       return { ...initialAuthState };
 
-    case LOGIN_SUCCESS:
+    case LOGIN_SUCCESS: {
       const { accessToken, refreshToken, name, role, id, email } = action.payload;
       return {
         ...state,
@@ -30,9 +37,19 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
         name,
         role,
       };
+    }
 
     case LOGIN_ERROR:
       return { ...initialAuthState };
+
+    case UPDATE_USER_DATA: {
+      const { name, email } = action.payload;
+      return {
+        ...state,
+        name,
+        email,
+      };
+    }
 
     default:
       return state;
