@@ -1,8 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { shallowEqual, useSelector } from 'react-redux';
+import { dispatch } from 'rxjs/internal/observable/pairs';
 
 import FormComponent from '../../../components/FormComponent';
+import { setFormMessage } from '../actions';
 
 function ResetPassword() {
+  const { message, status } = useSelector((state) => {
+    const { message, status } = state.responseMessage;
+    return { message, status };
+  }, shallowEqual);
+  useEffect(() => {
+    return () => {
+      dispatch(setFormMessage({ message: '', status: 0 }));
+    };
+  }, []);
   let newPassword = '';
 
   const validateOnSubmit = () => {
@@ -119,6 +132,7 @@ function ResetPassword() {
         formTitle="Reset Password"
         inputFields={resetForm}
         navigationPath="/signup"
+        responseError={message}
       />
     </div>
   );

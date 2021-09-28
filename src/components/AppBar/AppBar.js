@@ -13,11 +13,10 @@ import { StyledAppBar, StyledDiv, StyledLogo, StyledMenuItem } from './Style';
 const NavBar = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const logOut = () => {
-    dispatch(logout());
-  };
-
   const history = useHistory();
+  const logOut = () => {
+    dispatch(logout({ history }));
+  };
 
   const { resetPassword } = RouteNames;
 

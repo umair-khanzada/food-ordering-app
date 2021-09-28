@@ -3,13 +3,14 @@ import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import LoginContainer from '../Features/Auth/Login/LoginContainer';
-import { HomeContainer } from '../Features/Home';
 import Roles from '../roles';
-import { isProtectedRoute, isPublicRoute } from './Permission';
 import routeConfig from './RouteConfig';
+import RouteNames from './RouteNames';
+import ValidRoute from './ValidRoute';
 
 export default function BaseRouter() {
+  const { vendor, admin, user } = Roles;
+
   const { isLoggedIn, role } = useSelector((state) => {
     const {
       authReducer: { isLoggedIn, role },
@@ -20,62 +21,65 @@ export default function BaseRouter() {
     };
   }, shallowEqual);
 
-  const { vendor, admin, user } = Roles;
-
-  const getAuthenticatedRoute = (route, index) => {
-    if (isLoggedIn && route.permissions === isProtectedRoute) {
-      return <Route key={index} component={() => route.component()} exact path={route.path} />;
-    }
-    if (!isLoggedIn && route.permissions === isPublicRoute) {
-      return <Route key={index} component={() => route.component()} exact path={route.path} />;
-    }
-
-    if (isLoggedIn) return <Route key={index} component={() => <HomeContainer />} exact path="/home" />;
-    return <Route key={index} component={() => <LoginContainer />} exact path="/login" />;
-  };
+  const { orderHistory, menuList, dashboard, login } = RouteNames;
 
   return (
     <Switch>
       {routeConfig.auth.map((route, index) => {
-        return getAuthenticatedRoute(route, index);
+        return (
+          <Route
+            key={index}
+            component={() => <ValidRoute authorizedRole={null} route={route} />}
+            exact
+            path={route.path}
+          />
+        );
       })}
-      {isLoggedIn && role === user
-        ? routeConfig.customer.map((route, index) => {
-            return <Route key={index} component={() => route.component()} exact path={route.path} />;
-          })
-        : null}
-      {isLoggedIn &&
-        routeConfig.common.map((route, index) => {
-          return <Route key={index} component={() => route.component()} exact path={route.path} />;
-        })}
-      {isLoggedIn &&
-        role === vendor &&
-        routeConfig.vendor.map((route, index) => {
-          return <Route key={index} component={() => route.component()} exact path={route.path} />;
-        })}
-      {isLoggedIn &&
-        role === admin &&
-        routeConfig.admin.map((route, index) => {
-          return <Route key={index} component={() => route.component()} exact path={route.path} />;
-        })}
+      {routeConfig.common.map((route, index) => {
+        return <Route key={index} component={() => route.component()} exact path={route.path} />;
+      })}
+      {routeConfig.customer.map((route, index) => (
+        <Route
+          key={index}
+          component={() => <ValidRoute authorizedRole={user} route={route} />}
+          exact
+          path={route.path}
+        />
+      ))}
+      {routeConfig.vendor.map((route, index) => (
+        <Route
+          key={index}
+          component={() => <ValidRoute authorizedRole={vendor} route={route} />}
+          exact
+          path={route.path}
+        />
+      ))}
+      {routeConfig.admin.map((route, index) => (
+        <Route
+          key={index}
+          component={() => <ValidRoute authorizedRole={admin} route={route} />}
+          exact
+          path={route.path}
+        />
+      ))}
       {isLoggedIn && role === admin && (
         <Route>
-          <Redirect to="/orderhistory" />
+          <Redirect to={orderHistory} />
         </Route>
       )}
       {isLoggedIn && role === vendor && (
         <Route>
-          <Redirect to="/menu" />
+          <Redirect to={menuList} />
         </Route>
       )}
-      {isLoggedIn && role === user && (
+      {isLoggedIn && role === Roles.user && (
         <Route>
-          <Redirect to="/dashboard" />
+          <Redirect to={dashboard} />
         </Route>
       )}
       {!isLoggedIn && (
         <Route>
-          <Redirect to="/login" />
+          <Redirect to={login} />
         </Route>
       )}
     </Switch>
