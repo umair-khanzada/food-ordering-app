@@ -54,7 +54,5 @@ const Items = async (token) => {
 
 export const FetchItems = () => {
   const { token } = AuthToken();
-  const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery('items', () => Items(token));
-
-  return data;
+  return useQuery('items', () => Items(token));
 };

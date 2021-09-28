@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
+import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
-import { FetchCategories } from '../../Vendor/request';
+import { AuthToken } from '../../../scripts/constants';
+import { deleteCategory } from '../mutation';
+import { FetchCategories } from '../request';
 import { CategoriesTitleContainer, CategoriesTitle } from './style';
 
 function CategoryList() {
+  const token = AuthToken();
   const { addCategory, editCategory } = RouteNames;
   const history = useHistory();
   const onEdit = (row) => {
@@ -19,26 +23,20 @@ function CategoryList() {
     });
   };
   const [categories, setCategories] = useState([]);
+  const { data: categoriesdata, refetch } = FetchCategories();
 
-  const categoriesData = FetchCategories();
-  // saveRestaurant(restaurantsData);
-  // saveCategories(categoriesData);
   useEffect(() => {
-    if (categoriesData !== undefined) {
-      saveCategories(categoriesData);
+    if (categoriesdata !== undefined) {
+      saveCategories(categoriesdata);
     }
-  }, [categoriesData]);
+  }, [categoriesdata]);
 
   const saveCategories = ({ data: { results } }) => {
-    console.log('results', results);
-    const resData = results.map(({ name }) => ({ name }));
-    setCategories(resData);
-    console.log(resData);
-
-    // const updatedFields = SelectChangeHandler(fields, resData, 0);
-
-    // setFields(updatedFields);
+    setCategories(results);
   };
+  function deleteItem(categoryId) {
+    mutate({ id: categoryId, token });
+  }
 
   const onDelete = (row) => {
     row;
@@ -51,6 +49,13 @@ function CategoryList() {
     setHeader(['No', 'Categories', 'Edit']);
   }, []);
 
+  const { mutate, mutateAsync, isLoading, error } = useMutation(deleteCategory, {
+    onSuccess: (response) => {
+      refetch();
+
+      return response;
+    },
+  });
   return (
     <>
       <CategoriesTitleContainer>
@@ -60,6 +65,7 @@ function CategoryList() {
 
       <CustomTable
         cellWidth="400px"
+        deleteTableRow={deleteItem}
         header={header}
         isEditDelete
         onDelete={onDelete}

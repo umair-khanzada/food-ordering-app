@@ -13,7 +13,6 @@ import {
 import { Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 
-import { deleteitem } from '../../Features/Vendor/action';
 import { closeModal, openModal } from '../Modal/action';
 import ConfirmDeletModal from '../Modal/inex';
 import TablePaginationActions from './Pagination';
@@ -26,15 +25,17 @@ export default function CustomTable({
   tablewidth,
   onEdit,
   isEditDelete,
-  deleteItem,
+  deleteTableRow,
 }) {
   const dispatch = useDispatch();
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
     setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
+    // mutate({ name: 'fahad' });
+    // mutate({ id: currentSelectedRow, token });
+    // dispatch(deleteitem(currentSelectedRow));
+    deleteTableRow(currentSelectedRow);
 
-    dispatch(deleteitem(currentSelectedRow));
-    deleteItem(currentSelectedRow);
     // onDelete(currentSelectedRow);
     dispatch(closeModal());
   };
@@ -93,11 +94,15 @@ export default function CustomTable({
           {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
             <TableRow key={row.name}>
               <TableCell>{index + 1}</TableCell>
-              {Object.keys(row).map((data, index) => (
-                <TableCell key={index} cellwidth={cellWidth}>
-                  {row[data]}
-                </TableCell>
-              ))}
+              {Object.keys(row).map((data, index) => {
+                if (data != 'id' && data !== 'role') {
+                  return (
+                    <TableCell key={index} cellwidth={cellWidth}>
+                      {row[data]}
+                    </TableCell>
+                  );
+                }
+              })}
 
               {isEditDelete && (
                 <TableCell>

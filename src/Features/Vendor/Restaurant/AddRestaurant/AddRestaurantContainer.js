@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 
+import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { AuthToken } from '../../../../scripts/constants';
 import { validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
-import { addRestaurant } from '../../action';
+import { restaurants } from '../../mutation';
 const AddRestaurant = () => {
+  const token = AuthToken();
   const dispatch = useDispatch();
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const [loading, setLoading] = React.useState(false);
+  function handleClick() {
+    setLoading(true);
+  }
 
   const [restaurant, setRestaurant] = useState('');
+  // useEffect(() => {}, [buttons.button]);
   const [fields, setFields] = useState([
     {
       type: TEXT_FIELD,
@@ -26,21 +34,20 @@ const AddRestaurant = () => {
       },
     },
   ]);
-
+  // const token = AuthToken();
   const saveHandler = () => {
+    setLoading(true);
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
 
     if (isValid) {
       setOnSaveSuccess(true);
       const name = fields.map(({ value }) => value);
-      dispatch(
-        addRestaurant({
-          name: name[0],
-        }),
-      );
+
+      mutate({ name: name[0], token });
     } else {
       setOnSaveSuccess(false);
+      setLoading(false);
     }
   };
 
@@ -54,8 +61,26 @@ const AddRestaurant = () => {
       },
     ],
   };
+  const { mutate, mutateAsync, isLoading, error } = useMutation(restaurants, {
+    onSuccess: (response) => {
+      setLoading(false);
+
+      return response;
+    },
+  });
+
+  //
+
   return (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" onSaveSuccess={onSaveSuccess} />
+    <>
+      <CommonGridBasedForm
+        buttons={buttons}
+        fields={fields}
+        heading="Add Restaurant"
+        loading={loading}
+        onSaveSuccess={onSaveSuccess}
+      />
+    </>
   );
 };
 

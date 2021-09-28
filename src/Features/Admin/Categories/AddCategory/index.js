@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 
+import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { AuthToken } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { addCategory } from '../../actions';
+import { category } from '../../mutation';
 
 const AddCategory = () => {
+  const token = AuthToken();
   const dispatch = useDispatch();
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const [loading, setLoading] = React.useState(false);
+  function handleClick() {
+    setLoading(true);
+  }
   const adminId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -38,19 +45,29 @@ const AddCategory = () => {
     setFields(validateArray);
 
     if (isValid) {
+      setLoading(true);
       setOnSaveSuccess(true);
       const name = fields.map(({ value }, index) => value);
-
-      dispatch(
-        addCategory({
+      mutate({
+        category: {
           name: name[0],
           createdBy: adminId,
-        }),
-      );
+        },
+        token,
+      });
     } else {
       setOnSaveSuccess(false);
+      setLoading(false);
     }
   };
+
+  const { mutate, mutateAsync, isLoading, error } = useMutation(category, {
+    onSuccess: (response) => {
+      setLoading(false);
+
+      return response;
+    },
+  });
 
   const buttons = {
     button: [
@@ -62,7 +79,15 @@ const AddCategory = () => {
       },
     ],
   };
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Category" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <CommonGridBasedForm
+      buttons={buttons}
+      fields={fields}
+      heading="Add Category"
+      loading={loading}
+      onSaveSuccess={onSaveSuccess}
+    />
+  );
 };
 
 export default AddCategory;

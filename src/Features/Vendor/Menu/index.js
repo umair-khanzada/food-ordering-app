@@ -4,11 +4,14 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import { Grid } from '@material-ui/core';
 import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
+import { AuthToken } from '../../../scripts/constants';
+import { deleteitem } from '../mutation';
 import { FetchItems } from '../request';
 import { ButtonContainer, ButtonsContainer, FilterButton, HeaderLeftContainer, HeaderRightContainer } from './style';
 
@@ -18,8 +21,8 @@ function Menu() {
   const [items, setSaveItems] = useState([]);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
-  const itemsData = FetchItems();
-
+  const { isLoading: fetchloading, data: itemsData, refetch } = FetchItems();
+  const token = AuthToken();
   useEffect(() => {
     // dispatch(fetchitems(saveItems));
     if (itemsData !== undefined) {
@@ -50,17 +53,16 @@ function Menu() {
     history.push('/restaurant');
   }
   function deleteItem(itemId) {
-    // dispatch(deleteitem(currentSelectedRow));
-    // onDelete(currentSelectedRow);
-    // dispatch(closeModal());
-    // const updatedItem=items.filter(()=>{})
-    console.log('id', itemId);
-    console.log('items', items);
-    const updatedItem = items.filter(({ id }) => id !== itemId);
-    console.log('updtaed', updatedItem);
-    setSaveItems(updatedItem);
+    mutate({ id: itemId, token });
   }
 
+  const { mutate, mutateAsync, isLoading, error } = useMutation(deleteitem, {
+    onSuccess: (response) => {
+      refetch();
+
+      return response;
+    },
+  });
   return (
     <div>
       <Grid container>
@@ -95,7 +97,7 @@ function Menu() {
 
           <div style={{ padding: '20px', marginTop: '10px' }}>
             <CustomTable
-              deleteItem={deleteItem}
+              deleteTableRow={deleteItem}
               header={header}
               isEditDelete
               onEdit={onEdit}

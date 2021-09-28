@@ -41,7 +41,6 @@ const addRestaurantEpic = (action$, state) =>
     }),
   );
 
-export default addRestaurantEpic;
 export const addItemEpic = (action$, state) =>
   action$.pipe(
     ofType(ADD_ITEM),

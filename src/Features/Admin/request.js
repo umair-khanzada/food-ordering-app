@@ -16,9 +16,6 @@ const Categories = async (token) => {
 
 export const FetchCategories = () => {
   const { token } = AuthToken();
-  const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery('categories', () =>
-    Categories(token),
-  );
 
-  return data;
+  return useQuery('categories', () => Categories(token));
 };
