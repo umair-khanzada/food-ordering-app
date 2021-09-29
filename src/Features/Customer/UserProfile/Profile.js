@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-import AddEditForm from '../../../components/AddEditForm';
-import { TEXT_FIELD } from '../../../components/AddEditForm/FieldTypes';
+import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
+import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../redux/ActionTypes';
 import { contactRegex } from '../../../scripts/constants';
 
 const AddUser = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit] = useState(true);
   const validateOnSubmit = () => {
     let isValid = true;
 
@@ -41,11 +41,11 @@ const AddUser = () => {
     return isValid;
   };
 
-  const [email, setEmail] = useState('');
+  const [, setEmail] = useState('');
 
-  const [contact, setContact] = useState('');
+  const [, setContact] = useState('');
 
-  const [name, setName] = useState('');
+  const [, setName] = useState('');
 
   const [fields, setFields] = useState([
     {
@@ -161,7 +161,7 @@ const AddUser = () => {
     ],
   };
 
-  return <AddEditForm buttons={buttons} fields={fields} heading="Profile" onSaveSuccess={onSaveSuccess} />;
+  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" onSaveSuccess={onSaveSuccess} />;
 };
 
 export default AddUser;

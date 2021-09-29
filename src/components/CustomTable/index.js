@@ -13,8 +13,8 @@ import {
 import { Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 
+import ConfirmDeletModal from '../Modal';
 import { closeModal, openModal } from '../Modal/action';
-import ConfirmDeletModal from '../Modal/inex';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
@@ -47,7 +47,6 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
   };
 
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
-
   const RowPerPage = (rowsPerPage, rowsData, page) => {
     if (rowsPerPage > 0) {
       return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);

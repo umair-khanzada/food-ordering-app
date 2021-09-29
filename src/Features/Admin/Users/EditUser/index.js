@@ -11,7 +11,7 @@ import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGri
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
-const AddUser = () => {
+const EditUser = () => {
   const { headers } = GetHeader();
   const history = useHistory();
 
@@ -152,4 +152,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default EditUser;

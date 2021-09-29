@@ -63,7 +63,6 @@ const EditVendor = () => {
         return '';
       },
     },
-
     {
       type: TEXT_FIELD,
       textFieldType: 'password',
