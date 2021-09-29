@@ -49,7 +49,6 @@ export const addtocartReducers = (state = initialData, action) => {
         count: state.cart.length + 1,
       };
     }
-
     case INCREMENT:
       state.cart.map((element, index) => {
         if (element.id == action.payload.id) {
@@ -79,7 +78,6 @@ export const addtocartReducers = (state = initialData, action) => {
         cart: updCart,
       };
     }
-
     default:
       return state;
   }

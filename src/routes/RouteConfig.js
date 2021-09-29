@@ -10,6 +10,8 @@ import { CategoryListRoute, MenuListRoute, OrderListRoute } from '../Features/Ve
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
 
+  orderPlacer: [dashboardRoute, MenuListRoute],
+
   admin: [
     orderHistorydRoute,
 

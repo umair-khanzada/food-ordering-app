@@ -4,8 +4,7 @@ import CardData from '../../Mock/Data';
 import CommonCard from './CommonCard';
 import { ControlGrid } from './style';
 
-const CardMenu = ({ foodType, isopen }) => {
-  console.log('onChanheg', isopen);
+const CardMenu = ({ foodType }) => {
   return (
     <div>
       <ControlGrid container elevation={3} spacing={3}>
