@@ -11,6 +11,23 @@ export const AuthToken = () => {
   });
 };
 
+export const GetHeader = () => {
+  const { token } = useSelector((state) => {
+    const {
+      authReducer: {
+        accessToken: { token },
+      },
+    } = state;
+    return {
+      token,
+    };
+  });
+  return {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  };
+};
 export const defaultRouteForRoles = {
   admin: RouteNames.orderHistory,
   vendor: RouteNames.menuList,

@@ -1,30 +1,55 @@
 import React, { useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
-import { fetchUsers } from './actions';
+import { GetHeader } from '../../../scripts/constants';
+import { deleteUserById } from '../Common Requests/mutation';
+import { FetchUsers } from '../Common Requests/request';
 import { UsersTitleContainer, UsersTitle } from './style';
+
 function UsersList() {
+  const [users, setUsers] = useState([]);
+  const { headers } = GetHeader();
+
+  const { isLoading, isError, data: usersData, error, refetch: refetchUser } = FetchUsers('user');
+  const header = ['S.No', 'name', 'email', 'Edit'];
+
+  useEffect(() => {
+    if (Array.isArray(usersData)) {
+      usersData.map((user) => {
+        const removeElements = ['password', 'isEmailVerified'];
+
+        removeElements.map((removeElement) => delete user[removeElement]);
+      });
+      setUsers(usersData);
+    }
+  }, [usersData]);
+  const DeleteUser = useMutation(deleteUserById, {
+    onError: () => {},
+    onSuccess: () => {
+      refetchUser();
+    },
+  });
   const { addUser, editUser } = RouteNames;
 
-  const onEdit = (row) => {
+  const onEdit = ({ id }) => {
     history.push({
       pathname: editUser,
-      state: { data: row },
+      search: '?id=' + id,
     });
   };
 
-  const onDelete = (row) => {
-    row;
+  const onDelete = ({ id }) => {
+    DeleteUser.mutateAsync({ id, headers });
   };
 
   const history = useHistory();
 
-  const [users, setUsers] = useState([]);
 
   const getUsersResponseFromEpic = (response) => {
     setUsers(response);
@@ -45,12 +70,20 @@ function UsersList() {
 
   return (
     <>
-      <UsersTitleContainer>
-        <UsersTitle>Users</UsersTitle>
-        <CommonButton onClick={() => history.push(addUser)} property="Add Users" />
-      </UsersTitleContainer>
+      {isLoading ? (
+        <>
+          <img alt="loader" src="https://flevix.com/wp-content/uploads/2020/01/Bounce-Bar-Preloader-1.gif" />
+        </>
+      ) : (
+        <>
+          <UsersTitleContainer>
+            <UsersTitle>Users</UsersTitle>
+            <CommonButton onClick={() => history.push(addUser)} property="Add Users" />
+          </UsersTitleContainer>
 
-      <CustomTable header={header} isEditDelete onDelete={onDelete} onEdit={onEdit} rows={users} tablewidth="90%" />
+          <CustomTable header={header} isEditDelete onDelete={onDelete} onEdit={onEdit} rows={users} tablewidth="90%" />
+        </>
+      )}
     </>
   );
 }

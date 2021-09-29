@@ -13,6 +13,8 @@ import store from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import MaterialThemeWrapper from './theme';
 import GlobalStyles from './theme/GlobalStyles';
+
+const persistor = persistStore(store);
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -20,8 +22,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-const persistor = persistStore(store);
 
 ReactDOM.render(
   <MaterialThemeWrapper>

@@ -28,10 +28,9 @@ export default function CustomTable({
   deleteTableRow,
 }) {
   const dispatch = useDispatch();
+  const [currentSelectedRow, setCurrentSelectedRow] = useState({});
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
-    setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
-
     deleteTableRow(currentSelectedRow);
 
     dispatch(closeModal());
@@ -57,7 +56,7 @@ export default function CustomTable({
 
     setPage(0);
   };
-  const [currentSelectedRow, setCurrentSelectedRow] = useState({});
+
   const RowPerPage = (rowsPerPage, rowsData, page) => {
     if (rowsPerPage > 0) {
       return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
@@ -77,11 +76,8 @@ export default function CustomTable({
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
-            <TableHeader>S.No</TableHeader>
             {header.map((head, index) => {
-              if (head != 'id') {
-                return <TableHeader key={index}>{head}</TableHeader>;
-              }
+              return <TableHeader key={index}>{head}</TableHeader>;
             })}
           </TableRow>
         </CustomTableHead>
@@ -91,7 +87,7 @@ export default function CustomTable({
             <TableRow key={row.id}>
               <TableCell>{index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
-                if (data != 'id' && data != 'createdBy') {
+                if (data != 'id' && data != 'createdBy' && data !== 'role') {
                   return (
                     <TableCell key={index} cellwidth={cellWidth}>
                       {row[data]}

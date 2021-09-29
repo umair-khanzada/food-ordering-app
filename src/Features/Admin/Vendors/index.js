@@ -1,35 +1,37 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import RouteNames from '../../../routes/RouteNames';
-import { deleteVendorById, fetchVendors } from './actions';
+import { GetHeader } from '../../../scripts/constants';
+import { deleteUserById } from '../Common Requests/mutation';
+import { FetchUsers } from '../Common Requests/request';
 import { VendorTitleContainer, VendorTitle } from './style';
 function VendorList() {
-  const dispatch = useDispatch();
+  const { headers } = GetHeader();
+
   const [vendors, setVendors] = useState('');
-  const [header, setHeader] = useState([]);
-  const removeElements = ['role', 'password', 'isEmailVerified'];
-  const getVendors = (response) => {
-    setVendors(response);
-  };
+  const header = ['S.No', 'name', 'email', 'Edit'];
+  const { isLoading, isError, data: vendorsData, error, refetch: refetchVendor } = FetchUsers('vendor');
+  const Deletevendor = useMutation(deleteUserById, {
+    onError: () => {},
+    onSuccess: () => {
+      refetchVendor();
+    },
+  });
   useEffect(() => {
-    dispatch(fetchVendors(getVendors));
-  }, []);
-  useEffect(() => {
-    if (vendors) {
-      vendors.map((vendor) => {
-        removeElements.map((removeElement) => delete vendor[removeElement]);
+    if (Array.isArray(vendorsData)) {
+      vendorsData.map((user) => {
+        const removeElements = ['password', 'isEmailVerified'];
+
+        removeElements.map((removeElement) => delete user[removeElement]);
       });
-
-      const headers = [...Object.keys(vendors[0]), 'Edit'];
-
-      setHeader(headers);
+      setVendors(vendorsData);
     }
-  }, [vendors]);
+  }, [vendorsData]);
   const history = useHistory();
   const { editVendor, addVendor } = RouteNames;
 
@@ -41,7 +43,7 @@ function VendorList() {
   };
 
   const onDelete = ({ id }) => {
-    dispatch(deleteVendorById(id));
+    Deletevendor.mutateAsync({ id, headers });
   };
 
   const getVendorsResponseFromEpic = (response) => {

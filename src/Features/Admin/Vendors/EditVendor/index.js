@@ -1,30 +1,44 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
-import { MULTI_SELECT, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex } from '../../../../scripts/constants';
+import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { fetchVendorById, updateVendorById } from '../actions';
+import { editUserById } from '../../Common Requests/mutation';
+import { FetchUserById } from '../../Common Requests/request';
 
 const EditVendor = () => {
-  const dispatch = useDispatch();
+  const { headers } = GetHeader();
+  const EditVendor = useMutation(editUserById);
   const history = useHistory();
+
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
   const [fields, setFields] = useState([
     {
       type: SELECT,
       label: 'Role',
-      values: ['User', 'Vendor'],
+      values: ['user', 'vendor'],
       value: [],
       errorMessage: '',
       name: 'role',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: '',
+      name: 'name',
+      errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
         setFields(updatedFields);
@@ -47,19 +61,6 @@ const EditVendor = () => {
           return 'Email type is not valid';
         }
         return '';
-      },
-    },
-    {
-      type: TEXT_FIELD,
-      textFieldType: 'text',
-      label: 'Name',
-      variant: 'standard',
-      value: 'name',
-      name: 'name',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
-        setFields(updatedFields);
       },
     },
     {
@@ -102,10 +103,12 @@ const EditVendor = () => {
       },
     },
     {
-      type: MULTI_SELECT,
+      type: SELECT,
       label: 'Building',
       values: ['Main', 'Cherry', 'Qasre Sheeren'],
       value: [],
+      variant: 'standard',
+
       name: 'building',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
@@ -115,22 +118,18 @@ const EditVendor = () => {
     },
   ]);
   const [vendor, setVendor] = useState('');
-  const getUserResponseFromEpic = (response) => {
-    setVendor(response);
-    fields.map((field) => {
-      if (field.label === 'Email') {
-        field.value = response.email;
-      } else if (field.label === 'Name') {
-        field.value = response.name;
-      } else if (field.label === 'Password') {
-        field.value = response.password;
-      }
-    });
-    setFields(fields);
-  };
+
+  const { data: vendorById } = FetchUserById(id);
+
   useEffect(() => {
-    dispatch(fetchVendorById({ id, getUserResponseFromEpic }));
-  }, []);
+    if (vendorById !== undefined) {
+      setVendor(vendorById);
+      fields.map((field) => {
+        field.value = vendorById[field.name];
+      });
+      setFields(fields);
+    }
+  }, [vendorById]);
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
@@ -142,17 +141,7 @@ const EditVendor = () => {
           vendorData[name] = value;
         }
       });
-      dispatch(
-        updateVendorById({
-          id,
-          vendorData,
-        }),
-      );
-
-      setOnSaveSuccess(true);
-      history.push('/vendors');
-    } else {
-      setOnSaveSuccess(false);
+      EditVendor.mutateAsync({ id, headers, vendorData });
     }
   };
 
@@ -167,7 +156,9 @@ const EditVendor = () => {
     ],
   };
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={EditVendor.isSuccess} />
+  );
 };
 
 export default EditVendor;
