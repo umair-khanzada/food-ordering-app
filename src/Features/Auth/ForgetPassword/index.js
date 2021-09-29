@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex } from '../../../scripts/constants';
-import { forgotPassword } from '../actions';
+import { forgotPassword, setFormMessage } from '../actions';
 
 function ForgetPassword() {
   const history = useHistory();
@@ -13,7 +13,13 @@ function ForgetPassword() {
   const { message, status } = useSelector((state) => {
     const { message, status } = state.responseMessage;
     return { message, status };
-  });
+  }, shallowEqual);
+  useEffect(() => {
+    return () => {
+      dispatch(setFormMessage({ message: '', status: 0 }));
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = forgetPasswordForm.map((textField) => {

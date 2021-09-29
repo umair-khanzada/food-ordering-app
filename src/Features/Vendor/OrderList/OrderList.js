@@ -1,10 +1,7 @@
 import React from 'react';
 
-import IconButton from '@material-ui/core/IconButton';
-import { Edit } from '@material-ui/icons';
-
 import CustomTable from '../../../components/CustomTable';
-import { OrdersListTitleContainer, DeleteIcon } from './Style';
+import { OrdersListTitleContainer } from './Style';
 export const ordersHistoryList = [
   {
     id: 1,
@@ -64,16 +61,6 @@ export const ordersHistoryList = [
   },
 ];
 function OrdersList() {
-  const editDelete = (
-    <>
-      <IconButton>
-        <Edit />
-      </IconButton>
-      <IconButton>
-        <DeleteIcon />
-      </IconButton>
-    </>
-  );
   const header = ['No', 'Name', 'Contact', 'Items', 'Price', 'Date'];
   return (
     <>
