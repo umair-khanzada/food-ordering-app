@@ -2,13 +2,15 @@ import * as React from 'react';
 
 import { Box, CircularProgress } from '@material-ui/core';
 
+import { StyledLoaderGrid } from './style';
+
 const Loader = () => {
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CircularProgress />
-    </Box>
-    // <StyledLoaderGrid alignItems="center" container direction="column" justify="center">
-    // </StyledLoaderGrid>
+    <StyledLoaderGrid alignItems="center" container direction="column" justify="center">
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+    </StyledLoaderGrid>
   );
 };
 

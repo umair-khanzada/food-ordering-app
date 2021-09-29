@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
@@ -13,7 +13,7 @@ function ForgetPassword() {
   const { message, status } = useSelector((state) => {
     const { message, status } = state.responseMessage;
     return { message, status };
-  }, shallowEqual);
+  });
   useEffect(() => {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));

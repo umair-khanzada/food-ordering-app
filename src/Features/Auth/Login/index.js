@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch, shallowEqual, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import FormComponent from '../../../components/FormComponent';
@@ -11,7 +11,8 @@ function LoginForm() {
   const message = useSelector((state) => {
     const { message } = state.responseMessage;
     return message;
-  }, shallowEqual);
+  });
+
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = loginForm.map((textField) => {

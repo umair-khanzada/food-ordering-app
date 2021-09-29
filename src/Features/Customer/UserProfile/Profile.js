@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
@@ -27,17 +27,18 @@ const AddUser = () => {
       name,
       token,
     };
-  });
+  }, shallowEqual);
 
   const dispatch = useDispatch();
 
   const { isLoading, mutate: editUserMutate } = useMutation(editUser, {
-    onSuccess: async (resData) => {
-      if (!resData.code) {
-        const { name, email } = { data: { resData } };
-        dispatch(updateUserData({ name, email }));
-        setOnSaveSuccess(true);
-      } else setOnSaveSuccess(false);
+    onSuccess: async ({ data: { name, email } }) => {
+      dispatch(updateUserData({ name, email }));
+      setOnSaveSuccess(true);
+    },
+    onError: async (resData) => {
+      console.log(resData);
+      setOnSaveSuccess(false);
     },
   });
 
@@ -134,18 +135,16 @@ const AddUser = () => {
       });
   };
 
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-        name: 'save',
-        minWidth: '100%',
-        color: 'primary',
-        clickHandler: saveHandler,
-        isLoading,
-      },
-    ],
-  };
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      color: 'primary',
+      clickHandler: saveHandler,
+      isLoading,
+    },
+  ];
 
   return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" onSaveSuccess={onSaveSuccess} />;
 };
