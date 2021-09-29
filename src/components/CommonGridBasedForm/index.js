@@ -9,7 +9,7 @@ import TextField from '../TextField/TextField';
 import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD } from './FieldTypes';
 import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, StyledFormButton } from './style';
 
-const CommonGridBasedForm = ({ fields, buttons, responseError, heading, swal, onSaveSuccess }) => {
+const CommonGridBasedForm = ({ fields, buttons, responseError, heading, toggleSnackbarOpen, onSaveSuccess }) => {
   const WIDTH = '100%';
 
   const getField = (field, props, index) => {
@@ -99,7 +99,7 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, swal, on
       </StyledGridColumnItem>
       {responseError && <Error>{responseError}</Error>}
 
-      {onSaveSuccess && { swal }}
+      {onSaveSuccess && { toggleSnackbarOpen }}
     </StyledMainContainerGrid>
   );
 };

@@ -11,6 +11,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@material-ui/pickers": "^3.3.10",
+    "@mui/icons-material": "^5.0.1",
     "cra-template": "1.1.2",
     "date-fns": "^2.24.0",
     "history": "^5.0.1",

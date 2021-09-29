@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 
+// import { Snackbar } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import swal from 'sweetalert';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
@@ -10,6 +13,7 @@ import { addCategory } from '../../actions';
 
 const AddCategory = () => {
   const dispatch = useDispatch();
+
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const [onAlertMessage, setOnAlertMessage] = useState(false);
 
@@ -48,17 +52,6 @@ const AddCategory = () => {
     } else {
       setOnSaveSuccess(false);
     }
-    if (isValid) {
-      setOnAlertMessage(true);
-      // console.log(name[0]);
-      swal({
-        title: 'Save Successfully',
-        text: 'You add a category',
-        icon: 'success',
-      });
-    } else {
-      setOnAlertMessage(false);
-    }
   };
 
   const buttons = {
@@ -73,15 +66,22 @@ const AddCategory = () => {
   };
 
   return (
-    <div>
-      <CommonGridBasedForm
-        buttons={buttons}
-        fields={fields}
-        heading="Add Category"
-        onAlertMessage={onAlertMessage}
-        onSaveSuccess={onSaveSuccess}
-      />
-    </div>
+    <>
+      <div>
+        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Category" onSaveSuccess={onSaveSuccess} />
+
+        <Button
+          onClick={() => {
+            dispatch(toggleSnackbarOpen('Successfull Your order has been placed'));
+          }}
+        >
+          Click Me
+        </Button>
+        <div>
+          <Snackbar timeout={3000} />
+        </div>
+      </div>
+    </>
   );
 };
 
