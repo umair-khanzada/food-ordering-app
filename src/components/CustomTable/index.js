@@ -9,6 +9,7 @@ import {
   TableCell,
   TableFooter,
   Paper,
+  CircularProgress,
 } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
@@ -17,7 +18,16 @@ import ConfirmDeletModal from '../Modal';
 import { closeModal, openModal } from '../Modal/action';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
-export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
+export default function CustomTable({
+  isDeleting,
+  rows,
+  header,
+  onDelete,
+  cellWidth,
+  tablewidth,
+  onEdit,
+  isEditDelete,
+}) {
   const dispatch = useDispatch();
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
   const onCancel = () => dispatch(closeModal());
@@ -99,6 +109,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
                     }}
                   >
                     <DeleteIcon />
+                    {isDeleting && currentSelectedRow.id == row.id && <CircularProgress />}
                   </IconButton>
                 </TableCell>
               )}
