@@ -10,10 +10,7 @@ import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGri
 import { createUser } from '../../Common Requests/mutation';
 const AddVendor = () => {
   const { headers } = GetHeader();
-  const AddVendor = useMutation(createUser, {
-    onError: (error) => {},
-    onSuccess: (data) => {},
-  });
+  const AddVendor = useMutation(createUser);
   const [fields, setFields] = useState([
     {
       type: SELECT,

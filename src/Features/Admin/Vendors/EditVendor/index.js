@@ -13,10 +13,7 @@ import { FetchUserById } from '../../Common Requests/request';
 
 const EditVendor = () => {
   const { headers } = GetHeader();
-  const EditVendor = useMutation(editUserById, {
-    onError: () => {},
-    onSuccess: () => {},
-  });
+  const EditVendor = useMutation(editUserById);
   const history = useHistory();
 
   const params = new URLSearchParams(history.location.search);

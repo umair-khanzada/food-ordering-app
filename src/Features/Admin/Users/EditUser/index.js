@@ -116,10 +116,7 @@ const AddUser = () => {
     }
   }, [userById]);
 
-  const EditUser = useMutation(editUserById, {
-    onError: (error) => {},
-    onSuccess: (data) => {},
-  });
+  const EditUser = useMutation(editUserById);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);

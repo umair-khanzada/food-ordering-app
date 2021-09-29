@@ -22,14 +22,7 @@ const AddUser = () => {
       token,
     };
   });
-  const AddUser = useMutation(createUser, {
-    onError: (error) => {
-      console.log(error);
-    },
-    onSuccess: (data) => {
-      console.log('data', data);
-    },
-  });
+  const AddUser = useMutation(createUser);
   const [fields, setFields] = useState([
     {
       type: SELECT,
