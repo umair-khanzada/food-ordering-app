@@ -13,7 +13,7 @@ import { FetchUserById } from '../../Common Requests/request';
 
 const EditVendor = () => {
   const { headers } = GetHeader();
-  const EditVendor = useMutation(editUserById);
+
   const history = useHistory();
 
   const params = new URLSearchParams(history.location.search);
@@ -117,6 +117,17 @@ const EditVendor = () => {
       },
     },
   ]);
+  const EditVendor = useMutation(editUserById, {
+    onSuccess: () => {
+      const resetFields = fields.map((field) => {
+        return {
+          ...field,
+          value: '',
+        };
+      });
+      setFields(resetFields);
+    },
+  });
   const [vendor, setVendor] = useState('');
 
   const { data: vendorById } = FetchUserById(id);
@@ -157,7 +168,13 @@ const EditVendor = () => {
   };
 
   return (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={EditVendor.isSuccess} />
+    <CommonGridBasedForm
+      buttons={buttons}
+      fields={fields}
+      heading="Edit Vendor"
+      loading={EditVendor.isLoading}
+      onSaveSuccess={EditVendor.isSuccess}
+    />
   );
 };
 

@@ -10,7 +10,7 @@ import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGri
 import { createUser } from '../../Common Requests/mutation';
 const AddVendor = () => {
   const { headers } = GetHeader();
-  const AddVendor = useMutation(createUser);
+
   const [fields, setFields] = useState([
     {
       type: SELECT,
@@ -110,7 +110,17 @@ const AddVendor = () => {
       },
     },
   ]);
-
+  const AddVendor = useMutation(createUser, {
+    onSuccess: () => {
+      const resetFields = fields.map((field) => {
+        return {
+          ...field,
+          value: '',
+        };
+      });
+      setFields(resetFields);
+    },
+  });
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
@@ -138,7 +148,13 @@ const AddVendor = () => {
   };
 
   return (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={AddVendor.isSuccess} />
+    <CommonGridBasedForm
+      buttons={buttons}
+      fields={fields}
+      heading="Add Vendor"
+      loading={AddVendor.isLoading}
+      onSaveSuccess={AddVendor.isSuccess}
+    />
   );
 };
 

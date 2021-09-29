@@ -14,7 +14,6 @@ import { FetchUserById } from '../../Common Requests/request';
 const EditUser = () => {
   const { headers } = GetHeader();
   const history = useHistory();
-
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [user, setUser] = useState('');
@@ -116,7 +115,17 @@ const EditUser = () => {
     }
   }, [userById]);
 
-  const EditUser = useMutation(editUserById);
+  const EditUser = useMutation(editUserById, {
+    onSuccess: () => {
+      const resetFields = fields.map((field) => {
+        return {
+          ...field,
+          value: '',
+        };
+      });
+      setFields(resetFields);
+    },
+  });
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
@@ -145,10 +154,14 @@ const EditUser = () => {
     ],
   };
 
-  return EditUser.isLoading ? (
-    <img alt="loader" src="https://flevix.com/wp-content/uploads/2020/01/Bounce-Bar-Preloader-1.gif" />
-  ) : (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={EditUser.isSuccess} />
+  return (
+    <CommonGridBasedForm
+      buttons={buttons}
+      fields={fields}
+      heading="Edit User"
+      loading={EditUser.isLoading}
+      onSaveSuccess={EditUser.isSuccess}
+    />
   );
 };
 
