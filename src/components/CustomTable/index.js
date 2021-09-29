@@ -19,6 +19,7 @@ import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const dispatch = useDispatch();
+  const [currentSelectedRow, setCurrentSelectedRow] = useState({});
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
     onDelete(currentSelectedRow);
@@ -46,7 +47,6 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
     setPage(0);
   };
 
-  const [currentSelectedRow, setCurrentSelectedRow] = useState({});
   const RowPerPage = (rowsPerPage, rowsData, page) => {
     if (rowsPerPage > 0) {
       return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
