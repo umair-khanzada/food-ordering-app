@@ -32,6 +32,7 @@ function CategoryList() {
   }, [categoriesdata]);
 
   const saveCategories = ({ data: { results } }) => {
+    console.log('resultsCategories', results);
     setCategories(results);
   };
   function deleteItem(categoryId) {
@@ -46,7 +47,7 @@ function CategoryList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setHeader(['No', 'Categories', 'Edit']);
+    setHeader(['Categories', 'Edit']);
   }, []);
 
   const { mutate, mutateAsync, isLoading, error } = useMutation(deleteCategory, {

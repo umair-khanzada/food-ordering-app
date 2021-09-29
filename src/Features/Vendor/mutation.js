@@ -1,10 +1,13 @@
 import axios from 'axios';
 
 import { baseUrl } from '../../scripts/constants';
-//
 
 export async function restaurants(data) {
-  const { name, token } = data;
+  const {
+    name,
+    token: { token },
+  } = data;
+  console.log('data', token);
 
   const res = axios.post(
     baseUrl + 'kitchens',
@@ -17,7 +20,7 @@ export async function restaurants(data) {
       },
     },
   );
-
+  console.log('restaurantPost', res);
   return res;
 }
 

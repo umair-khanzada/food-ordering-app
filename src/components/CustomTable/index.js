@@ -31,12 +31,9 @@ export default function CustomTable({
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
     setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
-    // mutate({ name: 'fahad' });
-    // mutate({ id: currentSelectedRow, token });
-    // dispatch(deleteitem(currentSelectedRow));
+
     deleteTableRow(currentSelectedRow);
 
-    // onDelete(currentSelectedRow);
     dispatch(closeModal());
   };
 
@@ -94,7 +91,7 @@ export default function CustomTable({
             <TableRow key={row.id}>
               <TableCell>{index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
-                if (data != 'id') {
+                if (data != 'id' && data != 'createdBy') {
                   return (
                     <TableCell key={index} cellwidth={cellWidth}>
                       {row[data]}
