@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { AuthToken } from '../../../../scripts/constants';
+import { AuthToken, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { category } from '../../mutation';
+import { category } from '../mutation';
 
 const AddCategory = () => {
+  const { headers } = GetHeader();
   const token = AuthToken();
-  const dispatch = useDispatch();
+
   const adminId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -46,7 +47,7 @@ const AddCategory = () => {
           name: name[0],
           createdBy: adminId,
         },
-        token,
+        headers,
       });
     }
   };

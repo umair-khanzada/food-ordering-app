@@ -19,7 +19,7 @@ export const FetchRestaurants = () => {
   const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery('restaurants', () =>
     Restaurants(token),
   );
-  console.log('fetchRestaurnats', data);
+
   return data;
 };
 

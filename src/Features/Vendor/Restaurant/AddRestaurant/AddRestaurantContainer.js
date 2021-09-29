@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
@@ -10,7 +9,7 @@ import { validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 import { restaurants } from '../../mutation';
 const AddRestaurant = () => {
   const token = AuthToken();
-  const dispatch = useDispatch();
+
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const [restaurant, setRestaurant] = useState('');
