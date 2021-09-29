@@ -12,11 +12,13 @@ function SignUpForm() {
     return { message };
   }, shallowEqual);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
-  }, []);
+  }, [dispatch]);
 
   const validateOnSubmit = () => {
     let isValid = true;
@@ -37,7 +39,6 @@ function SignUpForm() {
 
     return isValid;
   };
-  const dispatch = useDispatch();
 
   const textFiledChangeHandler = (e, index) => {
     const { value } = e.target;

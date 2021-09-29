@@ -1,6 +1,5 @@
 import React from 'react';
 
-import SearchBar from 'material-ui-search-bar';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
@@ -8,7 +7,6 @@ import CustomTable from '../../../components/CustomTable';
 import { ordersHistoryList } from '../../../Mock/OrdersHistoryList';
 import RouteNames from '../../../routes/RouteNames';
 import { OrdersHistoryTitleContainer, OrdersHistoryTitle } from './style';
-
 function OrderHistory() {
   const history = useHistory();
   const { addOrderHistory, editOrderHistory } = RouteNames;
@@ -28,7 +26,6 @@ function OrderHistory() {
 
   return (
     <>
-      <SearchBar />
       <OrdersHistoryTitleContainer>
         <OrdersHistoryTitle>Orders</OrdersHistoryTitle>
         <CommonButton onClick={() => history.push(addOrderHistory)} property="Add History" />
