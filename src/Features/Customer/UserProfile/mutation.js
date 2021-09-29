@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import { baseBackEndURL } from '../../../scripts/constants';
+import { API_ROUTE } from '../../../scripts/constants';
 
 export const editUser = async ({ id, body, token }) => {
-  const res = await axios.patch(baseBackEndURL + '/users/' + id, body, {
+  const res = await axios.patch(API_ROUTE + '/users/' + id, body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

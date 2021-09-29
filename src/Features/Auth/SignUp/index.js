@@ -11,12 +11,13 @@ function SignUpForm() {
     const { message } = state.responseMessage;
     return { message };
   }, shallowEqual);
+
   useEffect(() => {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = signUpForm.map((textField) => {

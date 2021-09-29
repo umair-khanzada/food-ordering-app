@@ -9,19 +9,25 @@ const StyledMenu = withStyles({
   },
 })((props) => (
   <Menu
+    anchorEl={props.anchorEl}
     anchorOrigin={{
       vertical: 'bottom',
       horizontal: 'center',
     }}
+    classes={props.classes}
     elevation={0}
     getContentAnchorEl={null}
+    id={props.id}
+    keepMounted={props.keepMounted}
+    onClose={props.onClose}
+    open={props.open}
     transformOrigin={{
       vertical: 'top',
       horizontal: 'center',
     }}
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    {...props}
-  />
+  >
+    {props.children}
+  </Menu>
 ));
 
 const AppBarMenuButton = (props) => {

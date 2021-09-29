@@ -9,7 +9,7 @@ import { emailRegex } from '../../../redux/ActionTypes';
 import { contactRegex } from '../../../scripts/constants';
 import { fieldChangeHandler, validateOnSubmit } from '../../../util/CommonGridBasedFormUtils';
 import { updateUserData } from '../../Auth/actions';
-import { editUser } from './queryMethods';
+import { editUser } from './mutation';
 
 const AddUser = () => {
   const { id, email, name, token } = useSelector((state) => {
@@ -31,17 +31,15 @@ const AddUser = () => {
 
   const dispatch = useDispatch();
 
-  const editUserQuery = useMutation(editUser, {
-    onSuccess: async (data) => {
-      if (!data.code) {
-        const { name, email } = { data: { data } };
+  const { isLoading, mutate: editUserMutate } = useMutation(editUser, {
+    onSuccess: async (resData) => {
+      if (!resData.code) {
+        const { name, email } = { data: { resData } };
         dispatch(updateUserData({ name, email }));
         setOnSaveSuccess(true);
       } else setOnSaveSuccess(false);
     },
   });
-
-  const { isLoading, mutate: editUserMutate } = editUserQuery;
 
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const [fields, setFields] = useState([

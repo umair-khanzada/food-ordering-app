@@ -11,11 +11,13 @@ function ResetPassword() {
     const { message } = state.responseMessage;
     return { message };
   }, shallowEqual);
+
   useEffect(() => {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
   }, []);
+
   let newPassword = '';
 
   const validateOnSubmit = () => {

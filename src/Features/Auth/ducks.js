@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 import {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
@@ -68,11 +67,11 @@ export const forgotPassword = (state = { ...initialForgotPasswordState }, action
 
 export const responseMessage = (state = { ...initialResponseMessageState }, action) => {
   switch (action.type) {
-    case MESSAGE:
-      // eslint-disable-next-line no-case-declarations
+    case MESSAGE: {
       const { message, status } = action.payload;
 
       return { ...state, message, status };
+    }
 
     default:
       return state;
