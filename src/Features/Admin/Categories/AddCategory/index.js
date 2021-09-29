@@ -5,13 +5,12 @@ import { useSelector } from 'react-redux';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { AuthToken, GetHeader } from '../../../../scripts/constants';
+import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { category } from '../mutation';
 
 const AddCategory = () => {
   const { headers } = GetHeader();
-  const token = AuthToken();
 
   const adminId = useSelector((state) => {
     const {

@@ -31,13 +31,11 @@ export async function updateCategoryById(data) {
   const {
     category,
     categoriesId: { id },
-    token: { token },
+    headers,
   } = data;
 
   const res = axios.patch(`${baseUrl}categories/${id}`, category, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers,
   });
 
   return res;

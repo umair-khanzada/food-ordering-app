@@ -7,12 +7,13 @@ import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { AuthToken } from '../../../../scripts/constants';
+import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { updateCategoryById } from '../mutation';
 import { FetchCategoriesById } from '../request';
 
 const EditCategory = () => {
+  const { headers } = GetHeader();
   const adminId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -20,7 +21,6 @@ const EditCategory = () => {
     return id;
   });
 
-  const token = AuthToken();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
@@ -66,7 +66,7 @@ const EditCategory = () => {
           name: name[0],
           createdBy: adminId,
         },
-        token,
+        headers,
         categoriesId,
       });
     }
