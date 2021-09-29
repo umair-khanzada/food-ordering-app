@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
@@ -49,25 +48,6 @@ function UsersList() {
   };
 
   const history = useHistory();
-
-
-  const getUsersResponseFromEpic = (response) => {
-    setUsers(response);
-  };
-
-  const [header, setHeader] = useState([]);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUsers(getUsersResponseFromEpic));
-  }, []);
-
-  useEffect(() => {
-    if (users.length > 0) {
-      setHeader([...Object.keys(users[0]), 'Edit']);
-    }
-  }, [users]);
-
   return (
     <>
       {isLoading ? (
