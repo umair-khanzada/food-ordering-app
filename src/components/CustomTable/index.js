@@ -19,10 +19,9 @@ import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
   const dispatch = useDispatch();
+  const [currentSelectedRow, setCurrentSelectedRow] = useState({});
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
-    setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
-
     onDelete(currentSelectedRow);
     dispatch(closeModal());
   };
@@ -48,7 +47,6 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
     setPage(0);
   };
 
-  const [currentSelectedRow, setCurrentSelectedRow] = useState({});
   const RowPerPage = (rowsPerPage, rowsData, page) => {
     if (rowsPerPage > 0) {
       return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
@@ -68,11 +66,8 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
-            <TableHeader>S.No</TableHeader>
             {header.map((head, index) => {
-              if (head != 'id') {
-                return <TableHeader key={index}>{head}</TableHeader>;
-              }
+              return <TableHeader key={index}>{head}</TableHeader>;
             })}
           </TableRow>
         </CustomTableHead>
@@ -82,7 +77,7 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
             <TableRow key={row.id}>
               <TableCell>{index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
-                if (data != 'id') {
+                if (data != 'id' && data !== 'role') {
                   return (
                     <TableCell key={index} cellwidth={cellWidth}>
                       {row[data]}

@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
-import { MULTI_SELECT, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex } from '../../../../scripts/constants';
+import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { createVendor } from '../actions';
-
+import { createUser } from '../../Common Requests/mutation';
 const AddVendor = () => {
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
-  const dispatch = useDispatch();
+  const { headers } = GetHeader();
+  const AddVendor = useMutation(createUser);
   const [fields, setFields] = useState([
     {
       type: SELECT,
       label: 'Role',
-      name: 'role',
-      values: ['User', 'Vendor'],
+      values: ['user', 'vendor'],
       value: [],
+      name: 'role',
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
@@ -46,8 +44,8 @@ const AddVendor = () => {
       textFieldType: 'email',
       label: 'Email',
       variant: 'standard',
-      value: '',
       name: 'email',
+      value: '',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -100,10 +98,11 @@ const AddVendor = () => {
       },
     },
     {
-      type: MULTI_SELECT,
+      type: SELECT,
       label: 'Building',
       values: ['Main', 'Cherry', 'Qasre Sheeren'],
-      value: [],
+      value: '',
+      name: 'building',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -123,11 +122,7 @@ const AddVendor = () => {
           vendorData[name] = value;
         }
       });
-
-      dispatch(createVendor(vendorData));
-      setOnSaveSuccess(true);
-    } else {
-      setOnSaveSuccess(false);
+      AddVendor.mutateAsync({ headers, vendorData });
     }
   };
 
@@ -142,7 +137,9 @@ const AddVendor = () => {
     ],
   };
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={AddVendor.isSuccess} />
+  );
 };
 
 export default AddVendor;
