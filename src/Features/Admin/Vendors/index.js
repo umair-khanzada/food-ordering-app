@@ -46,20 +46,6 @@ function VendorList() {
     Deletevendor.mutateAsync({ id, headers });
   };
 
-  const getVendorsResponseFromEpic = (response) => {
-    setVendors(response);
-  };
-
-  useEffect(() => {
-    dispatch(fetchVendors(getVendorsResponseFromEpic));
-  }, []);
-
-  useEffect(() => {
-    if (vendors.length > 0) {
-      setHeader([...Object.keys(vendors[0]), 'Edit']);
-    }
-  }, [vendors]);
-
   return (
     <>
       <VendorTitleContainer>

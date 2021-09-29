@@ -47,7 +47,7 @@ function CategoryList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setHeader(['Categories', 'Edit']);
+    setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
 
   const { mutate, mutateAsync, isLoading, error } = useMutation(deleteCategory, {

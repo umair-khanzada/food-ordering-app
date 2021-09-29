@@ -12,11 +12,6 @@ import { category } from '../../mutation';
 const AddCategory = () => {
   const token = AuthToken();
   const dispatch = useDispatch();
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const [loading, setLoading] = React.useState(false);
-  function handleClick() {
-    setLoading(true);
-  }
   const adminId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -45,8 +40,6 @@ const AddCategory = () => {
     setFields(validateArray);
 
     if (isValid) {
-      setLoading(true);
-      setOnSaveSuccess(true);
       const name = fields.map(({ value }, index) => value);
       mutate({
         category: {
@@ -55,16 +48,11 @@ const AddCategory = () => {
         },
         token,
       });
-    } else {
-      setOnSaveSuccess(false);
-      setLoading(false);
     }
   };
 
-  const { mutate, mutateAsync, isLoading, error } = useMutation(category, {
+  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
     onSuccess: (response) => {
-      setLoading(false);
-
       return response;
     },
   });
@@ -84,8 +72,8 @@ const AddCategory = () => {
       buttons={buttons}
       fields={fields}
       heading="Add Category"
-      loading={loading}
-      onSaveSuccess={onSaveSuccess}
+      loading={isLoading}
+      onSaveSuccess={isSuccess}
     />
   );
 };

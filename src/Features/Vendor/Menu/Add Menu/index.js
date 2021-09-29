@@ -11,14 +11,9 @@ import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
 
 const AddMenu = () => {
-  const [loading, setLoading] = React.useState(false);
-  function handleClick() {
-    setLoading(true);
-  }
-
   const token = AuthToken();
   const dispatch = useDispatch();
-  const a = 7;
+
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -52,7 +47,7 @@ const AddMenu = () => {
 
     setFields(updatedFields);
   };
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+
   const [category, setCategory] = useState([]);
 
   const [price, setPrice] = useState(null);
@@ -117,12 +112,10 @@ const AddMenu = () => {
   ]);
 
   const saveHandler = () => {
-    setLoading(true);
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
 
     if (isValid) {
-      setOnSaveSuccess(true);
       mutate({
         items: {
           name: fields[3].value,
@@ -133,18 +126,6 @@ const AddMenu = () => {
         },
         token,
       });
-      // dispatch(
-      //   additem({
-      //     name: fields[3].value,
-      //     price: fields[2].value,
-      //     createdBy: vendorId,
-      //     categoryId: fields[0].value,
-      //     kitchenId: fields[1].value,
-      //   }),
-      // );
-    } else {
-      setOnSaveSuccess(false);
-      setLoading(false);
     }
   };
 
@@ -158,23 +139,15 @@ const AddMenu = () => {
       },
     ],
   };
-  const { mutate, mutateAsync, isLoading, error } = useMutation(items, {
+  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
-      setLoading(false);
-
       return response;
     },
   });
 
   return (
     <>
-      <AddEditForm
-        buttons={buttons}
-        fields={fields}
-        heading="Add Item"
-        loading={loading}
-        onSaveSuccess={onSaveSuccess}
-      />
+      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} onSaveSuccess={isSuccess} />
       ;
     </>
   );

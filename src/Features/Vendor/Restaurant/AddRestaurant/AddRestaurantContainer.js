@@ -12,10 +12,6 @@ const AddRestaurant = () => {
   const token = AuthToken();
   const dispatch = useDispatch();
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const [loading, setLoading] = React.useState(false);
-  function handleClick() {
-    setLoading(true);
-  }
 
   const [restaurant, setRestaurant] = useState('');
   // useEffect(() => {}, [buttons.button]);
@@ -36,7 +32,6 @@ const AddRestaurant = () => {
   ]);
   // const token = AuthToken();
   const saveHandler = () => {
-    setLoading(true);
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
 
@@ -47,7 +42,6 @@ const AddRestaurant = () => {
       mutate({ name: name[0], token });
     } else {
       setOnSaveSuccess(false);
-      setLoading(false);
     }
   };
 
@@ -61,10 +55,8 @@ const AddRestaurant = () => {
       },
     ],
   };
-  const { mutate, mutateAsync, isLoading, error } = useMutation(restaurants, {
+  const { mutate, mutateAsync, error, isLoading, isSuccess } = useMutation(restaurants, {
     onSuccess: (response) => {
-      setLoading(false);
-
       return response;
     },
   });
@@ -77,8 +69,8 @@ const AddRestaurant = () => {
         buttons={buttons}
         fields={fields}
         heading="Add Restaurant"
-        loading={loading}
-        onSaveSuccess={onSaveSuccess}
+        loading={isLoading}
+        onSaveSuccess={isSuccess}
       />
     </>
   );
