@@ -3,17 +3,18 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP } from '../../redux/ActionTypes';
-import { loginSuccess, logoutSuccess, setFormMessage } from './actions';
+import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS } from '../../redux/ActionTypes';
+import { defaultRouteForRoles } from '../../scripts/constants';
+import { loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
 
 export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
-    mergeMap(({ payload }) => {
+    mergeMap(({ payload: { userData, history } }) => {
       return ajax({
         url: 'http://localhost:4000/v1/auth/login',
         method: 'POST',
-        body: payload,
+        body: userData,
       }).pipe(
         mergeMap((res) => {
           const {
@@ -28,6 +29,7 @@ export const loginEpic = (action$) =>
               id,
               refreshToken: refresh,
               accessToken: access,
+              history,
             }),
           );
         }),
@@ -42,6 +44,17 @@ export const loginEpic = (action$) =>
       );
     }),
   );
+
+export const loginSuccessEpic = (action$) =>
+  action$.pipe(
+    ofType(LOGIN_SUCCESS),
+    mergeMap(({ payload: { role, history } }) => {
+      const defaultRouteAfterLogin = defaultRouteForRoles[role];
+      history.push(defaultRouteAfterLogin || '/');
+      return of();
+    }),
+  );
+
 export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
@@ -107,23 +120,25 @@ export const forgotPasswordEpic = (action$) =>
 export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
-    mergeMap(() => {
+    mergeMap(({ payload: { history } }) => {
       const {
         value: {
-          authReducer: { token },
+          authReducer: {
+            refreshToken: { token },
+          },
         },
       } = state;
-      const refreshToken = { refreshToken: token };
       return ajax({
         url: 'http://localhost:4000/v1/auth/logout',
         method: 'POST',
-        body: refreshToken,
+        body: { refreshToken: token },
       }).pipe(
         mergeMap(() => {
+          history.push('/login');
           return of(logoutSuccess());
         }),
         catchError(() => {
-          return of(logoutSuccess());
+          return of(logoutError());
         }),
       );
     }),

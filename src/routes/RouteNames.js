@@ -27,6 +27,7 @@ const RouteNames = {
   orderList: '/orderList',
   addmenu: '/addmenu',
   editmenu: '/editmenu',
+  orderHistories: '/orderHistories',
 };
 
 export default RouteNames;

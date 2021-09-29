@@ -9,6 +9,7 @@ export const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const MESSAGE = 'MESSAGE';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_ERROR = 'LOGOUT_ERROR';
 export const ADD_TOCART = 'ADD_TOCART';
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';

@@ -5,33 +5,48 @@ import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { vendorList } from '../../../Mock/VendorList';
 import RouteNames from '../../../routes/RouteNames';
-import { fetchVendors } from './actions';
+import { deleteVendorById, fetchVendors } from './actions';
 import { VendorTitleContainer, VendorTitle } from './style';
 function VendorList() {
+  const dispatch = useDispatch();
+  const [vendors, setVendors] = useState('');
+  const [header, setHeader] = useState([]);
+  const removeElements = ['role', 'password', 'isEmailVerified'];
+  const getVendors = (response) => {
+    setVendors(response);
+  };
+  useEffect(() => {
+    dispatch(fetchVendors(getVendors));
+  }, []);
+  useEffect(() => {
+    if (vendors) {
+      vendors.map((vendor) => {
+        removeElements.map((removeElement) => delete vendor[removeElement]);
+      });
+
+      const headers = [...Object.keys(vendors[0]), 'Edit'];
+
+      setHeader(headers);
+    }
+  }, [vendors]);
   const history = useHistory();
   const { editVendor, addVendor } = RouteNames;
 
-  const onEdit = (row) => {
+  const onEdit = ({ id }) => {
     history.push({
       pathname: editVendor,
-      state: { data: row },
+      search: '?id=' + id,
     });
   };
 
-  const onDelete = (row) => {
-    row;
+  const onDelete = ({ id }) => {
+    dispatch(deleteVendorById(id));
   };
-
-  const [vendors, setVendors] = useState([]);
 
   const getVendorsResponseFromEpic = (response) => {
     setVendors(response);
   };
-
-  const [header, setHeader] = useState([]);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchVendors(getVendorsResponseFromEpic));
@@ -50,15 +65,7 @@ function VendorList() {
         <CommonButton onClick={() => history.push(addVendor)} property="Add Vendor" />
       </VendorTitleContainer>
 
-      <CustomTable
-        header={header}
-        isEditDelete
-        onDelete={onDelete}
-        onEdit={onEdit}
-        padding="5px 11px"
-        rows={vendorList}
-        tablewidth="90%"
-      />
+      <CustomTable header={header} isEditDelete onDelete={onDelete} onEdit={onEdit} rows={vendors} tablewidth="90%" />
     </>
   );
 }

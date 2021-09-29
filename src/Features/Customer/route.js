@@ -17,7 +17,7 @@ export const profileRoute = {
 };
 
 export const customerOrderHistoryRoute = {
-  path: RouteNames.orderHistory,
+  path: RouteNames.orderHistories,
   permissions: isProtectedRoute, // to intimate it is public route
   component: OrderHistory,
 };

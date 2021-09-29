@@ -7,7 +7,7 @@ const initialData = {
   count: 0,
 };
 export const addtocartReducers = (state = initialData, action) => {
-  const updatedCart = [];
+  // const updatedCart = [];
 
   switch (action.type) {
     case OPEN_DRAWER:
@@ -16,18 +16,18 @@ export const addtocartReducers = (state = initialData, action) => {
     case CLOSE_DRAWER:
       return { ...state, isDrawerOpen: false };
 
-    case ADD_TOCART:
+    case ADD_TOCART: {
       const { id, name, price, img, qty } = action.payload;
 
       const filter = state.cart.filter((elem) => elem.id === id);
 
-      const obj = {
-        id,
-        name,
-        price,
-        img,
-        qty,
-      };
+      // const obj = {
+      //   id,
+      //   name,
+      //   price,
+      //   img,
+      //   qty,
+      // };
 
       if (filter.length > 0) {
         state.cart.map((element, index) => {
@@ -49,7 +49,7 @@ export const addtocartReducers = (state = initialData, action) => {
         isDrawerOpen: true,
         count: state.cart.length + 1,
       };
-
+    }
     case INCREMENT:
       state.cart.map((element, index) => {
         if (element.id == action.payload.id) {
@@ -72,13 +72,13 @@ export const addtocartReducers = (state = initialData, action) => {
       });
       return { ...state, cart: [...state.cart] };
 
-    case DELETE_ITEM:
+    case DELETE_ITEM: {
       const updCart = state.cart.filter((element) => element.id !== action.payload.id);
       return {
         ...state,
         cart: updCart,
       };
-
+    }
     default:
       return state;
   }

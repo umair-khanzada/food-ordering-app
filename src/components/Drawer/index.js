@@ -29,6 +29,10 @@ import {
   AddToCartImg,
   ModalIcons,
   PriceSpan,
+  EmptyCartHeading,
+  EmptyCartPara,
+  ConfirmButton,
+  CartPaper,
 } from './style';
 const TemporaryDrawer = () => {
   const cart = useSelector((state) => state.addtocartReducers.cart);
@@ -57,44 +61,47 @@ const TemporaryDrawer = () => {
             <div>
               {cart.length > 0 ? (
                 <>
-                  {cart.map((cartdata) => {
-                    return (
-                      <DrawerCard key={cartdata.id}>
-                        <AddToCartImg alt="cart" src={cartdata.img} />
+                  <CartPaper>
+                    {cart.map((cartdata) => {
+                      return (
+                        <DrawerCard key={cartdata.id}>
+                          <AddToCartImg alt="cart" src={cartdata.img} />
 
-                        <DrawerPrice>
-                          <Add>
-                            <div>
-                              <h4>{cartdata.name}</h4>
-                            </div>
+                          <DrawerPrice>
+                            <CartCancel>
+                              <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
+                            </CartCancel>
 
-                            <DrawerItemPrice>
-                              <CartPrice> {cartdata.price}</CartPrice>
-                            </DrawerItemPrice>
-                            <PriceSpan />
+                            <Add>
+                              <div>
+                                <h4>{cartdata.name}</h4>
+                              </div>
 
-                            <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
-                            {cartdata.qty}
-                            <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
-                          </Add>
-                          <CartCancel>
-                            <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
-                          </CartCancel>
-                        </DrawerPrice>
-                      </DrawerCard>
-                    );
-                  })}
+                              <DrawerItemPrice>
+                                <CartPrice> {cartdata.price}</CartPrice>
+                              </DrawerItemPrice>
+                              <PriceSpan />
+
+                              <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
+                              {cartdata.qty}
+                              <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
+                            </Add>
+                          </DrawerPrice>
+                        </DrawerCard>
+                      );
+                    })}
+                  </CartPaper>
                 </>
               ) : (
                 <EmptyCart>
-                  <h2>No Item in your cart </h2>
-                  <p>Your favorite items are just a click away</p>
+                  <EmptyCartHeading>No Item in your cart </EmptyCartHeading>
+                  <EmptyCartPara>Your favorite items are just a click away</EmptyCartPara>
                 </EmptyCart>
               )}
             </div>
           </div>
           {cart.length > 0 && (
-            <CheckoutButton color="secondary" onClick={handleOpen} variant="contained">
+            <CheckoutButton color="primary" onClick={handleOpen} variant="contained">
               Checkout
             </CheckoutButton>
           )}
@@ -116,10 +123,10 @@ const TemporaryDrawer = () => {
                     <CloseIcon />
                     Cancel
                   </CancelButton>
-                  <CheckoutButton color="secondary" onClick={() => handleClose()} variant="contained">
+                  <ConfirmButton color="primary" onClick={() => handleClose()} variant="contained">
                     <DoneIcon />
                     Confirm
-                  </CheckoutButton>
+                  </ConfirmButton>
                 </ModalIcons>
               </Paper>
             </Fade>

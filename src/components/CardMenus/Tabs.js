@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { Paper, Tab, Tabs } from '@material-ui/core';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { openDrawer } from '../../Features/Customer/actions';
 import TabData from '../../Mock/TabList';
 import History from '../../util/History';
 import CardMenus from './CardMenus';
@@ -37,7 +35,6 @@ const MainTab = () => {
           {TabData.map(({ label }, index) => {
             return <Tab key={index} label={label} value={label} />;
           })}
-          <Tab icon={<AddShoppingCartIcon onClick={() => dispatch(openDrawer())} />} value="addCart" />
         </Tabs>
       </Paper>
       {TabData.map(({ label }, index) => {

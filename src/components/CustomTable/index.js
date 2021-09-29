@@ -13,8 +13,8 @@ import {
 import { Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 
+import ConfirmDeletModal from '../Modal';
 import { closeModal, openModal } from '../Modal/action';
-import ConfirmDeletModal from '../Modal/inex';
 import TablePaginationActions from './Pagination';
 import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
 export default function CustomTable({
@@ -39,15 +39,15 @@ export default function CustomTable({
     // onDelete(currentSelectedRow);
     dispatch(closeModal());
   };
-  useEffect(() => {
-    setRowsData(rows);
-  }, [rows]);
 
   const deletModalButtons = [
     { property: 'Cancel', clickHandler: onCancel },
     { property: 'Confirm', clickHandler: onRowDelete },
   ];
-
+  const [rowsData, setRowsData] = useState([...rows]);
+  useEffect(() => {
+    setRowsData([...rows]);
+  }, [rows]);
   const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -60,11 +60,7 @@ export default function CustomTable({
 
     setPage(0);
   };
-
-  const [rowsData, setRowsData] = useState([...rows]);
-
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
-
   const RowPerPage = (rowsPerPage, rowsData, page) => {
     if (rowsPerPage > 0) {
       return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
@@ -84,18 +80,21 @@ export default function CustomTable({
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
-            {header.map((head, index) => (
-              <TableHeader key={index}>{head}</TableHeader>
-            ))}
+            <TableHeader>S.No</TableHeader>
+            {header.map((head, index) => {
+              if (head != 'id') {
+                return <TableHeader key={index}>{head}</TableHeader>;
+              }
+            })}
           </TableRow>
         </CustomTableHead>
 
         <TableBody>
           {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell>{index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
-                if (data != 'id' && data !== 'role') {
+                if (data != 'id') {
                   return (
                     <TableCell key={index} cellwidth={cellWidth}>
                       {row[data]}

@@ -2,7 +2,7 @@
 import { LOGIN_SUCCESS, LOGIN_ERROR, FORGOT_PASSWORD, MESSAGE, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
 // { isLoggedIn: false, token: '', name: '' }
 
-const initialAuthState = { isLoggedIn: '', accessToken: '', refreshToken: '', name: '', role: '', id: '' };
+const initialAuthState = { isLoggedIn: false, accessToken: '', refreshToken: '', name: '', role: '' };
 const initialForgotPasswordState = { message: '', status: 0 };
 const initialResponseMessageState = { message: '', status: 0 };
 

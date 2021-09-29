@@ -17,6 +17,8 @@ import {
 const routeConfig = {
   auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
 
+  orderPlacer: [dashboardRoute, MenuListRoute],
+
   admin: [
     orderHistorydRoute,
 
@@ -47,7 +49,7 @@ const routeConfig = {
   vendor: [OrderListRoute, MenuListRoute, CategoryListRoute, RestaurantRoute, AddMenuRoute, EditMenuRoute],
   officeBoy: [],
 
-  common: [MenuListRoute],
+  common: [],
 };
 
 export default routeConfig;

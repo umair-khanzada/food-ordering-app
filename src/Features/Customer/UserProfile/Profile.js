@@ -7,7 +7,7 @@ import { contactRegex } from '../../../scripts/constants';
 
 const AddUser = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit] = useState(true);
   const validateOnSubmit = () => {
     let isValid = true;
 
@@ -41,11 +41,11 @@ const AddUser = () => {
     return isValid;
   };
 
-  const [email, setEmail] = useState('');
+  const [, setEmail] = useState('');
 
-  const [contact, setContact] = useState('');
+  const [, setContact] = useState('');
 
-  const [name, setName] = useState('');
+  const [, setName] = useState('');
 
   const [fields, setFields] = useState([
     {
