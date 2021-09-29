@@ -7,9 +7,9 @@ import { emailRegex, contactRegex } from '../../../scripts/constants';
 import { setFormMessage, signup } from '../actions';
 
 function SignUpForm() {
-  const { message } = useSelector((state) => {
+  const message = useSelector((state) => {
     const { message } = state.responseMessage;
-    return { message };
+    return message;
   }, shallowEqual);
 
   const dispatch = useDispatch();

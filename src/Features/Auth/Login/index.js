@@ -8,9 +8,9 @@ import { emailRegex } from '../../../scripts/constants';
 import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const { message } = useSelector((state) => {
+  const message = useSelector((state) => {
     const { message } = state.responseMessage;
-    return { message };
+    return message;
   }, shallowEqual);
   const validateOnSubmit = () => {
     let isValid = true;
