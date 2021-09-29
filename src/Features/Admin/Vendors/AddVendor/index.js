@@ -1,22 +1,41 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { MULTI_SELECT, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { createVendor } from '../actions';
 
 const AddVendor = () => {
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
+  const dispatch = useDispatch();
   const [fields, setFields] = useState([
     {
       type: SELECT,
       label: 'Role',
+      name: 'role',
       values: ['User', 'Vendor'],
       value: [],
       errorMessage: '',
 
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+    },
+
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: '',
+      name: 'name',
+      errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
         setFields(updatedFields);
@@ -28,6 +47,7 @@ const AddVendor = () => {
       label: 'Email',
       variant: 'standard',
       value: '',
+      name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -46,6 +66,7 @@ const AddVendor = () => {
       label: 'Password',
       variant: 'standard',
       value: '',
+      name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -58,12 +79,14 @@ const AddVendor = () => {
         return '';
       },
     },
+
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
       label: 'Contact',
       variant: 'standard',
       value: '',
+      name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -74,18 +97,6 @@ const AddVendor = () => {
           return 'Contact length or Type is not valid';
         }
         return '';
-      },
-    },
-    {
-      type: TEXT_FIELD,
-      textFieldType: 'text',
-      label: 'Timing',
-      variant: 'standard',
-      value: '',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
-        setFields(updatedFields);
       },
     },
     {
@@ -104,7 +115,20 @@ const AddVendor = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+
+    if (isValid) {
+      const vendorData = {};
+      fields.map(({ name, value }) => {
+        if (name !== 'building' && name !== 'contact') {
+          vendorData[name] = value;
+        }
+      });
+
+      dispatch(createVendor(vendorData));
+      setOnSaveSuccess(true);
+    } else {
+      setOnSaveSuccess(false);
+    }
   };
 
   const buttons = {

@@ -19,7 +19,6 @@ const NavBar = () => {
     dispatch(logout({ history }));
   };
 
-<<<<<<< HEAD
   const cartItemCount = useSelector((state) => {
     const {
       addtocartReducers: { cart },
@@ -27,11 +26,6 @@ const NavBar = () => {
 
     return cart.length;
   });
-
-  const history = useHistory();
-
-=======
->>>>>>> db1ceb786c3180234b623f4c9151aae094ea015f
   const { resetPassword } = RouteNames;
 
   return (
