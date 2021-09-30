@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
@@ -9,7 +9,7 @@ import { contactRegex } from '../../../scripts/constants';
 import { fieldChangeHandler, validateOnSubmit } from '../../../util/CommonGridBasedFormUtils';
 import { editUser } from '../actions';
 
-const AddUser = () => {
+const UserProfile = () => {
   const { id, email, name, isLoading } = useSelector((state) => {
     const {
       authReducer: { id, email, name },
@@ -21,7 +21,7 @@ const AddUser = () => {
       name,
       isLoading,
     };
-  });
+  }, shallowEqual);
 
   const dispatch = useDispatch();
 
@@ -125,4 +125,4 @@ const AddUser = () => {
   return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" onSaveSuccess={onSaveSuccess} />;
 };
 
-export default AddUser;
+export default UserProfile;

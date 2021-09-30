@@ -12,6 +12,7 @@ function LoginForm() {
     const { message } = state.responseMessage;
     return message;
   });
+
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = loginForm.map((textField) => {
