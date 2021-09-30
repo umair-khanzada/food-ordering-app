@@ -7,7 +7,7 @@ import { addtocart } from '../../Features/Customer/actions';
 import CommonButton from '../Button/Button';
 import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice, InsideContent } from './style';
 
-const CommonCard = ({ id, name, price, resturantName, img, buttonText, OnChangeHandler }) => {
+const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
   const dispatch = useDispatch();
 
   return (

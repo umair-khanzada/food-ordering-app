@@ -42,9 +42,7 @@ export const editUserEpic = (action$, state) =>
               }),
             );
           }),
-          catchError((err) => {
-            console.log('response2');
-
+          catchError(() => {
             setOnSaveSuccess(false);
             return of();
           }),
