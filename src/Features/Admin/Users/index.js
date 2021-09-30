@@ -53,9 +53,7 @@ function UsersList() {
   return (
     <>
       {isFetching ? (
-        <>
-          <Loader />
-        </>
+        <Loader />
       ) : (
         <>
           <UsersTitleContainer>
