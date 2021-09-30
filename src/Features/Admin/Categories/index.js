@@ -35,7 +35,6 @@ function CategoryList() {
     setCategories(results);
   };
   function deletecategory(categoryId) {
-    console.log('categoryId', categoryId);
     mutate({ categoryId, headers });
   }
 
