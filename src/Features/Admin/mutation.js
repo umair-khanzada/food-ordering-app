@@ -8,7 +8,7 @@ export async function category(data) {
     token: { token },
   } = data;
 
-  const res = axios.post(
+  const res = await axios.post(
     baseUrl + 'categories',
 
     category,
@@ -28,7 +28,7 @@ export async function deleteCategory(data) {
     token: { token },
   } = data;
 
-  const res = axios.delete(`${baseUrl}categories/${id}`, {
+  const res = await axios.delete(`${baseUrl}categories/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

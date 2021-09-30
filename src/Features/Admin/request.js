@@ -5,7 +5,7 @@ import { AuthToken } from '../../scripts/constants';
 import { baseUrl } from '../../scripts/constants';
 
 const Categories = async (token) => {
-  const res = await axios.get(baseUrl + 'categories', {
+  const res = axios.get(baseUrl + 'categories', {
     headers: {
       Authorization: 'Bearer ' + token,
     },

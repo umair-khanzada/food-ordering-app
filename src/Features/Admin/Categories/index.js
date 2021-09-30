@@ -1,7 +1,7 @@
+/* eslint-disable no-const-assign */
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
@@ -22,10 +22,11 @@ function CategoryList() {
       state: { data: row },
     });
   };
-  const [categories, setCategories] = useState([]);
   const { data: categoriesdata, refetch } = FetchCategories();
 
   useEffect(() => {
+    console.log('useEffect');
+    console.log('queryData', categoriesdata);
     if (categoriesdata !== undefined) {
       saveCategories(categoriesdata);
     }
@@ -33,7 +34,6 @@ function CategoryList() {
 
   const saveCategories = ({ data: { results } }) => {
     console.log('resultsCategories', results);
-    setCategories(results);
   };
   function deleteItem(categoryId) {
     mutate({ id: categoryId, token });
@@ -44,7 +44,6 @@ function CategoryList() {
   };
 
   const [header, setHeader] = useState([]);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setHeader(['S.No', 'Categories', 'Edit']);
@@ -63,17 +62,20 @@ function CategoryList() {
         <CategoriesTitle>Categories</CategoriesTitle>
         <CommonButton onClick={() => history.push(addCategory)} property="Add Category" />
       </CategoriesTitleContainer>
+      {console.log('categoriesData', categoriesdata)}
 
-      <CustomTable
-        cellWidth="400px"
-        deleteTableRow={deleteItem}
-        header={header}
-        isEditDelete
-        onDelete={onDelete}
-        onEdit={onEdit}
-        rows={categories}
-        tablewidth="90%"
-      />
+      {categoriesdata !== undefined && (
+        <CustomTable
+          cellWidth="400px"
+          deleteTableRow={deleteItem}
+          header={header}
+          isEditDelete
+          onDelete={onDelete}
+          onEdit={onEdit}
+          rows={categoriesdata.data.results}
+          tablewidth="90%"
+        />
+      )}
     </>
   );
 }
