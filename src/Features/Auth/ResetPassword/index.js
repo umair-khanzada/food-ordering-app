@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
 import { setFormMessage } from '../actions';
@@ -9,7 +9,7 @@ function ResetPassword() {
   const message = useSelector((state) => {
     const { message } = state.responseMessage;
     return message;
-  }, shallowEqual);
+  });
 
   const dispatch = useDispatch();
 
