@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 
-import { CheckCircle } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { toggleSnackbarClose } from './alertRedux/actions';
-import { Container, CrossIcon, SuccessMessage, BTN } from './style';
+import { Container, CrossIcon, SuccessMessage, BTN, SuccessIconButton, ErrorIconButton } from './style';
 
-const Snackbar = ({ timeout }) => {
+const Snackbar = ({ timeout, type }) => {
   const dispatch = useDispatch();
-  const SHOW = useSelector((state) => state.uiReducer.toggleSnackbar);
-  const MESSAGE = useSelector((state) => state.uiReducer.snackbarMessage);
+  const {
+    uiReducer: { toggleSnackbar: SHOW, snackbarMessage: MESSAGE },
+  } = useSelector((state) => state);
 
   let TIMER;
 
@@ -38,8 +38,9 @@ const Snackbar = ({ timeout }) => {
 
   return (
     SHOW && (
-      <Container time={TIME}>
-        <CheckCircle style={{ fill: 'green' }} />
+      <Container color={type === 'success' ? 'green' : 'red'} time={TIME}>
+        {type === 'success' ? <SuccessIconButton /> : <ErrorIconButton />}
+
         <SuccessMessage>{MESSAGE}</SuccessMessage>
         <BTN onClick={handleClose}>
           <CrossIcon />

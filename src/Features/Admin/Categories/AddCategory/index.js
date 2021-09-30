@@ -15,7 +15,6 @@ const AddCategory = () => {
   const dispatch = useDispatch();
 
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const [onAlertMessage, setOnAlertMessage] = useState(false);
 
   const [fields, setFields] = useState([
     {
@@ -35,12 +34,11 @@ const AddCategory = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    // isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
 
     if (isValid) {
       setOnSaveSuccess(true);
       const name = fields.map(({ value }, index) => value);
-      // console.log(name[0]);
+
       dispatch(
         addCategory({
           name: name[0],
@@ -78,7 +76,7 @@ const AddCategory = () => {
           Click Me
         </Button>
         <div>
-          <Snackbar timeout={3000} />
+          <Snackbar timeout={4000} type="success" />
         </div>
       </div>
     </>
