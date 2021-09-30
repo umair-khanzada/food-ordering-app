@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
+import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
 import { GetHeader } from '../../../scripts/constants';
 import { deleteUserById } from '../Common Requests/mutation';
@@ -15,7 +16,7 @@ function UsersList() {
   const [users, setUsers] = useState([]);
   const { headers } = GetHeader();
 
-  const { isLoading, isError, data: usersData, error, refetch: refetchUser } = FetchUsers('user');
+  const { data: usersData, refetch: refetchUser, isFetching } = FetchUsers('user');
   const header = ['S.No', 'name', 'email', 'Edit'];
 
   useEffect(() => {
@@ -51,10 +52,8 @@ function UsersList() {
 
   return (
     <>
-      {isLoading ? (
-        <>
-          <img alt="loader" src="https://flevix.com/wp-content/uploads/2020/01/Bounce-Bar-Preloader-1.gif" />
-        </>
+      {isFetching ? (
+        <Loader />
       ) : (
         <>
           <UsersTitleContainer>
@@ -62,7 +61,15 @@ function UsersList() {
             <CommonButton onClick={() => history.push(addUser)} property="Add Users" />
           </UsersTitleContainer>
 
-          <CustomTable header={header} isEditDelete onDelete={onDelete} onEdit={onEdit} rows={users} tablewidth="90%" />
+          <CustomTable
+            header={header}
+            isDeleting={DeleteUser.isLoading}
+            isEditDelete
+            onDelete={onDelete}
+            onEdit={onEdit}
+            rows={users}
+            tablewidth="90%"
+          />
         </>
       )}
     </>

@@ -22,7 +22,17 @@ const AddUser = () => {
       token,
     };
   });
-  const AddUser = useMutation(createUser);
+  const AddUser = useMutation(createUser, {
+    onSuccess: () => {
+      const resetFields = fields.map((field) => {
+        return {
+          ...field,
+          value: '',
+        };
+      });
+      setFields(resetFields);
+    },
+  });
   const [fields, setFields] = useState([
     {
       type: SELECT,
@@ -137,7 +147,15 @@ const AddUser = () => {
     ],
   };
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" onSaveSuccess={AddUser.isSuccess} />;
+  return (
+    <CommonGridBasedForm
+      buttons={buttons}
+      fields={fields}
+      heading="Add User"
+      loading={AddUser.isLoading}
+      onSaveSuccess={AddUser.isSuccess}
+    />
+  );
 };
 
 export default AddUser;
