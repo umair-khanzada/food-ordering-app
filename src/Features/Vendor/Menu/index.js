@@ -13,7 +13,14 @@ import CustomTable from '../../../components/CustomTable';
 import { AuthToken } from '../../../scripts/constants';
 import { deleteitem } from '../mutation';
 import { FetchItems } from '../request';
-import { ButtonContainer, ButtonsContainer, FilterButton, HeaderLeftContainer, HeaderRightContainer } from './style';
+import {
+  ButtonContainer,
+  ButtonsContainer,
+  FilterButton,
+  HeaderLeftContainer,
+  HeaderRightContainer,
+  CustomTableContainer,
+} from './style';
 
 function Menu() {
   const history = useHistory();
@@ -70,10 +77,10 @@ function Menu() {
           <ButtonsContainer>
             <HeaderLeftContainer>
               <ButtonContainer>
-                <CommonButton fontSize="14px" minwidth="100px" onClick={showAddRestraunt} property="Add Restraunt" />
+                <CommonButton onClick={showAddRestraunt} property="Add Restraunt" />
               </ButtonContainer>
               <ButtonContainer>
-                <CommonButton fontSize="14px" minwidth="100px" onClick={showAddMenu} property="Add Item" />
+                <CommonButton onClick={showAddMenu} property="Add Item" />
               </ButtonContainer>
             </HeaderLeftContainer>
             <HeaderRightContainer>
@@ -90,12 +97,12 @@ function Menu() {
                 />
               </MuiPickersUtilsProvider>
               <FilterButton>
-                <CommonButton fontSize="14px" minwidth="100px" property="Save Time" />
+                <CommonButton property="Save Time" />
               </FilterButton>
             </HeaderRightContainer>
           </ButtonsContainer>
 
-          <div style={{ padding: '20px', marginTop: '10px' }}>
+          <CustomTableContainer>
             <CustomTable
               deleteTableRow={deleteItem}
               header={header}
@@ -105,7 +112,7 @@ function Menu() {
               rows={items}
               tablewidth="90%"
             />
-          </div>
+          </CustomTableContainer>
         </Grid>
       </Grid>
     </div>

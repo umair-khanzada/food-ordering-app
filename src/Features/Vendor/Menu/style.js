@@ -22,3 +22,8 @@ export const FilterButton = styled.div`
 export const ButtonContainer = styled.div`
   margin-left: 20px;
 `;
+
+export const CustomTableContainer = styled.div`
+  padding: 20px;
+  margin-top: 10px;
+`;
