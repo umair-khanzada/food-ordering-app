@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
@@ -130,7 +131,7 @@ const EditVendor = () => {
   });
   const [vendor, setVendor] = useState('');
 
-  const { data: vendorById } = FetchUserById(id);
+  const { data: vendorById, isFetching } = FetchUserById(id);
 
   useEffect(() => {
     if (vendorById !== undefined) {
@@ -168,13 +169,19 @@ const EditVendor = () => {
   };
 
   return (
-    <CommonGridBasedForm
-      buttons={buttons}
-      fields={fields}
-      heading="Edit Vendor"
-      loading={EditVendor.isLoading}
-      onSaveSuccess={EditVendor.isSuccess}
-    />
+    <>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <CommonGridBasedForm
+          buttons={buttons}
+          fields={fields}
+          heading="Edit Vendor"
+          loading={EditVendor.isLoading}
+          onSaveSuccess={EditVendor.isSuccess}
+        />
+      )}
+    </>
   );
 };
 

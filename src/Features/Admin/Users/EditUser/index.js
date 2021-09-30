@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
@@ -103,7 +104,7 @@ const EditUser = () => {
     },
   ]);
 
-  const { data: userById, isLoading } = FetchUserById(id);
+  const { data: userById, isFetching } = FetchUserById(id);
 
   useEffect(() => {
     if (userById !== undefined) {
@@ -155,13 +156,20 @@ const EditUser = () => {
   };
 
   return (
-    <CommonGridBasedForm
-      buttons={buttons}
-      fields={fields}
-      heading="Edit User"
-      loading={EditUser.isLoading}
-      onSaveSuccess={EditUser.isSuccess}
-    />
+    <>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <CommonGridBasedForm
+          buttons={buttons}
+          fields={fields}
+          heading="Edit User"
+          loading={EditUser.isLoading}
+          onSaveSuccess={EditUser.isSuccess}
+        />
+      )}
+      ;
+    </>
   );
 };
 
