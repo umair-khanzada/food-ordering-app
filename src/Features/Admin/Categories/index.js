@@ -53,7 +53,9 @@ function CategoryList() {
       </CategoriesTitleContainer>
 
       {isFetching ? (
-        <>{console.log('loader will be here in another branch')}</>
+        <>
+          <p>Loading</p>
+        </>
       ) : (
         <>
           <CustomTable
