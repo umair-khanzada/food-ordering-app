@@ -16,24 +16,15 @@ function CategoryList() {
 
   const { addCategory, editCategory } = RouteNames;
   const history = useHistory();
-  const onEdit = ({ id }) => {
+  const onEdit = ({ id: categoryId }) => {
     history.push({
       pathname: editCategory,
-      search: `?id=${id}`,
+      search: `?id=${categoryId}`,
     });
   };
-  const { data: categoriesdata, refetch } = FetchCategories();
+  const { data: categoriesData, refetch, isLoading, isFetching } = FetchCategories();
 
-  useEffect(() => {
-    if (Array.isArray(categoriesdata)) {
-      saveCategories(categoriesdata);
-    }
-  }, [categoriesdata]);
-  const saveCategories = (results) => {
-    // setCategories(results);
-  };
   function deletecategory(categoryId) {
-    console.log('categoryId', categoryId);
     mutate({ categoryId, headers });
   }
 
@@ -47,7 +38,7 @@ function CategoryList() {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
 
-  const { mutate, mutateAsync, isLoading, error } = useMutation(deleteCategory, {
+  const { mutate, mutateAsync, error } = useMutation(deleteCategory, {
     onSuccess: (response) => {
       refetch();
 
@@ -61,16 +52,22 @@ function CategoryList() {
         <CommonButton onClick={() => history.push(addCategory)} property="Add Category" />
       </CategoriesTitleContainer>
 
-      <CustomTable
-        cellWidth="400px"
-        deleteTableRow={deletecategory}
-        header={header}
-        isEditDelete
-        onDelete={onDelete}
-        onEdit={onEdit}
-        rows={categoriesdata || []}
-        tablewidth="90%"
-      />
+      {isFetching ? (
+        <>{console.log('loader will be here in another branch')}</>
+      ) : (
+        <>
+          <CustomTable
+            cellWidth="400px"
+            deleteTableRow={deletecategory}
+            header={header}
+            isEditDelete
+            onDelete={onDelete}
+            onEdit={onEdit}
+            rows={categoriesData}
+            tablewidth="90%"
+          />
+        </>
+      )}
     </>
   );
 }
