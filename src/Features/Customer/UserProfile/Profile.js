@@ -70,7 +70,7 @@ const UserProfile = () => {
       label: 'Password',
       variant: 'standard',
       value: '',
-      errorMessage: '',
+      errorMessage: 'password is required',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
         setFields(updatedFields);
@@ -103,7 +103,7 @@ const UserProfile = () => {
   ]);
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, false);
     setFields(validateArray);
     const [{ value: name }, { value: email }, { value: password }, { value: contact }] = fields;
 
