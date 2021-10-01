@@ -37,6 +37,7 @@ function CategoryList() {
   useEffect(() => {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
+  // eslint-disable-next-line no-debugger
 
   const { mutate, mutateAsync, error } = useMutation(deleteCategory, {
     onSuccess: (response) => {
