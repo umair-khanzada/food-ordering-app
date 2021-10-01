@@ -11,7 +11,7 @@ import { updateUserData } from '../Auth/actions';
 export const editUserEpic = (action$, state) =>
   action$.pipe(
     ofType(EDIT_USER),
-    mergeMap(({ payload: { id, name, email, password, setOnSaveSuccess } }) => {
+    mergeMap(({ payload: { id, name, email, password, contact, setOnSaveSuccess } }) => {
       const {
         value: {
           authReducer: {
@@ -31,14 +31,16 @@ export const editUserEpic = (action$, state) =>
             name,
             email,
             password,
+            contact,
           },
         }).pipe(
-          mergeMap(({ response: { name, email } }) => {
+          mergeMap(({ response: { name, email, contact } }) => {
             setOnSaveSuccess(true);
             return of(
               updateUserData({
                 name,
                 email,
+                contact,
               }),
             );
           }),

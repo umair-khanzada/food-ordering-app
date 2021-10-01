@@ -10,9 +10,9 @@ import { fieldChangeHandler, validateOnSubmit } from '../../../util/CommonGridBa
 import { editUser } from '../actions';
 
 const UserProfile = () => {
-  const { id, email, name, isLoading } = useSelector((state) => {
+  const { id, email, name, isLoading, contact } = useSelector((state) => {
     const {
-      authReducer: { id, email, name },
+      authReducer: { id, email, name, contact },
       loaderReducer: { isLoading },
     } = state;
     return {
@@ -20,6 +20,7 @@ const UserProfile = () => {
       email,
       name,
       isLoading,
+      contact,
     };
   }, shallowEqual);
 
@@ -86,7 +87,7 @@ const UserProfile = () => {
       textFieldType: 'text',
       label: 'Contact',
       variant: 'standard',
-      value: '',
+      value: contact,
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
@@ -104,9 +105,9 @@ const UserProfile = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    const [{ value: name }, { value: email }, { value: password }] = fields;
+    const [{ value: name }, { value: email }, { value: password }, { value: contact }] = fields;
 
-    isValid && dispatch(editUser({ id, name, email, password, setOnSaveSuccess }));
+    isValid && dispatch(editUser({ id, name, email, password, contact, setOnSaveSuccess }));
   };
 
   const buttons = [

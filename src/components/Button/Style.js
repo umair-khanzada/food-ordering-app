@@ -10,7 +10,7 @@ const StyledButton = styled(LoadingButton)`
   background-color: #00b3e3;
   color: white;
   white-space: nowrap;
-  font-weight: bold;
+  font-weight: bold !important;
   background-color: ${({ loading }) => !loading && '#00B3E3 !important'};
   ${({ theme }) => `
   &:hover {

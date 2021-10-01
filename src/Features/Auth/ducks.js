@@ -15,6 +15,7 @@ const initialAuthState = {
   refreshToken: '',
   name: '',
   role: '',
+  contact: '',
 };
 const initialForgotPasswordState = { message: '', status: 0 };
 const initialResponseMessageState = { message: '', status: 0 };
@@ -25,7 +26,7 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
       return { ...initialAuthState };
 
     case LOGIN_SUCCESS: {
-      const { accessToken, refreshToken, name, role, id, email } = action.payload;
+      const { accessToken, refreshToken, name, role, id, email, contact } = action.payload;
       return {
         ...state,
         isLoggedIn: true,
@@ -35,6 +36,7 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
         refreshToken,
         name,
         role,
+        contact,
       };
     }
 
@@ -42,11 +44,12 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
       return { ...initialAuthState };
 
     case UPDATE_USER_DATA: {
-      const { name, email } = action.payload;
+      const { name, email, contact } = action.payload;
       return {
         ...state,
         name,
         email,
+        contact,
       };
     }
 
