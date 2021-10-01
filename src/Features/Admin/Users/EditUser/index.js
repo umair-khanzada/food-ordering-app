@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
@@ -14,7 +15,6 @@ import { FetchUserById } from '../../Common Requests/request';
 const EditUser = () => {
   const { headers } = GetHeader();
   const history = useHistory();
-
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [user, setUser] = useState('');
@@ -104,7 +104,7 @@ const EditUser = () => {
     },
   ]);
 
-  const { data: userById, isLoading } = FetchUserById(id);
+  const { data: userById, isFetching } = FetchUserById(id);
 
   useEffect(() => {
     if (userById !== undefined) {
@@ -116,7 +116,17 @@ const EditUser = () => {
     }
   }, [userById]);
 
-  const EditUser = useMutation(editUserById);
+  const EditUser = useMutation(editUserById, {
+    onSuccess: () => {
+      const resetFields = fields.map((field) => {
+        return {
+          ...field,
+          value: '',
+        };
+      });
+      setFields(resetFields);
+    },
+  });
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
@@ -145,10 +155,21 @@ const EditUser = () => {
     ],
   };
 
-  return EditUser.isLoading ? (
-    <img alt="loader" src="https://flevix.com/wp-content/uploads/2020/01/Bounce-Bar-Preloader-1.gif" />
-  ) : (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={EditUser.isSuccess} />
+  return (
+    <>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <CommonGridBasedForm
+          buttons={buttons}
+          fields={fields}
+          heading="Edit User"
+          loading={EditUser.isLoading}
+          onSaveSuccess={EditUser.isSuccess}
+        />
+      )}
+      ;
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import { TableHead, TableContainer } from '@material-ui/core';
+import { TableHead, TableContainer, CircularProgress } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import styled from 'styled-components';
@@ -29,4 +29,8 @@ export const TableHeader = styled(TableCell)`
 `;
 export const TableCellContainer = styled(TableCell)`
   width: ${({ cellwidth }) => cellwidth};
+`;
+export const DeleteProgress = styled(CircularProgress)`
+  margin-left: 10px;
+  margin-top: 10px;
 `;

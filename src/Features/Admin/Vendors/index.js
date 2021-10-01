@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
+import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
 import { GetHeader } from '../../../scripts/constants';
 import { deleteUserById } from '../Common Requests/mutation';
@@ -15,7 +16,7 @@ function VendorList() {
 
   const [vendors, setVendors] = useState('');
   const header = ['S.No', 'name', 'email', 'Edit'];
-  const { isLoading, isError, data: vendorsData, error, refetch: refetchVendor } = FetchUsers('vendor');
+  const { data: vendorsData, isFetching, refetch: refetchVendor } = FetchUsers('vendor');
   const Deletevendor = useMutation(deleteUserById, {
     onError: () => {},
     onSuccess: () => {
@@ -48,12 +49,26 @@ function VendorList() {
 
   return (
     <>
-      <VendorTitleContainer>
-        <VendorTitle>Vendors</VendorTitle>
-        <CommonButton onClick={() => history.push(addVendor)} property="Add Vendor" />
-      </VendorTitleContainer>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <>
+          <VendorTitleContainer>
+            <VendorTitle>Vendors</VendorTitle>
+            <CommonButton onClick={() => history.push(addVendor)} property="Add Vendor" />
+          </VendorTitleContainer>
 
-      <CustomTable header={header} isEditDelete onDelete={onDelete} onEdit={onEdit} rows={vendors} tablewidth="90%" />
+          <CustomTable
+            header={header}
+            isDeleting={Deletevendor.isLoading}
+            isEditDelete
+            onDelete={onDelete}
+            onEdit={onEdit}
+            rows={vendors}
+            tablewidth="90%"
+          />
+        </>
+      )}
     </>
   );
 }
