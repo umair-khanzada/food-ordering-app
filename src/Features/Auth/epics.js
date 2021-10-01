@@ -3,8 +3,8 @@ import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS } from '../../redux/ActionTypes';
-import { defaultRouteForRoles } from '../../scripts/constants';
+import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS, RESET_PASSWORD } from '../../redux/ActionTypes';
+import { API_ROUTE, defaultRouteForRoles } from '../../scripts/constants';
 import { loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
 export const loginEpic = (action$) =>
   action$.pipe(
@@ -137,6 +137,36 @@ export const logoutEpic = (action$, state) =>
         }),
         catchError(() => {
           return of(logoutError());
+        }),
+      );
+    }),
+  );
+
+export const resetPasswordEpic = (action$, state) =>
+  action$.pipe(
+    ofType(RESET_PASSWORD),
+    mergeMap(({ payload }) => {
+      const {
+        value: {
+          authReducer: {
+            accessToken: { token },
+            id,
+          },
+        },
+      } = state;
+      return ajax({
+        url: API_ROUTE + '/auth/reset-password/?token=' + id,
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+        body: { password: payload },
+      }).pipe(
+        mergeMap(() => {
+          return of();
+        }),
+        catchError(() => {
+          return of();
         }),
       );
     }),
