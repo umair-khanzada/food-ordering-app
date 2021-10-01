@@ -15,7 +15,7 @@ function VendorList() {
   const { headers } = GetHeader();
 
   const [vendors, setVendors] = useState('');
-  const header = ['S.No', 'name', 'email', 'Edit'];
+  const header = ['S.No', 'name', 'email', 'contact', 'Edit'];
   const { data: vendorsData, isFetching, refetch: refetchVendor } = FetchUsers('vendor');
   const Deletevendor = useMutation(deleteUserById, {
     onError: () => {},

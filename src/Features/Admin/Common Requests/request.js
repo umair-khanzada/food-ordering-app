@@ -4,11 +4,12 @@ import { useQuery } from 'react-query';
 import { baseUrl, GetHeader } from '../../../scripts/constants';
 
 const userList = async (headers, userType) => {
-  const { data } = await axios.get(baseUrl + 'users', {
+  const {
+    data: { results },
+  } = await axios.get(baseUrl + 'users', {
     headers,
   });
-
-  return data.filter((user) => user.role == userType);
+  return results.filter((user) => user.role == userType);
 };
 export const FetchUsers = (userType) => {
   const { headers } = GetHeader();
