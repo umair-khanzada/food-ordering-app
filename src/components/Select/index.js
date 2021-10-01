@@ -10,9 +10,9 @@ const SelectTag = (props) => {
   return (
     <Select {...props} fullWidth onChange={(e) => onChange(e, index)} value={value}>
       {values
-        ? values.map((value, index) => (
-            <MenuItem key={index} value={value}>
-              {value}
+        ? values.map(({ name, id }, index) => (
+            <MenuItem key={index} value={id}>
+              {name}
             </MenuItem>
           ))
         : null}

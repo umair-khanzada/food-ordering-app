@@ -22,8 +22,11 @@ const RouteNames = {
   categories: '/categories',
   addCategory: '/categories/add',
   editCategory: '/categories/edit',
+  restaurant: '/restaurant',
   menuList: '/menu',
   orderList: '/orderList',
+  addmenu: '/addmenu',
+  editmenu: '/editmenu',
   orderHistories: '/orderHistories',
 };
 

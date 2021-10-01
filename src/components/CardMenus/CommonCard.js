@@ -7,11 +7,11 @@ import { addtocart } from '../../Features/Customer/actions';
 import CommonButton from '../Button/Button';
 import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice, InsideContent } from './style';
 
-const CommonCard = ({ id, name, price, resturantName, img, buttonText, OnChangeHandler }) => {
+const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
   const dispatch = useDispatch();
 
   return (
-    <Grid item md={3}>
+    <Grid item md={4}>
       <CardRoot>
         <ImageDiv src={img} title={name} />
 
@@ -21,8 +21,8 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText, OnChangeH
           <InsideContent>
             <div>
               <CommonButton
-                fontSize={16}
-                minwidth="40px"
+                fontSize="14px"
+                minwidth="30px"
                 onClick={() => {
                   dispatch(addtocart({ id, name, price, img, qty: 1 }));
                 }}

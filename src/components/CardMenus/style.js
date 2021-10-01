@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const CardRoot = styled(Card)`
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 20px blue;
+  box-shadow: 0 0 20px grey;
 `;
 
 export const FoodTitle = styled(Typography)`
@@ -25,15 +25,14 @@ export const ImageDiv = styled.img`
   border-radius: 10px;
   padding: 14px;
 `;
-export const ItemPrice = styled.span`
-  margin-left: 45px;
-  margin-top: 30px;
+export const ItemPrice = styled.div`
+  margin-left: 10vh;
+  margin-top: 2vh;
 `;
 export const ControlGrid = styled(Grid)`
   padding: 20px;
   margin-top: 50px;
 `;
 export const InsideContent = styled.div`
-  margin-top: 20px;
   display: flex;
 `;

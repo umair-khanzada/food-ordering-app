@@ -3,7 +3,9 @@ import { persistReducer } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
+// import uiReducer from '../../components/AlertMessage/alertRedux/reduc';
 import uiReducer from '../../components/AlertMessage/alertRedux/reduc';
+import { loaderReducer } from '../../components/Loader/ducks';
 import { modalReducer } from '../../components/Modal/ducks';
 import { forgotPassword, responseMessage, authReducer } from '../../Features/Auth/ducks';
 import { addtocartReducers } from '../../Features/Customer/ducks';
@@ -21,6 +23,7 @@ const reducer = combineReducers({
   addtocartReducers,
   modalReducer,
   uiReducer,
+  loaderReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

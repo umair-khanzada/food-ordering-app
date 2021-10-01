@@ -2,19 +2,30 @@ import React, { useState } from 'react';
 
 // import { Snackbar } from '@material-ui/core';
 import { Button } from '@mui/material';
+import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { addCategory } from '../../actions';
+import { category } from '../mutation';
 
 const AddCategory = () => {
   const dispatch = useDispatch();
 
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const { headers } = GetHeader();
+
+  const adminId = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
 
   const [fields, setFields] = useState([
     {
@@ -26,6 +37,7 @@ const AddCategory = () => {
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
+
         setFields(updatedFields);
       },
     },
@@ -36,21 +48,22 @@ const AddCategory = () => {
     setFields(validateArray);
 
     if (isValid) {
-      setOnSaveSuccess(true);
       const name = fields.map(({ value }, index) => value);
-
-      dispatch(
-        addCategory({
+      mutate({
+        category: {
           name: name[0],
-          description: 'sjdhsj',
-          createdBy: '613617938f70a058b41406de',
-          kitchenId: '614b449d74d9603870512b13',
-        }),
-      );
-    } else {
-      setOnSaveSuccess(false);
+          createdBy: adminId,
+        },
+        headers,
+      });
     }
   };
+
+  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
+    onSuccess: (response) => {
+      return response;
+    },
+  });
 
   const buttons = {
     button: [
@@ -66,7 +79,13 @@ const AddCategory = () => {
   return (
     <>
       <div>
-        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Category" onSaveSuccess={onSaveSuccess} />
+        <CommonGridBasedForm
+          buttons={buttons}
+          fields={fields}
+          heading="Add Category"
+          loading={isLoading}
+          onSaveSuccess={isSuccess}
+        />
 
         <Button
           onClick={() => {

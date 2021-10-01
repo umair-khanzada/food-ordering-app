@@ -6,7 +6,8 @@ import MultipleSelect from '../MultiSelect';
 import NumberInput from '../NumberInput';
 import SelectTag from '../Select';
 import TextField from '../TextField/TextField';
-import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD } from './FieldTypes';
+import AutoComplete from './autoComplete';
+import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD, AUTO_COMPLETE } from './FieldTypes';
 import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, StyledFormButton } from './style';
 
 const CommonGridBasedForm = ({ fields, buttons, responseError, heading, toggleSnackbarOpen, onSaveSuccess }) => {
@@ -18,7 +19,18 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, toggleSn
         return (
           <SelectTag index={index} onChange={props.onChange} value={props.value} values={props.values} width={WIDTH} />
         );
-
+      case AUTO_COMPLETE:
+        return (
+          <AutoComplete
+            index={index}
+            label={props.label}
+            onChange={props.onChange}
+            placeholder={props.placeholder}
+            value={props.value}
+            values={props.values}
+            width={WIDTH}
+          />
+        );
       case MULTI_SELECT:
         return (
           <MultipleSelect
@@ -65,7 +77,7 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, toggleSn
         </Typography>
       </Grid>
       <StyledGridColumnItem item>
-        <Grid container direction="row" justifyContent="space-around" spacing={3}>
+        <Grid container direction="row" spacing={3}>
           {fields &&
             fields.map((data, index) => {
               return (
@@ -82,20 +94,20 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, toggleSn
               );
             })}
         </Grid>
-        {buttons
-          ? buttons.button.map(({ clickHandler, minWidth, name, type }, i) => (
-              <div key={name + '-' + i}>
-                <StyledFormButton
-                  key={name + '-' + i}
-                  fontSize="16px"
-                  minwidth={minWidth}
-                  onClick={clickHandler}
-                  property={name}
-                  type={type}
-                />
-              </div>
-            ))
-          : null}
+        {buttons?.map(({ clickHandler, minWidth, name, type, isLoading, color }, i) => (
+          <div key={name + '-' + i}>
+            <StyledFormButton
+              key={name + '-' + i}
+              color={color}
+              fontSize="16px"
+              loading={isLoading}
+              minwidth={minWidth}
+              onClick={clickHandler}
+              property={name}
+              type={type}
+            />
+          </div>
+        ))}
       </StyledGridColumnItem>
       {responseError && <Error>{responseError}</Error>}
 

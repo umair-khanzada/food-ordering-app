@@ -6,18 +6,18 @@ import Profile from './UserProfile/Profile';
 
 export const dashboardRoute = {
   path: RouteNames.dashboard,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: Dashboard,
 };
 
 export const profileRoute = {
   path: RouteNames.profile,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: Profile,
 };
 
 export const customerOrderHistoryRoute = {
   path: RouteNames.orderHistories,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: CustomerOrderHistory,
 };
