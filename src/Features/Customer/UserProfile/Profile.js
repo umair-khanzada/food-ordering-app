@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { useMutation } from 'react-query';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
@@ -8,39 +7,23 @@ import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../redux/ActionTypes';
 import { contactRegex } from '../../../scripts/constants';
 import { fieldChangeHandler, validateOnSubmit } from '../../../util/CommonGridBasedFormUtils';
-import { updateUserData } from '../../Auth/actions';
-import { editUser } from './mutation';
+import { editUser } from '../actions';
 
-const AddUser = () => {
-  const { id, email, name, token } = useSelector((state) => {
+const UserProfile = () => {
+  const { id, email, name, isLoading } = useSelector((state) => {
     const {
-      authReducer: {
-        id,
-        email,
-        name,
-        accessToken: { token },
-      },
+      authReducer: { id, email, name },
+      loaderReducer: { isLoading },
     } = state;
     return {
       id,
       email,
       name,
-      token,
+      isLoading,
     };
   }, shallowEqual);
 
   const dispatch = useDispatch();
-
-  const { isLoading, mutate: editUserMutate } = useMutation(editUser, {
-    onSuccess: async ({ data: { name, email } }) => {
-      dispatch(updateUserData({ name, email }));
-      setOnSaveSuccess(true);
-    },
-    onError: async (resData) => {
-      console.log(resData);
-      setOnSaveSuccess(false);
-    },
-  });
 
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const [fields, setFields] = useState([
@@ -123,16 +106,7 @@ const AddUser = () => {
     setFields(validateArray);
     const [{ value: name }, { value: email }, { value: password }] = fields;
 
-    isValid &&
-      editUserMutate({
-        id,
-        body: {
-          name,
-          email,
-          password,
-        },
-        token,
-      });
+    isValid && dispatch(editUser({ id, name, email, password, setOnSaveSuccess }));
   };
 
   const buttons = [
@@ -149,4 +123,4 @@ const AddUser = () => {
   return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" onSaveSuccess={onSaveSuccess} />;
 };
 
-export default AddUser;
+export default UserProfile;

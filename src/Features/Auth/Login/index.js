@@ -108,7 +108,8 @@ function LoginForm() {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>

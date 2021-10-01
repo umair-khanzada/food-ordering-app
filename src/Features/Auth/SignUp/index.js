@@ -18,7 +18,8 @@ function SignUpForm() {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const validateOnSubmit = () => {
     let isValid = true;
