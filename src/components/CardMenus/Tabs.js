@@ -26,6 +26,7 @@ const MainTab = () => {
     const [{ label }] = TabData;
 
     setTabValue(tabIndex ? tabIndex : label);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

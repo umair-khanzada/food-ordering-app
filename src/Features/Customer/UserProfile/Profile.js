@@ -1,167 +1,127 @@
 import React, { useState } from 'react';
 
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../redux/ActionTypes';
 import { contactRegex } from '../../../scripts/constants';
+import { fieldChangeHandler, validateOnSubmit } from '../../../util/CommonGridBasedFormUtils';
+import { editUser } from '../actions';
 
-const AddUser = () => {
+const UserProfile = () => {
+  const { id, email, name, isLoading, contact } = useSelector((state) => {
+    const {
+      authReducer: { id, email, name, contact },
+      loaderReducer: { isLoading },
+    } = state;
+    return {
+      id,
+      email,
+      name,
+      isLoading,
+      contact,
+    };
+  }, shallowEqual);
+
+  const dispatch = useDispatch();
+
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-  const [isEdit] = useState(true);
-  const validateOnSubmit = () => {
-    let isValid = true;
-
-    const ValidateArray = fields.map((field) => {
-      if (
-        field.value === '' ||
-        field.value === undefined ||
-        field.value === null ||
-        (field.value.constructor.name == 'Array' && field.value.length === 0)
-      ) {
-        isValid = false;
-
-        field.errorMessage = field.label + ' field cannot be empty';
-
-        field.isValid = false;
-
-        return field;
-      }
-
-      field.isValid = true;
-
-      field.errorMessage = '';
-
-      !isValid ? null : (isValid = field.isValid);
-
-      return field;
-    });
-
-    setFields(ValidateArray);
-
-    return isValid;
-  };
-
-  const [, setEmail] = useState('');
-
-  const [, setContact] = useState('');
-
-  const [, setName] = useState('');
-
   const [fields, setFields] = useState([
     {
       type: TEXT_FIELD,
-
       textFieldType: 'text',
-
       label: 'Name',
-
       variant: 'standard',
-
-      value: 'User',
-      disabled: isEdit,
-      isValid: true,
-
+      value: name,
       errorMessage: '',
-
-      onChange: (event, index) => {
-        setName(event.target.value);
-
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+      getValidation: (value) => {
+        if (value.length < 3) {
+          return 'Name must be of length 3 atleast';
+        }
+        return '';
       },
     },
-
     {
       type: TEXT_FIELD,
-
       textFieldType: 'email',
-
       label: 'Email',
-
       variant: 'standard',
-
-      value: 'user@gmail.com',
-      disabled: isEdit,
-      isValid: true,
-
+      value: email,
       errorMessage: '',
-
-      onChange: (event, index) => {
-        setEmail(event.target.value);
-
-        fields[index].value = event.target.value;
-
-        fields[index].getValidation(event.target.value, index);
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
-
-      getValidation: (value, index) => {
+      getValidation: (value) => {
         if (!emailRegex.test(value)) {
-          fields[index].errorMessage = 'Email type is not valid';
-
-          fields[index].isValid = false;
-        } else {
-          fields[index].errorMessage = '';
-
-          fields[index].isValid = true;
+          return 'Email type is not valid';
         }
+        return '';
       },
     },
-
     {
       type: TEXT_FIELD,
-
-      textFieldType: 'text',
-
-      label: 'Contact',
-
+      textFieldType: 'password',
+      label: 'Password',
       variant: 'standard',
-
-      value: '03412132212',
-      disabled: isEdit,
-      isValid: true,
-
-      errorMessage: '',
-
-      onChange: (event, index) => {
-        setContact(event.target.value);
-
-        fields[index].value = event.target.value;
-
-        fields[index].getValidation(event.target.value, index);
+      value: '',
+      errorMessage: 'password is required',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
-
-      getValidation: (value, index) => {
-        if (!contactRegex.test(value)) {
-          fields[index].errorMessage = 'Contact length or Type is not valid';
-
-          fields[index].isValid = false;
-        } else {
-          fields[index].errorMessage = '';
-
-          fields[index].isValid = true;
+      getValidation: (value) => {
+        if (value.length < 8) {
+          return 'Password must be 8 characters long';
         }
+        return '';
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Contact',
+      variant: 'standard',
+      value: contact,
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+      getValidation: (value) => {
+        if (!contactRegex.test(value)) {
+          return 'Contact length or Type is not valid';
+        }
+        return '';
       },
     },
   ]);
 
   const saveHandler = () => {
-    validateOnSubmit() ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    const { validateArray, isValid } = validateOnSubmit(fields, false);
+    setFields(validateArray);
+    const [{ value: name }, { value: email }, { value: password }, { value: contact }] = fields;
+
+    isValid && dispatch(editUser({ id, name, email, password, contact, setOnSaveSuccess }));
   };
 
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-
-        name: 'Edit',
-
-        minWidth: '100%',
-
-        clickHandler: saveHandler,
-      },
-    ],
-  };
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      color: 'primary',
+      clickHandler: saveHandler,
+      isLoading,
+    },
+  ];
 
   return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" onSaveSuccess={onSaveSuccess} />;
 };
 
-export default AddUser;
+export default UserProfile;

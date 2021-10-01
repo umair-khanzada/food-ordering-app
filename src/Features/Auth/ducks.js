@@ -1,8 +1,22 @@
-/* eslint-disable no-case-declarations */
-import { LOGIN_SUCCESS, LOGIN_ERROR, FORGOT_PASSWORD, MESSAGE, LOGOUT_SUCCESS } from '../../redux/ActionTypes';
-// { isLoggedIn: false, token: '', name: '' }
+import {
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  FORGOT_PASSWORD,
+  MESSAGE,
+  LOGOUT_SUCCESS,
+  UPDATE_USER_DATA,
+} from '../../redux/ActionTypes';
 
-const initialAuthState = { isLoggedIn: false, accessToken: '', refreshToken: '', name: '', role: '' };
+const initialAuthState = {
+  isLoggedIn: false,
+  id: '',
+  email: '',
+  accessToken: '',
+  refreshToken: '',
+  name: '',
+  role: '',
+  contact: '',
+};
 const initialForgotPasswordState = { message: '', status: 0 };
 const initialResponseMessageState = { message: '', status: 0 };
 
@@ -12,21 +26,34 @@ export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => 
       // return { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
       return { isLoggedIn: '', user: '' };
 
-    case LOGIN_SUCCESS:
-      const { accessToken, refreshToken, name, role, id } = action.payload;
-
+    case LOGIN_SUCCESS: {
+      const { accessToken, refreshToken, name, role, id, email, contact } = action.payload;
       return {
         ...state,
         isLoggedIn: true,
+        id,
+        email,
         accessToken,
         refreshToken,
         name,
         role,
-        id,
+        contact,
       };
+    }
+
     case LOGIN_ERROR:
       // return { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
       return { isLoggedIn: '', user: '' };
+
+    case UPDATE_USER_DATA: {
+      const { name, email, contact } = action.payload;
+      return {
+        ...state,
+        name,
+        email,
+        contact,
+      };
+    }
 
     default:
       return state;
@@ -45,10 +72,11 @@ export const forgotPassword = (state = { ...initialForgotPasswordState }, action
 
 export const responseMessage = (state = { ...initialResponseMessageState }, action) => {
   switch (action.type) {
-    case MESSAGE:
+    case MESSAGE: {
       const { message, status } = action.payload;
 
       return { ...state, message, status };
+    }
 
     default:
       return state;

@@ -8,9 +8,10 @@ const StyledButton = styled(LoadingButton)`
   min-width: ${({ minwidth }) => minwidth} !important;
   background-color: #00b3e3;
   color: white;
-  font-weight: bold;
+  white-space: nowrap;
+  font-weight: bold !important;
+  background-color: ${({ loading }) => !loading && '#00B3E3 !important'};
   ${({ theme }) => `
-  background-color: ${theme.palette.primary.main} !important;
   &:hover {
     background-color: white !important;
     color: #00B3E3;

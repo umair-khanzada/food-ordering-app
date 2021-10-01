@@ -4,18 +4,17 @@ import { addUserRoute, editUserRoute, usersRoute } from '../Features/Admin/Users
 import { addVendorsRoute, editVendorsRoute, vendorsRoute } from '../Features/Admin/Vendors/route';
 import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
 import { customerOrderHistoryRoute, dashboardRoute, profileRoute } from '../Features/Customer/route';
-import { homeRoute } from '../Features/Home';
 import {
+  AddMenuRoute,
   CategoryListRoute,
+  EditMenuRoute,
   MenuListRoute,
   OrderListRoute,
   RestaurantRoute,
-  AddMenuRoute,
-  EditMenuRoute,
 } from '../Features/Vendor/route';
 
 const routeConfig = {
-  auth: [loginRoute, homeRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
+  auth: [loginRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
 
   orderPlacer: [dashboardRoute, MenuListRoute],
 

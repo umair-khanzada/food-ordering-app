@@ -8,7 +8,7 @@ const CardMenu = ({ foodType }) => {
   return (
     <div>
       <ControlGrid container elevation={3} spacing={3}>
-        {CardData.map(({ id, name, price, type, resturantName, img }, index) => {
+        {CardData.map(({ id, name, price, type, resturantName, img }) => {
           if (type === foodType) {
             return (
               <CommonCard

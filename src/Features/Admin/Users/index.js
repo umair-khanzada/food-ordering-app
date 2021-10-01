@@ -17,7 +17,7 @@ function UsersList() {
   const { headers } = GetHeader();
 
   const { data: usersData, refetch: refetchUser, isFetching } = FetchUsers('user');
-  const header = ['S.No', 'name', 'email', 'Edit'];
+  const header = ['S.No', 'name', 'email', 'contact', 'Edit'];
 
   useEffect(() => {
     if (Array.isArray(usersData)) {

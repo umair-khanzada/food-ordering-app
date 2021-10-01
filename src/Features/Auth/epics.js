@@ -17,7 +17,7 @@ export const loginEpic = (action$) =>
       }).pipe(
         mergeMap((res) => {
           const {
-            user: { name, email, role, id },
+            user: { name, email, role, id, contact },
             tokens: { refresh, access },
           } = res.response;
           return of(
@@ -26,6 +26,7 @@ export const loginEpic = (action$) =>
               name,
               email,
               role,
+              contact,
               refreshToken: refresh,
               accessToken: access,
               history,
@@ -55,7 +56,6 @@ export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
     mergeMap(({ payload }) => {
-      delete payload['contact'];
       return ajax({
         url: 'http://localhost:4000/v1/auth/register',
         method: 'POST',

@@ -10,7 +10,7 @@ import AutoComplete from './autoComplete';
 import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD, AUTO_COMPLETE } from './FieldTypes';
 import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, StyledFormButton } from './style';
 
-const CommonGridBasedForm = ({ loading, fields, buttons, responseError, heading, onSaveSuccess }) => {
+const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSuccess }) => {
   const WIDTH = '100%';
 
   const getField = (field, props, index) => {
@@ -94,21 +94,20 @@ const CommonGridBasedForm = ({ loading, fields, buttons, responseError, heading,
               );
             })}
         </Grid>
-        {buttons
-          ? buttons.button.map(({ clickHandler, minWidth, name, type }, i) => (
-              <div key={name + '-' + i}>
-                <StyledFormButton
-                  key={name + '-' + i}
-                  fontSize="16px"
-                  loading={loading}
-                  minwidth={minWidth}
-                  onClick={clickHandler}
-                  property={name}
-                  type={type}
-                />
-              </div>
-            ))
-          : null}
+        {buttons?.map(({ clickHandler, minWidth, name, type, isLoading, color }, i) => (
+          <div key={name + '-' + i}>
+            <StyledFormButton
+              key={name + '-' + i}
+              color={color}
+              fontSize="16px"
+              loading={isLoading}
+              minwidth={minWidth}
+              onClick={clickHandler}
+              property={name}
+              type={type}
+            />
+          </div>
+        ))}
       </StyledGridColumnItem>
       {responseError && <Error>{responseError}</Error>}
       {onSaveSuccess && (

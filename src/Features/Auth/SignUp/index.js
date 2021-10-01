@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex, contactRegex } from '../../../scripts/constants';
 import { setFormMessage, signup } from '../actions';
 
 function SignUpForm() {
-  const { message, status } = useSelector((state) => {
-    const { message, status } = state.responseMessage;
-    return { message, status };
-  }, shallowEqual);
+  const message = useSelector((state) => {
+    const { message } = state.responseMessage;
+    return message;
+  });
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = signUpForm.map((textField) => {
@@ -35,7 +40,6 @@ function SignUpForm() {
 
     return isValid;
   };
-  const dispatch = useDispatch();
 
   const textFiledChangeHandler = (e, index) => {
     const { value } = e.target;

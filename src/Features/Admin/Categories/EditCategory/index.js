@@ -27,16 +27,14 @@ const EditCategory = () => {
     isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
   };
 
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-        name: 'save',
-        minWidth: '100%',
-        clickHandler: saveHandler,
-      },
-    ],
-  };
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      clickHandler: saveHandler,
+    },
+  ];
 
   return (
     <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={onSaveSuccess} />

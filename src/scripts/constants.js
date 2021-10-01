@@ -33,3 +33,4 @@ export const defaultRouteForRoles = {
   vendor: RouteNames.menuList,
   user: RouteNames.dashboard,
 };
+export const API_ROUTE = 'http://localhost:4000/v1';

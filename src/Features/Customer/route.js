@@ -1,23 +1,23 @@
 import { isProtectedRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
 import Dashboard from './Dashboard';
-import OrderHistory from './OrderHistory/OrderHistory';
+import CustomerOrderHistory from './OrderHistory/OrderHistory';
 import Profile from './UserProfile/Profile';
 
 export const dashboardRoute = {
   path: RouteNames.dashboard,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: Dashboard,
 };
 
 export const profileRoute = {
   path: RouteNames.profile,
-  permissions: isProtectedRoute, // to intimate it is public route
+  permissions: isProtectedRoute,
   component: Profile,
 };
 
 export const customerOrderHistoryRoute = {
   path: RouteNames.orderHistories,
-  permissions: isProtectedRoute, // to intimate it is public route
-  component: OrderHistory,
+  permissions: isProtectedRoute,
+  component: CustomerOrderHistory,
 };
