@@ -1,58 +1,53 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
-import { AuthToken } from '../../scripts/constants';
+import { GetHeader } from '../../scripts/constants';
 import { baseUrl } from '../../scripts/constants';
 
-const Restaurants = async (token) => {
+const Restaurants = async (headers) => {
   const res = await axios.get(baseUrl + 'kitchens', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
+    headers,
   });
 
   return res;
 };
 
 export const FetchRestaurants = () => {
-  const { token } = AuthToken();
+  const { headers } = GetHeader();
   const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery('restaurants', () =>
-    Restaurants(token),
+    Restaurants(headers),
   );
 
   return data;
 };
 
-const Categories = async (token) => {
+const Categories = async (headers) => {
   const res = await axios.get(baseUrl + 'categories', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
+    headers,
   });
 
   return res;
 };
 
 export const FetchCategories = () => {
-  const { token } = AuthToken();
+  const { headers } = GetHeader();
   const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery('categories', () =>
-    Categories(token),
+    Categories(headers),
   );
 
   return data;
 };
 
-const Items = async (token) => {
+const Items = async (headers) => {
   const res = await axios.get(baseUrl + 'items', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
+    headers,
   });
 
   return res;
 };
 
 export const FetchItems = () => {
-  const { token } = AuthToken();
-  return useQuery('items', () => Items(token));
+  const { headers } = GetHeader();
+
+  return useQuery('items', () => Items(headers));
 };

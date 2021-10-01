@@ -3,10 +3,7 @@ import axios from 'axios';
 import { baseUrl } from '../../scripts/constants';
 
 export async function restaurants(data) {
-  const {
-    name,
-    token: { token },
-  } = data;
+  const { name, headers } = data;
 
   const res = axios.post(
     baseUrl + 'kitchens',
@@ -14,9 +11,7 @@ export async function restaurants(data) {
     { name },
 
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers,
     },
   );
 
@@ -24,10 +19,7 @@ export async function restaurants(data) {
 }
 
 export async function items(data) {
-  const {
-    items,
-    token: { token },
-  } = data;
+  const { items, headers } = data;
 
   const res = axios.post(
     baseUrl + 'items',
@@ -35,9 +27,7 @@ export async function items(data) {
     items,
 
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers,
     },
   );
 
@@ -45,15 +35,10 @@ export async function items(data) {
 }
 
 export async function deleteitem(data) {
-  const {
-    id,
-    token: { token },
-  } = data;
+  const { itemId, headers } = data;
 
-  const res = axios.delete(`${baseUrl}items/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+  const res = axios.delete(`${baseUrl}items/${itemId}`, {
+    headers,
   });
 
   return res;

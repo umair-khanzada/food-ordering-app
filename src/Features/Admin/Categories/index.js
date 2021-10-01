@@ -24,7 +24,7 @@ function CategoryList() {
   };
   const { data: categoriesData, refetch, isLoading, isFetching } = FetchCategories();
 
-  function deletecategory(categoryId) {
+  function deletecategory({ id: categoryId }) {
     mutate({ categoryId, headers });
   }
 
@@ -37,7 +37,6 @@ function CategoryList() {
   useEffect(() => {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
-  // eslint-disable-next-line no-debugger
 
   const { mutate, mutateAsync, error } = useMutation(deleteCategory, {
     onSuccess: (response) => {

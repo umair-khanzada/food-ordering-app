@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { AuthToken } from '../../../../scripts/constants';
+import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 import { restaurants } from '../../mutation';
 const AddRestaurant = () => {
-  const token = AuthToken();
-  const dispatch = useDispatch();
+  const { headers } = GetHeader();
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const [restaurant, setRestaurant] = useState('');
-  // useEffect(() => {}, [buttons.button]);
+
   const [fields, setFields] = useState([
     {
       type: TEXT_FIELD,
@@ -30,7 +28,7 @@ const AddRestaurant = () => {
       },
     },
   ]);
-  // const token = AuthToken();
+
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
@@ -39,7 +37,7 @@ const AddRestaurant = () => {
       setOnSaveSuccess(true);
       const name = fields.map(({ value }) => value);
 
-      mutate({ name: name[0], token });
+      mutate({ name: name[0], headers });
     } else {
       setOnSaveSuccess(false);
     }

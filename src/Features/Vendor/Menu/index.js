@@ -5,11 +5,11 @@ import DateFnsUtils from '@date-io/date-fns';
 import { Grid } from '@material-ui/core';
 import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
+import { GetHeader } from '../../../scripts/constants';
 import { AuthToken } from '../../../scripts/constants';
 import { deleteitem } from '../mutation';
 import { FetchItems } from '../request';
@@ -24,7 +24,7 @@ import {
 
 function Menu() {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const { headers } = GetHeader();
   const [items, setSaveItems] = useState([]);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
@@ -59,8 +59,8 @@ function Menu() {
   function showAddRestraunt() {
     history.push('/restaurant');
   }
-  function deleteItem(itemId) {
-    mutate({ id: itemId, token });
+  function deleteItem({ id: itemId }) {
+    mutate({ itemId, headers });
   }
 
   const { mutate, mutateAsync, isLoading, error } = useMutation(deleteitem, {

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { AuthToken } from '../../../../scripts/constants';
+import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, SelectChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
-
 const AddMenu = () => {
   const token = AuthToken();
-  const dispatch = useDispatch();
+  const { headers } = GetHeader();
 
   const vendorId = useSelector((state) => {
     const {
@@ -124,7 +124,7 @@ const AddMenu = () => {
           categoryId: fields[0].value,
           kitchenId: fields[1].value,
         },
-        token,
+        headers,
       });
     }
   };
