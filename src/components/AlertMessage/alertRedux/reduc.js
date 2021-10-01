@@ -5,7 +5,7 @@ const initialState = {
   snackbarMessage: '',
 };
 
-export const uiReducer = (state = initialState, action) => {
+const uiReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_SNACKBAR_OPEN: {
       return {
