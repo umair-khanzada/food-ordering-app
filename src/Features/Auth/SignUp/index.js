@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex, contactRegex } from '../../../scripts/constants';
@@ -11,6 +12,8 @@ function SignUpForm() {
     const { message } = state.responseMessage;
     return message;
   });
+
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -130,7 +133,7 @@ function SignUpForm() {
         userData[name] = value;
       });
 
-      dispatch(signup(userData));
+      dispatch(signup({ userData, history }));
     }
   };
 
