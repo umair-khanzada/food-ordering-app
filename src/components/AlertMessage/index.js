@@ -3,16 +3,22 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { toggleSnackbarClose } from './alertRedux/actions';
-import { Container, CrossIcon, SuccessMessage, BTN, SuccessIconButton, ErrorIconButton } from './style';
+import { Container, SuccessIconButton, ErrorIconButton, SuccessMessage, CrossIcon, ShowSnackBarButton } from './style';
 
 const Snackbar = ({ timeout, type }) => {
   const dispatch = useDispatch();
-  const {
-    uiReducer: { toggleSnackbar: SHOW, snackbarMessage: MESSAGE },
-  } = useSelector((state) => state);
+  const { show, message } = useSelector((state) => {
+    const {
+      uiReducer: { toggleSnackbar, snackbarMessage },
+    } = state;
+
+    return {
+      show: toggleSnackbar,
+      message: snackbarMessage,
+    };
+  });
 
   let TIMER;
-
   const TIME = (timeout - 500) / 1000 + 's';
 
   function handleTimeout() {
@@ -27,24 +33,24 @@ const Snackbar = ({ timeout, type }) => {
   }
 
   useEffect(() => {
-    if (SHOW) {
+    if (show) {
       handleTimeout();
     }
 
     return () => {
       clearTimeout(TIMER);
     };
-  }, [SHOW, TIMER]);
+  }, [show, TIMER]);
 
   return (
-    SHOW && (
+    show && (
       <Container color={type === 'success' ? 'green' : 'red'} time={TIME}>
         {type === 'success' ? <SuccessIconButton /> : <ErrorIconButton />}
 
-        <SuccessMessage>{MESSAGE}</SuccessMessage>
-        <BTN onClick={handleClose}>
+        <SuccessMessage>{message}</SuccessMessage>
+        <ShowSnackBarButton onClick={handleClose}>
           <CrossIcon />
-        </BTN>
+        </ShowSnackBarButton>
       </Container>
     )
   );

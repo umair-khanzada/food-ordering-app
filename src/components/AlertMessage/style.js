@@ -63,7 +63,7 @@ export const Container = styled.div`
   animation: ${fadein} 0.5s, ${fadeout} 0.9s ${(props) => props.time};
 `;
 
-export const BTN = styled.button`
+export const ShowSnackBarButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;

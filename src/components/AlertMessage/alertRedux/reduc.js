@@ -3,7 +3,7 @@ const initialState = {
   snackbarMessage: '',
 };
 
-export default function uiReducer(state = initialState, action) {
+export const uiReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'TOGGLE_SNACKBAR_OPEN': {
       return {
@@ -25,4 +25,5 @@ export default function uiReducer(state = initialState, action) {
       return state;
     }
   }
-}
+};
+export default uiReducer;
