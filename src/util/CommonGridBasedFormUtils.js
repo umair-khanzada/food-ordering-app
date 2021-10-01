@@ -29,3 +29,17 @@ export const fieldChangeHandler = (prev, value, index) => {
 
   return prevForm;
 };
+
+export const SelectChangeHandler = (prev, values, index) => {
+  const prevForm = [...prev];
+  const currentTextField = prevForm[index];
+
+  currentTextField.values = values;
+
+  if (currentTextField.getValidation) {
+    const getValidationError = currentTextField.getValidation(currentTextField.value);
+    currentTextField.errorMessage = getValidationError;
+  }
+
+  return prevForm;
+};

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   TableRow,
@@ -16,14 +16,24 @@ import { useDispatch } from 'react-redux';
 import ConfirmDeletModal from '../Modal';
 import { closeModal, openModal } from '../Modal/action';
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon } from './style';
-export default function CustomTable({ rows, header, onDelete, cellWidth, tablewidth, onEdit, isEditDelete }) {
+import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, DeleteProgress } from './style';
+export default function CustomTable({
+  isDeleting,
+  rows,
+  header,
+  onDelete,
+  cellWidth,
+  tablewidth,
+  onEdit,
+  isEditDelete,
+  deleteTableRow,
+}) {
   const dispatch = useDispatch();
+  const [currentSelectedRow, setCurrentSelectedRow] = useState({});
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
-    setRowsData((prev) => prev.filter((data) => data !== currentSelectedRow));
+    deleteTableRow(currentSelectedRow);
 
-    onDelete(currentSelectedRow);
     dispatch(closeModal());
   };
 
@@ -32,7 +42,9 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
     { property: 'Confirm', clickHandler: onRowDelete },
   ];
   const [rowsData, setRowsData] = useState([...rows]);
-
+  useEffect(() => {
+    setRowsData([...rows]);
+  }, [rows]);
   const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -45,8 +57,6 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
 
     setPage(0);
   };
-
-  const [currentSelectedRow, setCurrentSelectedRow] = useState({});
 
   const RowPerPage = (rowsPerPage, rowsData, page) => {
     if (rowsPerPage > 0) {
@@ -67,20 +77,25 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
       <Table aria-label="custom pagination table">
         <CustomTableHead>
           <TableRow>
-            {header.map((head, index) => (
-              <TableHeader key={index}>{head}</TableHeader>
-            ))}
+            {header.map((head, index) => {
+              return <TableHeader key={index}>{head}</TableHeader>;
+            })}
           </TableRow>
         </CustomTableHead>
 
         <TableBody>
-          {RowPerPage(rowsPerPage, rowsData, page).map((row) => (
-            <TableRow key={row.name}>
-              {Object.keys(row).map((data, index) => (
-                <TableCell key={index} cellwidth={cellWidth}>
-                  {row[data]}
-                </TableCell>
-              ))}
+          {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
+            <TableRow key={row.id}>
+              <TableCell>{index + 1}</TableCell>
+              {Object.keys(row).map((data, index) => {
+                if (data != 'id' && data != 'createdBy' && data !== 'role') {
+                  return (
+                    <TableCell key={index} cellwidth={cellWidth}>
+                      {row[data]}
+                    </TableCell>
+                  );
+                }
+              })}
 
               {isEditDelete && (
                 <TableCell>
@@ -88,14 +103,18 @@ export default function CustomTable({ rows, header, onDelete, cellWidth, tablewi
                     <Edit />
                   </IconButton>
 
-                  <IconButton
-                    onClick={() => {
-                      setCurrentSelectedRow(row);
-                      dispatch(openModal());
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  {isDeleting && currentSelectedRow.id == row.id ? (
+                    <DeleteProgress size="20px" />
+                  ) : (
+                    <IconButton
+                      onClick={() => {
+                        setCurrentSelectedRow(row);
+                        dispatch(openModal());
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
                 </TableCell>
               )}
             </TableRow>

@@ -1,4 +1,4 @@
-import { Button, Card, Drawer, Modal } from '@material-ui/core';
+import { Button, Card, Drawer, Modal, Typography } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
@@ -6,8 +6,8 @@ import styled from 'styled-components';
 
 export const MainDrawer = styled(Drawer)`
   height: 20px;
-  width: 20%;
-  margin-top: 50px;
+  width: 90vh;
+  margin-top: 12px;
 `;
 export const DrawerModal = styled(Modal)`
   display: flex;
@@ -16,10 +16,11 @@ export const DrawerModal = styled(Modal)`
 `;
 export const DrawerCard = styled(Card)`
   display: flex;
+  width: 50vh;
 
   align-items: center;
   margin-bottom: 20px;
-  height: 150px;
+  height: 15vh;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3;
   &:hover {
@@ -29,7 +30,7 @@ export const DrawerCard = styled(Card)`
 export const Paper = styled.div`
   background-color: white;
   border-radius: 12px;
-  padding: 20px 20px 17px 20px;
+  padding: 10px 10px 17px 10px;
 `;
 export const DrwaerIcon = styled.div`
   display: flex;
@@ -38,12 +39,18 @@ export const DrwaerIcon = styled.div`
   background-color: #00b3e3;
   height: 46px;
 `;
-
+export const CartPaper = styled.div`
+  padding: 20px;
+`;
 export const DrawerText = styled(CloseIcon)`
   width: 30%;
+  color: white;
+  float: right;
 `;
 export const DrawerHeadingText = styled.h4`
   width: 30%;
+  color: white;
+  margin-left: 5vh;
 `;
 export const Image = styled.img`
   border: 100px;
@@ -80,9 +87,14 @@ export const NegativeIcon = styled(RemoveCircleRoundedIcon)`
 `;
 export const CheckoutButton = styled(Button)`
   backgroundcolor: #00b3e3;
-
+  position: fixed;
+  bottom: 2px;
   align-items: center;
   margin: 0 10px;
+  width: 53vh;
+  color: white;
+`;
+export const ConfirmButton = styled(Button)`
   color: white;
 `;
 export const CancelButton = styled(Button)`
@@ -106,14 +118,13 @@ export const DrawerImageDiv = styled.div`
   margin: 100px;
 `;
 export const DeleteIcon = styled(CloseIcon)`
-  margin-left: 200px;
+  margin-left: 23vh;
 `;
 
 export const CartPrice = styled.span`
   margin-left: 20px;
 `;
 export const CartCancel = styled.span`
-  margin-botton: 50px;
   width: 60%;
 `;
 export const CountQuantity = styled.span`
@@ -127,8 +138,9 @@ export const EmptyCart = styled.div`
   display: flex;
 `;
 export const AddToCartImg = styled.img`
-  width: 20%;
+  width: 25%;
   display: flex;
+  margin-left: 2.5vh;
   border-radius: 10px;
 `;
 export const ModalIcons = styled.div`
@@ -138,4 +150,10 @@ export const ModalIcons = styled.div`
 `;
 export const PriceSpan = styled.span`
   margin: 20px;
+`;
+export const EmptyCartHeading = styled(Typography)`
+  color: #00b3e3;
+`;
+export const EmptyCartPara = styled.p`
+  color: #717271;
 `;

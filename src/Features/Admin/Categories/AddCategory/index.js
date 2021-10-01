@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { category } from '../mutation';
 
 const AddCategory = () => {
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const { headers } = GetHeader();
+
+  const adminId = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
 
   const [fields, setFields] = useState([
     {
@@ -17,6 +29,7 @@ const AddCategory = () => {
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
+
         setFields(updatedFields);
       },
     },
@@ -25,18 +38,44 @@ const AddCategory = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+
+    if (isValid) {
+      const name = fields.map(({ value }, index) => value);
+      mutate({
+        category: {
+          name: name[0],
+          createdBy: adminId,
+        },
+        headers,
+      });
+    }
   };
 
-  const buttons = [
-    {
-      type: 'button',
-      name: 'save',
-      minWidth: '100%',
-      clickHandler: saveHandler,
+  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
+    onSuccess: (response) => {
+      return response;
     },
-  ];
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Category" onSaveSuccess={onSaveSuccess} />;
+  });
+
+  const buttons = {
+    button: [
+      {
+        type: 'button',
+        name: 'save',
+        minWidth: '100%',
+        clickHandler: saveHandler,
+      },
+    ],
+  };
+  return (
+    <CommonGridBasedForm
+      buttons={buttons}
+      fields={fields}
+      heading="Add Category"
+      loading={isLoading}
+      onSaveSuccess={isSuccess}
+    />
+  );
 };
 
 export default AddCategory;

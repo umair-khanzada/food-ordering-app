@@ -20,3 +20,4 @@ export const OPENMODAL = 'OPENMODAL';
 export const CLOSEMODAL = 'CLOSEMODAL';
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 export const EDIT_USER = 'EDIT_USER';
+export const EDIT_CATEGORY = 'EDIT_CATEGORY';

@@ -6,7 +6,6 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS } from '../../redux/ActionTypes';
 import { defaultRouteForRoles } from '../../scripts/constants';
 import { loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
-
 export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
@@ -39,13 +38,11 @@ export const loginEpic = (action$) =>
             response: { message },
             status,
           } = err;
-
           return of(setFormMessage({ message, status }));
         }),
       );
     }),
   );
-
 export const loginSuccessEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN_SUCCESS),
@@ -55,7 +52,6 @@ export const loginSuccessEpic = (action$) =>
       return of();
     }),
   );
-
 export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
@@ -83,13 +79,11 @@ export const signUpEpic = (action$) =>
             response: { message },
             status,
           } = err;
-
           return of(setFormMessage({ message, status }));
         }),
       );
     }),
   );
-
 export const forgotPasswordEpic = (action$) =>
   action$.pipe(
     ofType(FORGOT_PASSWORD),
@@ -111,7 +105,6 @@ export const forgotPasswordEpic = (action$) =>
             response: { message },
             status,
           } = err;
-
           return of(setFormMessage({ message, status }));
         }),
       );

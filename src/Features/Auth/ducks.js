@@ -20,10 +20,11 @@ const initialAuthState = {
 const initialForgotPasswordState = { message: '', status: 0 };
 const initialResponseMessageState = { message: '', status: 0 };
 
-export const authReducer = (state = { ...initialAuthState }, action) => {
+export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => {
   switch (action.type) {
     case LOGOUT_SUCCESS:
-      return { ...initialAuthState };
+      // return { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
+      return { isLoggedIn: '', user: '' };
 
     case LOGIN_SUCCESS: {
       const { accessToken, refreshToken, name, role, id, email, contact } = action.payload;
@@ -41,7 +42,8 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
     }
 
     case LOGIN_ERROR:
-      return { ...initialAuthState };
+      // return { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
+      return { isLoggedIn: '', user: '' };
 
     case UPDATE_USER_DATA: {
       const { name, email, contact } = action.payload;

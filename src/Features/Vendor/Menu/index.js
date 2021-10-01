@@ -1,23 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import { Grid } from '@material-ui/core';
 import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { MenuList } from '../../../Mock/MenuList';
-import { ButtonContainer, ButtonsContainer, FilterButton, HeaderLeftContainer, HeaderRightContainer } from './style';
+import { GetHeader } from '../../../scripts/constants';
+import { AuthToken } from '../../../scripts/constants';
+import { deleteitem } from '../mutation';
+import { FetchItems } from '../request';
+import {
+  ButtonContainer,
+  ButtonsContainer,
+  FilterButton,
+  HeaderLeftContainer,
+  HeaderRightContainer,
+  CustomTableContainer,
+} from './style';
 
 function Menu() {
   const history = useHistory();
+  const { headers } = GetHeader();
+  const [items, setSaveItems] = useState([]);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
+  const { isLoading: fetchloading, data: itemsData, refetch } = FetchItems();
+  const token = AuthToken();
+  useEffect(() => {
+    // dispatch(fetchitems(saveItems));
+    if (itemsData !== undefined) {
+      saveItems(itemsData);
+    }
+  }, [itemsData]);
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const saveItems = ({ data: { results } }) => {
+    setSaveItems(results);
+  };
+
+  const handleDateChange = (data) => {
+    setSelectedDate(data);
   };
 
   const onEdit = (row) => {
@@ -32,9 +57,19 @@ function Menu() {
     history.push('/addmenu');
   }
   function showAddRestraunt() {
-    history.push('/restraunt');
+    history.push('/restaurant');
+  }
+  function deleteItem({ id: itemId }) {
+    mutate({ itemId, headers });
   }
 
+  const { mutate, mutateAsync, isLoading, error } = useMutation(deleteitem, {
+    onSuccess: (response) => {
+      refetch();
+
+      return response;
+    },
+  });
   return (
     <div>
       <Grid container>
@@ -42,10 +77,10 @@ function Menu() {
           <ButtonsContainer>
             <HeaderLeftContainer>
               <ButtonContainer>
-                <CommonButton fontSize="14px" minwidth="100px" onClick={showAddRestraunt} property="Add Restraunt" />
+                <CommonButton onClick={showAddRestraunt} property="Add Restraunt" />
               </ButtonContainer>
               <ButtonContainer>
-                <CommonButton fontSize="14px" minwidth="100px" onClick={showAddMenu} property="Add Item" />
+                <CommonButton onClick={showAddMenu} property="Add Item" />
               </ButtonContainer>
             </HeaderLeftContainer>
             <HeaderRightContainer>
@@ -62,14 +97,22 @@ function Menu() {
                 />
               </MuiPickersUtilsProvider>
               <FilterButton>
-                <CommonButton fontSize="14px" minwidth="100px" property="Save Time" />
+                <CommonButton property="Save Time" />
               </FilterButton>
             </HeaderRightContainer>
           </ButtonsContainer>
 
-          <div style={{ padding: '20px', marginTop: '10px' }}>
-            <CustomTable header={header} isEditDelete onEdit={onEdit} rows={MenuList} tablewidth="90%" />
-          </div>
+          <CustomTableContainer>
+            <CustomTable
+              deleteTableRow={deleteItem}
+              header={header}
+              isEditDelete
+              onEdit={onEdit}
+              padding="5px 11px"
+              rows={items}
+              tablewidth="90%"
+            />
+          </CustomTableContainer>
         </Grid>
       </Grid>
     </div>
