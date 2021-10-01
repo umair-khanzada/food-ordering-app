@@ -27,7 +27,6 @@ function CategoryList() {
   function deletecategory({ id: categoryId }) {
     mutate({ categoryId, headers });
   }
-  console.log(categoriesData);
   const onDelete = (row) => {
     row;
   };
