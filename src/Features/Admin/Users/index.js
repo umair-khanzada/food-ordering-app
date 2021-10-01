@@ -49,7 +49,6 @@ function UsersList() {
   };
 
   const history = useHistory();
-
   return (
     <>
       {isFetching ? (

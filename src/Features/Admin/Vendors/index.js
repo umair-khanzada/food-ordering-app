@@ -11,7 +11,6 @@ import { GetHeader } from '../../../scripts/constants';
 import { deleteUserById } from '../Common Requests/mutation';
 import { FetchUsers } from '../Common Requests/request';
 import { VendorTitleContainer, VendorTitle } from './style';
-
 function VendorList() {
   const { headers } = GetHeader();
 
