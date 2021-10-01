@@ -18,3 +18,6 @@ export const OPEN_DRAWER = 'OPEN_DRAWER';
 export const CLOSE_DRAWER = 'CLOSE_DRAWER';
 export const OPENMODAL = 'OPENMODAL';
 export const CLOSEMODAL = 'CLOSEMODAL';
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
+export const EDIT_USER = 'EDIT_USER';
+export const EDIT_CATEGORY = 'EDIT_CATEGORY';

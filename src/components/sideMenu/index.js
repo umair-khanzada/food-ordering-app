@@ -29,14 +29,12 @@ function SideMenu() {
     },
   }));
 
-  const { role } = useSelector((state) => {
+  const role = useSelector((state) => {
     const {
       authReducer: { role },
     } = state;
 
-    return {
-      role,
-    };
+    return role;
   });
 
   const { vendor, admin, user } = Roles;

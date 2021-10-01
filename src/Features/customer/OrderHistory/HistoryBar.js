@@ -4,7 +4,6 @@ import DateFnsUtils from '@date-io/date-fns';
 // import { makeStyles } from '@material-ui/core/styles';
 import 'date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import SearchBar from 'material-ui-search-bar';
 
 import CommonButton from '../../../components/Button/Button';
 
@@ -28,7 +27,6 @@ import CommonButton from '../../../components/Button/Button';
 const HistoryBar = () => {
   return (
     <>
-      <SearchBar />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           format="MM/dd/yyyy"

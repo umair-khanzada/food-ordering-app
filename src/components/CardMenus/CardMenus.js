@@ -4,12 +4,11 @@ import CardData from '../../Mock/Data';
 import CommonCard from './CommonCard';
 import { ControlGrid } from './style';
 
-const CardMenu = ({ foodType, isopen }) => {
-  console.log('onChanheg', isopen);
+const CardMenu = ({ foodType }) => {
   return (
     <div>
       <ControlGrid container elevation={3} spacing={3}>
-        {CardData.map(({ id, name, price, type, resturantName, img }, index) => {
+        {CardData.map(({ id, name, price, type, resturantName, img }) => {
           if (type === foodType) {
             return (
               <CommonCard

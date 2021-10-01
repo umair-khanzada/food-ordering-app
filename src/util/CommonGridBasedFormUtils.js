@@ -1,7 +1,7 @@
-export const validateOnSubmit = (fields) => {
+export const validateOnSubmit = (fields, checkEmpty) => {
   let isValid = true;
   const validateArray = fields.map((field) => {
-    if (!field.value?.length) {
+    if (!field.value?.length && checkEmpty) {
       isValid = false;
       field.errorMessage = field.label + ' field cannot be empty';
 
@@ -21,6 +21,20 @@ export const fieldChangeHandler = (prev, value, index) => {
   const currentTextField = prevForm[index];
 
   currentTextField.value = value;
+
+  if (currentTextField.getValidation) {
+    const getValidationError = currentTextField.getValidation(currentTextField.value);
+    currentTextField.errorMessage = getValidationError;
+  }
+
+  return prevForm;
+};
+
+export const SelectChangeHandler = (prev, values, index) => {
+  const prevForm = [...prev];
+  const currentTextField = prevForm[index];
+
+  currentTextField.values = values;
 
   if (currentTextField.getValidation) {
     const getValidationError = currentTextField.getValidation(currentTextField.value);

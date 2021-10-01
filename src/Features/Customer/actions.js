@@ -1,4 +1,12 @@
-import { ADD_TOCART, INCREMENT, DECREMENT, DELETE_ITEM, OPEN_DRAWER, CLOSE_DRAWER } from '../../redux/ActionTypes';
+import {
+  ADD_TOCART,
+  INCREMENT,
+  DECREMENT,
+  DELETE_ITEM,
+  OPEN_DRAWER,
+  CLOSE_DRAWER,
+  EDIT_USER,
+} from '../../redux/ActionTypes';
 
 export const addtocart = (data) => {
   return {
@@ -40,5 +48,12 @@ export const openDrawer = () => {
 export const closeDrawer = () => {
   return {
     type: CLOSE_DRAWER,
+  };
+};
+
+export const editUser = (data) => {
+  return {
+    type: EDIT_USER,
+    payload: data,
   };
 };

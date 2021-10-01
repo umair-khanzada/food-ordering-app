@@ -1,45 +1,74 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { vendorList } from '../../../Mock/VendorList';
+import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
+import { GetHeader } from '../../../scripts/constants';
+import { deleteUserById } from '../Common Requests/mutation';
+import { FetchUsers } from '../Common Requests/request';
 import { VendorTitleContainer, VendorTitle } from './style';
-
 function VendorList() {
+  const { headers } = GetHeader();
+
+  const [vendors, setVendors] = useState('');
+  const header = ['S.No', 'name', 'email', 'contact', 'Edit'];
+  const { data: vendorsData, isFetching, refetch: refetchVendor } = FetchUsers('vendor');
+  const Deletevendor = useMutation(deleteUserById, {
+    onError: () => {},
+    onSuccess: () => {
+      refetchVendor();
+    },
+  });
+  useEffect(() => {
+    if (Array.isArray(vendorsData)) {
+      vendorsData.map((user) => {
+        const removeElements = ['password', 'isEmailVerified'];
+
+        removeElements.map((removeElement) => delete user[removeElement]);
+      });
+      setVendors(vendorsData);
+    }
+  }, [vendorsData]);
   const history = useHistory();
   const { editVendor, addVendor } = RouteNames;
 
-  const header = ['No', 'Name', 'Email', 'Contact', 'Timing', 'Building', 'Edit'];
-
-  const onEdit = (row) => {
+  const onEdit = ({ id }) => {
     history.push({
       pathname: editVendor,
-      state: { data: row },
+      search: '?id=' + id,
     });
   };
 
-  const onDelete = (row) => {
-    row;
+  const onDelete = ({ id }) => {
+    Deletevendor.mutateAsync({ id, headers });
   };
 
   return (
     <>
-      <VendorTitleContainer>
-        <VendorTitle>Vendors</VendorTitle>
-        <CommonButton onClick={() => history.push(addVendor)} property="Add Vendor" />
-      </VendorTitleContainer>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <>
+          <VendorTitleContainer>
+            <VendorTitle>Vendors</VendorTitle>
+            <CommonButton onClick={() => history.push(addVendor)} property="Add Vendor" />
+          </VendorTitleContainer>
 
-      <CustomTable
-        header={header}
-        isEditDelete
-        onDelete={onDelete}
-        onEdit={onEdit}
-        rows={vendorList}
-        tablewidth="90%"
-      />
+          <CustomTable
+            header={header}
+            isDeleting={Deletevendor.isLoading}
+            isEditDelete
+            onDelete={onDelete}
+            onEdit={onEdit}
+            rows={vendors}
+            tablewidth="90%"
+          />
+        </>
+      )}
     </>
   );
 }

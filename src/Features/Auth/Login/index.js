@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch, shallowEqual, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import FormComponent from '../../../components/FormComponent';
@@ -8,10 +8,11 @@ import { emailRegex } from '../../../scripts/constants';
 import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const { message } = useSelector((state) => {
+  const message = useSelector((state) => {
     const { message } = state.responseMessage;
-    return { message };
-  }, shallowEqual);
+    return message;
+  });
+
   const validateOnSubmit = () => {
     let isValid = true;
     const ValidateArray = loginForm.map((textField) => {

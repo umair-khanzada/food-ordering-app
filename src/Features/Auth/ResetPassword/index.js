@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
-import { shallowEqual, useSelector } from 'react-redux';
-import { dispatch } from 'rxjs/internal/observable/pairs';
+import { useDispatch, useSelector } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
 import { setFormMessage } from '../actions';
 
 function ResetPassword() {
-  const { message, status } = useSelector((state) => {
-    const { message, status } = state.responseMessage;
-    return { message, status };
-  }, shallowEqual);
+  const message = useSelector((state) => {
+    const { message } = state.responseMessage;
+    return message;
+  });
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     return () => {
       dispatch(setFormMessage({ message: '', status: 0 }));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   let newPassword = '';
 
   const validateOnSubmit = () => {
