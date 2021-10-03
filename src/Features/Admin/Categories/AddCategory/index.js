@@ -53,20 +53,23 @@ const AddCategory = () => {
 
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
     onSuccess: (response) => {
+      const resetFields = fields.map((field) => {
+        return { ...field, value: '' };
+      });
+      setFields(resetFields);
       return response;
     },
   });
 
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-        name: 'save',
-        minWidth: '100%',
-        clickHandler: saveHandler,
-      },
-    ],
-  };
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      clickHandler: saveHandler,
+    },
+  ];
+
   return (
     <CommonGridBasedForm
       buttons={buttons}

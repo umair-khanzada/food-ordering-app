@@ -9,6 +9,7 @@ import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
+import Loader from '../../../components/Loader/index';
 import { GetHeader } from '../../../scripts/constants';
 import { AuthToken } from '../../../scripts/constants';
 import { deleteitem } from '../mutation';
@@ -28,7 +29,7 @@ function Menu() {
   const [items, setSaveItems] = useState([]);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
-  const { isLoading: fetchloading, data: itemsData, refetch } = FetchItems();
+  const { isLoading: fetchloading, data: itemsData, refetch, isFetching } = FetchItems();
   const token = AuthToken();
   useEffect(() => {
     // dispatch(fetchitems(saveItems));
@@ -102,17 +103,26 @@ function Menu() {
             </HeaderRightContainer>
           </ButtonsContainer>
 
-          <CustomTableContainer>
-            <CustomTable
-              deleteTableRow={deleteItem}
-              header={header}
-              isEditDelete
-              onEdit={onEdit}
-              padding="5px 11px"
-              rows={items}
-              tablewidth="90%"
-            />
-          </CustomTableContainer>
+          {isFetching ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>
+              <CustomTableContainer>
+                <CustomTable
+                  deleteTableRow={deleteItem}
+                  header={header}
+                  isDeleting={isLoading}
+                  isEditDelete
+                  onEdit={onEdit}
+                  padding="5px 11px"
+                  rows={items}
+                  tablewidth="90%"
+                />
+              </CustomTableContainer>
+            </>
+          )}
         </Grid>
       </Grid>
     </div>

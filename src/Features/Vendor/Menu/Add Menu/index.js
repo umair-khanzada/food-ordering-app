@@ -5,13 +5,11 @@ import { useSelector } from 'react-redux';
 
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { AuthToken } from '../../../../scripts/constants';
 import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, SelectChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
-  const token = AuthToken();
   const { headers } = GetHeader();
 
   const vendorId = useSelector((state) => {
@@ -48,7 +46,8 @@ const AddMenu = () => {
     setFields(updatedFields);
   };
 
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState(null);
+  const [restaurant, setRestaurant] = useState(null);
 
   const [price, setPrice] = useState(null);
   const [name, setName] = useState();
@@ -64,6 +63,7 @@ const AddMenu = () => {
 
       onChange: (event, value) => {
         if (value !== null) {
+          setCategory(value.id);
           fields[0].value = value.id;
         }
       },
@@ -79,6 +79,7 @@ const AddMenu = () => {
 
       onChange: (event, value) => {
         if (value !== null) {
+          setRestaurant(value.id);
           fields[1].value = value.id;
         }
       },
@@ -129,18 +130,20 @@ const AddMenu = () => {
     }
   };
 
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-        name: 'save',
-        minWidth: '100%',
-        clickHandler: saveHandler,
-      },
-    ],
-  };
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      clickHandler: saveHandler,
+    },
+  ];
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
+      const resetFields = fields.map((field) => {
+        return { ...field, value: '' };
+      });
+      setFields(resetFields);
       return response;
     },
   });

@@ -1,9 +1,16 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 
 import { Autocomplete } from '@mui/material';
 import { TextField } from '@mui/material';
 const AutoComplete = (props) => {
-  const { values, onChange, index, value, options, label, placeholder } = props;
+  const { values, onChange, index, value, options, placeholder } = props;
+
+  const labelValue = value
+    ? values.filter(({ id }) => {
+        return id === value;
+      })
+    : '';
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
@@ -15,9 +22,12 @@ const AutoComplete = (props) => {
       id="combo-box-demo"
       onChange={onChange}
       options={values}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       renderInput={(params) => <TextField {...params} label={placeholder} />}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       sx={{ width: 300 }}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+
+      value={labelValue ? labelValue[0].label : labelValue}
     />
   );
 };

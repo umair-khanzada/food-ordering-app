@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
+import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
 import { GetHeader } from '../../../scripts/constants';
 import { deleteCategory } from './mutation';
@@ -22,10 +23,10 @@ function CategoryList() {
       search: `?id=${categoryId}`,
     });
   };
-  const { data: categoriesData, refetch, isLoading, isFetching } = FetchCategories();
+  const { data: categoriesData, refetch, isFetching } = FetchCategories();
 
   function deletecategory({ id: categoryId }) {
-    mutate({ categoryId, headers });
+    deletCategory.mutate({ categoryId, headers });
   }
 
   const onDelete = (row) => {
@@ -38,7 +39,7 @@ function CategoryList() {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
 
-  const { mutate, mutateAsync, error } = useMutation(deleteCategory, {
+  const deletCategory = useMutation(deleteCategory, {
     onSuccess: (response) => {
       refetch();
 
@@ -54,7 +55,7 @@ function CategoryList() {
 
       {isFetching ? (
         <>
-          <p>Loading</p>
+          <Loader />
         </>
       ) : (
         <>
@@ -62,6 +63,7 @@ function CategoryList() {
             cellWidth="400px"
             deleteTableRow={deletecategory}
             header={header}
+            isDeleting={deletCategory.isLoading}
             isEditDelete
             onDelete={onDelete}
             onEdit={onEdit}
