@@ -50,7 +50,6 @@ export async function updateItemById(data) {
     itemsById: { id },
     headers,
   } = data;
-  console.log('updatedFields', items);
 
   const res = axios.patch(`${baseUrl}items/${id}`, items, {
     headers,

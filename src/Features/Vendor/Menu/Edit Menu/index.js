@@ -35,7 +35,6 @@ const EditMenu = () => {
   }, [itemsById]);
 
   const saveItemsId = (itemsId) => {
-    console.log('itemsdata', itemsId);
     const { name, price, categoryId, kitchenId } = itemsId;
 
     fields[0].value = categoryId;

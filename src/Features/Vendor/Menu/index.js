@@ -39,7 +39,6 @@ function Menu() {
   }, [itemsData]);
 
   const saveItems = ({ data: { results } }) => {
-    console.log('itemsData', results);
     setSaveItems(results);
   };
 

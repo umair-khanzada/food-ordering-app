@@ -23,7 +23,7 @@ const CategoriesById = async (headers, id) => {
   const { data } = await axios.get(baseUrl + 'categories/' + id, {
     headers,
   });
-  console.log('data', data);
+
   return data;
 };
 export const FetchCategoriesById = (id) => {

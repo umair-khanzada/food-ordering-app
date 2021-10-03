@@ -6,8 +6,6 @@ import { TextField } from '@mui/material';
 const AutoComplete = (props) => {
   const { values, onChange, index, value, options, placeholder } = props;
 
-  console.log('values', value);
-
   const labelValue = value
     ? values.filter(({ id }) => {
         return id === value;
