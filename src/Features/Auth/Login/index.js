@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import FormComponent from '../../../components/FormComponent';
@@ -8,10 +8,13 @@ import { emailRegex } from '../../../scripts/constants';
 import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const message = useSelector((state) => {
-    const { message } = state.responseMessage;
-    return message;
-  });
+  const { message, isLoading } = useSelector((state) => {
+    const {
+      responseMessage: { message },
+      loaderReducer: { isLoading },
+    } = state;
+    return { message, isLoading };
+  }, shallowEqual);
 
   const validateOnSubmit = () => {
     let isValid = true;
@@ -101,6 +104,7 @@ function LoginForm() {
         name: 'login',
         minWidth: '100%',
         clickHandler: loginClickHandler,
+        isLoading,
       },
     ],
   };

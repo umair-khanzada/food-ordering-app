@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
@@ -8,10 +8,13 @@ import { emailRegex, contactRegex } from '../../../scripts/constants';
 import { setFormMessage, signup } from '../actions';
 
 function SignUpForm() {
-  const message = useSelector((state) => {
-    const { message } = state.responseMessage;
-    return message;
-  });
+  const { message, isLoading } = useSelector((state) => {
+    const {
+      responseMessage: { message },
+      loaderReducer: { isLoading },
+    } = state;
+    return { message, isLoading };
+  }, shallowEqual);
 
   const history = useHistory();
 
@@ -144,6 +147,7 @@ function SignUpForm() {
         name: 'SignUp',
         minWidth: '100%',
         clickHandler: signUpClickHandler,
+        isLoading,
       },
     ],
   };

@@ -1,8 +1,9 @@
 import { ofType } from 'redux-observable';
-import { of } from 'rxjs';
+import { of, concat } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
+import { showLoader, hideLoader } from '../../components/Loader/actions';
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS, RESET_PASSWORD } from '../../redux/ActionTypes';
 import { API_ROUTE, defaultRouteForRoles } from '../../scripts/constants';
 import { loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
@@ -10,36 +11,40 @@ export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
     mergeMap(({ payload: { userData, history } }) => {
-      return ajax({
-        url: 'http://localhost:4000/v1/auth/login',
-        method: 'POST',
-        body: userData,
-      }).pipe(
-        mergeMap((res) => {
-          const {
-            user: { name, email, role, id, contact },
-            tokens: { refresh, access },
-          } = res.response;
-          return of(
-            loginSuccess({
-              id,
-              name,
-              email,
-              role,
-              contact,
-              refreshToken: refresh,
-              accessToken: access,
-              history,
-            }),
-          );
-        }),
-        catchError((err) => {
-          const {
-            response: { message },
-            status,
-          } = err;
-          return of(setFormMessage({ message, status }));
-        }),
+      return concat(
+        of(showLoader()),
+        ajax({
+          url: 'http://localhost:4000/v1/auth/login',
+          method: 'POST',
+          body: userData,
+        }).pipe(
+          mergeMap((res) => {
+            const {
+              user: { name, email, role, id, contact },
+              tokens: { refresh, access },
+            } = res.response;
+            return of(
+              loginSuccess({
+                id,
+                name,
+                email,
+                role,
+                contact,
+                refreshToken: refresh,
+                accessToken: access,
+                history,
+              }),
+            );
+          }),
+          catchError((err) => {
+            const {
+              response: { message },
+              status,
+            } = err;
+            return of(setFormMessage({ message, status }));
+          }),
+        ),
+        of(hideLoader()),
       );
     }),
   );
@@ -56,36 +61,40 @@ export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
     mergeMap(({ payload: { userData, history } }) => {
-      return ajax({
-        url: 'http://localhost:4000/v1/auth/register',
-        method: 'POST',
-        body: userData,
-      }).pipe(
-        mergeMap((res) => {
-          const {
-            user: { name, email, role, id, contact },
-            tokens: { refresh, access },
-          } = res.response;
-          return of(
-            loginSuccess({
-              id,
-              name,
-              email,
-              role,
-              contact,
-              refreshToken: refresh,
-              accessToken: access,
-              history,
-            }),
-          );
-        }),
-        catchError((err) => {
-          const {
-            response: { message },
-            status,
-          } = err;
-          return of(setFormMessage({ message, status }));
-        }),
+      return concat(
+        of(showLoader()),
+        ajax({
+          url: 'http://localhost:4000/v1/auth/register',
+          method: 'POST',
+          body: userData,
+        }).pipe(
+          mergeMap((res) => {
+            const {
+              user: { name, email, role, id, contact },
+              tokens: { refresh, access },
+            } = res.response;
+            return of(
+              loginSuccess({
+                id,
+                name,
+                email,
+                role,
+                contact,
+                refreshToken: refresh,
+                accessToken: access,
+                history,
+              }),
+            );
+          }),
+          catchError((err) => {
+            const {
+              response: { message },
+              status,
+            } = err;
+            return of(setFormMessage({ message, status }));
+          }),
+        ),
+        of(hideLoader()),
       );
     }),
   );
