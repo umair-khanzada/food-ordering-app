@@ -127,7 +127,7 @@ const AddUser = () => {
     if (isValid) {
       const userData = {};
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact') {
+        if (name !== 'building') {
           userData[name] = value;
         }
       });
@@ -142,18 +142,11 @@ const AddUser = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading: AddUser.isLoading,
     },
   ];
 
-  return (
-    <CommonGridBasedForm
-      buttons={buttons}
-      fields={fields}
-      heading="Add User"
-      loading={AddUser.isLoading}
-      onSaveSuccess={AddUser.isSuccess}
-    />
-  );
+  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" onSaveSuccess={AddUser.isSuccess} />;
 };
 
 export default AddUser;

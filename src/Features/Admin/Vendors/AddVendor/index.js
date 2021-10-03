@@ -142,17 +142,12 @@ const AddVendor = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading: AddVendor.isLoading,
     },
   ];
 
   return (
-    <CommonGridBasedForm
-      buttons={buttons}
-      fields={fields}
-      heading="Add Vendor"
-      loading={AddVendor.isLoading}
-      onSaveSuccess={AddVendor.isSuccess}
-    />
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={AddVendor.isSuccess} />
   );
 };
 

@@ -135,7 +135,7 @@ const EditUser = () => {
     if (isValid) {
       const userData = {};
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact' && name !== 'role') {
+        if (name !== 'building' && name !== 'role') {
           userData[name] = value;
         }
       });
@@ -150,6 +150,7 @@ const EditUser = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading: EditUser.isLoading,
     },
   ];
 
@@ -158,13 +159,7 @@ const EditUser = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit User"
-          loading={EditUser.isLoading}
-          onSaveSuccess={EditUser.isSuccess}
-        />
+        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={EditUser.isSuccess} />
       )}
       ;
     </>

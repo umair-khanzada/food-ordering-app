@@ -163,6 +163,7 @@ const EditVendor = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading: EditVendor.isLoading,
     },
   ];
 
@@ -175,7 +176,6 @@ const EditVendor = () => {
           buttons={buttons}
           fields={fields}
           heading="Edit Vendor"
-          loading={EditVendor.isLoading}
           onSaveSuccess={EditVendor.isSuccess}
         />
       )}
