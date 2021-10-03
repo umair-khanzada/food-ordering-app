@@ -51,3 +51,17 @@ export const FetchItems = () => {
 
   return useQuery('items', () => Items(headers));
 };
+
+const ItemsById = async (headers, id) => {
+  const { data } = await axios.get(baseUrl + 'items/' + id, {
+    headers,
+  });
+
+  console.log('itemsdata', data);
+  return data;
+};
+export const FetchItemsById = (id) => {
+  const { headers } = GetHeader();
+  console.log('id', id);
+  return useQuery('fetchItems', () => ItemsById(headers, id));
+};

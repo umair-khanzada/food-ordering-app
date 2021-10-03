@@ -1,67 +1,105 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import AddEditForm from '../../../../components/CommonGridBasedForm';
-import { PRICE, SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
+import { PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import Loader from '../../../../components/Loader/index';
+import { GetHeader } from '../../../../scripts/constants';
+import { fieldChangeHandler, validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
+import { updateItemById } from '../../mutation';
+import { FetchItemsById } from '../../request';
 
 const EditMenu = () => {
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
+  const id = params.get('id');
+  const { headers } = GetHeader();
+  const [item, setItem] = useState('');
+  const vendorId = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
 
-  const [category, setCategory] = useState([]);
-  const [restaurant, setRestaurant] = useState([]);
-  const [price, setPrice] = useState(30);
-  const [name, setName] = useState();
+  const { data: itemsById, refetch, isFetching } = FetchItemsById(id);
+
+  useEffect(() => {
+    if (itemsById !== undefined) {
+      setItem(itemsById);
+      saveItemsId(itemsById);
+    }
+  }, [itemsById]);
+
+  const saveItemsId = (itemsId) => {
+    console.log('itemsdata', itemsId);
+    const { name, price, categoryId, kitchenId } = itemsId;
+
+    fields[0].value = categoryId;
+    fields[1].value = kitchenId;
+    fields[2].value = price;
+    fields[3].value = name;
+    setFields(fields);
+  };
+
   const [fields, setFields] = useState([
     {
-      type: SELECT,
-      label: 'Categories',
-      values: ['Bread', 'Gravy'],
-      value: category,
+      type: TEXT_FIELD,
+      label: 'Category',
+      placeholder: 'Categories',
+      value: '',
       isValid: true,
+      textFieldType: 'text',
+      variant: 'standard',
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setCategory(event.target.value);
-        fields[index].value = event.target.value;
-      },
-    },
-    {
-      type: SELECT,
-      label: 'Restaurant',
-      values: ['KFC', 'DOMINOS', 'DARBAR'],
-      value: restaurant,
-      isValid: true,
-      errorMessage: '',
-
-      onChange: (event, index) => {
-        setRestaurant(event.target.value);
-        fields[index].value = event.target.value;
-      },
-    },
-    {
-      type: PRICE,
-      label: 'Price',
-      value: price,
-      isValid: true,
-      errorMessage: '',
-
-      onChange: (event, index) => {
-        setPrice(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
     {
       type: TEXT_FIELD,
-      label: 'Name',
-      value: name,
+      label: 'Restaurant',
+      placeholder: 'Restaurants',
+      value: '',
       textFieldType: 'text',
       variant: 'standard',
       isValid: true,
       errorMessage: '',
 
-      onChange: (event, index) => {
-        setName(event.target.value);
-        fields[index].value = event.target.value;
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+    },
+    {
+      type: PRICE,
+      label: 'Price',
+      value: '',
+      isValid: true,
+      errorMessage: '',
+
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      label: 'Name',
+      value: '',
+      textFieldType: 'text',
+      variant: 'standard',
+      isValid: true,
+      errorMessage: '',
+
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
       },
     },
   ]);
@@ -69,20 +107,53 @@ const EditMenu = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
+    if (isValid) {
+      mutate({
+        items: {
+          name: fields[3].value,
+          price: fields[2].value,
+          createdBy: vendorId,
+          categoryId: fields[0].value,
+          kitchenId: fields[1].value,
+        },
+        headers,
+        itemsById,
+      });
+    }
   };
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-        name: 'save',
-        minWidth: '100%',
-        clickHandler: saveHandler,
-      },
-    ],
-  };
+  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateItemById, {
+    onSuccess: (response) => {
+      const resetFields = fields.map((field) => {
+        return { ...field, value: '' };
+      });
+      setFields(resetFields);
+      return response;
+    },
+  });
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      clickHandler: saveHandler,
+    },
+  ];
 
-  return <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <AddEditForm
+          buttons={buttons}
+          fields={fields}
+          heading="Edit Item"
+          loading={isLoading}
+          onSaveSuccess={isSuccess}
+        />
+      )}
+    </>
+  );
 };
 
 export default EditMenu;

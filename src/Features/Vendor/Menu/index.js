@@ -39,6 +39,7 @@ function Menu() {
   }, [itemsData]);
 
   const saveItems = ({ data: { results } }) => {
+    console.log('itemsData', results);
     setSaveItems(results);
   };
 
@@ -46,10 +47,10 @@ function Menu() {
     setSelectedDate(data);
   };
 
-  const onEdit = (row) => {
+  const onEdit = ({ id: itemId }) => {
     history.push({
       pathname: '/editmenu',
-      state: { data: row },
+      search: `?id=${itemId}`,
     });
   };
   const header = ['Item Name', 'Type', 'Restraunt', 'Price', 'Edit'];

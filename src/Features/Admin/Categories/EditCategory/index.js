@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import Loader from '../../../../components/Loader';
 import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { updateCategoryById } from '../mutation';
@@ -24,7 +25,7 @@ const EditCategory = () => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
-  const { data: categoriesId, refetch } = FetchCategoriesById(id);
+  const { data: categoriesId, refetch, isFetching } = FetchCategoriesById(id);
   const [categories, setCategoriesId] = useState([]);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const EditCategory = () => {
       saveCategoriesId(categoriesId);
     }
   }, [categoriesId]);
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+
   const saveCategoriesId = (categoriesId) => {
     const { name } = categoriesId;
 
@@ -72,25 +73,39 @@ const EditCategory = () => {
     }
   };
 
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-        name: 'save',
-        minWidth: '100%',
-        clickHandler: saveHandler,
-      },
-    ],
-  };
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      clickHandler: saveHandler,
+    },
+  ];
 
-  const { mutate, mutateAsync, isLoading, error } = useMutation(updateCategoryById, {
+  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
     onSuccess: (response) => {
+      const resetFields = fields.map((field) => {
+        return { ...field, value: '' };
+      });
+      setFields(resetFields);
       return response;
     },
   });
 
   return (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={onSaveSuccess} />
+    <>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <CommonGridBasedForm
+          buttons={buttons}
+          fields={fields}
+          heading="Edit Category"
+          loading={isLoading}
+          onSaveSuccess={isSuccess}
+        />
+      )}
+    </>
   );
 };
 

@@ -54,9 +54,7 @@ function CategoryList() {
       </CategoriesTitleContainer>
 
       {isFetching ? (
-        <>
-          <Loader />
-        </>
+        <Loader />
       ) : (
         <>
           <CustomTable
