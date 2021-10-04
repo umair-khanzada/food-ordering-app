@@ -8,14 +8,14 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, SUCCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 
 const AddUser = () => {
   const dispatch = useDispatch();
   const { headers } = GetHeader();
-  const success_message = 'Successfull User has been created';
+  const successMessage = 'Successfull User has been created';
   const { isLoading, mutateAsync, isSuccess } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
@@ -25,7 +25,7 @@ const AddUser = () => {
         };
       });
       setFields(resetFields);
-      dispatch(toggleSnackbarOpen(success_message));
+      dispatch(toggleSnackbarOpen(successMessage));
     },
     onError: (error) => {
       const {
@@ -145,7 +145,7 @@ const AddUser = () => {
         loading={isLoading}
         onSaveSuccess={isSuccess}
       />
-      {isSuccess ? <Snackbar type="success" /> : <Snackbar type="error" />}
+      {isSuccess ? <Snackbar type={SUCCCESS} /> : <Snackbar type={ERROR} />}
     </>
   );
 };

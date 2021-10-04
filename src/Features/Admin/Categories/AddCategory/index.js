@@ -5,16 +5,18 @@ import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader, SUCCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { category } from '../mutation';
 
 const AddCategory = () => {
   const dispatch = useDispatch();
+  const successMessage = 'Successfull category has been created';
 
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const { headers } = GetHeader();
 
   const adminId = useSelector((state) => {
@@ -57,8 +59,16 @@ const AddCategory = () => {
   };
 
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
-    onSuccess: (response) => {
-      return response;
+    onSuccess: () => {
+      dispatch(toggleSnackbarOpen(successMessage));
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      dispatch(toggleSnackbarOpen(message));
     },
   });
 
@@ -80,6 +90,7 @@ const AddCategory = () => {
         loading={isLoading}
         onSaveSuccess={isSuccess}
       />
+      {isSuccess ? <Snackbar type={SUCCCESS} /> : <Snackbar type={ERROR} />}
     </>
   );
 };

@@ -8,8 +8,9 @@ import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, SUCCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
@@ -18,7 +19,7 @@ const EditUser = () => {
   const { headers } = GetHeader();
   const dispatch = useDispatch();
   const history = useHistory();
-  const success_message = 'Successfull user has been edited';
+  const successMessage = 'Successfull user has been edited';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [user, setUser] = useState('');
@@ -128,7 +129,7 @@ const EditUser = () => {
         };
       });
       setFields(resetFields);
-      dispatch(toggleSnackbarOpen(success_message));
+      dispatch(toggleSnackbarOpen(successMessage));
     },
     onError: (error) => {
       const {
@@ -168,8 +169,14 @@ const EditUser = () => {
 
   return (
     <>
-      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
-      {isSuccess ? <Snackbar type="success" /> : <Snackbar type="error" />}
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <>
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
+          {isSuccess ? <Snackbar type={SUCCCESS} /> : <Snackbar type={ERROR} />}
+        </>
+      )}
     </>
   );
 };
