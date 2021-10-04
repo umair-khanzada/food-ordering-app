@@ -108,10 +108,6 @@ const AddUser = () => {
         userData[name] = value;
       });
 
-<<<<<<< HEAD
-      userData['role'] = 'user';
-=======
->>>>>>> 4c8e0b68491b932c271fccbab52c8265230eb2d4
       mutateAsync({ headers, userData });
     }
   };
@@ -126,19 +122,7 @@ const AddUser = () => {
     },
   ];
 
-<<<<<<< HEAD
-  return (
-    <CommonGridBasedForm
-      buttons={buttons}
-      fields={fields}
-      heading="Add User"
-      loading={isLoading}
-      onSaveSuccess={isSuccess}
-    />
-  );
-=======
   return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" onSaveSuccess={isSuccess} />;
->>>>>>> 4c8e0b68491b932c271fccbab52c8265230eb2d4
 };
 
 export default AddUser;
