@@ -6,6 +6,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Customer/actions';
+import { GetHeader } from '../../scripts/constants';
 import {
   DrawerModal,
   DrawerCard,
@@ -34,9 +35,16 @@ import {
   ConfirmButton,
   CartPaper,
 } from './style';
-const TemporaryDrawer = () => {
+const TemporaryDrawer = ({ mutate }) => {
   const cart = useSelector((state) => state.addtocartReducers.cart);
+  const { headers } = GetHeader();
   const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
+  const userId = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -46,6 +54,23 @@ const TemporaryDrawer = () => {
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+  const placeOrder = () => {
+    const items = [];
+    let amount = 0;
+    cart.map(({ id, price, qty }) => {
+      items.push(id);
+      amount += price * qty;
+    });
+    const orders = {
+      userId,
+      items,
+      status: 'pending',
+      amount,
+    };
+
+    mutate({ orders, headers });
     setOpen(false);
   };
 
@@ -123,7 +148,7 @@ const TemporaryDrawer = () => {
                     <CloseIcon />
                     Cancel
                   </CancelButton>
-                  <ConfirmButton color="primary" onClick={() => handleClose()} variant="contained">
+                  <ConfirmButton color="primary" onClick={placeOrder} variant="contained">
                     <DoneIcon />
                     Confirm
                   </ConfirmButton>

@@ -1,11 +1,31 @@
 /* eslint-disable no-case-declarations */
-import { ADD_TOCART, CLOSE_DRAWER, DECREMENT, DELETE_ITEM, INCREMENT, OPEN_DRAWER } from '../../redux/ActionTypes';
+import {
+  ADD_TOCART,
+  CLOSE_DRAWER,
+  DECREMENT,
+  DELETE_ITEM,
+  INCREMENT,
+  OPEN_DRAWER,
+  CART_DATA,
+} from '../../redux/ActionTypes';
 
 const initialData = {
   cart: [],
   isDrawerOpen: false,
   count: 0,
 };
+const cardItem = [];
+
+export const cartItemReducer = (state = cardItem, action) => {
+  switch (action.type) {
+    case CART_DATA:
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
+
 export const addtocartReducers = (state = initialData, action) => {
   // const updatedCart = [];
 
@@ -17,7 +37,7 @@ export const addtocartReducers = (state = initialData, action) => {
       return { ...state, isDrawerOpen: false };
 
     case ADD_TOCART: {
-      const { id, name, price, img, qty } = action.payload;
+      const { id, name, price, img, qty, vendorId } = action.payload;
 
       const filter = state.cart.filter((elem) => elem.id === id);
 
@@ -45,7 +65,7 @@ export const addtocartReducers = (state = initialData, action) => {
 
       return {
         ...state,
-        cart: [...state.cart, { id, name, price, img, qty }],
+        cart: [...state.cart, { id, name, price, img, qty, vendorId }],
         isDrawerOpen: true,
         count: state.cart.length + 1,
       };

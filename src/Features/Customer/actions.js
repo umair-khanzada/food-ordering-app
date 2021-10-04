@@ -6,6 +6,7 @@ import {
   OPEN_DRAWER,
   CLOSE_DRAWER,
   EDIT_USER,
+  CART_DATA,
 } from '../../redux/ActionTypes';
 
 export const addtocart = (data) => {
@@ -54,6 +55,12 @@ export const closeDrawer = () => {
 export const editUser = (data) => {
   return {
     type: EDIT_USER,
+    payload: data,
+  };
+};
+export const cardData = (data) => {
+  return {
+    type: CART_DATA,
     payload: data,
   };
 };
