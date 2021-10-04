@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
@@ -14,7 +16,9 @@ import { FetchUserById } from '../../Common Requests/request';
 
 const EditUser = () => {
   const { headers } = GetHeader();
+  const dispatch = useDispatch();
   const history = useHistory();
+  const success_message = 'Successfull user has been edited';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [user, setUser] = useState('');
@@ -22,11 +26,10 @@ const EditUser = () => {
     {
       type: SELECT,
       label: 'Role',
-      values: ['User', 'Vendor'],
+      values: ['user', 'vendor'],
       value: [],
       name: 'role',
       errorMessage: '',
-
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
         setFields(updatedFields);
@@ -116,7 +119,7 @@ const EditUser = () => {
     }
   }, [userById]);
 
-  const EditUser = useMutation(editUserById, {
+  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -125,6 +128,16 @@ const EditUser = () => {
         };
       });
       setFields(resetFields);
+      dispatch(toggleSnackbarOpen(success_message));
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+
+      dispatch(toggleSnackbarOpen(message));
     },
   });
 
@@ -134,13 +147,12 @@ const EditUser = () => {
 
     if (isValid) {
       const userData = {};
+
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact' && name !== 'role') {
-          userData[name] = value;
-        }
+        userData[name] = value;
       });
 
-      EditUser.mutateAsync({ id, headers, userData });
+      mutateAsync({ id, headers, userData });
     }
   };
 
@@ -150,23 +162,14 @@ const EditUser = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
   return (
     <>
-      {isFetching ? (
-        <Loader />
-      ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit User"
-          loading={EditUser.isLoading}
-          onSaveSuccess={EditUser.isSuccess}
-        />
-      )}
-      ;
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
+      {isSuccess ? <Snackbar type="success" /> : <Snackbar type="error" />}
     </>
   );
 };

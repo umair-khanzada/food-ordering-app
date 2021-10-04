@@ -129,17 +129,16 @@ const AddMenu = () => {
     }
   };
 
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-        name: 'save',
-        minWidth: '100%',
-        clickHandler: saveHandler,
-      },
-    ],
-  };
-  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      clickHandler: saveHandler,
+    },
+  ];
+
+  const { mutate, isLoading, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
       return response;
     },

@@ -2,7 +2,7 @@ import { TOGGLE_SNACKBAR_CLOSE, TOGGLE_SNACKBAR_OPEN } from '../../../redux/Acti
 
 export const toggleSnackbarOpen = (message) => ({
   type: TOGGLE_SNACKBAR_OPEN,
-  message,
+  payload: message,
 });
 
 export const toggleSnackbarClose = () => ({

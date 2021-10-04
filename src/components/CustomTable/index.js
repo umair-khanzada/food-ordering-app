@@ -26,14 +26,12 @@ export default function CustomTable({
   tablewidth,
   onEdit,
   isEditDelete,
-  deleteTableRow,
 }) {
   const dispatch = useDispatch();
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
-    deleteTableRow(currentSelectedRow);
-
+    onDelete(currentSelectedRow);
     dispatch(closeModal());
   };
 
