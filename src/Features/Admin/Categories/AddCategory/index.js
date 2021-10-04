@@ -65,7 +65,6 @@ const AddCategory = () => {
     },
   });
 
-<<<<<<< HEAD
   const buttons = [
     {
       type: 'button',
@@ -74,19 +73,6 @@ const AddCategory = () => {
       clickHandler: saveHandler,
     },
   ];
-=======
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-        name: 'save',
-        minWidth: '100%',
-        clickHandler: saveHandler,
-      },
-    ],
-  };
-
->>>>>>> 9456c8ab6b167c8346437433ad8929793a543177
   return (
     <>
       <div>
