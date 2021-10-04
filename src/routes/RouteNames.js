@@ -23,11 +23,13 @@ const RouteNames = {
   addCategory: '/categories/add',
   editCategory: '/categories/edit',
   restaurant: '/restaurant',
+  editRestaurant: '/restaurant/edit',
   menuList: '/menu',
   orderList: '/orderList',
   addmenu: '/addmenu',
   editmenu: '/editmenu',
   orderHistories: '/orderHistories',
+  restaurantList: '/restaurantlist',
 };
 
 export default RouteNames;

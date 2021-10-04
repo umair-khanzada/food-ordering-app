@@ -11,6 +11,8 @@ import {
   MenuListRoute,
   OrderListRoute,
   RestaurantRoute,
+  RestaurantListRoute,
+  editRestaurantsRoute,
 } from '../Features/Vendor/route';
 
 const routeConfig = {
@@ -45,7 +47,16 @@ const routeConfig = {
   ],
 
   customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute],
-  vendor: [OrderListRoute, MenuListRoute, CategoryListRoute, RestaurantRoute, AddMenuRoute, EditMenuRoute],
+  vendor: [
+    OrderListRoute,
+    MenuListRoute,
+    CategoryListRoute,
+    RestaurantRoute,
+    AddMenuRoute,
+    EditMenuRoute,
+    RestaurantListRoute,
+    editRestaurantsRoute,
+  ],
   officeBoy: [],
 
   common: [],

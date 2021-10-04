@@ -37,13 +37,15 @@ function Menu() {
   }, [itemsData]);
 
   const saveItems = ({ data }) => {
-    const itemsData = data.map(({ name, price, id, categoryId, kitchenId }) => {
+    console.log('itemsDATA', data);
+    const itemData = data.map(({ name, price, id, categoryId, kitchenId }) => {
+      console.log('kitchen', kitchenId);
       const { name: categoryName } = categoryId;
       const { name: kitchenName } = kitchenId;
       return { name, categoryName, kitchenName, price, id };
     });
 
-    setSaveItems(itemsData);
+    setSaveItems(itemData);
   };
 
   const handleDateChange = (data) => {
