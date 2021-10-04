@@ -1,5 +1,6 @@
 import { isProtectedRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
+import BalanceSheet from './BalanceSheet';
 import CategoryList from './CategoryList/CategoryList';
 import Menu from './Menu';
 import AddMenu from './Menu/Add Menu';
@@ -40,4 +41,10 @@ export const EditMenuRoute = {
   path: RouteNames.editmenu,
   permissions: isProtectedRoute,
   component: EditMenu,
+};
+
+export const BalanceSheetRoute = {
+  path: RouteNames.balanceSheet,
+  permissions: isProtectedRoute,
+  component: BalanceSheet,
 };

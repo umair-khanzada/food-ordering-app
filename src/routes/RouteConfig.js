@@ -6,6 +6,7 @@ import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from
 import { customerOrderHistoryRoute, dashboardRoute, profileRoute } from '../Features/Customer/route';
 import {
   AddMenuRoute,
+  BalanceSheetRoute,
   CategoryListRoute,
   EditMenuRoute,
   MenuListRoute,
@@ -45,7 +46,15 @@ const routeConfig = {
   ],
 
   customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute],
-  vendor: [OrderListRoute, MenuListRoute, CategoryListRoute, RestaurantRoute, AddMenuRoute, EditMenuRoute],
+  vendor: [
+    OrderListRoute,
+    MenuListRoute,
+    CategoryListRoute,
+    RestaurantRoute,
+    AddMenuRoute,
+    EditMenuRoute,
+    BalanceSheetRoute,
+  ],
   officeBoy: [],
 
   common: [],
