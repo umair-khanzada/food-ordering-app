@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
-import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, GetHeader } from '../../../../scripts/constants';
@@ -20,18 +20,6 @@ const EditVendor = () => {
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [fields, setFields] = useState([
-    {
-      type: SELECT,
-      label: 'Role',
-      values: ['user', 'vendor'],
-      value: [],
-      errorMessage: '',
-      name: 'role',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
-        setFields(updatedFields);
-      },
-    },
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -103,20 +91,6 @@ const EditVendor = () => {
         return '';
       },
     },
-    {
-      type: SELECT,
-      label: 'Building',
-      values: ['Main', 'Cherry', 'Qasre Sheeren'],
-      value: [],
-      variant: 'standard',
-
-      name: 'building',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
-        setFields(updatedFields);
-      },
-    },
   ]);
   const EditVendor = useMutation(editUserById, {
     onSuccess: () => {
@@ -147,13 +121,11 @@ const EditVendor = () => {
     setFields(validateArray);
 
     if (isValid) {
-      const vendorData = {};
+      const userData = {};
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact' && name !== 'role') {
-          vendorData[name] = value;
-        }
+        userData[name] = value;
       });
-      EditVendor.mutateAsync({ id, headers, vendorData });
+      EditVendor.mutateAsync({ id, headers, userData });
     }
   };
 
