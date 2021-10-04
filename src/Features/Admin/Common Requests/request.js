@@ -7,7 +7,6 @@ const userList = async (headers, userType) => {
   const { data } = await axios.get(baseUrl + 'users', {
     headers,
   });
-
   return data.filter((user) => user.role == userType);
 };
 export const FetchUsers = (userType) => {

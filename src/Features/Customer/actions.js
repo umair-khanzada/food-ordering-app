@@ -6,6 +6,7 @@ import {
   OPEN_DRAWER,
   CLOSE_DRAWER,
   EDIT_USER,
+  CLEAR_CART,
 } from '../../redux/ActionTypes';
 
 export const addtocart = (data) => {
@@ -36,6 +37,12 @@ export const deleteItem = (itemId) => {
     payload: {
       id: itemId,
     },
+  };
+};
+
+export const clearCart = () => {
+  return {
+    type: CLEAR_CART,
   };
 };
 

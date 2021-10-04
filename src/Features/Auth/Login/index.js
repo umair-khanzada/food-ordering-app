@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex } from '../../../scripts/constants';
+import { emailRegex, passwordRegex } from '../../../scripts/constants';
 import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const message = useSelector((state) => {
-    const { message } = state.responseMessage;
-    return message;
-  });
+  const { message, isLoading } = useSelector((state) => {
+    const {
+      responseMessage: { message },
+      authReducer: { isLoading },
+    } = state;
+    return { message, isLoading };
+  }, shallowEqual);
 
   const validateOnSubmit = () => {
     let isValid = true;
@@ -86,8 +89,8 @@ function LoginForm() {
       value: '',
       errorMessage: '',
       getValidation: (value) => {
-        if (value.length < 8) {
-          return ['Password must be 8 characters long', false];
+        if (!passwordRegex.test(value)) {
+          return ['Password must be 8 characters long and contains atleast one number and letter', false];
         }
         return ['', true];
       },
@@ -101,6 +104,7 @@ function LoginForm() {
         name: 'login',
         minWidth: '100%',
         clickHandler: loginClickHandler,
+        isLoading,
       },
     ],
   };
