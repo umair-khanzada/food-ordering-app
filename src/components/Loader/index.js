@@ -6,7 +6,7 @@ import { StyledLoaderGrid } from './style';
 
 const Loader = () => {
   return (
-    <StyledLoaderGrid alignItems="center" container direction="column" justify="center">
+    <StyledLoaderGrid alignItems="center" container direction="column" justifyContent="center">
       <Box sx={{ display: 'flex' }}>
         <CircularProgress />
       </Box>

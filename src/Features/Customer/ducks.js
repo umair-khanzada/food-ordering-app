@@ -1,6 +1,7 @@
 /* eslint-disable no-case-declarations */
 import {
   ADD_TOCART,
+  CLEAR_CART,
   CLOSE_DRAWER,
   DECREMENT,
   DELETE_ITEM,
@@ -40,14 +41,6 @@ export const addtocartReducers = (state = initialData, action) => {
       const { id, name, price, img, qty, vendorId } = action.payload;
 
       const filter = state.cart.filter((elem) => elem.id === id);
-
-      // const obj = {
-      //   id,
-      //   name,
-      //   price,
-      //   img,
-      //   qty,
-      // };
 
       if (filter.length > 0) {
         state.cart.map((element, index) => {
@@ -99,6 +92,12 @@ export const addtocartReducers = (state = initialData, action) => {
         cart: updCart,
       };
     }
+
+    case CLEAR_CART:
+      return {
+        ...initialData,
+      };
+
     default:
       return state;
   }

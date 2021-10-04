@@ -1,17 +1,65 @@
 import { ofType } from 'redux-observable';
-import { of } from 'rxjs';
+import { of, concat } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS } from '../../redux/ActionTypes';
-import { defaultRouteForRoles } from '../../scripts/constants';
-import { loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
+import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS, RESET_PASSWORD } from '../../redux/ActionTypes';
+import { API_ROUTE, defaultRouteForRoles } from '../../scripts/constants';
+import { clearCart } from '../Customer/actions';
+import { loginError, loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
 export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
     mergeMap(({ payload: { userData, history } }) => {
       return ajax({
         url: 'http://localhost:4000/v1/auth/login',
+        method: 'POST',
+        body: userData,
+      }).pipe(
+        mergeMap((res) => {
+          const {
+            user: { name, email, role, id, contact },
+            tokens: { refresh, access },
+          } = res.response;
+
+          return of(
+            loginSuccess({
+              id,
+              name,
+              email,
+              role,
+              contact,
+              refreshToken: refresh,
+              accessToken: access,
+              history,
+            }),
+          );
+        }),
+        catchError((err) => {
+          const {
+            response: { message },
+            status,
+          } = err;
+          return concat(of(setFormMessage({ message, status })), of(loginError()));
+        }),
+      );
+    }),
+  );
+export const loginSuccessEpic = (action$) =>
+  action$.pipe(
+    ofType(LOGIN_SUCCESS),
+    mergeMap(({ payload: { role, history } }) => {
+      const defaultRouteAfterLogin = defaultRouteForRoles[role];
+      history.push(defaultRouteAfterLogin || '/');
+      return of();
+    }),
+  );
+export const signUpEpic = (action$) =>
+  action$.pipe(
+    ofType(SIGNUP),
+    mergeMap(({ payload: { userData, history } }) => {
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/register',
         method: 'POST',
         body: userData,
       }).pipe(
@@ -38,48 +86,7 @@ export const loginEpic = (action$) =>
             response: { message },
             status,
           } = err;
-          return of(setFormMessage({ message, status }));
-        }),
-      );
-    }),
-  );
-export const loginSuccessEpic = (action$) =>
-  action$.pipe(
-    ofType(LOGIN_SUCCESS),
-    mergeMap(({ payload: { role, history } }) => {
-      const defaultRouteAfterLogin = defaultRouteForRoles[role];
-      history.push(defaultRouteAfterLogin || '/');
-      return of();
-    }),
-  );
-export const signUpEpic = (action$) =>
-  action$.pipe(
-    ofType(SIGNUP),
-    mergeMap(({ payload }) => {
-      return ajax({
-        url: 'http://localhost:4000/v1/auth/register',
-        method: 'POST',
-        body: payload,
-      }).pipe(
-        mergeMap((res) => {
-          const {
-            user: { name },
-            tokens: { refresh, access },
-          } = res.response;
-          return of(
-            loginSuccess({
-              name,
-              refreshToken: refresh,
-              accessToken: access,
-            }),
-          );
-        }),
-        catchError((err) => {
-          const {
-            response: { message },
-            status,
-          } = err;
-          return of(setFormMessage({ message, status }));
+          return concat(of(setFormMessage({ message, status })), of(loginError()));
         }),
       );
     }),
@@ -118,6 +125,7 @@ export const logoutEpic = (action$, state) =>
         value: {
           authReducer: {
             refreshToken: { token },
+            role,
           },
         },
       } = state;
@@ -128,10 +136,43 @@ export const logoutEpic = (action$, state) =>
       }).pipe(
         mergeMap(() => {
           history.push('/login');
+          if (role === 'user') {
+            return concat(of(clearCart()), of(logoutSuccess()));
+          }
           return of(logoutSuccess());
         }),
         catchError(() => {
           return of(logoutError());
+        }),
+      );
+    }),
+  );
+
+export const resetPasswordEpic = (action$, state) =>
+  action$.pipe(
+    ofType(RESET_PASSWORD),
+    mergeMap(({ payload }) => {
+      const {
+        value: {
+          authReducer: {
+            accessToken: { token },
+            id,
+          },
+        },
+      } = state;
+      return ajax({
+        url: API_ROUTE + '/auth/reset-password/?token=' + id,
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+        body: { password: payload },
+      }).pipe(
+        mergeMap(() => {
+          return of();
+        }),
+        catchError(() => {
+          return of();
         }),
       );
     }),

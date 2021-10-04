@@ -51,7 +51,7 @@ function Menu() {
       state: { data: row },
     });
   };
-  const header = ['Item Name', 'Type', 'Restraunt', 'Price', 'Edit'];
+  const header = ['No', 'Item Name', 'Type', 'Restraunt', 'Price', 'Edit'];
 
   function showAddMenu() {
     history.push('/addmenu');

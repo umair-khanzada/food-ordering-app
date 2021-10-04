@@ -7,7 +7,7 @@ import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader } from '../../../../scripts/constants';
+import { contactRegex, GetHeader, passwordRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
@@ -25,8 +25,8 @@ const EditVendor = () => {
       label: 'Role',
       values: ['user', 'vendor'],
       value: [],
-      errorMessage: '',
       name: 'role',
+      errorMessage: '',
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
         setFields(updatedFields);
@@ -77,10 +77,10 @@ const EditVendor = () => {
         setFields(updatedFields);
       },
       getValidation: (value) => {
-        if (value.length < 8) {
-          return 'Password must be 8 characters long';
+        if (!passwordRegex.test(value)) {
+          return ['Password must be 8 characters long and contains atleast one number and letter', false];
         }
-        return '';
+        return ['', true];
       },
     },
 
@@ -103,22 +103,8 @@ const EditVendor = () => {
         return '';
       },
     },
-    {
-      type: SELECT,
-      label: 'Building',
-      values: ['Main', 'Cherry', 'Qasre Sheeren'],
-      value: [],
-      variant: 'standard',
-
-      name: 'building',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
-        setFields(updatedFields);
-      },
-    },
   ]);
-  const EditVendor = useMutation(editUserById, {
+  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -147,13 +133,12 @@ const EditVendor = () => {
     setFields(validateArray);
 
     if (isValid) {
-      const vendorData = {};
+      const userData = {};
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact' && name !== 'role') {
-          vendorData[name] = value;
-        }
+        userData[name] = value;
       });
-      EditVendor.mutateAsync({ id, headers, vendorData });
+
+      mutateAsync({ id, headers, userData });
     }
   };
 
@@ -163,6 +148,7 @@ const EditVendor = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
@@ -171,13 +157,7 @@ const EditVendor = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit Vendor"
-          loading={EditVendor.isLoading}
-          onSaveSuccess={EditVendor.isSuccess}
-        />
+        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={isSuccess} />
       )}
     </>
   );
