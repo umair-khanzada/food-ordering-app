@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
@@ -11,6 +13,7 @@ import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGri
 import { createUser } from '../../Common Requests/mutation';
 
 const AddUser = () => {
+  const dispatch = useDispatch();
   const { headers } = GetHeader();
   const { token } = useSelector((state) => {
     const {
@@ -31,6 +34,7 @@ const AddUser = () => {
         };
       });
       setFields(resetFields);
+      dispatch(toggleSnackbarOpen('Successfull User has been created'));
     },
   });
   const [fields, setFields] = useState([
@@ -146,13 +150,17 @@ const AddUser = () => {
   ];
 
   return (
-    <CommonGridBasedForm
-      buttons={buttons}
-      fields={fields}
-      heading="Add User"
-      loading={AddUser.isLoading}
-      onSaveSuccess={AddUser.isSuccess}
-    />
+    <>
+      {' '}
+      <CommonGridBasedForm
+        buttons={buttons}
+        fields={fields}
+        heading="Add User"
+        loading={AddUser.isLoading}
+        onSaveSuccess={AddUser.isSuccess}
+      />
+      <Snackbar timeout={4000} />
+    </>
   );
 };
 
