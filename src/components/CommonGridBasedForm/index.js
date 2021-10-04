@@ -10,7 +10,7 @@ import AutoComplete from './autoComplete';
 import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD, AUTO_COMPLETE } from './FieldTypes';
 import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, StyledFormButton } from './style';
 
-const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSuccess }) => {
+const CommonGridBasedForm = ({ fields, buttons, responseError, heading, toggleSnackbarOpen, onSaveSuccess }) => {
   const WIDTH = '100%';
 
   const getField = (field, props, index) => {
@@ -110,11 +110,8 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSu
         ))}
       </StyledGridColumnItem>
       {responseError && <Error>{responseError}</Error>}
-      {onSaveSuccess && (
-        <Typography color="primary" variant="h4">
-          Save Successfull!
-        </Typography>
-      )}
+
+      {onSaveSuccess && <Typography color="secondary">Save Successfull!</Typography>}
     </StyledMainContainerGrid>
   );
 };

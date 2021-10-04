@@ -15,6 +15,6 @@ const orderList = async (headers) => {
 
 export const OrderHistoryListApi = () => {
   const { headers } = GetHeader();
-
-  return useQuery('orders', () => orderList(headers));
+  const query = useQuery('orders', () => orderList(headers));
+  return query;
 };

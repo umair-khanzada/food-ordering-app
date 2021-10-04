@@ -1,71 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useMutation } from 'react-query';
+import { useHistory } from 'react-router';
+
+import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { OrdersListTitleContainer } from './Style';
-export const ordersHistoryList = [
-  {
-    id: 1,
-    name: 'Adnan',
-    contact: '13131232',
-    items: 'roti, keema',
-    price: 'Rs 250',
-    date: '25-9-2021',
-  },
-  {
-    id: 2,
-    name: 'Yousuf',
-    contact: '13131232',
-    items: 'roti, karhai',
-    price: 'Rs 200',
-    date: '25-9-2021',
-  },
-  {
-    id: 3,
-    name: 'Baber',
-    contact: '1309232',
-    items: 'burger',
-    price: 'Rs 350',
-    date: '24-9-2021',
-  },
-  {
-    id: 4,
-    name: 'Dilawer',
-    contact: '23131232',
-    items: 'biryani, coldrink',
-    price: 'Rs 200',
-    date: '24-9-2021',
-  },
-  {
-    id: 5,
-    name: 'Naem',
-    contact: '10901232',
-    items: 'biryani',
-    price: 'Rs 150',
-    date: '23-9-2021',
-  },
-  {
-    id: 6,
-    name: 'Kashif',
-    contact: '13131232',
-    items: 'karhai, coldrink, roti',
-    price: 'Rs 450',
-    date: '23-9-2021',
-  },
-  {
-    id: 7,
-    name: 'Dilawer',
-    contact: '13131232',
-    items: 'biryani, coldrink, salad',
-    price: 'Rs 400',
-    date: '22-9-2021',
-  },
-];
+import Loader from '../../../components/Loader';
+import RouteNames from '../../../routes/RouteNames';
+import { deleteUserById } from '../../Admin/Common Requests/mutation';
+import { OrderHistoryListApi } from './request';
+import { OrdersHistoryTitleContainer, OrdersHistoryTitle } from './Style';
 function OrdersList() {
-  const header = ['No', 'Name', 'Contact', 'Items', 'Price', 'Date'];
+  const { addOrderHistory, editOrderHistory } = RouteNames;
+
+  const { data, refetch: refetchUser, isFetching } = OrderHistoryListApi('orders');
+
+  const header = ['Id', 'Name', 'Contact', 'Items', 'Price', 'Date', 'Edit'];
+
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    if (Array.isArray(data)) {
+      data.map((order) => {
+        const removeElements = ['password', 'isEmailVerified'];
+
+        removeElements.map((removeElement) => delete order[removeElement]);
+      });
+      setOrders(data);
+    }
+  }, [data]);
+  const DeleteUser = useMutation(deleteUserById, {
+    onError: () => {},
+    onSuccess: () => {
+      refetchUser();
+    },
+  });
+
+  const onEdit = ({ id }) => {
+    history.push({
+      pathname: editOrderHistory,
+      search: '?id=' + id,
+    });
+  };
+
+  const onDelete = ({ id }) => {
+    DeleteUser.mutateAsync({ id });
+  };
+  const history = useHistory();
+
   return (
     <>
-      <OrdersListTitleContainer />
-      <CustomTable header={header} rows={ordersHistoryList} tablewidth="80%" />
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <>
+          <OrdersHistoryTitleContainer>
+            <OrdersHistoryTitle>Orders</OrdersHistoryTitle>
+            <CommonButton onClick={() => history.push(addOrderHistory)} property="Add History" />
+          </OrdersHistoryTitleContainer>
+          <CustomTable
+            header={header}
+            isEditDelete
+            onDelete={onDelete}
+            onEdit={onEdit}
+            rows={orders}
+            tablewidth="90%"
+          />
+        </>
+      )}
     </>
   );
 }

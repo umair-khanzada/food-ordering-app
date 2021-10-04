@@ -23,3 +23,16 @@ export const OrdersListTitle = styled.div`
 export const DeleteIcon = styled(Delete)`
   color: #ff4d4d;
 `;
+export const OrdersHistoryTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 20px auto;
+`;
+
+export const OrdersHistoryTitle = styled.div`
+  color: #717271;
+  font-size: 25px;
+
+  font-weight: 500;
+`;

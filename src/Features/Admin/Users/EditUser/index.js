@@ -22,11 +22,10 @@ const EditUser = () => {
     {
       type: SELECT,
       label: 'Role',
-      values: ['User', 'Vendor'],
+      values: ['user', 'vendor'],
       value: [],
       name: 'role',
       errorMessage: '',
-
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
         setFields(updatedFields);
@@ -116,7 +115,7 @@ const EditUser = () => {
     }
   }, [userById]);
 
-  const EditUser = useMutation(editUserById, {
+  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -134,13 +133,12 @@ const EditUser = () => {
 
     if (isValid) {
       const userData = {};
+
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact' && name !== 'role') {
-          userData[name] = value;
-        }
+        userData[name] = value;
       });
 
-      EditUser.mutateAsync({ id, headers, userData });
+      mutateAsync({ id, headers, userData });
     }
   };
 
@@ -150,6 +148,7 @@ const EditUser = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
@@ -158,13 +157,7 @@ const EditUser = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit User"
-          loading={EditUser.isLoading}
-          onSaveSuccess={EditUser.isSuccess}
-        />
+        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />
       )}
       ;
     </>
