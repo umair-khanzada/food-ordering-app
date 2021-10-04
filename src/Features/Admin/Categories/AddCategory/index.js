@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 
+// import { Snackbar } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { GetHeader } from '../../../../scripts/constants';
@@ -10,6 +15,9 @@ import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGri
 import { category } from '../mutation';
 
 const AddCategory = () => {
+  const dispatch = useDispatch();
+
+  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const { headers } = GetHeader();
 
   const adminId = useSelector((state) => {
@@ -67,14 +75,30 @@ const AddCategory = () => {
       },
     ],
   };
+
   return (
-    <CommonGridBasedForm
-      buttons={buttons}
-      fields={fields}
-      heading="Add Category"
-      loading={isLoading}
-      onSaveSuccess={isSuccess}
-    />
+    <>
+      <div>
+        <CommonGridBasedForm
+          buttons={buttons}
+          fields={fields}
+          heading="Add Category"
+          loading={isLoading}
+          onSaveSuccess={isSuccess}
+        />
+
+        <Button
+          onClick={() => {
+            dispatch(toggleSnackbarOpen('Successfull Your order has been placed'));
+          }}
+        >
+          Click Me
+        </Button>
+        <div>
+          <Snackbar timeout={4000} type="success" />
+        </div>
+      </div>
+    </>
   );
 };
 
