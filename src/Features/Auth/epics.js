@@ -40,7 +40,7 @@ export const loginEpic = (action$) =>
             response: { message },
             status,
           } = err;
-          return of(setFormMessage({ message, status }));
+          return concat(of(setFormMessage({ message, status })), of(loginError()));
         }),
       );
     }),
