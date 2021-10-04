@@ -22,7 +22,7 @@ const EditUser = () => {
     {
       type: SELECT,
       label: 'Role',
-      values: ['User', 'Vendor'],
+      values: ['user', 'vendor'],
       value: [],
       name: 'role',
       errorMessage: '',
@@ -135,9 +135,7 @@ const EditUser = () => {
     if (isValid) {
       const userData = {};
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact' && name !== 'role') {
-          userData[name] = value;
-        }
+        userData[name] = value;
       });
 
       EditUser.mutateAsync({ id, headers, userData });

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
-import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
@@ -12,17 +11,8 @@ import { createUser } from '../../Common Requests/mutation';
 
 const AddUser = () => {
   const { headers } = GetHeader();
-  const { token } = useSelector((state) => {
-    const {
-      authReducer: {
-        accessToken: { token },
-      },
-    } = state;
-    return {
-      token,
-    };
-  });
-  const AddUser = useMutation(createUser, {
+
+  const { isLoading, isSuccess, mutateAsync } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -34,19 +24,6 @@ const AddUser = () => {
     },
   });
   const [fields, setFields] = useState([
-    {
-      type: SELECT,
-      label: 'Role',
-      values: ['user', 'vendor'],
-      value: [],
-      name: 'role',
-      errorMessage: '',
-
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
-        setFields(updatedFields);
-      },
-    },
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -127,12 +104,11 @@ const AddUser = () => {
     if (isValid) {
       const userData = {};
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact') {
-          userData[name] = value;
-        }
+        userData[name] = value;
       });
 
-      AddUser.mutateAsync({ headers, userData });
+      userData['role'] = 'user';
+      mutateAsync({ headers, userData });
     }
   };
 
@@ -150,8 +126,8 @@ const AddUser = () => {
       buttons={buttons}
       fields={fields}
       heading="Add User"
-      loading={AddUser.isLoading}
-      onSaveSuccess={AddUser.isSuccess}
+      loading={isLoading}
+      onSaveSuccess={isSuccess}
     />
   );
 };

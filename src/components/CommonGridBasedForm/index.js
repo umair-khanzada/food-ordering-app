@@ -111,7 +111,7 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, toggleSn
       </StyledGridColumnItem>
       {responseError && <Error>{responseError}</Error>}
 
-      {onSaveSuccess && { toggleSnackbarOpen }}
+      {onSaveSuccess && toggleSnackbarOpen}
     </StyledMainContainerGrid>
   );
 };

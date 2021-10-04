@@ -10,6 +10,7 @@ export const editUserById = async ({ id, headers, userData }) => {
 };
 
 export const createUser = ({ headers, userData }) => {
+  console.log(userData);
   const createResposnse = axios.post(baseUrl + 'users', userData, {
     headers,
   });

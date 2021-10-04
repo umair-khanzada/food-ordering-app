@@ -6,6 +6,7 @@ import {
   LOGOUT_SUCCESS,
   UPDATE_USER_DATA,
   LOGIN,
+  SIGNUP,
 } from '../../redux/ActionTypes';
 
 const initialAuthState = {
@@ -25,6 +26,7 @@ const initialResponseMessageState = { message: '', status: 0 };
 export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => {
   switch (action.type) {
     case LOGIN:
+    case SIGNUP:
       return { ...state, isLoading: true };
 
     case LOGOUT_SUCCESS:

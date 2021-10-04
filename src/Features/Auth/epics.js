@@ -3,11 +3,10 @@ import { of, concat } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { showLoader, hideLoader } from '../../components/Loader/actions';
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS, RESET_PASSWORD } from '../../redux/ActionTypes';
 import { API_ROUTE, defaultRouteForRoles } from '../../scripts/constants';
 import { clearCart } from '../Customer/actions';
-import { loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
+import { loginError, loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
 export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
@@ -59,40 +58,36 @@ export const signUpEpic = (action$) =>
   action$.pipe(
     ofType(SIGNUP),
     mergeMap(({ payload: { userData, history } }) => {
-      return concat(
-        of(showLoader()),
-        ajax({
-          url: 'http://localhost:4000/v1/auth/register',
-          method: 'POST',
-          body: userData,
-        }).pipe(
-          mergeMap((res) => {
-            const {
-              user: { name, email, role, id, contact },
-              tokens: { refresh, access },
-            } = res.response;
-            return of(
-              loginSuccess({
-                id,
-                name,
-                email,
-                role,
-                contact,
-                refreshToken: refresh,
-                accessToken: access,
-                history,
-              }),
-            );
-          }),
-          catchError((err) => {
-            const {
-              response: { message },
-              status,
-            } = err;
-            return of(setFormMessage({ message, status }));
-          }),
-        ),
-        of(hideLoader()),
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/register',
+        method: 'POST',
+        body: userData,
+      }).pipe(
+        mergeMap((res) => {
+          const {
+            user: { name, email, role, id, contact },
+            tokens: { refresh, access },
+          } = res.response;
+          return of(
+            loginSuccess({
+              id,
+              name,
+              email,
+              role,
+              contact,
+              refreshToken: refresh,
+              accessToken: access,
+              history,
+            }),
+          );
+        }),
+        catchError((err) => {
+          const {
+            response: { message },
+            status,
+          } = err;
+          return concat(of(setFormMessage({ message, status })), of(loginError()));
+        }),
       );
     }),
   );
