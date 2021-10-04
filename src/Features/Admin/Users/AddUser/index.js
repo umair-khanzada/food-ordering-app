@@ -12,7 +12,7 @@ import { createUser } from '../../Common Requests/mutation';
 const AddUser = () => {
   const { headers } = GetHeader();
 
-  const { isLoading, isSuccess, mutateAsync } = useMutation(createUser, {
+  const { isLoading, mutateAsync, isSuccess } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -103,11 +103,15 @@ const AddUser = () => {
 
     if (isValid) {
       const userData = {};
+      userData['role'] = 'user';
       fields.map(({ name, value }) => {
         userData[name] = value;
       });
 
+<<<<<<< HEAD
       userData['role'] = 'user';
+=======
+>>>>>>> 4c8e0b68491b932c271fccbab52c8265230eb2d4
       mutateAsync({ headers, userData });
     }
   };
@@ -118,9 +122,11 @@ const AddUser = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
+<<<<<<< HEAD
   return (
     <CommonGridBasedForm
       buttons={buttons}
@@ -130,6 +136,9 @@ const AddUser = () => {
       onSaveSuccess={isSuccess}
     />
   );
+=======
+  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" onSaveSuccess={isSuccess} />;
+>>>>>>> 4c8e0b68491b932c271fccbab52c8265230eb2d4
 };
 
 export default AddUser;
