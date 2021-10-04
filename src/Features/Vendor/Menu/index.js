@@ -42,7 +42,7 @@ function Menu() {
       const { name: kitchenName } = kitchenId;
       return { name, categoryName, kitchenName, price, id };
     });
-    console.log('data', itemsData);
+
     setSaveItems(itemsData);
   };
 
