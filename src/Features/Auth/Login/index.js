@@ -11,7 +11,7 @@ function LoginForm() {
   const { message, isLoading } = useSelector((state) => {
     const {
       responseMessage: { message },
-      loaderReducer: { isLoading },
+      authReducer: { isLoading },
     } = state;
     return { message, isLoading };
   }, shallowEqual);

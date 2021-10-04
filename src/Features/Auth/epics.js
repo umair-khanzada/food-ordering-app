@@ -12,40 +12,37 @@ export const loginEpic = (action$) =>
   action$.pipe(
     ofType(LOGIN),
     mergeMap(({ payload: { userData, history } }) => {
-      return concat(
-        of(showLoader()),
-        ajax({
-          url: 'http://localhost:4000/v1/auth/login',
-          method: 'POST',
-          body: userData,
-        }).pipe(
-          mergeMap((res) => {
-            const {
-              user: { name, email, role, id, contact },
-              tokens: { refresh, access },
-            } = res.response;
-            return of(
-              loginSuccess({
-                id,
-                name,
-                email,
-                role,
-                contact,
-                refreshToken: refresh,
-                accessToken: access,
-                history,
-              }),
-            );
-          }),
-          catchError((err) => {
-            const {
-              response: { message },
-              status,
-            } = err;
-            return of(setFormMessage({ message, status }));
-          }),
-        ),
-        of(hideLoader()),
+      return ajax({
+        url: 'http://localhost:4000/v1/auth/login',
+        method: 'POST',
+        body: userData,
+      }).pipe(
+        mergeMap((res) => {
+          const {
+            user: { name, email, role, id, contact },
+            tokens: { refresh, access },
+          } = res.response;
+
+          return of(
+            loginSuccess({
+              id,
+              name,
+              email,
+              role,
+              contact,
+              refreshToken: refresh,
+              accessToken: access,
+              history,
+            }),
+          );
+        }),
+        catchError((err) => {
+          const {
+            response: { message },
+            status,
+          } = err;
+          return of(setFormMessage({ message, status }));
+        }),
       );
     }),
   );
