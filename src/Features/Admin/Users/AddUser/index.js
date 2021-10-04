@@ -45,7 +45,6 @@ const AddUser = () => {
       onChange: ({ target: { value } }, index) => {
         const updatedFields = fieldChangeHandler(fields, value, index);
         setFields(updatedFields);
-        console.log(value);
       },
     },
     {

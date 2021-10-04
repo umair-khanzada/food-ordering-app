@@ -6,6 +6,7 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { showLoader, hideLoader } from '../../components/Loader/actions';
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS, RESET_PASSWORD } from '../../redux/ActionTypes';
 import { API_ROUTE, defaultRouteForRoles } from '../../scripts/constants';
+import { clearCart } from '../Customer/actions';
 import { loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
 export const loginEpic = (action$) =>
   action$.pipe(
@@ -132,6 +133,7 @@ export const logoutEpic = (action$, state) =>
         value: {
           authReducer: {
             refreshToken: { token },
+            role,
           },
         },
       } = state;
@@ -142,6 +144,9 @@ export const logoutEpic = (action$, state) =>
       }).pipe(
         mergeMap(() => {
           history.push('/login');
+          if (role === 'user') {
+            return concat(of(clearCart()), of(logoutSuccess()));
+          }
           return of(logoutSuccess());
         }),
         catchError(() => {
