@@ -87,7 +87,7 @@ export default function CustomTable({
             <TableRow key={row.id}>
               <TableCell>{index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
-                if (data != 'id' && data !== 'role') {
+                if (data != 'id' && data !== 'role' && data != 'createdBy') {
                   return (
                     <TableCell key={index} cellwidth={cellWidth}>
                       {row[data]}
