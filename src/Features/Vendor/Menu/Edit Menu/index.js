@@ -43,8 +43,7 @@ const EditMenu = () => {
     fields[3].value = name;
     setFields(fields);
   };
-
-  const [fields, setFields] = useState([
+  const initialItemEditField = [
     {
       type: TEXT_FIELD,
       label: 'Category',
@@ -101,7 +100,8 @@ const EditMenu = () => {
         setFields(updatedFields);
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialItemEditField);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
@@ -122,10 +122,7 @@ const EditMenu = () => {
   };
   const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateItemById, {
     onSuccess: (response) => {
-      const resetFields = fields.map((field) => {
-        return { ...field, value: '' };
-      });
-      setFields(resetFields);
+      setFields(initialItemEditField);
       return response;
     },
   });

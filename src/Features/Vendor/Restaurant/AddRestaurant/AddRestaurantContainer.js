@@ -14,7 +14,7 @@ const AddRestaurant = () => {
 
   const [restaurant, setRestaurant] = useState('');
 
-  const [fields, setFields] = useState([
+  const initialRestaurantField = [
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -29,7 +29,9 @@ const AddRestaurant = () => {
         setFields(updatedFields);
       },
     },
-  ]);
+  ];
+
+  const [fields, setFields] = useState(initialRestaurantField);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
@@ -53,15 +55,10 @@ const AddRestaurant = () => {
   ];
   const { mutate, mutateAsync, error, isLoading, isSuccess } = useMutation(restaurants, {
     onSuccess: (response) => {
-      const resetFields = fields.map((field) => {
-        return { ...field, value: '' };
-      });
-      setFields(resetFields);
+      setFields(initialRestaurantField);
       return response;
     },
   });
-
-  //
 
   return (
     <>

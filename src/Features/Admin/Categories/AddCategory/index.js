@@ -19,7 +19,7 @@ const AddCategory = () => {
     return id;
   });
 
-  const [fields, setFields] = useState([
+  const initialCategoriesField = [
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -33,7 +33,9 @@ const AddCategory = () => {
         setFields(updatedFields);
       },
     },
-  ]);
+  ];
+
+  const [fields, setFields] = useState(initialCategoriesField);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
@@ -53,10 +55,7 @@ const AddCategory = () => {
 
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
     onSuccess: (response) => {
-      const resetFields = fields.map((field) => {
-        return { ...field, value: '' };
-      });
-      setFields(resetFields);
+      setFields(initialCategoriesField);
       return response;
     },
   });

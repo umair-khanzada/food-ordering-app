@@ -11,7 +11,6 @@ import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader/index';
 import { GetHeader } from '../../../scripts/constants';
-import { AuthToken } from '../../../scripts/constants';
 import { deleteitem } from '../mutation';
 import { FetchItems } from '../request';
 import {
@@ -30,9 +29,8 @@ function Menu() {
 
   const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
   const { isLoading: fetchloading, data: itemsData, refetch, isFetching } = FetchItems();
-  const token = AuthToken();
+
   useEffect(() => {
-    // dispatch(fetchitems(saveItems));
     if (itemsData !== undefined) {
       saveItems(itemsData);
     }
@@ -60,14 +58,13 @@ function Menu() {
   function showAddRestraunt() {
     history.push('/restaurant');
   }
-  function deleteItem({ id: itemId }) {
+  function onDelete({ id: itemId }) {
     mutate({ itemId, headers });
   }
 
-  const { mutate, mutateAsync, isLoading, error } = useMutation(deleteitem, {
+  const { mutate, isLoading } = useMutation(deleteitem, {
     onSuccess: (response) => {
       refetch();
-
       return response;
     },
   });
@@ -78,7 +75,7 @@ function Menu() {
           <ButtonsContainer>
             <HeaderLeftContainer>
               <ButtonContainer>
-                <CommonButton onClick={showAddRestraunt} property="Add Restraunt" />
+                <CommonButton onClick={showAddRestraunt} property="Add Restaurant" />
               </ButtonContainer>
               <ButtonContainer>
                 <CommonButton onClick={showAddMenu} property="Add Item" />
@@ -111,10 +108,10 @@ function Menu() {
             <>
               <CustomTableContainer>
                 <CustomTable
-                  deleteTableRow={deleteItem}
                   header={header}
                   isDeleting={isLoading}
                   isEditDelete
+                  onDelete={onDelete}
                   onEdit={onEdit}
                   padding="5px 11px"
                   rows={items}

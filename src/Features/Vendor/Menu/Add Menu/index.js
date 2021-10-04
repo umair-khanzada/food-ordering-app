@@ -51,7 +51,7 @@ const AddMenu = () => {
 
   const [price, setPrice] = useState(null);
   const [name, setName] = useState();
-  const [fields, setFields] = useState([
+  const initialItemRestaurant = [
     {
       type: AUTO_COMPLETE,
       label: '',
@@ -87,7 +87,7 @@ const AddMenu = () => {
     {
       type: PRICE,
       label: 'Price',
-      value: price,
+      value: '',
       isValid: true,
       errorMessage: '',
 
@@ -99,7 +99,7 @@ const AddMenu = () => {
     {
       type: TEXT_FIELD,
       label: 'Name',
-      value: name,
+      value: '',
       textFieldType: 'text',
       variant: 'standard',
       isValid: true,
@@ -110,7 +110,8 @@ const AddMenu = () => {
         fields[index].value = event.target.value;
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialItemRestaurant);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
@@ -140,10 +141,7 @@ const AddMenu = () => {
   ];
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
-      const resetFields = fields.map((field) => {
-        return { ...field, value: '' };
-      });
-      setFields(resetFields);
+      setFields(initialItemRestaurant);
       return response;
     },
   });
