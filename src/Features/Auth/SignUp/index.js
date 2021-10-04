@@ -4,7 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex, contactRegex } from '../../../scripts/constants';
+import { emailRegex, contactRegex, passwordRegex } from '../../../scripts/constants';
 import { setFormMessage, signup } from '../actions';
 
 function SignUpForm() {
@@ -103,8 +103,8 @@ function SignUpForm() {
       isValid: true,
       errorMessage: '',
       getValidation: (value) => {
-        if (value.length < 8) {
-          return ['Password must be 8 characters long', false];
+        if (!passwordRegex.test(value)) {
+          return ['Password must be 8 characters long and contains atleast one number and letter', false];
         }
         return ['', true];
       },

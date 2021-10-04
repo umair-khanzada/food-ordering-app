@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
+import { passwordRegex } from '../../../scripts/constants';
 import { resetPassword, setFormMessage } from '../actions';
 
 function ResetPassword() {
@@ -20,7 +21,7 @@ function ResetPassword() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let newPassword = '';
+  const newPassword = '';
 
   const validateOnSubmit = () => {
     let isFormValid = true;
@@ -84,9 +85,8 @@ function ResetPassword() {
       value: '',
       errorMessage: '',
       getValidation: (value) => {
-        newPassword = value;
-        if (value.length < 8) {
-          return ['Password must be 8 characters long', false];
+        if (!passwordRegex.test(value)) {
+          return ['Password must be 8 characters long and contains atleast one number and letter', false];
         }
         return ['', true];
       },
