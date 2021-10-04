@@ -42,7 +42,7 @@ const Items = async (headers) => {
   const res = await axios.get(baseUrl + 'items', {
     headers,
   });
-
+  console.log('resItems', res);
   return res;
 };
 

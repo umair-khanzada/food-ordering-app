@@ -36,8 +36,14 @@ function Menu() {
     }
   }, [itemsData]);
 
-  const saveItems = ({ data: { results } }) => {
-    setSaveItems(results);
+  const saveItems = ({ data }) => {
+    const itemsData = data.map(({ name, price, id, categoryId, kitchenId }) => {
+      const { name: categoryName } = categoryId;
+      const { name: kitchenName } = kitchenId;
+      return { name, categoryName, kitchenName, price, id };
+    });
+    console.log('data', itemsData);
+    setSaveItems(itemsData);
   };
 
   const handleDateChange = (data) => {
@@ -50,7 +56,7 @@ function Menu() {
       search: `?id=${itemId}`,
     });
   };
-  const header = ['Item Name', 'Type', 'Restraunt', 'Price', 'Edit'];
+  const header = ['Sno', 'ItemName', 'Type', 'Restraunt', 'Price', 'Edit'];
 
   function showAddMenu() {
     history.push('/addmenu');
