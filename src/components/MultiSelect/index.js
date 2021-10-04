@@ -20,6 +20,7 @@ export default function MultipleSelect({ values, width, onChange, index, value }
     setDataArray(event.target.value);
     onChange(event, index);
   };
+
   return (
     <Select
       id="demo-mutiple-checkbox"

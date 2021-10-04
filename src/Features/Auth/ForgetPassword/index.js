@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex } from '../../../scripts/constants';
+import { emailRegex, passwordRegex } from '../../../scripts/constants';
 import { forgotPassword, setFormMessage } from '../actions';
 
 function ForgetPassword() {
@@ -97,10 +97,10 @@ function ForgetPassword() {
       value: null,
       errorMessage: null,
       getValidation: (value) => {
-        if (value.length < 8) {
-          return ['Password must be 8 characters long', false];
+        if (!passwordRegex.test(value)) {
+          return ['Password must be 8 characters long and contains atleast one number and letter', false];
         }
-        return [null, true];
+        return ['', true];
       },
     },
   ]);
