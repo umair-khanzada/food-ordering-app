@@ -29,6 +29,7 @@ const RouteNames = {
   editmenu: '/editmenu',
   orderHistories: '/orderHistories',
   balanceSheet: '/balanceSheet',
+  editBalanceSheet: '/editBalanceSheet',
 };
 
 export default RouteNames;

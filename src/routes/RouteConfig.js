@@ -8,6 +8,7 @@ import {
   AddMenuRoute,
   BalanceSheetRoute,
   CategoryListRoute,
+  EditBalanceSheetRoute,
   EditMenuRoute,
   MenuListRoute,
   OrderListRoute,
@@ -54,6 +55,7 @@ const routeConfig = {
     AddMenuRoute,
     EditMenuRoute,
     BalanceSheetRoute,
+    EditBalanceSheetRoute,
   ],
   officeBoy: [],
 

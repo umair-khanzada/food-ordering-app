@@ -1,10 +1,23 @@
-// import axios from 'axios';
+import axios from 'axios';
+import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
 
-// import { baseUrl } from '../../../scripts/constants';
+export const FetchBalances = () => {
+  const vendorId = useSelector((state) => state.authReducer.id);
+  return useQuery('balance', async () => {
+    const {
+      data: { results },
+    } = await axios.get('http://localhost:4000/v1/balance');
+    return results.filter((res) => res.vendorId === vendorId);
+  });
+};
 
-// const userList = async (headers, vendorID) => {
-//   const { data } = await axios.get(baseUrl + 'balance', {
-//     headers,
-//   });
-//   return data.filter((user) => user.role == userType);
-// };
+export const FetchBalanceById = (id) => {
+  const vendorId = useSelector((state) => state.authReducer.id);
+  return useQuery('balance', async () => {
+    const {
+      data: { results },
+    } = await axios.get('http://localhost:4000/v1/balance/' + id);
+    return results.filter((res) => res.vendorId === vendorId);
+  });
+};
