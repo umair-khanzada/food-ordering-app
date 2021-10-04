@@ -84,7 +84,7 @@ const AddVendor = () => {
       },
     },
   ]);
-  const AddVendor = useMutation(createUser, {
+  const { mutateAsync, isLoading, isSuccess } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -106,7 +106,7 @@ const AddVendor = () => {
         userData[name] = value;
       });
 
-      AddVendor.mutateAsync({ headers, userData });
+      mutateAsync({ headers, userData });
     }
   };
 
@@ -116,13 +116,11 @@ const AddVendor = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
-      isLoading: AddVendor.isLoading,
+      isLoading,
     },
   ];
 
-  return (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={AddVendor.isSuccess} />
-  );
+  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={isSuccess} />;
 };
 
 export default AddVendor;

@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
-import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, GetHeader } from '../../../../scripts/constants';
@@ -20,6 +20,18 @@ const EditVendor = () => {
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [fields, setFields] = useState([
+    {
+      type: SELECT,
+      label: 'Role',
+      values: ['user', 'vendor'],
+      value: [],
+      name: 'role',
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(fields, value, index);
+        setFields(updatedFields);
+      },
+    },
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -92,7 +104,7 @@ const EditVendor = () => {
       },
     },
   ]);
-  const EditVendor = useMutation(editUserById, {
+  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -125,7 +137,8 @@ const EditVendor = () => {
       fields.map(({ name, value }) => {
         userData[name] = value;
       });
-      EditVendor.mutateAsync({ id, headers, userData });
+
+      mutateAsync({ id, headers, userData });
     }
   };
 
@@ -135,7 +148,7 @@ const EditVendor = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
-      isLoading: EditVendor.isLoading,
+      isLoading,
     },
   ];
 
@@ -144,12 +157,7 @@ const EditVendor = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit Vendor"
-          onSaveSuccess={EditVendor.isSuccess}
-        />
+        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={isSuccess} />
       )}
     </>
   );
