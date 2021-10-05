@@ -7,6 +7,8 @@ export const passwordRegex = new RegExp(
 );
 export const contactRegex = new RegExp('^[0-9]{11,12}$');
 export const baseUrl = 'http://localhost:4000/v1/';
+export const SUCCCESS = 'success';
+export const ERROR = 'errro';
 
 export const AuthToken = () => {
   return useSelector(({ authReducer: { accessToken } }) => {

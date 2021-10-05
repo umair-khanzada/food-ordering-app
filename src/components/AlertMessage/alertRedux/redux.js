@@ -8,10 +8,11 @@ const initialState = {
 const uiReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_SNACKBAR_OPEN: {
+      const { payload } = action;
       return {
         ...state,
         toggleSnackbar: true,
-        snackbarMessage: action.message,
+        snackbarMessage: payload,
       };
     }
 

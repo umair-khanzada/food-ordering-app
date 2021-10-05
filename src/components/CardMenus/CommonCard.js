@@ -5,17 +5,20 @@ import { useDispatch } from 'react-redux';
 
 import { addtocart } from '../../Features/Customer/actions';
 import CommonButton from '../Button/Button';
-import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice, InsideContent } from './style';
+import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice, InsideContent, ResturantName } from './style';
 
 const CommonCard = ({ id, name, price, resturantName, img, buttonText }) => {
   const dispatch = useDispatch();
 
   return (
-    <Grid item md={4}>
+    <Grid item>
       <CardRoot>
         <ImageDiv src={img} title={name} />
 
-        <HeaderCard subheader={<h4>{resturantName}</h4>} title={<FoodTitle variant="h2">{name}</FoodTitle>} />
+        <HeaderCard
+          subheader={<ResturantName>{resturantName}</ResturantName>}
+          title={<FoodTitle variant="h2">{name}</FoodTitle>}
+        />
 
         <Content>
           <InsideContent>

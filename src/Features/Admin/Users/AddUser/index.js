@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader, passwordRegex } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 
 const AddUser = () => {
+  const dispatch = useDispatch();
   const { headers } = GetHeader();
-
-  const { isLoading, mutateAsync, isSuccess } = useMutation(createUser, {
+  const successMessage = 'Successfull User has been created';
+  const { isLoading, mutateAsync, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -21,6 +25,16 @@ const AddUser = () => {
         };
       });
       setFields(resetFields);
+      dispatch(toggleSnackbarOpen(successMessage));
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+
+      dispatch(toggleSnackbarOpen(message));
     },
   });
   const [fields, setFields] = useState([
@@ -122,7 +136,19 @@ const AddUser = () => {
     },
   ];
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" onSaveSuccess={isSuccess} />;
+  return (
+    <>
+      <CommonGridBasedForm
+        buttons={buttons}
+        fields={fields}
+        heading="Add User"
+        loading={isLoading}
+        onSaveSuccess={isSuccess}
+      />
+      {isSuccess && <Snackbar type={SUCCCESS} />}
+      {isError && <Snackbar type={ERROR} />}
+    </>
+  );
 };
 
 export default AddUser;

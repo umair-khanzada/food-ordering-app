@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader, passwordRegex } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, SUCCCESS, passwordRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
 const EditVendor = () => {
   const { headers } = GetHeader();
-
+  const successMessage = 'Successfull vendor has been edited';
   const history = useHistory();
-
+  const dispatch = useDispatch();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [fields, setFields] = useState([
@@ -104,7 +107,7 @@ const EditVendor = () => {
       },
     },
   ]);
-  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
+  const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -113,6 +116,15 @@ const EditVendor = () => {
         };
       });
       setFields(resetFields);
+      dispatch(toggleSnackbarOpen(successMessage));
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      dispatch(toggleSnackbarOpen(message));
     },
   });
   const [vendor, setVendor] = useState('');
@@ -157,7 +169,11 @@ const EditVendor = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={isSuccess} />
+        <>
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={isSuccess} />
+          {isSuccess && <Snackbar type={SUCCCESS} />}
+          {isError && <Snackbar type={ERROR} />}
+        </>
       )}
     </>
   );
