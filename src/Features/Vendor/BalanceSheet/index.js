@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box } from '@mui/system';
 import { useHistory } from 'react-router';
@@ -12,7 +12,23 @@ import { FetchBalances } from './requests';
 const BalanceSheet = () => {
   const { isLoading, data, refetch } = FetchBalances();
 
-  const header = ['No', 'User', 'Vendor', 'Balance', 'Edit'];
+  const header = ['No', 'User', 'Balance', 'Edit'];
+
+  const [balanceData, setBalanceData] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      const filteredData = [];
+      data.map((item) => {
+        delete item['vendor'];
+        delete item['vendorId'];
+        delete item['userId'];
+
+        filteredData.push(item);
+      });
+      setBalanceData(filteredData);
+    }
+  }, [data]);
 
   const history = useHistory();
   const { editBalanceSheet } = RouteNames;
@@ -43,8 +59,8 @@ const BalanceSheet = () => {
         isEditDelete
         onDelete={onDelete}
         onEdit={onEdit}
-        rows={data}
-        tablewidth="70%"
+        rows={balanceData}
+        tablewidth="50%"
       />
       ;
     </Box>

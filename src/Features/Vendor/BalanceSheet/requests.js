@@ -7,10 +7,21 @@ import { baseUrl } from '../../../scripts/constants';
 export const FetchBalances = () => {
   const vendorId = useSelector((state) => state.authReducer.id);
   return useQuery('balance', async () => {
-    const {
-      data: { results },
-    } = await axios.get(baseUrl + 'balance');
-    return results.filter((res) => res.vendorId === vendorId);
+    const { data } = await axios.get(baseUrl + 'balance');
+    const filteredData = data.filter((res) => res.vendorId.id === vendorId);
+    const structutredData = [];
+
+    filteredData.map((data) =>
+      structutredData.push({
+        vendor: data.vendorId.name,
+        vendorId: data.vendorId.id,
+        user: data.userId.name,
+        userId: data.userId.id,
+        amount: data.amount,
+        id: data.id,
+      }),
+    );
+    return structutredData;
   });
 };
 
