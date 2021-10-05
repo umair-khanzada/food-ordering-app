@@ -132,6 +132,13 @@ const AddMenu = () => {
     }
   };
 
+  const { mutate, isLoading, isSuccess } = useMutation(items, {
+    onSuccess: (response) => {
+      setFields(initialItemRestaurant);
+      return response;
+    },
+  });
+
   const buttons = [
     {
       type: 'button',
@@ -141,12 +148,6 @@ const AddMenu = () => {
       isLoading,
     },
   ];
-  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
-    onSuccess: (response) => {
-      setFields(initialItemRestaurant);
-      return response;
-    },
-  });
 
   return (
     <>

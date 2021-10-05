@@ -14,7 +14,12 @@ import { FetchRestaurantsById } from '../request';
 
 const EditRestaurant = () => {
   const { headers } = GetHeader();
-
+  const { mutate, isLoading, isSuccess } = useMutation(updateRestaurantById, {
+    onSuccess: (response) => {
+      setFields(initialRestaurantsEditField);
+      return response;
+    },
+  });
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
@@ -75,14 +80,6 @@ const EditRestaurant = () => {
       isLoading,
     },
   ];
-
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateRestaurantById, {
-    onSuccess: (response) => {
-      setFields(initialRestaurantsEditField);
-      return response;
-    },
-  });
-
   return (
     <>
       {isFetching ? (

@@ -10,6 +10,12 @@ import { restaurants } from '../../mutation';
 
 const AddRestaurant = () => {
   const { headers } = GetHeader();
+  const { mutate, isLoading, isSuccess } = useMutation(restaurants, {
+    onSuccess: (response) => {
+      setFields(initialRestaurantField);
+      return response;
+    },
+  });
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const [restaurant, setRestaurant] = useState('');
@@ -54,12 +60,6 @@ const AddRestaurant = () => {
       isLoading,
     },
   ];
-  const { mutate, mutateAsync, error, isLoading, isSuccess } = useMutation(restaurants, {
-    onSuccess: (response) => {
-      setFields(initialRestaurantField);
-      return response;
-    },
-  });
 
   return (
     <>

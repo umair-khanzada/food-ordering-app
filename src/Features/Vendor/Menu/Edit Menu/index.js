@@ -156,7 +156,7 @@ const EditMenu = () => {
 
     setFields(updatedFields);
   };
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateItemById, {
+  const { mutate, isLoading, isSuccess } = useMutation(updateItemById, {
     onSuccess: (response) => {
       setFields(initialItemEditField);
       return response;

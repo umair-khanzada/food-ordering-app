@@ -27,6 +27,12 @@ const EditCategory = () => {
   const id = params.get('id');
   const { data: categoriesId, refetch, isFetching } = FetchCategoriesById(id);
 
+  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
+    onSuccess: () => {
+      setFields(initialCategoriesEditField);
+    },
+  });
+
   useEffect(() => {
     if (categoriesId !== undefined) {
       saveCategoriesId(categoriesId);
@@ -82,14 +88,6 @@ const EditCategory = () => {
       isLoading,
     },
   ];
-
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
-    onSuccess: (response) => {
-      setFields(initialCategoriesEditField);
-      return response;
-    },
-  });
-
   return (
     <>
       {isFetching ? (
