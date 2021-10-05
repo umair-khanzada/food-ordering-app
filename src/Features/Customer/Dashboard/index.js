@@ -75,7 +75,7 @@ function Dashboard() {
   return (
     <div>
       <Grid container>
-        <Grid item md={9}>
+        <Grid item md={12}>
           <Box>
             <Filter>
               <AddEditForm fields={fields} />

@@ -34,6 +34,7 @@ import {
   EmptyCartPara,
   ConfirmButton,
   CartPaper,
+  ModalDiv,
 } from './style';
 const TemporaryDrawer = ({ mutate }) => {
   const cart = useSelector((state) => state.addtocartReducers.cart);
@@ -119,7 +120,7 @@ const TemporaryDrawer = ({ mutate }) => {
                 </>
               ) : (
                 <EmptyCart>
-                  <EmptyCartHeading>No Item in your cart </EmptyCartHeading>
+                  <EmptyCartHeading variant="h5">No Item in your cart </EmptyCartHeading>
                   <EmptyCartPara>Your favorite items are just a click away</EmptyCartPara>
                 </EmptyCart>
               )}
@@ -142,7 +143,10 @@ const TemporaryDrawer = ({ mutate }) => {
           >
             <Fade in={open}>
               <Paper>
-                <Modaltext>Are You Sure You Want To Confirm Your Order</Modaltext>
+                <ModalDiv>
+                  <Modaltext>Are You Sure You Want To Confirm Your Order</Modaltext>
+                </ModalDiv>
+
                 <ModalIcons>
                   <CancelButton color="black" onClick={() => handleClose()} variant="contained">
                     <CloseIcon />
