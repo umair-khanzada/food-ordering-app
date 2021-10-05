@@ -6,13 +6,12 @@ import { TextField } from '@mui/material';
 const AutoComplete = (props) => {
   const { values, onChange, index, value, options, placeholder } = props;
 
-  console.log('value', value);
   const labelValue = value
     ? values.find(({ id }) => {
         return id === value;
       })
     : '';
-  console.log('labelValue', labelValue);
+  // const [label, setLabel] = useState('');
 
   return (
     <Autocomplete
@@ -23,7 +22,8 @@ const AutoComplete = (props) => {
       options={values}
       renderInput={(params) => <TextField {...params} label={placeholder} />}
       sx={{ width: 300 }}
-      value={labelValue ? labelValue.label : labelValue}
+      // value={labelValue ? labelValue.label : labelValue}
+      value={labelValue ? labelValue : ''}
       // value={value}
     />
   );

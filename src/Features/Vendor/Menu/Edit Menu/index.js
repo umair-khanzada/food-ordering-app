@@ -28,8 +28,7 @@ const EditMenu = () => {
   const categoriesData = FetchCategories();
 
   const { data: itemsById, refetch, isFetching } = FetchItemsById(id);
-  const [category, setCategory] = useState(null);
-  const [restaurant, setRestaurant] = useState(null);
+
   useEffect(() => {
     if (restaurantsData !== undefined) {
       saveRestaurant(restaurantsData);
@@ -82,9 +81,10 @@ const EditMenu = () => {
       errorMessage: '',
 
       onChange: (event, value) => {
-        if (value !== null) {
-          setCategory(value.id);
-          fields[0].value = value.id;
+        if (value) {
+          setFormFields(fields, value.id, 0);
+        } else {
+          setFormFields(fields, '', 0);
         }
       },
     },
@@ -98,9 +98,10 @@ const EditMenu = () => {
       errorMessage: '',
 
       onChange: (event, value) => {
-        if (value !== null) {
-          setRestaurant(value.id);
-          fields[1].value = value.id;
+        if (value) {
+          setFormFields(fields, value.id, 1);
+        } else {
+          setFormFields(fields, '', 1);
         }
       },
     },
@@ -149,6 +150,11 @@ const EditMenu = () => {
         itemsById,
       });
     }
+  };
+  const setFormFields = (fields, value, index) => {
+    const updatedFields = fieldChangeHandler(fields, value, index);
+
+    setFields(updatedFields);
   };
   const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateItemById, {
     onSuccess: (response) => {

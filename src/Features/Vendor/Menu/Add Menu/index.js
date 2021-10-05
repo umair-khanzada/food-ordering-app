@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { GetHeader } from '../../../../scripts/constants';
-import { validateOnSubmit, SelectChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { validateOnSubmit, SelectChangeHandler, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
@@ -46,11 +46,6 @@ const AddMenu = () => {
     setFields(updatedFields);
   };
 
-  const [category, setCategory] = useState(null);
-  const [restaurant, setRestaurant] = useState(null);
-
-  const [price, setPrice] = useState(null);
-  const [name, setName] = useState();
   const initialItemRestaurant = [
     {
       type: AUTO_COMPLETE,
@@ -62,9 +57,10 @@ const AddMenu = () => {
       errorMessage: '',
 
       onChange: (event, value) => {
-        if (value !== null) {
-          setCategory(value.id);
-          fields[0].value = value.id;
+        if (value) {
+          setFormFields(fields, value.id, 0);
+        } else {
+          setFormFields(fields, '', 0);
         }
       },
     },
@@ -78,9 +74,10 @@ const AddMenu = () => {
       errorMessage: '',
 
       onChange: (event, value) => {
-        if (value !== null) {
-          setRestaurant(value.id);
-          fields[1].value = value.id;
+        if (value) {
+          setFormFields(fields, value.id, 1);
+        } else {
+          setFormFields(fields, '', 1);
         }
       },
     },
@@ -92,8 +89,7 @@ const AddMenu = () => {
       errorMessage: '',
 
       onChange: (event, index) => {
-        setPrice(event.target.value);
-        fields[index].value = event.target.value;
+        setFormFields(fields, event.target.value, 2);
       },
     },
     {
@@ -106,12 +102,17 @@ const AddMenu = () => {
       errorMessage: '',
 
       onChange: (event, index) => {
-        setName(event.target.value);
-        fields[index].value = event.target.value;
+        setFormFields(fields, event.target.value, 3);
       },
     },
   ];
   const [fields, setFields] = useState(initialItemRestaurant);
+
+  const setFormFields = (fields, value, index) => {
+    const updatedFields = fieldChangeHandler(fields, value, index);
+
+    setFields(updatedFields);
+  };
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
