@@ -64,11 +64,12 @@ const FormComponent = ({
                     <Error>{errorMessage}</Error>
                   </InputBox>
                 ))}
-                {basicButtons.button.map(({ clickHandler, minWidth, name, type }, i) => (
+                {basicButtons.button.map(({ clickHandler, minWidth, name, type, isLoading }, i) => (
                   <div key={name + '-' + i}>
                     <CommonButton
                       key={name + '-' + i}
                       fontSize="16px"
+                      loading={isLoading}
                       minwidth={minWidth}
                       onClick={clickHandler}
                       property={name}

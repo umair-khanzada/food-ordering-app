@@ -2,7 +2,7 @@ import React from 'react';
 
 import CustomTable from '../../../components/CustomTable/index';
 
-const header = ['reference', 'order', 'placed', 'placedby', 'status', 'description', 'cost'];
+const header = ['No', 'reference', 'order', 'placed', 'placedby', 'status', 'description', 'cost'];
 const tableData = [
   {
     reference: 'August 2021',

@@ -109,12 +109,6 @@ const CommonGridBasedForm = ({ loading, fields, buttons, responseError, heading,
           </div>
         ))}
       </StyledGridColumnItem>
-      {responseError && <Error>{responseError}</Error>}
-      {onSaveSuccess && (
-        <Typography color="primary" variant="h4">
-          Save Successfull!
-        </Typography>
-      )}
     </StyledMainContainerGrid>
   );
 };

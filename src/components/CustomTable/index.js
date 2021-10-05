@@ -32,7 +32,10 @@ export default function CustomTable({
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
     onDelete(currentSelectedRow);
+<<<<<<< HEAD
 
+=======
+>>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
     dispatch(closeModal());
   };
 

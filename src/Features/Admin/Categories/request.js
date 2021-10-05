@@ -16,7 +16,6 @@ const Categories = async (headers) => {
 
 export const FetchCategories = () => {
   const { headers } = GetHeader();
-
   return useQuery('categories', () => Categories(headers));
 };
 const CategoriesById = async (headers, id) => {
