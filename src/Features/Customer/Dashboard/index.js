@@ -32,11 +32,14 @@ function Dashboard() {
       errorMessage: '',
 
       onChange: (event, value) => {
-        if (value !== null) {
-          fields[0].value = value.id;
+        if (value) {
+          const { id } = value;
+          let [{ value: fieldValue }] = fields;
+
+          fieldValue = id;
 
           setTabShow(true);
-          setVendorId(value.id);
+          setVendorId(id);
         } else {
           setTabShow(false);
         }
@@ -49,13 +52,13 @@ function Dashboard() {
   const { data: items, isFetching: isItemsFething } = GetItemsByVendor(vendorId);
 
   useEffect(() => {
-    if (vendors !== undefined) {
+    if (vendors) {
       saveVendors(vendors);
     }
   }, [vendors]);
 
   useEffect(() => {
-    if (items !== undefined) {
+    if (items) {
       dispatch(cardData(items));
     }
   }, [items]);
