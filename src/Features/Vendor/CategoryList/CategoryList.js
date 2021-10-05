@@ -1,26 +1,21 @@
-import React from 'react';
+// import React from 'react';
 
-import { useHistory } from 'react-router';
+// import { useHistory } from 'react-router';
 
-import CommonButton from '../../../components/Button/Button';
-import CustomTable from '../../../components/CustomTable/index';
-import CategoryData from '../../../Mock/CategoryListData';
-import { CategoriesTitleContainer } from './Style';
+// import CustomTable from '../../../components/CustomTable/index';
+// import CategoryData from '../../../Mock/CategoryListData';
+// import { CategoriesContainer } from './Style';
 
-function CategoryList() {
-  const History = useHistory();
+// function CategoryList() {
+//   const History = useHistory();
 
-  const header = ['No', 'Category', 'Edit'];
+//   const header = ['No', 'Category', 'Edit'];
 
-  return (
-    <>
-      <CategoriesTitleContainer>
-        <CommonButton onClick={() => History.push('/addcategory')} property="Add Category" />
-      </CategoriesTitleContainer>
+//   return (
+//     <CategoriesContainer>
+//       <CustomTable cellWidth="30%" header={header} isEditDelete rows={CategoryData} tablewidth="90%" />
+//     </CategoriesContainer>
+//   );
+// }
 
-      <CustomTable cellWidth="30%" header={header} isEditDelete rows={CategoryData} tablewidth="90%" />
-    </>
-  );
-}
-
-export default CategoryList;
+// export default CategoryList;
