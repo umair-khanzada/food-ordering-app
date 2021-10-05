@@ -13,11 +13,11 @@ export const FetchBalances = () => {
 
     filteredData.map((data) =>
       structutredData.push({
+        user: data.userId.name,
+        amount: data.amount,
         vendor: data.vendorId.name,
         vendorId: data.vendorId.id,
-        user: data.userId.name,
         userId: data.userId.id,
-        amount: data.amount,
         id: data.id,
       }),
     );
