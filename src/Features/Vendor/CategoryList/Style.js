@@ -1,24 +1,5 @@
-import { Delete } from '@material-ui/icons';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
-export const CategoriesTitleContainer = styled.div`
-  display: flex;
-
-  justify-content: space-between;
-  width: 90%;
-  margin: 20px auto;
-`;
-
-export const CategoriesTitle = styled.div`
-  color: grey;
-
-  font-size: 25px;
-
-  padding-left: 20px;
-
-  font-weight: 500;
-`;
-
-export const DeleteIcon = styled(Delete)`
-  color: #ff4d4d;
-`;
+// export const CategoriesContainer = styled.div`
+//   margin-top: 40px;
+// `;

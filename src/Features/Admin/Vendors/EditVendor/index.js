@@ -140,6 +140,7 @@ const EditVendor = () => {
       setFields(fields);
     }
   }, [vendorById]);
+
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);

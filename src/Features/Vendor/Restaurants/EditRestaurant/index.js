@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
@@ -10,41 +9,36 @@ import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldType
 import Loader from '../../../../components/Loader';
 import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { updateCategoryById } from '../mutation';
-import { FetchCategoriesById } from '../request';
+import { updateRestaurantById } from '../mutation';
+import { FetchRestaurantsById } from '../request';
 
-const EditCategory = () => {
+const EditRestaurant = () => {
   const { headers } = GetHeader();
-  const adminId = useSelector((state) => {
-    const {
-      authReducer: { id },
-    } = state;
-    return id;
-  });
 
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
-  const { data: categoriesId, refetch, isFetching } = FetchCategoriesById(id);
+  const { data: restaurantsId, refetch, isFetching } = FetchRestaurantsById(id);
+  const [restaurants, setRestaurantsId] = useState([]);
 
   useEffect(() => {
-    if (categoriesId !== undefined) {
-      saveCategoriesId(categoriesId);
+    if (restaurantsId !== undefined) {
+      saveRestaurantsId(restaurantsId);
     }
-  }, [categoriesId]);
+  }, [restaurantsId]);
 
-  const saveCategoriesId = (categoriesId) => {
-    const { name } = categoriesId;
+  const saveRestaurantsId = (restaurantsId) => {
+    const { name } = restaurantsId;
 
     fields[0].value = name;
     setFields(fields);
-    // setCategoriesId(name);
+    setRestaurantsId(name);
   };
-  const initialCategoriesEditField = [
+  const initialRestaurantsEditField = [
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
-      label: 'Category Name',
+      label: 'Restaurant Name',
       variant: 'standard',
       value: '',
       errorMessage: '',
@@ -54,7 +48,7 @@ const EditCategory = () => {
       },
     },
   ];
-  const [fields, setFields] = useState(initialCategoriesEditField);
+  const [fields, setFields] = useState(initialRestaurantsEditField);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
@@ -63,12 +57,11 @@ const EditCategory = () => {
     if (isValid) {
       const name = fields.map(({ value }, index) => value);
       mutate({
-        category: {
+        restaurant: {
           name: name[0],
-          createdBy: adminId,
         },
+        restaurantsId,
         headers,
-        categoriesId,
       });
     }
   };
@@ -82,9 +75,9 @@ const EditCategory = () => {
     },
   ];
 
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
+  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateRestaurantById, {
     onSuccess: (response) => {
-      setFields(initialCategoriesEditField);
+      setFields(initialRestaurantsEditField);
       return response;
     },
   });
@@ -97,7 +90,7 @@ const EditCategory = () => {
         <CommonGridBasedForm
           buttons={buttons}
           fields={fields}
-          heading="Edit Category"
+          heading="Edit Restaurant"
           loading={isLoading}
           onSaveSuccess={isSuccess}
         />
@@ -106,4 +99,4 @@ const EditCategory = () => {
   );
 };
 
-export default EditCategory;
+export default EditRestaurant;

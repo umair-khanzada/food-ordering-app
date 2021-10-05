@@ -26,7 +26,7 @@ const AddCategory = () => {
     return id;
   });
 
-  const [fields, setFields] = useState([
+  const initialCategoriesField = [
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -40,7 +40,9 @@ const AddCategory = () => {
         setFields(updatedFields);
       },
     },
-  ]);
+  ];
+
+  const [fields, setFields] = useState(initialCategoriesField);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
@@ -58,6 +60,12 @@ const AddCategory = () => {
     }
   };
 
+<<<<<<< HEAD
+  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
+    onSuccess: (response) => {
+      setFields(initialCategoriesField);
+      return response;
+=======
   const { mutate, isLoading, isSuccess, isError } = useMutation(category, {
     onSuccess: () => {
       dispatch(toggleSnackbarOpen(successMessage));
@@ -69,6 +77,7 @@ const AddCategory = () => {
         },
       } = error;
       dispatch(toggleSnackbarOpen(message));
+>>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
     },
   });
 
@@ -80,6 +89,10 @@ const AddCategory = () => {
       clickHandler: saveHandler,
     },
   ];
+<<<<<<< HEAD
+
+=======
+>>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
   return (
     <>
       <CommonGridBasedForm
