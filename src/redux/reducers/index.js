@@ -7,7 +7,7 @@ import uiReducer from '../../components/AlertMessage/alertRedux/redux';
 import { loaderReducer } from '../../components/Loader/ducks';
 import { modalReducer } from '../../components/Modal/ducks';
 import { forgotPassword, responseMessage, authReducer } from '../../Features/Auth/ducks';
-import { addtocartReducers } from '../../Features/Customer/ducks';
+import { addtocartReducers, cartItemReducer } from '../../Features/Customer/ducks';
 
 const persistConfig = {
   key: 'root',
@@ -23,6 +23,7 @@ const reducer = combineReducers({
   modalReducer,
   uiReducer,
   loaderReducer,
+  cartItemReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
