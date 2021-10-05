@@ -6,10 +6,11 @@ import { useHistory } from 'react-router';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
+import { DeleteBalanceById } from './mutations';
 import { FetchBalances } from './requests';
 
 const BalanceSheet = () => {
-  const { isLoading, data } = FetchBalances();
+  const { isLoading, data, refetch } = FetchBalances();
 
   const header = ['No', 'User', 'Vendor', 'Balance', 'Edit'];
 
@@ -23,11 +24,29 @@ const BalanceSheet = () => {
     });
   };
 
+  const { isLoading: isMutating, mutate, isSuccess } = DeleteBalanceById();
+
+  const onDelete = ({ id }) => {
+    mutate(id);
+  };
+
+  isSuccess && refetch();
+
   return isLoading ? (
     <Loader />
   ) : (
     <Box mt={4}>
-      <CustomTable cellWidth="30%" header={header} isEditDelete onEdit={onEdit} rows={data} tablewidth="70%" />;
+      <CustomTable
+        cellWidth="30%"
+        header={header}
+        isDeleting={isMutating}
+        isEditDelete
+        onDelete={onDelete}
+        onEdit={onEdit}
+        rows={data}
+        tablewidth="70%"
+      />
+      ;
     </Box>
   );
 };

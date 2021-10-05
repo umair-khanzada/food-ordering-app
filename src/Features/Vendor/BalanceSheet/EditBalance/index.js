@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { PRICE } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import Loader from '../../../../components/Loader';
 import { fieldChangeHandler, validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
+import { EditBalanceById } from '../mutations';
+import { FetchBalanceById } from '../requests';
 
 const EditBalanceSheet = () => {
-  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const params = new URLSearchParams(history.location.search);
+  const id = params.get('id');
+
+  const { mutate, isSuccess, isLoading: isMutating } = EditBalanceById();
+
+  const { isLoading, data } = FetchBalanceById(id);
   const [fields, setFields] = useState([
     {
       type: PRICE,
-      label: 'Price',
+      label: 'Balance',
       value: '',
       errorMessage: '',
 
@@ -24,13 +32,28 @@ const EditBalanceSheet = () => {
     },
   ]);
 
+  useEffect(() => {
+    if (data?.amount) {
+      fields[0].value = data.amount;
+      setFields(fields);
+    }
+  }, [data]);
+
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
-    const [{ value: amount }] = fields;
 
-    console.log(amount);
-    // isValid && dispatch(editUser({ id, name, email, password, contact, setOnSaveSuccess }));
+    if (isValid) {
+      const [{ value: amount }] = fields;
+
+      const updatedData = {
+        userId: data.userId,
+        vendorId: data.vendorId,
+        amount,
+      };
+
+      mutate({ id, data: updatedData });
+    }
   };
 
   const buttons = [
@@ -40,10 +63,15 @@ const EditBalanceSheet = () => {
       minWidth: '100%',
       color: 'primary',
       clickHandler: saveHandler,
+      isLoading: isMutating,
     },
   ];
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Balance" onSaveSuccess={onSaveSuccess} />;
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Balance" onSaveSuccess={isSuccess} />
+  );
 };
 
 export default EditBalanceSheet;

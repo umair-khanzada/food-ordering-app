@@ -2,22 +2,21 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 
+import { baseUrl } from '../../../scripts/constants';
+
 export const FetchBalances = () => {
   const vendorId = useSelector((state) => state.authReducer.id);
   return useQuery('balance', async () => {
     const {
       data: { results },
-    } = await axios.get('http://localhost:4000/v1/balance');
+    } = await axios.get(baseUrl + 'balance');
     return results.filter((res) => res.vendorId === vendorId);
   });
 };
 
 export const FetchBalanceById = (id) => {
-  const vendorId = useSelector((state) => state.authReducer.id);
   return useQuery('balance', async () => {
-    const {
-      data: { results },
-    } = await axios.get('http://localhost:4000/v1/balance/' + id);
-    return results.filter((res) => res.vendorId === vendorId);
+    const { data } = await axios.get(baseUrl + 'balance/' + id);
+    return data;
   });
 };
