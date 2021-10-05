@@ -19,12 +19,12 @@ const Snackbar = ({ type }) => {
   });
 
   let TIMER;
-  const TIME = 4000 / 1000 + 's';
+  const TIME = 4000;
 
   function handleTimeout() {
     TIMER = setTimeout(() => {
       dispatch(toggleSnackbarClose());
-    }, 4000);
+    }, TIME);
   }
 
   function handleClose() {
@@ -44,7 +44,7 @@ const Snackbar = ({ type }) => {
 
   return (
     show && (
-      <Container color={type === 'success' ? 'green' : 'red'} time={TIME}>
+      <Container color={type === 'success' ? 'green' : 'red'} time={TIME / 1000 + 's'}>
         {type === 'success' ? <SuccessIconButton /> : <ErrorIconButton />}
 
         <SuccessMessage>{message}</SuccessMessage>
