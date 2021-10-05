@@ -15,7 +15,7 @@ export const FetchBalances = () => {
 };
 
 export const FetchBalanceById = (id) => {
-  return useQuery('balance', async () => {
+  return useQuery('balance/' + id, async () => {
     const { data } = await axios.get(baseUrl + 'balance/' + id);
     return data;
   });
