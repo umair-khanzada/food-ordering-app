@@ -46,8 +46,8 @@ const EditMenu = () => {
     setFields(updatedFields);
   };
 
-  const saveCategories = ({ data: { results } }) => {
-    const resData = results.map(({ name, id }) => ({ label: name, id }));
+  const saveCategories = (categoriesDetail) => {
+    const resData = categoriesDetail.map(({ name, id }) => ({ label: name, id }));
 
     const updatedFields = SelectChangeHandler(fields, resData, 0);
 
