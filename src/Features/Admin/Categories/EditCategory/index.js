@@ -26,7 +26,6 @@ const EditCategory = () => {
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const { data: categoriesId, refetch, isFetching } = FetchCategoriesById(id);
-  const [categories, setCategoriesId] = useState([]);
 
   useEffect(() => {
     if (categoriesId !== undefined) {
@@ -39,7 +38,7 @@ const EditCategory = () => {
 
     fields[0].value = name;
     setFields(fields);
-    setCategoriesId(name);
+    // setCategoriesId(name);
   };
   const initialCategoriesEditField = [
     {

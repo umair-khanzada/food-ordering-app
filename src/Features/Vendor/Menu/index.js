@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
 import { Grid } from '@material-ui/core';
-import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
@@ -13,14 +11,7 @@ import Loader from '../../../components/Loader/index';
 import { GetHeader } from '../../../scripts/constants';
 import { deleteitem } from '../mutation';
 import { FetchItems } from '../request';
-import {
-  ButtonContainer,
-  ButtonsContainer,
-  FilterButton,
-  HeaderLeftContainer,
-  HeaderRightContainer,
-  CustomTableContainer,
-} from './style';
+import { ButtonsContainer, CustomTableContainer, ButtonContainer } from './style';
 
 function Menu() {
   const history = useHistory();
@@ -79,31 +70,12 @@ function Menu() {
       <Grid container>
         <Grid item md={12}>
           <ButtonsContainer>
-            <HeaderLeftContainer>
-              <ButtonContainer>
-                <CommonButton onClick={showAddRestraunt} property="Add Restaurant" />
-              </ButtonContainer>
-              <ButtonContainer>
-                <CommonButton onClick={showAddMenu} property="Add Item" />
-              </ButtonContainer>
-            </HeaderLeftContainer>
-            <HeaderRightContainer>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardTimePicker
-                  id="time-picker"
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                  label=" Closing time"
-                  margin="normal"
-                  onChange={handleDateChange}
-                  value={selectedDate}
-                />
-              </MuiPickersUtilsProvider>
-              <FilterButton>
-                <CommonButton property="Save Time" />
-              </FilterButton>
-            </HeaderRightContainer>
+            <ButtonContainer>
+              <CommonButton onClick={showAddRestraunt} property="Add Restaurant" />
+            </ButtonContainer>
+            <ButtonContainer>
+              <CommonButton onClick={showAddMenu} property="Add Item" />
+            </ButtonContainer>
           </ButtonsContainer>
 
           {isFetching ? (
