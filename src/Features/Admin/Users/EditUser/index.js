@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader, passwordRegex } from '../../../../scripts/constants';
+import { contactRegex, GetHeader, SUCCCESS, passwordRegex, ERROR } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
 const EditUser = () => {
   const { headers } = GetHeader();
+  const dispatch = useDispatch();
   const history = useHistory();
+  const successMessage = 'Successfull user has been edited';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [user, setUser] = useState('');
@@ -115,7 +120,7 @@ const EditUser = () => {
     }
   }, [userById]);
 
-  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
+  const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -124,6 +129,16 @@ const EditUser = () => {
         };
       });
       setFields(resetFields);
+      dispatch(toggleSnackbarOpen(successMessage));
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+
+      dispatch(toggleSnackbarOpen(message));
     },
   });
 
@@ -157,9 +172,12 @@ const EditUser = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />
+        <>
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
+          {isSuccess && <Snackbar type={SUCCCESS} />}
+          {isError && <Snackbar type={ERROR} />}
+        </>
       )}
-      ;
     </>
   );
 };

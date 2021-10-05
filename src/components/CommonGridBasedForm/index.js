@@ -109,7 +109,6 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSu
           </div>
         ))}
       </StyledGridColumnItem>
-      {responseError && <Error>{responseError}</Error>}
     </StyledMainContainerGrid>
   );
 };

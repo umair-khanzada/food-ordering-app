@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleSnackbarClose } from './alertRedux/actions';
 import { Container, SuccessIconButton, ErrorIconButton, SuccessMessage, CrossIcon, ShowSnackBarButton } from './style';
 
-const Snackbar = ({ timeout, type }) => {
+const Snackbar = ({ type }) => {
   const dispatch = useDispatch();
   const { show, message } = useSelector((state) => {
     const {
@@ -19,12 +19,12 @@ const Snackbar = ({ timeout, type }) => {
   });
 
   let TIMER;
-  const TIME = (timeout - 500) / 1000 + 's';
+  const TIME = 4000;
 
   function handleTimeout() {
     TIMER = setTimeout(() => {
       dispatch(toggleSnackbarClose());
-    }, timeout);
+    }, TIME);
   }
 
   function handleClose() {
@@ -44,7 +44,7 @@ const Snackbar = ({ timeout, type }) => {
 
   return (
     show && (
-      <Container color={type === 'success' ? 'green' : 'red'} time={TIME}>
+      <Container color={type === 'success' ? 'green' : 'red'} time={TIME / 1000 + 's'}>
         {type === 'success' ? <SuccessIconButton /> : <ErrorIconButton />}
 
         <SuccessMessage>{message}</SuccessMessage>
