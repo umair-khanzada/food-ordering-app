@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
 import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
 import { Grid } from '@material-ui/core';
-import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
+import Loader from '../../../components/Loader/index';
 import { GetHeader } from '../../../scripts/constants';
-import { AuthToken } from '../../../scripts/constants';
 import { deleteitem } from '../mutation';
 import { FetchItems } from '../request';
-import {
-  ButtonContainer,
-  ButtonsContainer,
-  FilterButton,
-  HeaderLeftContainer,
-  HeaderRightContainer,
-  CustomTableContainer,
-} from './style';
+import { ButtonsContainer, CustomTableContainer, ButtonContainer } from './style';
 
 function Menu() {
   const history = useHistory();
@@ -28,27 +19,32 @@ function Menu() {
   const [items, setSaveItems] = useState([]);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
-  const { isLoading: fetchloading, data: itemsData, refetch } = FetchItems();
-  const token = AuthToken();
+  const { isLoading: fetchloading, data: itemsData, refetch, isFetching } = FetchItems();
+
   useEffect(() => {
-    // dispatch(fetchitems(saveItems));
     if (itemsData !== undefined) {
       saveItems(itemsData);
     }
   }, [itemsData]);
 
   const saveItems = ({ data: { results } }) => {
-    setSaveItems(results);
+    const itemData = results.map(({ name, price, id, categoryId, kitchenId }) => {
+      const { name: categoryName } = categoryId;
+      const { name: kitchenName } = kitchenId;
+      return { name, categoryName, kitchenName, price, id };
+    });
+
+    setSaveItems(itemData);
   };
 
   const handleDateChange = (data) => {
     setSelectedDate(data);
   };
 
-  const onEdit = (row) => {
+  const onEdit = ({ id: itemId }) => {
     history.push({
       pathname: '/editmenu',
-      state: { data: row },
+      search: `?id=${itemId}`,
     });
   };
   const header = ['No', 'Item Name', 'Type', 'Restraunt', 'Price', 'Edit'];
@@ -59,14 +55,13 @@ function Menu() {
   function showAddRestraunt() {
     history.push('/restaurant');
   }
-  function deleteItem({ id: itemId }) {
+  function onDelete({ id: itemId }) {
     mutate({ itemId, headers });
   }
 
-  const { mutate, mutateAsync, isLoading, error } = useMutation(deleteitem, {
+  const { mutate, isLoading } = useMutation(deleteitem, {
     onSuccess: (response) => {
       refetch();
-
       return response;
     },
   });
@@ -75,44 +70,34 @@ function Menu() {
       <Grid container>
         <Grid item md={12}>
           <ButtonsContainer>
-            <HeaderLeftContainer>
-              <ButtonContainer>
-                <CommonButton onClick={showAddRestraunt} property="Add Restraunt" />
-              </ButtonContainer>
-              <ButtonContainer>
-                <CommonButton onClick={showAddMenu} property="Add Item" />
-              </ButtonContainer>
-            </HeaderLeftContainer>
-            <HeaderRightContainer>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardTimePicker
-                  id="time-picker"
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                  label=" Closing time"
-                  margin="normal"
-                  onChange={handleDateChange}
-                  value={selectedDate}
-                />
-              </MuiPickersUtilsProvider>
-              <FilterButton>
-                <CommonButton property="Save Time" />
-              </FilterButton>
-            </HeaderRightContainer>
+            <ButtonContainer>
+              <CommonButton onClick={showAddRestraunt} property="Add Restaurant" />
+            </ButtonContainer>
+            <ButtonContainer>
+              <CommonButton onClick={showAddMenu} property="Add Item" />
+            </ButtonContainer>
           </ButtonsContainer>
 
-          <CustomTableContainer>
-            <CustomTable
-              deleteTableRow={deleteItem}
-              header={header}
-              isEditDelete
-              onEdit={onEdit}
-              padding="5px 11px"
-              rows={items}
-              tablewidth="90%"
-            />
-          </CustomTableContainer>
+          {isFetching ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>
+              <CustomTableContainer>
+                <CustomTable
+                  header={header}
+                  isDeleting={isLoading}
+                  isEditDelete
+                  onDelete={onDelete}
+                  onEdit={onEdit}
+                  padding="5px 11px"
+                  rows={items}
+                  tablewidth="90%"
+                />
+              </CustomTableContainer>
+            </>
+          )}
         </Grid>
       </Grid>
     </div>

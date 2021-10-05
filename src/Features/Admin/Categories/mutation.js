@@ -25,3 +25,17 @@ export async function deleteCategory(data) {
 
   return res;
 }
+
+export async function updateCategoryById(data) {
+  const {
+    category,
+    categoriesId: { id },
+    headers,
+  } = data;
+
+  const res = axios.patch(`${baseUrl}categories/${id}`, category, {
+    headers,
+  });
+
+  return res;
+}

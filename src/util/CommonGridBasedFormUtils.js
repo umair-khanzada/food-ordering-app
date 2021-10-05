@@ -1,7 +1,7 @@
 export const validateOnSubmit = (fields, checkEmpty) => {
   let isValid = true;
   const validateArray = fields.map((field) => {
-    if (!field.value?.length && checkEmpty) {
+    if (!(field.value?.length || field.value) && checkEmpty) {
       isValid = false;
       field.errorMessage = field.label + ' field cannot be empty';
 

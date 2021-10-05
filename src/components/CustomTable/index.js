@@ -84,9 +84,9 @@ export default function CustomTable({
         <TableBody>
           {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
             <TableRow key={row.id}>
-              <TableCell>{index + 1}</TableCell>
+              <TableCell>{page * 5 + index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
-                if (data != 'id' && data != 'createdBy' && data !== 'role') {
+                if (data != 'id' && data !== 'role' && data != 'createdBy') {
                   return (
                     <TableCell key={index} cellwidth={cellWidth}>
                       {row[data]}

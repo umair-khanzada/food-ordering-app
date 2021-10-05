@@ -1,11 +1,15 @@
 import { isProtectedRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
+import BalanceSheet from './BalanceSheet';
+import EditBalanceSheet from './BalanceSheet/EditBalance';
 import CategoryList from './CategoryList/CategoryList';
 import Menu from './Menu';
 import AddMenu from './Menu/Add Menu';
 import EditMenu from './Menu/Edit Menu';
 import OrderList from './OrderList/OrderList';
 import AddRestaurantContainer from './Restaurant/AddRestaurant/AddRestaurantContainer';
+import EditRestaurant from './Restaurants/EditRestaurant';
+import RestaurantList from './Restaurants/index';
 
 export const MenuListRoute = {
   path: RouteNames.menuList,
@@ -30,6 +34,11 @@ export const CategoryListRoute = {
   permissions: isProtectedRoute,
   component: CategoryList,
 };
+export const RestaurantListRoute = {
+  path: RouteNames.restaurantList,
+  permissions: isProtectedRoute,
+  component: RestaurantList,
+};
 
 export const AddMenuRoute = {
   path: RouteNames.addmenu,
@@ -40,4 +49,22 @@ export const EditMenuRoute = {
   path: RouteNames.editmenu,
   permissions: isProtectedRoute,
   component: EditMenu,
+};
+
+export const BalanceSheetRoute = {
+  path: RouteNames.balanceSheet,
+  permissions: isProtectedRoute,
+  component: BalanceSheet,
+};
+
+export const EditBalanceSheetRoute = {
+  path: RouteNames.editBalanceSheet,
+  permissions: isProtectedRoute,
+  component: EditBalanceSheet,
+};
+
+export const editRestaurantsRoute = {
+  path: RouteNames.editRestaurant,
+  permissions: isProtectedRoute,
+  component: EditRestaurant,
 };

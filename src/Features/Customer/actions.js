@@ -6,6 +6,7 @@ import {
   OPEN_DRAWER,
   CLOSE_DRAWER,
   EDIT_USER,
+  GET_CARD_DATA,
   CLEAR_CART,
 } from '../../redux/ActionTypes';
 
@@ -61,6 +62,12 @@ export const closeDrawer = () => {
 export const editUser = (data) => {
   return {
     type: EDIT_USER,
+    payload: data,
+  };
+};
+export const getCardData = (data) => {
+  return {
+    type: GET_CARD_DATA,
     payload: data,
   };
 };

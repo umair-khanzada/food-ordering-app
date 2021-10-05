@@ -33,7 +33,6 @@ to {
 
 export const SuccessMessage = styled.p`
   margin-left: 15px;
-  text-transform: capitalize;
 `;
 export const ErrorIconButton = styled(ErrorIcon)`
   fill: red;
