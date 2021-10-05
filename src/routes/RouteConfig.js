@@ -13,6 +13,8 @@ import {
   MenuListRoute,
   OrderListRoute,
   RestaurantRoute,
+  RestaurantListRoute,
+  editRestaurantsRoute,
 } from '../Features/Vendor/route';
 
 const routeConfig = {
@@ -56,6 +58,8 @@ const routeConfig = {
     EditMenuRoute,
     BalanceSheetRoute,
     EditBalanceSheetRoute,
+    RestaurantListRoute,
+    editRestaurantsRoute,
   ],
   officeBoy: [],
 

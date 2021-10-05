@@ -5,13 +5,11 @@ import { useSelector } from 'react-redux';
 
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { AuthToken } from '../../../../scripts/constants';
 import { GetHeader } from '../../../../scripts/constants';
-import { validateOnSubmit, SelectChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { validateOnSubmit, SelectChangeHandler, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
-  const token = AuthToken();
   const { headers } = GetHeader();
 
   const vendorId = useSelector((state) => {
@@ -33,26 +31,22 @@ const AddMenu = () => {
     }
   }, [restaurantsData, categoriesData]);
 
-  const saveRestaurant = ({ data: { results } }) => {
-    const resData = results.map(({ name, id }) => ({ label: name, id }));
+  const saveRestaurant = (restaurantsDetails) => {
+    const resData = restaurantsDetails.map(({ name, id }) => ({ label: name, id }));
     const updatedFields = SelectChangeHandler(fields, resData, 1);
 
     setFields(updatedFields);
   };
 
-  const saveCategories = ({ data: { results } }) => {
-    const resData = results.map(({ name, id }) => ({ label: name, id }));
+  const saveCategories = (categoriesDetails) => {
+    const resData = categoriesDetails.map(({ name, id }) => ({ label: name, id }));
 
     const updatedFields = SelectChangeHandler(fields, resData, 0);
 
     setFields(updatedFields);
   };
 
-  const [category, setCategory] = useState([]);
-
-  const [price, setPrice] = useState(null);
-  const [name, setName] = useState();
-  const [fields, setFields] = useState([
+  const initialItemRestaurant = [
     {
       type: AUTO_COMPLETE,
       label: '',
@@ -63,8 +57,10 @@ const AddMenu = () => {
       errorMessage: '',
 
       onChange: (event, value) => {
-        if (value !== null) {
-          fields[0].value = value.id;
+        if (value) {
+          setFormFields(fields, value.id, 0);
+        } else {
+          setFormFields(fields, '', 0);
         }
       },
     },
@@ -78,38 +74,45 @@ const AddMenu = () => {
       errorMessage: '',
 
       onChange: (event, value) => {
-        if (value !== null) {
-          fields[1].value = value.id;
+        if (value) {
+          setFormFields(fields, value.id, 1);
+        } else {
+          setFormFields(fields, '', 1);
         }
       },
     },
     {
       type: PRICE,
       label: 'Price',
-      value: price,
+      value: '',
       isValid: true,
       errorMessage: '',
 
       onChange: (event, index) => {
-        setPrice(event.target.value);
-        fields[index].value = event.target.value;
+        setFormFields(fields, event.target.value, 2);
       },
     },
     {
       type: TEXT_FIELD,
       label: 'Name',
-      value: name,
+      value: '',
       textFieldType: 'text',
       variant: 'standard',
       isValid: true,
       errorMessage: '',
 
       onChange: (event, index) => {
-        setName(event.target.value);
-        fields[index].value = event.target.value;
+        setFormFields(fields, event.target.value, 3);
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialItemRestaurant);
+
+  const setFormFields = (fields, value, index) => {
+    const updatedFields = fieldChangeHandler(fields, value, index);
+
+    setFields(updatedFields);
+  };
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields);
@@ -139,6 +142,7 @@ const AddMenu = () => {
   ];
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
+      setFields(initialItemRestaurant);
       return response;
     },
   });

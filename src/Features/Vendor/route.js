@@ -8,6 +8,8 @@ import AddMenu from './Menu/Add Menu';
 import EditMenu from './Menu/Edit Menu';
 import OrderList from './OrderList/OrderList';
 import AddRestaurantContainer from './Restaurant/AddRestaurant/AddRestaurantContainer';
+import EditRestaurant from './Restaurants/EditRestaurant';
+import RestaurantList from './Restaurants/index';
 
 export const MenuListRoute = {
   path: RouteNames.menuList,
@@ -32,6 +34,11 @@ export const CategoryListRoute = {
   permissions: isProtectedRoute,
   component: CategoryList,
 };
+export const RestaurantListRoute = {
+  path: RouteNames.restaurantList,
+  permissions: isProtectedRoute,
+  component: RestaurantList,
+};
 
 export const AddMenuRoute = {
   path: RouteNames.addmenu,
@@ -54,4 +61,10 @@ export const EditBalanceSheetRoute = {
   path: RouteNames.editBalanceSheet,
   permissions: isProtectedRoute,
   component: EditBalanceSheet,
+};
+
+export const editRestaurantsRoute = {
+  path: RouteNames.editRestaurant,
+  permissions: isProtectedRoute,
+  component: EditRestaurant,
 };

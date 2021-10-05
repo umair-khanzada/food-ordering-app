@@ -43,3 +43,17 @@ export async function deleteitem(data) {
 
   return res;
 }
+
+export async function updateItemById(data) {
+  const {
+    items,
+    itemsById: { id },
+    headers,
+  } = data;
+
+  const res = axios.patch(`${baseUrl}items/${id}`, items, {
+    headers,
+  });
+
+  return res;
+}

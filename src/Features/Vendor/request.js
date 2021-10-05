@@ -5,11 +5,13 @@ import { GetHeader } from '../../scripts/constants';
 import { baseUrl } from '../../scripts/constants';
 
 const Restaurants = async (headers) => {
-  const res = await axios.get(baseUrl + 'kitchens', {
+  const {
+    data: { results },
+  } = await axios.get(baseUrl + 'kitchens', {
     headers,
   });
 
-  return res;
+  return results;
 };
 
 export const FetchRestaurants = () => {
@@ -22,11 +24,13 @@ export const FetchRestaurants = () => {
 };
 
 const Categories = async (headers) => {
-  const res = await axios.get(baseUrl + 'categories', {
+  const {
+    data: { results },
+  } = await axios.get(baseUrl + 'categories', {
     headers,
   });
 
-  return res;
+  return results;
 };
 
 export const FetchCategories = () => {
@@ -50,4 +54,17 @@ export const FetchItems = () => {
   const { headers } = GetHeader();
 
   return useQuery('items', () => Items(headers));
+};
+
+const ItemsById = async (headers, id) => {
+  const { data } = await axios.get(baseUrl + 'items/' + id, {
+    headers,
+  });
+
+  return data;
+};
+export const FetchItemsById = (id) => {
+  const { headers } = GetHeader();
+
+  return useQuery('fetchItems', () => ItemsById(headers, id));
 };
