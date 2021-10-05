@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, SUCCCESS } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 
@@ -16,7 +16,7 @@ const AddUser = () => {
   const dispatch = useDispatch();
   const { headers } = GetHeader();
   const successMessage = 'Successfull User has been created';
-  const { isLoading, mutateAsync, isSuccess } = useMutation(createUser, {
+  const { isLoading, mutateAsync, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -83,10 +83,10 @@ const AddUser = () => {
         setFields(updatedFields);
       },
       getValidation: (value) => {
-        if (value.length < 8) {
-          return 'Password must be 8 characters long';
+        if (!passwordRegex.test(value)) {
+          return ['Password must be 8 characters long and contains atleast one number and letter', false];
         }
-        return '';
+        return ['', true];
       },
     },
     {
@@ -145,7 +145,8 @@ const AddUser = () => {
         loading={isLoading}
         onSaveSuccess={isSuccess}
       />
-      {isSuccess ? <Snackbar type={SUCCCESS} /> : <Snackbar type={ERROR} />}
+      {isSuccess && <Snackbar type={SUCCCESS} />}
+      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

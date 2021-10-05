@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, SUCCCESS } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, SUCCCESS, passwordRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 const AddVendor = () => {
@@ -61,10 +61,10 @@ const AddVendor = () => {
         setFields(updatedFields);
       },
       getValidation: (value) => {
-        if (value.length < 8) {
-          return 'Password must be 8 characters long';
+        if (!passwordRegex.test(value)) {
+          return ['Password must be 8 characters long and contains atleast one number and letter', false];
         }
-        return '';
+        return ['', true];
       },
     },
 
@@ -88,7 +88,7 @@ const AddVendor = () => {
       },
     },
   ]);
-  const { mutateAsync, isLoading, isSuccess } = useMutation(createUser, {
+  const { mutateAsync, isLoading, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -137,7 +137,8 @@ const AddVendor = () => {
   return (
     <>
       <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={isSuccess} />
-      {isSuccess ? <Snackbar type={SUCCCESS} /> : <Snackbar type={ERROR} />}
+      {isSuccess && <Snackbar type={SUCCCESS} />}
+      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

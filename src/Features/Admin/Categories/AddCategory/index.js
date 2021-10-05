@@ -58,7 +58,7 @@ const AddCategory = () => {
     }
   };
 
-  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
+  const { mutate, isLoading, isSuccess, isError } = useMutation(category, {
     onSuccess: () => {
       dispatch(toggleSnackbarOpen(successMessage));
     },
@@ -80,7 +80,6 @@ const AddCategory = () => {
       clickHandler: saveHandler,
     },
   ];
-
   return (
     <>
       <CommonGridBasedForm
@@ -90,7 +89,8 @@ const AddCategory = () => {
         loading={isLoading}
         onSaveSuccess={isSuccess}
       />
-      {isSuccess ? <Snackbar type={SUCCCESS} /> : <Snackbar type={ERROR} />}
+      {isSuccess && <Snackbar type={SUCCCESS} />}
+      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

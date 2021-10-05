@@ -137,8 +137,7 @@ const AddMenu = () => {
       clickHandler: saveHandler,
     },
   ];
-
-  const { mutate, isLoading, isSuccess } = useMutation(items, {
+  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
       return response;
     },

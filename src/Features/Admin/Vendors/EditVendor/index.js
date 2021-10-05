@@ -10,7 +10,7 @@ import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, SUCCCESS } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, SUCCCESS, passwordRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
@@ -80,10 +80,10 @@ const EditVendor = () => {
         setFields(updatedFields);
       },
       getValidation: (value) => {
-        if (value.length < 8) {
-          return 'Password must be 8 characters long';
+        if (!passwordRegex.test(value)) {
+          return ['Password must be 8 characters long and contains atleast one number and letter', false];
         }
-        return '';
+        return ['', true];
       },
     },
 
@@ -107,7 +107,7 @@ const EditVendor = () => {
       },
     },
   ]);
-  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
+  const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -171,7 +171,8 @@ const EditVendor = () => {
       ) : (
         <>
           <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={isSuccess} />
-          {isSuccess ? <Snackbar type={SUCCCESS} /> : <Snackbar type={ERROR} />}
+          {isSuccess && <Snackbar type={SUCCCESS} />}
+          {isError && <Snackbar type={ERROR} />}
         </>
       )}
     </>

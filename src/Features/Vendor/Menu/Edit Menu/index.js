@@ -71,16 +71,14 @@ const EditMenu = () => {
     setFields(validateArray);
     isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
   };
-  const buttons = {
-    button: [
-      {
-        type: 'button',
-        name: 'save',
-        minWidth: '100%',
-        clickHandler: saveHandler,
-      },
-    ],
-  };
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      clickHandler: saveHandler,
+    },
+  ];
 
   return <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" onSaveSuccess={onSaveSuccess} />;
 };
