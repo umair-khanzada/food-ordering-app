@@ -22,7 +22,7 @@ const EditCategory = () => {
   ]);
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
     isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
   };
