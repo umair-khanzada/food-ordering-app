@@ -1,24 +1,31 @@
 import React from 'react';
 
-import CardData from '../../Mock/Data';
+import { useSelector } from 'react-redux';
+
+import curry from '../../assets/curry.jpg';
 import CommonCard from './CommonCard';
 import { ControlGrid } from './style';
 
 const CardMenu = ({ foodType }) => {
+  const card = useSelector((state) => {
+    const { cartItemReducer } = state;
+    return cartItemReducer;
+  });
   return (
     <div>
       <ControlGrid container elevation={3} spacing={3}>
-        {CardData.map(({ id, name, price, type, resturantName, img }) => {
-          if (type === foodType) {
+        {card.map(({ id, name, price, categoryId, createdBy }) => {
+          if (categoryId === foodType) {
             return (
               <CommonCard
                 key={id}
                 buttonText="Add to Cart"
                 id={id}
-                img={img}
+                img={curry}
                 name={name}
                 price={price}
-                resturantName={resturantName}
+                resturantName="Dominos"
+                vendorId={createdBy}
               />
             );
           }
