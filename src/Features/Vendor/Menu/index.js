@@ -27,8 +27,8 @@ function Menu() {
     }
   }, [itemsData]);
 
-  const saveItems = ({ data }) => {
-    const itemData = data.map(({ name, price, id, categoryId, kitchenId }) => {
+  const saveItems = ({ data: { results } }) => {
+    const itemData = results.map(({ name, price, id, categoryId, kitchenId }) => {
       const { name: categoryName } = categoryId;
       const { name: kitchenName } = kitchenId;
       return { name, categoryName, kitchenName, price, id };

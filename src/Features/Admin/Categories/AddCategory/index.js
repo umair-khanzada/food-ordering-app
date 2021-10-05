@@ -60,12 +60,6 @@ const AddCategory = () => {
     }
   };
 
-<<<<<<< HEAD
-  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
-    onSuccess: (response) => {
-      setFields(initialCategoriesField);
-      return response;
-=======
   const { mutate, isLoading, isSuccess, isError } = useMutation(category, {
     onSuccess: () => {
       dispatch(toggleSnackbarOpen(successMessage));
@@ -77,7 +71,6 @@ const AddCategory = () => {
         },
       } = error;
       dispatch(toggleSnackbarOpen(message));
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
     },
   });
 
@@ -89,10 +82,6 @@ const AddCategory = () => {
       clickHandler: saveHandler,
     },
   ];
-<<<<<<< HEAD
-
-=======
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
   return (
     <>
       <CommonGridBasedForm
