@@ -5,11 +5,13 @@ import { GetHeader } from '../../scripts/constants';
 import { baseUrl } from '../../scripts/constants';
 
 const Restaurants = async (headers) => {
-  const res = await axios.get(baseUrl + 'kitchens', {
+  const {
+    data: { results },
+  } = await axios.get(baseUrl + 'kitchens', {
     headers,
   });
 
-  return res;
+  return results;
 };
 
 export const FetchRestaurants = () => {

@@ -39,8 +39,8 @@ const EditMenu = () => {
     }
   }, [restaurantsData, categoriesData]);
 
-  const saveRestaurant = ({ data: { results } }) => {
-    const resData = results.map(({ name, id }) => ({ label: name, id }));
+  const saveRestaurant = (restaurantsDetail) => {
+    const resData = restaurantsDetail.map(({ name, id }) => ({ label: name, id }));
     const updatedFields = SelectChangeHandler(fields, resData, 1);
 
     setFields(updatedFields);
