@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import { Grid, Input, Typography } from '@material-ui/core';
 
@@ -12,6 +12,12 @@ import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, S
 
 const CommonGridBasedForm = ({ loading, fields, buttons, responseError, heading, onSaveSuccess }) => {
   const WIDTH = '100%';
+
+  const [fieldsData, setFieldsData] = useState([fields]);
+
+  useEffect(() => {
+    setFieldsData(fields);
+  }, [fields]);
 
   const getField = (field, props, index) => {
     switch (field) {
@@ -78,21 +84,20 @@ const CommonGridBasedForm = ({ loading, fields, buttons, responseError, heading,
       </Grid>
       <StyledGridColumnItem item>
         <Grid container direction="row" spacing={3}>
-          {fields &&
-            fields.map((data, index) => {
-              return (
-                <Fragment key={index}>
-                  <StyledGridItem item xs={6}>
-                    <Typography color="secondary" variant="h4">
-                      {data.label}
-                    </Typography>
-                    {getField(data.type, data, index)}
-                    <br />
-                    <Error>{data.errorMessage}</Error>
-                  </StyledGridItem>
-                </Fragment>
-              );
-            })}
+          {fieldsData?.map((data, index) => {
+            return (
+              <Fragment key={index}>
+                <StyledGridItem item xs={6}>
+                  <Typography color="secondary" variant="h4">
+                    {data.label}
+                  </Typography>
+                  {getField(data.type, data, index)}
+                  <br />
+                  <Error>{data.errorMessage}</Error>
+                </StyledGridItem>
+              </Fragment>
+            );
+          })}
         </Grid>
         {buttons?.map(({ clickHandler, minWidth, name, type, color }, i) => (
           <div key={name + '-' + i}>
@@ -109,6 +114,8 @@ const CommonGridBasedForm = ({ loading, fields, buttons, responseError, heading,
           </div>
         ))}
       </StyledGridColumnItem>
+      {responseError && <Error>{responseError}</Error>}
+      {onSaveSuccess && 'Save Successfull!'}
     </StyledMainContainerGrid>
   );
 };

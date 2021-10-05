@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { MenuOutlined, Edit, Restaurant } from '@material-ui/icons';
+import { MenuOutlined, Edit, AccountBalanceWallet, Restaurant } from '@material-ui/icons';
 
 import RouteNames from '../../routes/RouteNames';
 import StyledLink from '../ReactRouterStyledLink';
 
 const VendorSideNav = () => {
-  const { orderList, menuList, restaurantList } = RouteNames;
+  const { categoryList, orderList, menuList, balanceSheet, restaurantList } = RouteNames;
 
   return (
     <>
@@ -15,6 +15,8 @@ const VendorSideNav = () => {
       <StyledLink icon={<Restaurant />} label="Restaurant" to={restaurantList} />
 
       <StyledLink icon={<Edit />} label="Order" to={orderList} />
+
+      <StyledLink icon={<AccountBalanceWallet />} label="Balance Sheet" to={balanceSheet} />
     </>
   );
 };

@@ -6,7 +6,9 @@ import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from
 import { customerOrderHistoryRoute, dashboardRoute, profileRoute } from '../Features/Customer/route';
 import {
   AddMenuRoute,
+  BalanceSheetRoute,
   CategoryListRoute,
+  EditBalanceSheetRoute,
   EditMenuRoute,
   MenuListRoute,
   OrderListRoute,
@@ -54,6 +56,8 @@ const routeConfig = {
     RestaurantRoute,
     AddMenuRoute,
     EditMenuRoute,
+    BalanceSheetRoute,
+    EditBalanceSheetRoute,
     RestaurantListRoute,
     editRestaurantsRoute,
   ],

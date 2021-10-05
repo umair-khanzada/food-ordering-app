@@ -32,10 +32,6 @@ export default function CustomTable({
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
     onDelete(currentSelectedRow);
-<<<<<<< HEAD
-
-=======
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
     dispatch(closeModal());
   };
 
@@ -88,7 +84,7 @@ export default function CustomTable({
         <TableBody>
           {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
             <TableRow key={row.id}>
-              <TableCell>{index + 1}</TableCell>
+              <TableCell>{page * 5 + index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
                 if (data != 'id' && data !== 'role' && data != 'createdBy') {
                   return (

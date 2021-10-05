@@ -151,7 +151,6 @@ const EditMenu = () => {
       });
     }
   };
-<<<<<<< HEAD
   const setFormFields = (fields, value, index) => {
     const updatedFields = fieldChangeHandler(fields, value, index);
 
@@ -163,8 +162,6 @@ const EditMenu = () => {
       return response;
     },
   });
-=======
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
   const buttons = [
     {
       type: 'button',
