@@ -51,6 +51,7 @@ const AddRestaurant = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
   const { mutate, mutateAsync, error, isLoading, isSuccess } = useMutation(restaurants, {
@@ -62,13 +63,7 @@ const AddRestaurant = () => {
 
   return (
     <>
-      <CommonGridBasedForm
-        buttons={buttons}
-        fields={fields}
-        heading="Add Restaurant"
-        loading={isLoading}
-        onSaveSuccess={isSuccess}
-      />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" onSaveSuccess={isSuccess} />
     </>
   );
 };

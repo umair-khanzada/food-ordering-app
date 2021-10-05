@@ -72,6 +72,7 @@ const EditRestaurant = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
@@ -87,13 +88,7 @@ const EditRestaurant = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit Restaurant"
-          loading={isLoading}
-          onSaveSuccess={isSuccess}
-        />
+        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Restaurant" onSaveSuccess={isSuccess} />
       )}
     </>
   );

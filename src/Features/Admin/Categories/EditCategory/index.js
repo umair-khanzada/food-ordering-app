@@ -79,6 +79,7 @@ const EditCategory = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
@@ -94,13 +95,7 @@ const EditCategory = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit Category"
-          loading={isLoading}
-          onSaveSuccess={isSuccess}
-        />
+        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={isSuccess} />
       )}
     </>
   );

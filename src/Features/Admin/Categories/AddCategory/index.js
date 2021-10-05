@@ -80,17 +80,12 @@ const AddCategory = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
   return (
     <>
-      <CommonGridBasedForm
-        buttons={buttons}
-        fields={fields}
-        heading="Add Category"
-        loading={isLoading}
-        onSaveSuccess={isSuccess}
-      />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Category" onSaveSuccess={isSuccess} />
       {isSuccess && <Snackbar type={SUCCCESS} />}
       {isError && <Snackbar type={ERROR} />}
     </>

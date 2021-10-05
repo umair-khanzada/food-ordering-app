@@ -168,6 +168,7 @@ const EditMenu = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
@@ -176,13 +177,7 @@ const EditMenu = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <AddEditForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit Item"
-          loading={isLoading}
-          onSaveSuccess={isSuccess}
-        />
+        <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" onSaveSuccess={isSuccess} />
       )}
     </>
   );

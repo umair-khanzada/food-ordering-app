@@ -138,6 +138,7 @@ const AddMenu = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
@@ -149,8 +150,7 @@ const AddMenu = () => {
 
   return (
     <>
-      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} onSaveSuccess={isSuccess} />
-      ;
+      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" onSaveSuccess={isSuccess} />;
     </>
   );
 };
