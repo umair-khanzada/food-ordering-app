@@ -14,7 +14,6 @@ export const VendorGrid = styled(Grid)`
   `};
 `;
 
-// export default VendorGrid;
 export const Filter = styled.div`
   height: 124px;
 `;

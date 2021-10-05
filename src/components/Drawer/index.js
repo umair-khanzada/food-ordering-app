@@ -36,7 +36,7 @@ import {
   CartPaper,
   ModalDiv,
 } from './style';
-const TemporaryDrawer = ({ mutate }) => {
+const Drawer = ({ mutate }) => {
   const cart = useSelector((state) => state.addtocartReducers.cart);
   const { headers } = GetHeader();
   const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
@@ -166,4 +166,4 @@ const TemporaryDrawer = ({ mutate }) => {
   );
 };
 
-export default TemporaryDrawer;
+export default Drawer;

@@ -3,7 +3,7 @@ import React from 'react';
 import NoData from '../../assets/no-data.jpg';
 import { NoDataContainer, ImageContainer, PlaceHolder } from './style';
 
-function NoDataFilter({ text }) {
+function NoDataFound({ text }) {
   return (
     <NoDataContainer>
       <ImageContainer>
@@ -13,4 +13,4 @@ function NoDataFilter({ text }) {
     </NoDataContainer>
   );
 }
-export default NoDataFilter;
+export default NoDataFound;

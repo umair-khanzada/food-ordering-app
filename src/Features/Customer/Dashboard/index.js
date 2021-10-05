@@ -7,11 +7,11 @@ import { useDispatch } from 'react-redux';
 import MainTab from '../../../components/CardMenus/Tabs';
 import AddEditForm from '../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE } from '../../../components/CommonGridBasedForm/FieldTypes';
-import TemporaryDrawer from '../../../components/Drawer';
+import Drawer from '../../../components/Drawer';
 import Loader from '../../../components/Loader';
-import NoDataFilter from '../../../components/NoDataFilter';
+import NoDataFound from '../../../components/NoDataFilter';
 import { SelectChangeHandler } from '../../../util/CommonGridBasedFormUtils';
-import { cardData } from '../actions';
+import { getCardData } from '../actions';
 import { InsertOrder } from '../mutation';
 import { FetchVendors, GetCategories, GetItemsByVendor } from '../request';
 import { Filter } from './style';
@@ -59,7 +59,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (items) {
-      dispatch(cardData(items));
+      dispatch(getCardData(items));
     }
   }, [items]);
 
@@ -83,10 +83,10 @@ function Dashboard() {
 
             {isItemsFething && <Loader />}
             <FirstTab>
-              <TemporaryDrawer mutate={mutate} vendorId={vendorId} />
+              <Drawer mutate={mutate} vendorId={vendorId} />
               {isTabshow && !isItemsFething && <MainTab category={category} />}
             </FirstTab>
-            {!isTabshow && <NoDataFilter text="No Vendor Seleted" />}
+            {!isTabshow && <NoDataFound text="No Vendor Seleted" />}
           </Box>
         </Grid>
       </Grid>

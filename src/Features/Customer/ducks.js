@@ -7,7 +7,7 @@ import {
   DELETE_ITEM,
   INCREMENT,
   OPEN_DRAWER,
-  CART_DATA,
+  GET_CARD_DATA,
 } from '../../redux/ActionTypes';
 
 const initialData = {
@@ -19,7 +19,7 @@ const cardItem = [];
 
 export const cartItemReducer = (state = cardItem, action) => {
   switch (action.type) {
-    case CART_DATA:
+    case GET_CARD_DATA:
       return action.payload;
 
     default:

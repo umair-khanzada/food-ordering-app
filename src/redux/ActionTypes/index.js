@@ -26,6 +26,6 @@ export const TOGGLE_SNACKBAR_CLOSE = 'TOGGLE_SNACKBAR_CLOSE';
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 export const EDIT_USER = 'EDIT_USER';
 export const EDIT_CATEGORY = 'EDIT_CATEGORY';
-export const CART_DATA = 'CART_DATA';
+export const GET_CARD_DATA = 'GET_CARD_DATA';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const CLEAR_CART = 'CLEAR_CART';
