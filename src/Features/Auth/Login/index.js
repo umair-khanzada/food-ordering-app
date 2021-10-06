@@ -6,16 +6,16 @@ import { useHistory } from 'react-router-dom';
 import Snackbar from '../../../components/AlertMessage';
 import FormComponent from '../../../components/FormComponent';
 import { emailRegex, ERROR, passwordRegex } from '../../../scripts/constants';
-import { login, sessionExpireReset, setFormMessage } from '../actions';
+import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const { message, isLoading, isSessionExpired } = useSelector((state) => {
+  const { message, isLoading, toggleSnackbar } = useSelector((state) => {
     const {
       responseMessage: { message },
       authReducer: { isLoading },
-      sessionExpireReducer: { isSessionExpired },
+      uiReducer: { toggleSnackbar },
     } = state;
-    return { message, isLoading, isSessionExpired };
+    return { message, isLoading, toggleSnackbar };
   }, shallowEqual);
 
   const validateOnSubmit = () => {
@@ -117,14 +117,6 @@ function LoginForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (isSessionExpired) {
-        dispatch(sessionExpireReset());
-      }
-    };
-  }, [isSessionExpired]);
-
   return (
     <div>
       <FormComponent
@@ -137,7 +129,7 @@ function LoginForm() {
         navigationPath="/signup"
         responseError={message}
       />
-      {isSessionExpired && <Snackbar type={ERROR} />}
+      {toggleSnackbar && <Snackbar type={ERROR} />}
     </div>
   );
 }

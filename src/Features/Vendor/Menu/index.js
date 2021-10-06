@@ -3,13 +3,16 @@ import React, { useEffect, useState } from 'react';
 import 'date-fns';
 import { Grid } from '@material-ui/core';
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader/index';
 import RouteNames from '../../../routes/RouteNames';
 import { GetHeader } from '../../../scripts/constants';
+import { logout } from '../../Auth/actions';
 import { deleteitem } from '../mutation';
 import { FetchItems } from '../request';
 import { ButtonsContainer, CustomTableContainer, ButtonContainer } from './style';
@@ -54,10 +57,19 @@ function Menu() {
   function onDelete({ id: itemId }) {
     mutate({ itemId, headers });
   }
+
+  const dispatch = useDispatch();
+
   const { mutate, isLoading } = useMutation(deleteitem, {
     onSuccess: (response) => {
       refetch();
       return response;
+    },
+    onError: (err) => {
+      if (err.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+      }
     },
   });
   return (
