@@ -7,6 +7,8 @@ import {
   UPDATE_USER_DATA,
   LOGIN,
   SIGNUP,
+  SESSION_EXPIRE_RESET,
+  SESSION_EXPIRE,
 } from '../../redux/ActionTypes';
 
 const initialAuthState = {
@@ -22,6 +24,7 @@ const initialAuthState = {
 };
 const initialForgotPasswordState = { message: '', status: 0 };
 const initialResponseMessageState = { message: '', status: 0 };
+const initialSessionExpireState = { isSessionExpired: false };
 
 export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => {
   switch (action.type) {
@@ -84,6 +87,20 @@ export const responseMessage = (state = { ...initialResponseMessageState }, acti
       return { ...state, message, status };
     }
 
+    default:
+      return state;
+  }
+};
+
+export const sessionExpireReducer = (state = { ...initialSessionExpireState }, action) => {
+  switch (action.type) {
+    case SESSION_EXPIRE: {
+      return { ...initialSessionExpireState, isSessionExpired: true };
+    }
+
+    case SESSION_EXPIRE_RESET: {
+      return { ...initialSessionExpireState };
+    }
     default:
       return state;
   }

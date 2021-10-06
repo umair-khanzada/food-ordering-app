@@ -3,17 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import Snackbar from '../../../components/AlertMessage';
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex, passwordRegex } from '../../../scripts/constants';
-import { login, setFormMessage } from '../actions';
+import { emailRegex, ERROR, passwordRegex } from '../../../scripts/constants';
+import { login, sessionExpireReset, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const { message, isLoading } = useSelector((state) => {
+  const { message, isLoading, isSessionExpired } = useSelector((state) => {
     const {
       responseMessage: { message },
       authReducer: { isLoading },
+      sessionExpireReducer: { isSessionExpired },
     } = state;
-    return { message, isLoading };
+    return { message, isLoading, isSessionExpired };
   }, shallowEqual);
 
   const validateOnSubmit = () => {
@@ -115,6 +117,14 @@ function LoginForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (isSessionExpired) {
+        dispatch(sessionExpireReset());
+      }
+    };
+  }, [isSessionExpired]);
+
   return (
     <div>
       <FormComponent
@@ -127,6 +137,7 @@ function LoginForm() {
         navigationPath="/signup"
         responseError={message}
       />
+      {isSessionExpired && <Snackbar type={ERROR} />}
     </div>
   );
 }

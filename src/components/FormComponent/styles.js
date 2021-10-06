@@ -16,10 +16,16 @@ export const Form = styled.form`
 export const InputBox = styled.div`
   height: 95px;
 `;
-export const ErrorRespose = styled.div`
+export const ErrorResponse = styled.div`
   margin-bottom: 32px;
-  margin-left: 10px;
-  color: red;
+  color: #c60707;
+  border: 1px solid #c60707;
+  border-radius: 5px;
+  font-size: 18px;
+  text-align: center;
+  padding: 6px;
+  background-color: #fdf6f6ff;
+  height: 40px;
   font-size: 16px;
 `;
 export const Error = styled.span`

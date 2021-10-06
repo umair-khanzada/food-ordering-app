@@ -10,6 +10,8 @@ import {
   LOGOUT_ERROR,
   UPDATE_USER_DATA,
   RESET_PASSWORD,
+  SESSION_EXPIRE,
+  SESSION_EXPIRE_RESET,
 } from '../../redux/ActionTypes';
 
 export const login = (data) => ({ type: LOGIN, payload: data });
@@ -28,3 +30,6 @@ export const logoutError = () => ({ type: LOGOUT_ERROR });
 export const resetPassword = (data) => ({ type: RESET_PASSWORD, payload: data });
 
 export const updateUserData = (data) => ({ type: UPDATE_USER_DATA, payload: data });
+
+export const sessionExpire = () => ({ type: SESSION_EXPIRE });
+export const sessionExpireReset = () => ({ type: SESSION_EXPIRE_RESET });
