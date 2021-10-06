@@ -138,7 +138,7 @@ const EditUser = () => {
   });
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields, false);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {

@@ -43,7 +43,6 @@ function Menu() {
         return { name, categoryName, kitchenName, price, id };
       });
 
-    console.log('itemData', itemData);
     setSaveItems(itemData);
   };
   const handleDateChange = (data) => {
