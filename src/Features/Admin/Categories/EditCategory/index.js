@@ -35,9 +35,9 @@ const EditCategory = () => {
 
   const saveCategoriesId = (categoriesId) => {
     const { name } = categoriesId;
+    const updatedFields = fieldChangeHandler(fields, name, 0);
+    setFields(updatedFields);
 
-    fields[0].value = name;
-    setFields(fields);
     // setCategoriesId(name);
   };
   const initialCategoriesEditField = [

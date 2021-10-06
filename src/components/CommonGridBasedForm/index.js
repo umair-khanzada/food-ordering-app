@@ -14,6 +14,7 @@ const CommonGridBasedForm = ({ loading, fields, buttons, responseError, heading,
   const WIDTH = '100%';
 
   const getField = (field, props, index) => {
+    console.log('field', field);
     switch (field) {
       case SELECT:
         return (

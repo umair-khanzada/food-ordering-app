@@ -47,11 +47,7 @@ function Menu() {
       search: `?id=${itemId}`,
     });
   };
-<<<<<<< HEAD
   const header = ['Sno', 'ItemName', 'Type', 'Restraunt', 'Price', 'Edit'];
-=======
-  const header = ['No', 'Item Name', 'Type', 'Restraunt', 'Price', 'Edit'];
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
 
   function showAddMenu() {
     history.push('/addmenu');

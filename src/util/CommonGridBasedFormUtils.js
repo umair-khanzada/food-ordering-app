@@ -17,7 +17,7 @@ export const validateOnSubmit = (fields, checkEmpty) => {
 };
 
 export const fieldChangeHandler = (prev, value, index) => {
-  const prevForm = [...prev];
+  const prevForm = prev;
   const currentTextField = prevForm[index];
 
   currentTextField.value = value;

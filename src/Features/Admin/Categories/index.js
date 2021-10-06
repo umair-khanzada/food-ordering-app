@@ -13,6 +13,8 @@ import { FetchCategories } from './request';
 import { CategoriesTitleContainer, CategoriesTitle } from './style';
 
 function CategoryList() {
+  const [status, setStatus] = useState(0);
+  const fetching = 204;
   const { headers } = GetHeader();
 
   const { addCategory, editCategory } = RouteNames;
@@ -23,19 +25,10 @@ function CategoryList() {
       search: `?id=${categoryId}`,
     });
   };
-<<<<<<< HEAD
   const { data: categoriesData, refetch, isFetching } = FetchCategories();
 
   const onDelete = ({ id: categoryId }) => {
     mutate({ categoryId, headers });
-=======
-  const { data: categoriesData, refetch, isLoading } = FetchCategories();
-  function deletecategory({ id: categoryId }) {
-    mutate({ categoryId, headers });
-  }
-  const onDelete = (row) => {
-    row;
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
   };
 
   const [header, setHeader] = useState([]);
@@ -44,17 +37,19 @@ function CategoryList() {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
 
-<<<<<<< HEAD
   const { isLoading, mutate } = useMutation(deleteCategory, {
-=======
-  const { mutate } = useMutation(deleteCategory, {
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
     onSuccess: (response) => {
       refetch();
-
+      console.log('resposne', response);
+      setStatus(response.status);
+      // fetching = false;
+      // getResponse(response);
       return response;
     },
   });
+  const getResponse = ({ status }) => {
+    return status;
+  };
   return (
     <>
       <CategoriesTitleContainer>
@@ -62,8 +57,7 @@ function CategoryList() {
         <CommonButton onClick={() => history.push(addCategory)} property="Add Category" />
       </CategoriesTitleContainer>
 
-<<<<<<< HEAD
-      {isFetching ? (
+      {isFetching && status === 0 ? (
         <Loader />
       ) : (
         <>
@@ -78,21 +72,6 @@ function CategoryList() {
             tablewidth="90%"
           />
         </>
-=======
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <CustomTable
-          cellWidth="400px"
-          deleteTableRow={deletecategory}
-          header={header}
-          isEditDelete
-          onDelete={onDelete}
-          onEdit={onEdit}
-          rows={categoriesData}
-          tablewidth="90%"
-        />
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
       )}
     </>
   );

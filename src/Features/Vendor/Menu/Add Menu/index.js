@@ -11,6 +11,7 @@ import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
   const { headers } = GetHeader();
+  const [isSubmit, setSubmit] = useState(false);
 
   const vendorId = useSelector((state) => {
     const {
@@ -18,6 +19,7 @@ const AddMenu = () => {
     } = state;
     return id;
   });
+  const [catData, setCatData] = useState([]);
 
   const restaurantsData = FetchRestaurants();
   const categoriesData = FetchCategories();
@@ -42,7 +44,7 @@ const AddMenu = () => {
     const resData = categoriesDetails.map(({ name, id }) => ({ label: name, id }));
 
     const updatedFields = SelectChangeHandler(fields, resData, 0);
-
+    setCatData(resData);
     setFields(updatedFields);
   };
 
@@ -50,17 +52,19 @@ const AddMenu = () => {
     {
       type: AUTO_COMPLETE,
       label: '',
-      values: [],
+      values: catData,
       placeholder: 'Categories',
       value: '',
       isValid: true,
       errorMessage: '',
 
       onChange: (event, value) => {
+        console.log('submit', isSubmit);
         if (value) {
-          setFormFields(fields, value.id, 0);
+          setFormFields(initialItemRestaurant, value.id, 0);
         } else {
-          setFormFields(fields, '', 0);
+          console.log('bhenchod', fields);
+          setFormFields(initialItemRestaurant, '', 0);
         }
       },
     },
@@ -77,6 +81,8 @@ const AddMenu = () => {
         if (value) {
           setFormFields(fields, value.id, 1);
         } else {
+          console.log(initialItemRestaurant);
+          // console.log('real fei', fields);
           setFormFields(fields, '', 1);
         }
       },
@@ -89,7 +95,7 @@ const AddMenu = () => {
       errorMessage: '',
 
       onChange: (event, index) => {
-        setFormFields(fields, event.target.value, 2);
+        setFormFields(initialItemRestaurant, event.target.value, 2);
       },
     },
     {
@@ -102,12 +108,13 @@ const AddMenu = () => {
       errorMessage: '',
 
       onChange: (event, index) => {
-        setFormFields(fields, event.target.value, 3);
+        setFormFields(initialItemRestaurant, event.target.value, 3);
       },
     },
   ];
   const [fields, setFields] = useState(initialItemRestaurant);
 
+  console.log('kkk', fields);
   const setFormFields = (fields, value, index) => {
     const updatedFields = fieldChangeHandler(fields, value, index);
 
@@ -129,6 +136,8 @@ const AddMenu = () => {
         },
         headers,
       });
+
+      // console.log('hello');
     }
   };
 
@@ -142,7 +151,8 @@ const AddMenu = () => {
   ];
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
-      setFields(initialItemRestaurant);
+      setFields([...initialItemRestaurant]);
+      setSubmit(true);
       return response;
     },
   });
