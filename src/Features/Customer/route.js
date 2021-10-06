@@ -1,7 +1,7 @@
 import { isProtectedRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
 import Dashboard from './Dashboard';
-import CustomerOrderHistory from './OrderHistory/OrderHistory';
+import CustomerOrderHistory from './OrderHistory';
 import Profile from './UserProfile/Profile';
 
 export const dashboardRoute = {

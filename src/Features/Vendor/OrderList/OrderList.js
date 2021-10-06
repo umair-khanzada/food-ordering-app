@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { useMutation } from 'react-query';
+import { useHistory } from 'react-router';
 
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
+import RouteNames from '../../../routes/RouteNames';
 import { GetHeader } from '../../../scripts/constants';
 import { deleteOrderById } from '../mutation';
 import { FetchOrderHistory } from '../request';
@@ -15,18 +17,21 @@ const OrdersList = () => {
 
   const { mutateAsync, isLoading } = useMutation(deleteOrderById, {
     onSuccess: () => {
-      console.log('success');
       refetchOrders();
     },
-    onError: () => {
-      console.log('error');
-    },
   });
+  const history = useHistory();
+  const { editOrderList } = RouteNames;
+  const onEdit = ({ id }) => {
+    history.push({
+      pathname: editOrderList,
+      search: '?id' + id,
+    });
+  };
   const onDelete = ({ id }) => {
-    console.log('row', id);
     mutateAsync({ id, headers });
   };
-  const header = ['No', 'Name', 'Contact', 'Items', 'Price', 'Date', 'edit'];
+  const header = ['S.No', 'Name', 'Items', 'status', 'Price', 'edit'];
   return (
     <>
       {isFetching ? (
@@ -39,8 +44,9 @@ const OrdersList = () => {
             isDeleting={isLoading}
             isEditDelete
             onDelete={onDelete}
+            onEdit={onEdit}
             rows={ordersList}
-            tablewidth="80%"
+            tablewidth="90%"
           />
         </>
       )}

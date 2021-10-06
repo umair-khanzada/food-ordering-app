@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
 
 import { GetHeader } from '../../scripts/constants';
 import { baseUrl } from '../../scripts/constants';
@@ -68,17 +69,33 @@ export const FetchItemsById = (id) => {
 
   return useQuery('fetchItems', () => ItemsById(headers, id));
 };
-const orderHistory = async (headers) => {
-  const {
-    data: { results },
-  } = await axios.get(baseUrl + 'orders', {
+const orderHistory = async (headers, vendorId) => {
+  const { data } = await axios.get(baseUrl + 'orders', {
     headers,
   });
-  console.log('orderssss', results);
 
-  return results;
+  const orders = data.filter((order) => order.vendorId.id == vendorId);
+
+  const structuredData = [];
+  orders.map((order) =>
+    structuredData.push({
+      id: order.id,
+      userName: order.userId.name,
+      items: order.items.join(',  '),
+      status: order.status,
+      price: order.amount,
+    }),
+  );
+  return structuredData;
 };
 export const FetchOrderHistory = () => {
+  const vendorId = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
+
   const { headers } = GetHeader();
-  return useQuery('orders', () => orderHistory(headers));
+  return useQuery('orders', () => orderHistory(headers, vendorId));
 };
