@@ -115,7 +115,7 @@ const AddMenu = () => {
   };
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {
@@ -132,25 +132,26 @@ const AddMenu = () => {
     }
   };
 
-  const buttons = [
-    {
-      type: 'button',
-      name: 'save',
-      minWidth: '100%',
-      clickHandler: saveHandler,
-    },
-  ];
-  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
+  const { mutate, isLoading, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
       setFields(initialItemRestaurant);
       return response;
     },
   });
 
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      clickHandler: saveHandler,
+      isLoading,
+    },
+  ];
+
   return (
     <>
-      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} onSaveSuccess={isSuccess} />
-      ;
+      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" onSaveSuccess={isSuccess} />;
     </>
   );
 };

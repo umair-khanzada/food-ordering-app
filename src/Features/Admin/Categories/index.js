@@ -25,6 +25,9 @@ function CategoryList() {
   };
   const { data: categoriesData, refetch, isFetching } = FetchCategories();
 
+  function deletecategory({ id: categoryId }) {
+    mutate({ categoryId, headers });
+  }
   const onDelete = ({ id: categoryId }) => {
     mutate({ categoryId, headers });
   };
@@ -35,7 +38,7 @@ function CategoryList() {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
 
-  const { isLoading, mutate } = useMutation(deleteCategory, {
+  const { mutate, isLoading } = useMutation(deleteCategory, {
     onSuccess: (response) => {
       refetch();
 

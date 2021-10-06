@@ -83,10 +83,10 @@ const AddUser = () => {
         setFields(updatedFields);
       },
       getValidation: (value) => {
-        if (!passwordRegex.test(value)) {
-          return ['Password must be 8 characters long and contains atleast one number and letter', false];
+        if (passwordRegex.test(value) && value.length >= 8) {
+          return ['', true];
         }
-        return ['', true];
+        return ['Password must be 8 characters long and contains atleast one number and letter', false];
       },
     },
     {
@@ -112,7 +112,7 @@ const AddUser = () => {
   ]);
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {

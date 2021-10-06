@@ -14,7 +14,12 @@ import { FetchRestaurantsById } from '../request';
 
 const EditRestaurant = () => {
   const { headers } = GetHeader();
-
+  const { mutate, isLoading, isSuccess } = useMutation(updateRestaurantById, {
+    onSuccess: (response) => {
+      setFields(initialRestaurantsEditField);
+      return response;
+    },
+  });
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
@@ -72,28 +77,15 @@ const EditRestaurant = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
-
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateRestaurantById, {
-    onSuccess: (response) => {
-      setFields(initialRestaurantsEditField);
-      return response;
-    },
-  });
-
   return (
     <>
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit Restaurant"
-          loading={isLoading}
-          onSaveSuccess={isSuccess}
-        />
+        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Restaurant" onSaveSuccess={isSuccess} />
       )}
     </>
   );
