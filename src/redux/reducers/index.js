@@ -10,6 +10,7 @@ import { forgotPassword, responseMessage, authReducer } from '../../Features/Aut
 import { addtocartReducers, cartItemReducer } from '../../Features/Customer/ducks';
 
 const persistConfig = {
+  blacklist: ['forgotPassword', 'loaderReducer', 'modalReducer', 'responseMessage', 'uiReducer'],
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
