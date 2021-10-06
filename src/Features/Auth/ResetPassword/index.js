@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import FormComponent from '../../../components/FormComponent';
-import { setFormMessage } from '../actions';
+import { passwordRegex } from '../../../scripts/constants';
+import { resetPassword, setFormMessage } from '../actions';
 
 function ResetPassword() {
   const message = useSelector((state) => {
@@ -20,7 +21,7 @@ function ResetPassword() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let newPassword = '';
+  const newPassword = '';
 
   const validateOnSubmit = () => {
     let isFormValid = true;
@@ -50,6 +51,13 @@ function ResetPassword() {
       resetForm.map(({ name, value }) => {
         userData[name] = value;
       });
+
+      const { newpassword, confirmpassword } = userData;
+      if (newpassword !== confirmpassword) {
+        dispatch(setFormMessage({ message: 'new and confirm password must match', status: 400 }));
+      } else {
+        dispatch(resetPassword(newpassword));
+      }
     }
   };
   const textFiledChangeHandler = (e, index) => {
@@ -69,21 +77,6 @@ function ResetPassword() {
   const [resetForm, setResetPasswordForm] = useState([
     {
       required: true,
-      label: 'Old Password',
-      name: 'oldpassword',
-      type: 'password',
-      value: '',
-      isValid: true,
-      errorMessage: '',
-      getValidation: (value) => {
-        if (value.length < 8) {
-          return ['Password must be 8 characters long', false];
-        }
-        return ['', true];
-      },
-    },
-    {
-      required: true,
       label: 'New Password',
       name: 'newpassword',
       type: 'password',
@@ -92,11 +85,10 @@ function ResetPassword() {
       value: '',
       errorMessage: '',
       getValidation: (value) => {
-        newPassword = value;
-        if (value.length < 8) {
-          return ['Password must be 8 characters long', false];
+        if (passwordRegex.test(value) && value.length >= 8) {
+          return ['', true];
         }
-        return ['', true];
+        return ['Password must be 8 characters long and contains atleast one number and letter', false];
       },
     },
     {

@@ -1,47 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Paper, Tab, Tabs } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
-import TabData from '../../Mock/TabList';
-import History from '../../util/History';
 import CardMenus from './CardMenus';
 
-const MainTab = () => {
-  const [tabValue, setTabValue] = useState('Gravy');
-  const params = new URLSearchParams(useLocation().search);
+const MainTab = ({ category }) => {
+  const [tabValue, setTabValue] = useState(category[0].id);
 
   const onTabChange = (event, tabValue) => {
-    if (tabValue !== 'addCart') {
-      History.push(`/dashboard?category=${tabValue}`);
-      setTabValue(tabValue);
-    }
+    setTabValue(tabValue);
   };
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const tabIndex = params.get('category');
-    const [{ label }] = TabData;
-
-    setTabValue(tabIndex ? tabIndex : label);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
       <Paper square>
         <Tabs indicatorColor="secondary" onChange={onTabChange} textColor="secondary" value={tabValue}>
-          {TabData.map(({ label }, index) => {
-            return <Tab key={index} label={label} value={label} />;
+          {category.map(({ name, id }, index) => {
+            return <Tab key={index} label={name} value={id} />;
           })}
         </Tabs>
       </Paper>
-      {TabData.map(({ label }, index) => {
+
+      {category.map(({ id }, index) => {
         return (
-          <TabPanel key={index} index={label} value={tabValue}>
-            <CardMenus foodType={label} />
+          <TabPanel key={index} index={id} value={tabValue}>
+            <CardMenus foodType={id} />
           </TabPanel>
         );
       })}

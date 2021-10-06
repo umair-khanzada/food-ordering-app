@@ -1,20 +1,33 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
 import { baseUrl, GetHeader } from '../../../scripts/constants';
+import { logout, sessionExpire } from '../../Auth/actions';
 
 const userList = async (headers, userType) => {
-  const {
-    data: { results },
-  } = await axios.get(baseUrl + 'users', {
+  const { data } = await axios.get(baseUrl + 'users', {
     headers,
   });
-  return results.filter((user) => user.role == userType);
+  return data.filter((user) => user.role == userType);
 };
 export const FetchUsers = (userType) => {
   const { headers } = GetHeader();
 
-  return useQuery('users', () => userList(headers, userType));
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  return useQuery('users', () => userList(headers, userType), {
+    onError: (err) => {
+      if (err.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(sessionExpire());
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+      }
+    },
+  });
 };
 
 const userById = async (headers, id) => {

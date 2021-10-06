@@ -13,19 +13,15 @@ function SideMenu() {
   const useStyles = makeStyles(() => ({
     drawerPaper: {
       position: 'relative',
-      // height: '88vh',
+      height: '88vh',
       backgroundColor: 'white',
     },
     navigation: {
       marginTop: '50px',
     },
 
-    mainDiv: {
-      width: '100%',
-      height: '100%',
-    },
     drawer: {
-      height: '100%',
+      height: '615px',
     },
   }));
 

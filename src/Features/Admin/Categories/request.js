@@ -16,6 +16,17 @@ const Categories = async (headers) => {
 
 export const FetchCategories = () => {
   const { headers } = GetHeader();
-
   return useQuery('categories', () => Categories(headers));
+};
+const CategoriesById = async (headers, id) => {
+  const { data } = await axios.get(baseUrl + 'categories/' + id, {
+    headers,
+  });
+
+  return data;
+};
+export const FetchCategoriesById = (id) => {
+  const { headers } = GetHeader();
+
+  return useQuery('categoriesBYId', () => CategoriesById(headers, id));
 };

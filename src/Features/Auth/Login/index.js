@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import Snackbar from '../../../components/AlertMessage';
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex } from '../../../scripts/constants';
-import { login, setFormMessage } from '../actions';
+import { emailRegex, ERROR, passwordRegex } from '../../../scripts/constants';
+import { login, sessionExpireReset, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const message = useSelector((state) => {
-    const { message } = state.responseMessage;
-    return message;
-  });
+  const { message, isLoading, isSessionExpired } = useSelector((state) => {
+    const {
+      responseMessage: { message },
+      authReducer: { isLoading },
+      sessionExpireReducer: { isSessionExpired },
+    } = state;
+    return { message, isLoading, isSessionExpired };
+  }, shallowEqual);
 
   const validateOnSubmit = () => {
     let isValid = true;
@@ -86,10 +91,10 @@ function LoginForm() {
       value: '',
       errorMessage: '',
       getValidation: (value) => {
-        if (value.length < 8) {
-          return ['Password must be 8 characters long', false];
+        if (passwordRegex.test(value) && value.length >= 8) {
+          return ['', true];
         }
-        return ['', true];
+        return ['Password must be 8 characters long and contains atleast one number and letter', false];
       },
     },
   ]);
@@ -101,6 +106,7 @@ function LoginForm() {
         name: 'login',
         minWidth: '100%',
         clickHandler: loginClickHandler,
+        isLoading,
       },
     ],
   };
@@ -110,6 +116,14 @@ function LoginForm() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (isSessionExpired) {
+        dispatch(sessionExpireReset());
+      }
+    };
+  }, [isSessionExpired]);
 
   return (
     <div>
@@ -123,6 +137,7 @@ function LoginForm() {
         navigationPath="/signup"
         responseError={message}
       />
+      {isSessionExpired && <Snackbar type={ERROR} />}
     </div>
   );
 }

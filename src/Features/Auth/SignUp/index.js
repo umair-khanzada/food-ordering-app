@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex, contactRegex } from '../../../scripts/constants';
+import { emailRegex, contactRegex, passwordRegex } from '../../../scripts/constants';
 import { setFormMessage, signup } from '../actions';
 
 function SignUpForm() {
-  const message = useSelector((state) => {
-    const { message } = state.responseMessage;
-    return message;
-  });
+  const { message, isLoading } = useSelector((state) => {
+    const {
+      responseMessage: { message },
+      authReducer: { isLoading },
+    } = state;
+    return { message, isLoading };
+  }, shallowEqual);
+
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -97,10 +103,10 @@ function SignUpForm() {
       isValid: true,
       errorMessage: '',
       getValidation: (value) => {
-        if (value.length < 8) {
-          return ['Password must be 8 characters long', false];
+        if (passwordRegex.test(value) && value.length >= 8) {
+          return ['', true];
         }
-        return ['', true];
+        return ['Password must be 8 characters long and contains atleast one number and letter', false];
       },
     },
     {
@@ -130,7 +136,7 @@ function SignUpForm() {
         userData[name] = value;
       });
 
-      dispatch(signup(userData));
+      dispatch(signup({ userData, history }));
     }
   };
 
@@ -141,6 +147,7 @@ function SignUpForm() {
         name: 'SignUp',
         minWidth: '100%',
         clickHandler: signUpClickHandler,
+        isLoading,
       },
     ],
   };

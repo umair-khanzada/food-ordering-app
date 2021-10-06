@@ -1,9 +1,12 @@
 import { useSelector } from 'react-redux';
 
 import RouteNames from '../routes/RouteNames';
-export const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
-export const contactRegex = new RegExp('([0-9]{1}|[0-9]{2}|[0-9]{3})[0-9]{10,12}');
+export const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
+export const passwordRegex = new RegExp('^(.*(([A-Za-z]+(.*)[0-9]+)|([0-9]+(.*)[A-Za-z]+))(.*))$');
+export const contactRegex = new RegExp('^[0-9]{11,12}$');
 export const baseUrl = 'http://localhost:4000/v1/';
+export const SUCCCESS = 'success';
+export const ERROR = 'errro';
 
 export const AuthToken = () => {
   return useSelector(({ authReducer: { accessToken } }) => {

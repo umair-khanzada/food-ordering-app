@@ -2,11 +2,12 @@ import React from 'react';
 
 import { Grid, ListItemIcon, ListItemText, useTheme, Toolbar, IconButton } from '@material-ui/core';
 import { Lock, OfflineBolt, ShoppingCart } from '@material-ui/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { logout } from '../../Features/Auth/actions';
 import { openDrawer } from '../../Features/Customer/actions';
+import Roles from '../../roles';
 import RouteNames from '../../routes/RouteNames';
 import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
 import { StyledAppBar, StyledDiv, StyledLogo, StyledMenuItem } from './Style';
@@ -19,14 +20,20 @@ const NavBar = () => {
     dispatch(logout({ history }));
   };
 
-  const cartItemCount = useSelector((state) => {
+  const {
+    cart: { length: cartItemCount },
+    role,
+  } = useSelector((state) => {
     const {
       addtocartReducers: { cart },
+      authReducer: { role },
     } = state;
 
-    return cart.length;
-  });
+    return { cart, role };
+  }, shallowEqual);
   const { resetPassword } = RouteNames;
+
+  const { user } = Roles;
 
   return (
     <StyledDiv>
@@ -34,12 +41,15 @@ const NavBar = () => {
         <Toolbar>
           <StyledLogo alt="logo" src="https://www.nisum.com/hubfs/logo_nisum.svg" />
           <Grid alignItems="flex-end" container justifyContent="flex-end">
-            <IconButton onClick={() => dispatch(openDrawer())}>
-              <span style={{ position: 'absolute', top: 0, right: '8px', color: 'red', fontSize: '16px' }}>
-                {cartItemCount === 0 ? null : cartItemCount}
-              </span>
-              <ShoppingCart />
-            </IconButton>
+            {role === user && (
+              <IconButton onClick={() => dispatch(openDrawer())}>
+                <span style={{ position: 'absolute', top: 0, right: '8px', color: 'red', fontSize: '16px' }}>
+                  {cartItemCount === 0 ? null : cartItemCount}
+                </span>
+                <ShoppingCart />
+              </IconButton>
+            )}
+
             <AppBarMenuButton>
               <StyledMenuItem onClick={() => history.push(resetPassword)} theme={theme}>
                 <ListItemIcon>

@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
+import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
 import { GetHeader } from '../../../scripts/constants';
 import { deleteCategory } from './mutation';
@@ -22,14 +23,13 @@ function CategoryList() {
       search: `?id=${categoryId}`,
     });
   };
-  const { data: categoriesData, refetch, isLoading, isFetching } = FetchCategories();
+  const { data: categoriesData, refetch, isFetching } = FetchCategories();
 
   function deletecategory({ id: categoryId }) {
     mutate({ categoryId, headers });
   }
-
-  const onDelete = (row) => {
-    row;
+  const onDelete = ({ id: categoryId }) => {
+    mutate({ categoryId, headers });
   };
 
   const [header, setHeader] = useState([]);
@@ -38,7 +38,7 @@ function CategoryList() {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
 
-  const { mutate, mutateAsync, error } = useMutation(deleteCategory, {
+  const { mutate, isLoading } = useMutation(deleteCategory, {
     onSuccess: (response) => {
       refetch();
 
@@ -53,22 +53,18 @@ function CategoryList() {
       </CategoriesTitleContainer>
 
       {isFetching ? (
-        <>
-          <p>Loading</p>
-        </>
+        <Loader />
       ) : (
-        <>
-          <CustomTable
-            cellWidth="400px"
-            deleteTableRow={deletecategory}
-            header={header}
-            isEditDelete
-            onDelete={onDelete}
-            onEdit={onEdit}
-            rows={categoriesData}
-            tablewidth="90%"
-          />
-        </>
+        <CustomTable
+          cellWidth="400px"
+          header={header}
+          isDeleting={isLoading}
+          isEditDelete
+          onDelete={onDelete}
+          onEdit={onEdit}
+          rows={categoriesData}
+          tablewidth="90%"
+        />
       )}
     </>
   );

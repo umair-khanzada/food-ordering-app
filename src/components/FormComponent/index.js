@@ -18,7 +18,7 @@ import {
   NavTitle,
   NisumText,
   NisumTextColor,
-  ErrorRespose,
+  ErrorResponse,
 } from './styles';
 
 const FormComponent = ({
@@ -48,7 +48,7 @@ const FormComponent = ({
             <Collapse in={checked} timeout={1000}>
               <Form elevation={10}>
                 <FormHeading>{formTitle}</FormHeading>
-                <ErrorRespose>{responseError}</ErrorRespose>
+                {responseError !== '' && <ErrorResponse>{responseError}</ErrorResponse>}
                 {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
                   <InputBox key={name + '-' + i} className="inputFields">
                     <BasicTextFields
@@ -64,11 +64,12 @@ const FormComponent = ({
                     <Error>{errorMessage}</Error>
                   </InputBox>
                 ))}
-                {basicButtons.button.map(({ clickHandler, minWidth, name, type }, i) => (
+                {basicButtons.button.map(({ clickHandler, minWidth, name, type, isLoading }, i) => (
                   <div key={name + '-' + i}>
                     <CommonButton
                       key={name + '-' + i}
                       fontSize="16px"
+                      loading={isLoading}
                       minwidth={minWidth}
                       onClick={clickHandler}
                       property={name}
