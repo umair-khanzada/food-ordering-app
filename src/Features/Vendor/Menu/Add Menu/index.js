@@ -52,11 +52,9 @@ const AddMenu = () => {
       isValid: true,
       errorMessage: '',
       onChange: (event, value) => {
-        console.log('submit', isSubmit);
         if (value) {
           setFormFields(initialItemRestaurant, value.id, 0);
         } else {
-          console.log('bhenchod', fields);
           setFormFields(initialItemRestaurant, '', 0);
         }
       },
@@ -73,8 +71,6 @@ const AddMenu = () => {
         if (value) {
           setFormFields(initialItemRestaurant, value.id, 1);
         } else {
-          console.log(initialItemRestaurant);
-
           setFormFields(initialItemRestaurant, '', 1);
         }
       },
@@ -103,7 +99,7 @@ const AddMenu = () => {
     },
   ];
   const [fields, setFields] = useState(initialItemRestaurant);
-  console.log('kkk', fields);
+
   const setFormFields = (fields, value, index) => {
     const updatedFields = fieldChangeHandler(fields, value, index);
     setFields(updatedFields);
@@ -124,14 +120,7 @@ const AddMenu = () => {
       });
     }
   };
-  const buttons = [
-    {
-      type: 'button',
-      name: 'save',
-      minWidth: '100%',
-      clickHandler: saveHandler,
-    },
-  ];
+
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
       setFields(initialItemRestaurant);
@@ -139,6 +128,15 @@ const AddMenu = () => {
       return response;
     },
   });
+  const buttons = [
+    {
+      type: 'button',
+      name: 'save',
+      minWidth: '100%',
+      clickHandler: saveHandler,
+      isLoading,
+    },
+  ];
   return (
     <>
       <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} onSaveSuccess={isSuccess} />
