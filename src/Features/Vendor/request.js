@@ -68,3 +68,17 @@ export const FetchItemsById = (id) => {
 
   return useQuery('fetchItems', () => ItemsById(headers, id));
 };
+const orderHistory = async (headers) => {
+  const {
+    data: { results },
+  } = await axios.get(baseUrl + 'orders', {
+    headers,
+  });
+  console.log('orderssss', results);
+
+  return results;
+};
+export const FetchOrderHistory = () => {
+  const { headers } = GetHeader();
+  return useQuery('orders', () => orderHistory(headers));
+};

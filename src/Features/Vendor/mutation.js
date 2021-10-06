@@ -57,3 +57,9 @@ export async function updateItemById(data) {
 
   return res;
 }
+export const deleteOrderById = async ({ id, headers }) => {
+  const deleteOrderRes = await axios.delete(baseUrl + 'orders/' + id, {
+    headers,
+  });
+  return deleteOrderRes;
+};
