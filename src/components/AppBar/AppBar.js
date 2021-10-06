@@ -9,6 +9,7 @@ import { logout } from '../../Features/Auth/actions';
 import { openDrawer } from '../../Features/Customer/actions';
 import Roles from '../../roles';
 import RouteNames from '../../routes/RouteNames';
+import Drawer from '../Drawer';
 import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
 import { StyledAppBar, StyledDiv, StyledLogo, StyledMenuItem } from './Style';
 
@@ -42,12 +43,15 @@ const NavBar = () => {
           <StyledLogo alt="logo" src="https://www.nisum.com/hubfs/logo_nisum.svg" />
           <Grid alignItems="flex-end" container justifyContent="flex-end">
             {role === user && (
-              <IconButton onClick={() => dispatch(openDrawer())}>
-                <span style={{ position: 'absolute', top: 0, right: '8px', color: 'red', fontSize: '16px' }}>
-                  {cartItemCount === 0 ? null : cartItemCount}
-                </span>
-                <ShoppingCart />
-              </IconButton>
+              <>
+                <Drawer />
+                <IconButton onClick={() => dispatch(openDrawer())}>
+                  <span style={{ position: 'absolute', top: 0, right: '8px', color: 'red', fontSize: '16px' }}>
+                    {cartItemCount === 0 ? null : cartItemCount}
+                  </span>
+                  <ShoppingCart />
+                </IconButton>
+              </>
             )}
 
             <AppBarMenuButton>

@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
 
-// import { Snackbar } from '@material-ui/core';
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-import Snackbar from '../../../../components/AlertMessage';
-import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { ERROR, GetHeader, SUCCCESS } from '../../../../scripts/constants';
+import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { category } from '../mutation';
 
 const AddCategory = () => {
-  const dispatch = useDispatch();
-  const successMessage = 'Successfull category has been created';
-
   const { headers } = GetHeader();
 
   const adminId = useSelector((state) => {
@@ -60,24 +53,10 @@ const AddCategory = () => {
     }
   };
 
-<<<<<<< HEAD
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
     onSuccess: (response) => {
       setFields(initialCategoriesField);
       return response;
-=======
-  const { mutate, isLoading, isSuccess, isError } = useMutation(category, {
-    onSuccess: () => {
-      dispatch(toggleSnackbarOpen(successMessage));
-    },
-    onError: (error) => {
-      const {
-        response: {
-          data: { message },
-        },
-      } = error;
-      dispatch(toggleSnackbarOpen(message));
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
     },
   });
 
@@ -89,10 +68,6 @@ const AddCategory = () => {
       clickHandler: saveHandler,
     },
   ];
-<<<<<<< HEAD
-
-=======
->>>>>>> b4da7a338a7aabc292ceff9805f3377c38975d9c
   return (
     <>
       <CommonGridBasedForm
@@ -102,8 +77,6 @@ const AddCategory = () => {
         loading={isLoading}
         onSaveSuccess={isSuccess}
       />
-      {isSuccess && <Snackbar type={SUCCCESS} />}
-      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

@@ -10,7 +10,7 @@ import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader, SUCCCESS, passwordRegex, ERROR } from '../../../../scripts/constants';
+import { contactRegex, GetHeader, passwordRegex, ERROR } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
@@ -129,7 +129,12 @@ const EditUser = () => {
         };
       });
       setFields(resetFields);
-      dispatch(toggleSnackbarOpen(successMessage));
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: ERROR,
+        }),
+      );
     },
     onError: (error) => {
       const {
@@ -138,7 +143,7 @@ const EditUser = () => {
         },
       } = error;
 
-      dispatch(toggleSnackbarOpen(message));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
 
@@ -174,8 +179,7 @@ const EditUser = () => {
       ) : (
         <>
           <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
-          {isSuccess && <Snackbar type={SUCCCESS} />}
-          {isError && <Snackbar type={ERROR} />}
+          <Snackbar />
         </>
       )}
     </>

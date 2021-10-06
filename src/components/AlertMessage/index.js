@@ -5,16 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleSnackbarClose } from './alertRedux/actions';
 import { Container, SuccessIconButton, ErrorIconButton, SuccessMessage, CrossIcon, ShowSnackBarButton } from './style';
 
-const Snackbar = ({ type }) => {
+const Snackbar = () => {
   const dispatch = useDispatch();
-  const { show, message } = useSelector((state) => {
+  const { show, message, type } = useSelector((state) => {
     const {
-      uiReducer: { toggleSnackbar, snackbarMessage },
+      uiReducer: { toggleSnackbar, snackbarMessage, messageType },
     } = state;
 
     return {
       show: toggleSnackbar,
       message: snackbarMessage,
+      type: messageType,
     };
   });
 

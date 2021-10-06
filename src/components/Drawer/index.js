@@ -3,10 +3,19 @@ import React, { useState } from 'react';
 import { Fade, Backdrop } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
+import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Customer/actions';
-import { GetHeader } from '../../scripts/constants';
+import {
+  increaseQuantity,
+  deleteItem,
+  closeDrawer,
+  decreaseQuantity,
+  clearCart,
+} from '../../Features/Customer/actions';
+import { GetHeader, SUCCESS, ERROR } from '../../scripts/constants';
+import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
+import { InsertOrder } from './mutation';
 import {
   DrawerModal,
   DrawerCard,
@@ -36,10 +45,15 @@ import {
   CartPaper,
   ModalDiv,
 } from './style';
-const Drawer = ({ mutate }) => {
-  const cart = useSelector((state) => state.addtocartReducers.cart);
+const Drawer = () => {
   const { headers } = GetHeader();
-  const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
+  const { isDrawerOpen, cart } = useSelector((state) => {
+    state.addtocartReducers.isDrawerOpen;
+    const {
+      addtocartReducers: { isDrawerOpen, cart },
+    } = state;
+    return { isDrawerOpen, cart };
+  });
   const userId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -60,12 +74,15 @@ const Drawer = ({ mutate }) => {
   const placeOrder = () => {
     const items = [];
     let amount = 0;
-    cart.map(({ id, price, qty }) => {
+    let vendor = '';
+    cart.map(({ id, price, qty, vendorId }) => {
       items.push(id);
       amount += price * qty;
+      vendor = vendorId;
     });
     const orders = {
       userId,
+      vendorId: vendor,
       items,
       status: 'pending',
       amount,
@@ -75,6 +92,30 @@ const Drawer = ({ mutate }) => {
     setOpen(false);
   };
 
+  const { mutate } = useMutation(InsertOrder, {
+    onSuccess: () => {
+      dispatch(clearCart());
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: 'Your order has been placed',
+          messageType: SUCCESS,
+        }),
+      );
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: message,
+          messageType: ERROR,
+        }),
+      );
+    },
+  });
   return (
     <>
       <React.Fragment key="right">
