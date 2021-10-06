@@ -135,7 +135,7 @@ const EditMenu = () => {
   const [fields, setFields] = useState(initialItemEditField);
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
     if (isValid) {
       mutate({
@@ -156,7 +156,7 @@ const EditMenu = () => {
 
     setFields(updatedFields);
   };
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateItemById, {
+  const { mutate, isLoading, isSuccess } = useMutation(updateItemById, {
     onSuccess: (response) => {
       setFields(initialItemEditField);
       return response;
@@ -168,6 +168,7 @@ const EditMenu = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
@@ -176,13 +177,7 @@ const EditMenu = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <AddEditForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit Item"
-          loading={isLoading}
-          onSaveSuccess={isSuccess}
-        />
+        <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" onSaveSuccess={isSuccess} />
       )}
     </>
   );

@@ -23,12 +23,13 @@ function CategoryList() {
       search: `?id=${categoryId}`,
     });
   };
-  const { data: categoriesData, refetch, isLoading } = FetchCategories();
+  const { data: categoriesData, refetch, isFetching } = FetchCategories();
+
   function deletecategory({ id: categoryId }) {
     mutate({ categoryId, headers });
   }
-  const onDelete = (row) => {
-    row;
+  const onDelete = ({ id: categoryId }) => {
+    mutate({ categoryId, headers });
   };
 
   const [header, setHeader] = useState([]);
@@ -37,7 +38,7 @@ function CategoryList() {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
 
-  const { mutate } = useMutation(deleteCategory, {
+  const { mutate, isLoading } = useMutation(deleteCategory, {
     onSuccess: (response) => {
       refetch();
 
@@ -51,13 +52,13 @@ function CategoryList() {
         <CommonButton onClick={() => history.push(addCategory)} property="Add Category" />
       </CategoriesTitleContainer>
 
-      {isLoading ? (
+      {isFetching ? (
         <Loader />
       ) : (
         <CustomTable
           cellWidth="400px"
-          deleteTableRow={deletecategory}
           header={header}
+          isDeleting={isLoading}
           isEditDelete
           onDelete={onDelete}
           onEdit={onEdit}

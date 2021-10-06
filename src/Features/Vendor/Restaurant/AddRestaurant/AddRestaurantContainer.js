@@ -10,6 +10,12 @@ import { restaurants } from '../../mutation';
 
 const AddRestaurant = () => {
   const { headers } = GetHeader();
+  const { mutate, isLoading, isSuccess } = useMutation(restaurants, {
+    onSuccess: (response) => {
+      setFields(initialRestaurantField);
+      return response;
+    },
+  });
   const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const [restaurant, setRestaurant] = useState('');
@@ -34,7 +40,7 @@ const AddRestaurant = () => {
   const [fields, setFields] = useState(initialRestaurantField);
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {
@@ -51,24 +57,13 @@ const AddRestaurant = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
-  const { mutate, mutateAsync, error, isLoading, isSuccess } = useMutation(restaurants, {
-    onSuccess: (response) => {
-      setFields(initialRestaurantField);
-      return response;
-    },
-  });
 
   return (
     <>
-      <CommonGridBasedForm
-        buttons={buttons}
-        fields={fields}
-        heading="Add Restaurant"
-        loading={isLoading}
-        onSaveSuccess={isSuccess}
-      />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" onSaveSuccess={isSuccess} />
     </>
   );
 };

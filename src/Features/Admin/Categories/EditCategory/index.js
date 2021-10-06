@@ -27,6 +27,12 @@ const EditCategory = () => {
   const id = params.get('id');
   const { data: categoriesId, refetch, isFetching } = FetchCategoriesById(id);
 
+  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
+    onSuccess: () => {
+      setFields(initialCategoriesEditField);
+    },
+  });
+
   useEffect(() => {
     if (categoriesId !== undefined) {
       saveCategoriesId(categoriesId);
@@ -35,9 +41,8 @@ const EditCategory = () => {
 
   const saveCategoriesId = (categoriesId) => {
     const { name } = categoriesId;
-
-    fields[0].value = name;
-    setFields(fields);
+    const updatedFields = fieldChangeHandler(fields, name, 0);
+    setFields(updatedFields);
     // setCategoriesId(name);
   };
   const initialCategoriesEditField = [
@@ -57,7 +62,7 @@ const EditCategory = () => {
   const [fields, setFields] = useState(initialCategoriesEditField);
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {
@@ -79,28 +84,15 @@ const EditCategory = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
-
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
-    onSuccess: (response) => {
-      setFields(initialCategoriesEditField);
-      return response;
-    },
-  });
-
   return (
     <>
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit Category"
-          loading={isLoading}
-          onSaveSuccess={isSuccess}
-        />
+        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={isSuccess} />
       )}
     </>
   );
