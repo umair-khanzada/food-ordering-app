@@ -4,7 +4,7 @@ import { Fade, Backdrop } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 import { useMutation } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import {
   increaseQuantity,
@@ -53,7 +53,7 @@ const Drawer = () => {
       addtocartReducers: { isDrawerOpen, cart },
     } = state;
     return { isDrawerOpen, cart };
-  });
+  }, shallowEqual);
   const userId = useSelector((state) => {
     const {
       authReducer: { id },
