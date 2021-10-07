@@ -32,6 +32,7 @@ const RouteNames = {
   balanceSheet: '/balance-sheet',
   editBalanceSheet: '/edit-balance-sheet',
   restaurantList: '/restaurant-list',
+  userBalanceSheet: '/user-balance-sheet',
 };
 
 export default RouteNames;
