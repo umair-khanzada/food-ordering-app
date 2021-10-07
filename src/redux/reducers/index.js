@@ -6,10 +6,11 @@ import storage from 'redux-persist/lib/storage';
 import uiReducer from '../../components/AlertMessage/alertRedux/redux';
 import { loaderReducer } from '../../components/Loader/ducks';
 import { modalReducer } from '../../components/Modal/ducks';
-import { forgotPassword, responseMessage, authReducer, sessionExpireReducer } from '../../Features/Auth/ducks';
+import { forgotPassword, responseMessage, authReducer } from '../../Features/Auth/ducks';
 import { addtocartReducers, cartItemReducer } from '../../Features/Customer/ducks';
 
 const persistConfig = {
+  blacklist: ['forgotPassword', 'loaderReducer', 'modalReducer', 'responseMessage', 'uiReducer'],
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
@@ -24,7 +25,6 @@ const reducer = combineReducers({
   uiReducer,
   loaderReducer,
   cartItemReducer,
-  sessionExpireReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

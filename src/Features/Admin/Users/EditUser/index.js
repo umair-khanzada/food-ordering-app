@@ -12,6 +12,7 @@ import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, GetHeader, passwordRegex, ERROR } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
@@ -23,7 +24,7 @@ const EditUser = () => {
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [user, setUser] = useState('');
-  const [fields, setFields] = useState([
+  const initialEditUserField = [
     {
       type: SELECT,
       label: 'Role',
@@ -32,7 +33,7 @@ const EditUser = () => {
       name: 'role',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
     },
@@ -45,7 +46,7 @@ const EditUser = () => {
       name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -64,7 +65,7 @@ const EditUser = () => {
       name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
     },
@@ -77,7 +78,7 @@ const EditUser = () => {
       name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -96,7 +97,7 @@ const EditUser = () => {
       name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -106,7 +107,8 @@ const EditUser = () => {
         return '';
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialEditUserField);
 
   const { data: userById, isFetching } = FetchUserById(id);
 
@@ -142,13 +144,17 @@ const EditUser = () => {
           data: { message },
         },
       } = error;
-
-      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
     },
   });
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields, false);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {

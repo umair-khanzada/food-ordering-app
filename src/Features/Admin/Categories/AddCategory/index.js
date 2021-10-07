@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { category } from '../mutation';
 const AddCategory = () => {
   const { headers } = GetHeader();
@@ -45,10 +48,19 @@ const AddCategory = () => {
       });
     }
   };
+
+  const history = useHistory();
+
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
     onSuccess: (response) => {
       setFields(initialCategoriesField);
       return response;
+    },
+    onError: (err) => {
+      if (err.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+      }
     },
   });
   const buttons = [

@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { updateCategoryById } from '../mutation';
 import { FetchCategoriesById } from '../request';
 
@@ -27,9 +29,17 @@ const EditCategory = () => {
   const id = params.get('id');
   const { data: categoriesId, refetch, isFetching } = FetchCategoriesById(id);
 
+  const dispatch = useDispatch();
+
   const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
     onSuccess: () => {
       setFields(initialCategoriesEditField);
+    },
+    onError: (err) => {
+      if (err.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+      }
     },
   });
 
