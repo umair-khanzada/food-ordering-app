@@ -2,7 +2,6 @@ import { Box, Grid } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const StyledBox = styled(Box)`
-  /* background-image: linear-gradient(to right, rgb(32, 183, 94), rgb(162, 139, 81)); */
   position: relative;
   border: 5px solid black;
   border-radius: 10px;
@@ -13,7 +12,6 @@ export const StyledBox = styled(Box)`
 
 export const StyledImageTag = styled.img`
   background-size: contain;
-  /* height: 100vh; */
   padding: 0;
   margin: 0;
 `;
