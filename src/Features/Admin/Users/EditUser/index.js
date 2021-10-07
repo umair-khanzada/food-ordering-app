@@ -12,6 +12,7 @@ import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, GetHeader, SUCCCESS, passwordRegex, ERROR } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
@@ -126,14 +127,11 @@ const EditUser = () => {
       setFields(initialEditUserField);
       dispatch(toggleSnackbarOpen(successMessage));
     },
-    onError: (error) => {
-      const {
-        response: {
-          data: { message },
-        },
-      } = error;
-
-      dispatch(toggleSnackbarOpen(message));
+    onError: (err) => {
+      if (err.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+      }
     },
   });
 
