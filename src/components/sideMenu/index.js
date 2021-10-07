@@ -12,16 +12,13 @@ import VendorSideNav from './VendorSideNav';
 function SideMenu() {
   const useStyles = makeStyles(() => ({
     drawerPaper: {
-      position: 'relative',
+      position: 'absolute',
+      width: '100%',
       height: '88vh',
       backgroundColor: 'white',
     },
     navigation: {
       marginTop: '50px',
-    },
-
-    drawer: {
-      height: '615px',
     },
   }));
 
@@ -36,15 +33,14 @@ function SideMenu() {
   const { vendor, admin, user } = Roles;
   const classes = useStyles();
 
-  const { drawer, drawerPaper, navigation, mainDiv } = classes;
+  const { drawerPaper, navigation } = classes;
   return (
-    <div className={mainDiv}>
+    <div>
       <Drawer
         anchor="left"
         classes={{
           paper: drawerPaper,
         }}
-        className={drawer}
         variant="permanent"
       >
         <div className={navigation}>
