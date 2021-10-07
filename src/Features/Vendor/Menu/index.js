@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import 'date-fns';
 import { Grid } from '@material-ui/core';
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
@@ -17,6 +17,12 @@ import { deleteitem } from '../mutation';
 import { FetchItems } from '../request';
 import { ButtonsContainer, CustomTableContainer, ButtonContainer } from './style';
 function Menu() {
+  const vendorId = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
   const history = useHistory();
   const { headers } = GetHeader();
   const [items, setSaveItems] = useState([]);
@@ -31,11 +37,14 @@ function Menu() {
     }
   }, [itemsData]);
   const saveItems = ({ data }) => {
-    const itemData = data.map(({ name, price, id, categoryId, kitchenId }) => {
-      const { name: categoryName } = categoryId;
-      const { name: kitchenName } = kitchenId;
-      return { name, categoryName, kitchenName, price, id };
-    });
+    const itemData = data
+      .filter(({ createdBy }) => vendorId === createdBy)
+      .map(({ name, price, id, categoryId, kitchenId }) => {
+        const { name: categoryName } = categoryId;
+        const { name: kitchenName } = kitchenId;
+        return { name, categoryName, kitchenName, price, id };
+      });
+
     setSaveItems(itemData);
   };
   const handleDateChange = (data) => {

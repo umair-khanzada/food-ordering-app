@@ -22,7 +22,7 @@ const EditVendor = () => {
   const dispatch = useDispatch();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
-  const [fields, setFields] = useState([
+  const initialEditVendorField = [
     {
       type: SELECT,
       label: 'Role',
@@ -31,7 +31,7 @@ const EditVendor = () => {
       name: 'role',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
     },
@@ -44,7 +44,7 @@ const EditVendor = () => {
       name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
     },
@@ -57,7 +57,7 @@ const EditVendor = () => {
       name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -76,7 +76,7 @@ const EditVendor = () => {
       name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -96,7 +96,7 @@ const EditVendor = () => {
       name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -106,16 +106,11 @@ const EditVendor = () => {
         return '';
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialEditVendorField);
   const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
-      const resetFields = fields.map((field) => {
-        return {
-          ...field,
-          value: '',
-        };
-      });
-      setFields(resetFields);
+      setFields(initialEditVendorField);
       dispatch(toggleSnackbarOpen(successMessage));
     },
     onError: (error) => {

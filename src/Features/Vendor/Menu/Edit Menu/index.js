@@ -15,6 +15,8 @@ import { updateItemById } from '../../mutation';
 import { FetchCategories, FetchItemsById, FetchRestaurants } from '../../request';
 
 const EditMenu = () => {
+  const [categoryData, setCategoryData] = useState([]);
+  const [restaurantData, setRestaurantData] = useState([]);
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
@@ -43,7 +45,7 @@ const EditMenu = () => {
   const saveRestaurant = (restaurantsDetail) => {
     const resData = restaurantsDetail.map(({ name, id }) => ({ label: name, id }));
     const updatedFields = SelectChangeHandler(fields, resData, 1);
-
+    setRestaurantData(resData);
     setFields(updatedFields);
   };
 
@@ -51,7 +53,7 @@ const EditMenu = () => {
     const resData = categoriesDetail.map(({ name, id }) => ({ label: name, id }));
 
     const updatedFields = SelectChangeHandler(fields, resData, 0);
-
+    setCategoryData(resData);
     setFields(updatedFields);
   };
   useEffect(() => {
@@ -66,17 +68,16 @@ const EditMenu = () => {
     const { id: categoryid } = categoryId;
     const { id: kitchenid } = kitchenId;
 
-    fields[0].value = categoryid;
-    fields[1].value = kitchenid;
-    fields[2].value = price;
-    fields[3].value = name;
-    setFields(fields);
+    setFields(fieldChangeHandler(fields, categoryid, 0));
+    setFields(fieldChangeHandler(fields, kitchenid, 1));
+    setFields(fieldChangeHandler(fields, price, 2));
+    setFields(fieldChangeHandler(fields, name, 3));
   };
   const initialItemEditField = [
     {
       type: AUTO_COMPLETE,
       label: '',
-      values: [],
+      values: categoryData,
       placeholder: 'Categories',
       value: '',
       isValid: true,
@@ -84,9 +85,9 @@ const EditMenu = () => {
 
       onChange: (event, value) => {
         if (value) {
-          setFormFields(fields, value.id, 0);
+          setFormFields(initialItemEditField, value.id, 0);
         } else {
-          setFormFields(fields, '', 0);
+          setFormFields(initialItemEditField, '', 0);
         }
       },
     },
@@ -94,16 +95,16 @@ const EditMenu = () => {
       type: AUTO_COMPLETE,
       label: '',
       placeholder: 'Restaurants',
-      values: [],
+      values: restaurantData,
       value: '',
       isValid: true,
       errorMessage: '',
 
       onChange: (event, value) => {
         if (value) {
-          setFormFields(fields, value.id, 1);
+          setFormFields(initialItemEditField, value.id, 1);
         } else {
-          setFormFields(fields, '', 1);
+          setFormFields(initialItemEditField, '', 1);
         }
       },
     },
@@ -115,7 +116,7 @@ const EditMenu = () => {
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialItemEditField, value, index);
         setFields(updatedFields);
       },
     },
@@ -129,7 +130,7 @@ const EditMenu = () => {
       errorMessage: '',
 
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialItemEditField, value, index);
         setFields(updatedFields);
       },
     },

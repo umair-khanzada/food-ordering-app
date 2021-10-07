@@ -14,17 +14,17 @@ import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
   const { headers } = GetHeader();
-
+  const [isSubmit, setSubmit] = useState(false);
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
     } = state;
     return id;
   });
-
+  const [categoryData, setCategoryData] = useState([]);
+  const [restaurantData, setRestaurantData] = useState([]);
   const restaurantsData = FetchRestaurants();
   const categoriesData = FetchCategories();
-
   useEffect(() => {
     if (restaurantsData !== undefined) {
       saveRestaurant(restaurantsData);
@@ -33,37 +33,32 @@ const AddMenu = () => {
       saveCategories(categoriesData);
     }
   }, [restaurantsData, categoriesData]);
-
   const saveRestaurant = (restaurantsDetails) => {
     const resData = restaurantsDetails.map(({ name, id }) => ({ label: name, id }));
     const updatedFields = SelectChangeHandler(fields, resData, 1);
-
+    setRestaurantData(resData);
     setFields(updatedFields);
   };
-
   const saveCategories = (categoriesDetails) => {
     const resData = categoriesDetails.map(({ name, id }) => ({ label: name, id }));
-
     const updatedFields = SelectChangeHandler(fields, resData, 0);
-
+    setCategoryData(resData);
     setFields(updatedFields);
   };
-
   const initialItemRestaurant = [
     {
       type: AUTO_COMPLETE,
       label: '',
-      values: [],
+      values: categoryData,
       placeholder: 'Categories',
       value: '',
       isValid: true,
       errorMessage: '',
-
       onChange: (event, value) => {
         if (value) {
-          setFormFields(fields, value.id, 0);
+          setFormFields(initialItemRestaurant, value.id, 0);
         } else {
-          setFormFields(fields, '', 0);
+          setFormFields(initialItemRestaurant, '', 0);
         }
       },
     },
@@ -71,16 +66,15 @@ const AddMenu = () => {
       type: AUTO_COMPLETE,
       label: '',
       placeholder: 'Restaurants',
-      values: [],
+      values: restaurantData,
       value: '',
       isValid: true,
       errorMessage: '',
-
       onChange: (event, value) => {
         if (value) {
-          setFormFields(fields, value.id, 1);
+          setFormFields(initialItemRestaurant, value.id, 1);
         } else {
-          setFormFields(fields, '', 1);
+          setFormFields(initialItemRestaurant, '', 1);
         }
       },
     },
@@ -90,9 +84,8 @@ const AddMenu = () => {
       value: '',
       isValid: true,
       errorMessage: '',
-
       onChange: (event, index) => {
-        setFormFields(fields, event.target.value, 2);
+        setFormFields(initialItemRestaurant, event.target.value, 2);
       },
     },
     {
@@ -103,9 +96,8 @@ const AddMenu = () => {
       variant: 'standard',
       isValid: true,
       errorMessage: '',
-
       onChange: (event, index) => {
-        setFormFields(fields, event.target.value, 3);
+        setFormFields(initialItemRestaurant, event.target.value, 3);
       },
     },
   ];
@@ -113,14 +105,11 @@ const AddMenu = () => {
 
   const setFormFields = (fields, value, index) => {
     const updatedFields = fieldChangeHandler(fields, value, index);
-
     setFields(updatedFields);
   };
-
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields, true);
+    const { validateArray, isValid } = validateOnSubmit(fields);
     setFields(validateArray);
-
     if (isValid) {
       mutate({
         items: {
@@ -141,6 +130,7 @@ const AddMenu = () => {
   const { mutate, isLoading, isSuccess } = useMutation(items, {
     onSuccess: (response) => {
       setFields(initialItemRestaurant);
+      setSubmit(true);
       return response;
     },
     onError: (err) => {
@@ -150,7 +140,6 @@ const AddMenu = () => {
       }
     },
   });
-
   const buttons = [
     {
       type: 'button',
@@ -160,12 +149,11 @@ const AddMenu = () => {
       isLoading,
     },
   ];
-
   return (
     <>
-      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" onSaveSuccess={isSuccess} />;
+      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} onSaveSuccess={isSuccess} />
+      ;
     </>
   );
 };
-
 export default AddMenu;

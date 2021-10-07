@@ -15,7 +15,7 @@ const AddVendor = () => {
   const { headers } = GetHeader();
   const dispatch = useDispatch();
   const successMessage = 'Successfull vendor has been created';
-  const [fields, setFields] = useState([
+  const intialVendorFields = [
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -25,7 +25,7 @@ const AddVendor = () => {
       name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(intialVendorFields, value, index);
         setFields(updatedFields);
       },
     },
@@ -38,7 +38,7 @@ const AddVendor = () => {
       value: '',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(intialVendorFields, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -57,7 +57,7 @@ const AddVendor = () => {
       name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(intialVendorFields, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -77,7 +77,7 @@ const AddVendor = () => {
       name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(intialVendorFields, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -87,16 +87,11 @@ const AddVendor = () => {
         return '';
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(intialVendorFields);
   const { mutateAsync, isLoading, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
-      const resetFields = fields.map((field) => {
-        return {
-          ...field,
-          value: '',
-        };
-      });
-      setFields(resetFields);
+      setFields(intialVendorFields);
       dispatch(toggleSnackbarOpen(successMessage));
     },
     onError: (error) => {

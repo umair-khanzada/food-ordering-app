@@ -18,13 +18,7 @@ const AddUser = () => {
   const successMessage = 'Successfull User has been created';
   const { isLoading, mutateAsync, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
-      const resetFields = fields.map((field) => {
-        return {
-          ...field,
-          value: '',
-        };
-      });
-      setFields(resetFields);
+      setFields(initialUserField);
       dispatch(toggleSnackbarOpen(successMessage));
     },
     onError: (error) => {
@@ -37,7 +31,7 @@ const AddUser = () => {
       dispatch(toggleSnackbarOpen(message));
     },
   });
-  const [fields, setFields] = useState([
+  const initialUserField = [
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -47,7 +41,7 @@ const AddUser = () => {
       name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
     },
@@ -60,7 +54,7 @@ const AddUser = () => {
       name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -79,7 +73,7 @@ const AddUser = () => {
       name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -99,7 +93,7 @@ const AddUser = () => {
 
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -109,7 +103,8 @@ const AddUser = () => {
         return '';
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialUserField);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
