@@ -21,6 +21,7 @@ export const FetchBalances = () => {
         id: data.id,
       }),
     );
+
     return structutredData;
   });
 };

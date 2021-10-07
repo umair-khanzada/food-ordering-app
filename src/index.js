@@ -13,7 +13,7 @@ import store from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import MaterialThemeWrapper from './theme';
 import GlobalStyles from './theme/GlobalStyles';
-
+import ErrorBoundary from './util/ErrorBoundary/index';
 const persistor = persistStore(store);
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,12 +31,13 @@ ReactDOM.render(
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <QueryClientProvider client={queryClient}>
-            <App />
+            <ErrorBoundary>
+              <App />
+            </ErrorBoundary>
           </QueryClientProvider>
         </PersistGate>
       </Provider>
     </React.StrictMode>
-    ,
   </MaterialThemeWrapper>,
   document.getElementById('root'),
 );
