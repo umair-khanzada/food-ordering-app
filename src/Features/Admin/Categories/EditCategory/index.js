@@ -105,13 +105,7 @@ const EditCategory = () => {
     },
   ];
   return (
-    <>
-      {isFetching ? (
-        <Loader />
-      ) : (
-        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={isSuccess} />
-      )}
-    </>
+    <>{isFetching ? <Loader /> : <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" />}</>
   );
 };
 

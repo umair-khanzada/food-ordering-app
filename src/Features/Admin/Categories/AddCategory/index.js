@@ -82,7 +82,7 @@ const AddCategory = () => {
   ];
   return (
     <>
-      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Category" onSaveSuccess={isSuccess} />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Category" />
     </>
   );
 };

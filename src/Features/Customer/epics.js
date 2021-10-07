@@ -4,15 +4,14 @@ import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
 import { toggleSnackbarOpen } from '../../components/AlertMessage/alertRedux/actions';
-import { hideLoader, showLoader } from '../../components/Loader/actions';
 import { EDIT_USER } from '../../redux/ActionTypes';
-import { API_ROUTE } from '../../scripts/constants';
-import { logout, updateUserData } from '../Auth/actions';
+import { API_ROUTE, ERROR, SUCCESS } from '../../scripts/constants';
+import { authLoadingToggle, logout, updateUserData } from '../Auth/actions';
 
 export const editUserEpic = (action$, state) =>
   action$.pipe(
     ofType(EDIT_USER),
-    mergeMap(({ payload: { id, name, email, password, contact, setOnSaveSuccess, history } }) => {
+    mergeMap(({ payload: { id, name, email, password, contact, history } }) => {
       const {
         value: {
           authReducer: {
@@ -21,7 +20,7 @@ export const editUserEpic = (action$, state) =>
         },
       } = state;
       return concat(
-        of(showLoader()),
+        of(authLoadingToggle()),
         ajax({
           url: `${API_ROUTE}/users/${id}`,
           method: 'PATCH',
@@ -36,24 +35,32 @@ export const editUserEpic = (action$, state) =>
           },
         }).pipe(
           mergeMap(({ response: { name, email, contact } }) => {
-            setOnSaveSuccess(true);
-            return of(
-              updateUserData({
-                name,
-                email,
-                contact,
-              }),
+            return concat(
+              of(
+                updateUserData({
+                  name,
+                  email,
+                  contact,
+                }),
+              ),
+
+              of(toggleSnackbarOpen({ snackbarMessage: 'Profile Updated!', messageType: SUCCESS })),
             );
           }),
           catchError((err) => {
             if (err.status === 401) {
-              return concat(of(logout({ history })), of(toggleSnackbarOpen('Session Expired! Please Log in again.')));
+              return concat(
+                of(logout({ history })),
+                of(
+                  toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }),
+                ),
+              );
             }
-            setOnSaveSuccess(false);
-            return of();
+
+            return of(toggleSnackbarOpen({ snackbarMessage: err.message, messageType: ERROR }));
           }),
         ),
-        of(hideLoader()),
+        of(authLoadingToggle()),
       );
     }),
   );

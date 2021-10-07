@@ -191,15 +191,7 @@ const EditMenu = () => {
     },
   ];
 
-  return (
-    <>
-      {isFetching ? (
-        <Loader />
-      ) : (
-        <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" onSaveSuccess={isSuccess} />
-      )}
-    </>
-  );
+  return <>{isFetching ? <Loader /> : <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" />}</>;
 };
 
 export default EditMenu;

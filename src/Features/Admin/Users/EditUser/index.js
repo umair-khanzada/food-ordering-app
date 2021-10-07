@@ -184,7 +184,7 @@ const EditUser = () => {
         <Loader />
       ) : (
         <>
-          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" />;
           <Snackbar />
         </>
       )}

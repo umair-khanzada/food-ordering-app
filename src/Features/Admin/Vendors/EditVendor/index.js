@@ -172,7 +172,7 @@ const EditVendor = () => {
         <Loader />
       ) : (
         <>
-          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={isSuccess} />
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" />
           <Snackbar />
         </>
       )}

@@ -158,8 +158,7 @@ const AddMenu = () => {
   ];
   return (
     <>
-      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} onSaveSuccess={isSuccess} />
-      ;
+      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} />;
     </>
   );
 };
