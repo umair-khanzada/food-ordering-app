@@ -60,7 +60,7 @@ const orderHistory = async (headers, userId) => {
     structuredData.push({
       id: order.id,
       vendorName: order.vendorId.name,
-      items: order.items.join(',  '),
+      items: order.items.join('\n'),
       status: order.status,
       price: order.amount,
     }),

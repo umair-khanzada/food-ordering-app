@@ -15,7 +15,8 @@ const CardMenu = ({ foodType }) => {
     <div>
       <ControlGrid container elevation={3} spacing={3}>
         {card.map(({ id, name, price, categoryId, createdBy }) => {
-          if (categoryId === foodType) {
+          const { id: category } = categoryId;
+          if (category === foodType) {
             return (
               <CommonCard
                 key={id}
