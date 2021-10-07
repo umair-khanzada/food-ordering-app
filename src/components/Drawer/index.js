@@ -5,7 +5,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useHistory } from 'react-router';
 
+import { logout } from '../../Features/Auth/actions';
 import {
   increaseQuantity,
   deleteItem,
@@ -114,6 +116,8 @@ const Drawer = () => {
     setOpen(false);
   };
 
+  const history = useHistory();
+
   const { mutate } = useMutation(InsertOrder, {
     onError: (error) => {
       const {
@@ -121,12 +125,12 @@ const Drawer = () => {
           data: { message },
         },
       } = error;
-      dispatch(
-        toggleSnackbarOpen({
-          snackbarMessage: message,
-          messageType: ERROR,
-        }),
-      );
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
     },
   });
   const { mutate: addBalanceMutate } = useMutation(InsertBalance, {
@@ -146,12 +150,12 @@ const Drawer = () => {
           data: { message },
         },
       } = error;
-      dispatch(
-        toggleSnackbarOpen({
-          snackbarMessage: message,
-          messageType: ERROR,
-        }),
-      );
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
     },
   });
 

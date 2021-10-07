@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
-import { GetHeader } from '../../../scripts/constants';
+import { ERROR, GetHeader } from '../../../scripts/constants';
+import { logout } from '../../Auth/actions';
 import { deleteUserById } from '../Common Requests/mutation';
 import { FetchUsers } from '../Common Requests/request';
 import { VendorTitleContainer, VendorTitle } from './style';
@@ -16,9 +19,23 @@ function VendorList() {
 
   const [vendors, setVendors] = useState('');
   const header = ['S.No', 'name', 'email', 'contact', 'Edit'];
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { data: vendorsData, isFetching, refetch: refetchVendor } = FetchUsers('vendor');
   const Deletevendor = useMutation(deleteUserById, {
-    onError: () => {},
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
+    },
     onSuccess: () => {
       refetchVendor();
     },
@@ -33,7 +50,6 @@ function VendorList() {
       setVendors(vendorsData);
     }
   }, [vendorsData]);
-  const history = useHistory();
   const { editVendor, addVendor } = RouteNames;
 
   const onEdit = ({ id }) => {

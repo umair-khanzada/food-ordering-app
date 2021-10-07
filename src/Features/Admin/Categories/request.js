@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
-import { GetHeader } from '../../../scripts/constants';
+import { ERROR, GetHeader } from '../../../scripts/constants';
 import { baseUrl } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 
@@ -25,10 +25,17 @@ export const FetchCategories = () => {
   const history = useHistory();
 
   return useQuery('categories', () => Categories(headers), {
-    onError: (err) => {
-      if (err.response.status === 401) {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
       }
     },
   });
