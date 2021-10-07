@@ -3,6 +3,7 @@ import React from 'react';
 import './ErrorBoundary.css';
 import { Grid, Typography } from '@material-ui/core';
 
+import fallbackGIF from '../../assets/something-went-wrong.gif';
 import {
   StyledBarSpan,
   StyledDivColumn,
@@ -62,10 +63,7 @@ export default class ErrorBoundary extends React.Component {
             </StyledDivContainer>
           </Grid>
           <Grid item xs={6}>
-            <StyledImageTag
-              alt="fallback"
-              src="https://cdn.dribbble.com/users/774806/screenshots/3823110/something-went-wrong.gif"
-            />
+            <StyledImageTag alt="fallback" src={fallbackGIF} />
           </Grid>
         </Grid>
       );
