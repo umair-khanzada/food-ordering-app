@@ -16,7 +16,7 @@ const UserBalanceSheet = () => {
   });
   const { data, isFetching } = FetchBalances();
 
-  const header = ['No', 'Vendor', 'Balance'];
+  const header = ['Sno', 'Vendor', 'Balance'];
 
   const [balanceData, setBalanceData] = useState([]);
 
