@@ -6,13 +6,11 @@ import { useHistory } from 'react-router';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
-import { GetHeader } from '../../../scripts/constants';
 import { deleteOrderById } from '../mutation';
 import { FetchOrderHistory } from '../request';
 import { OrdersListTitleContainer } from './Style';
 
 const OrdersList = () => {
-  const { headers } = GetHeader();
   const { data: ordersList, refetch: refetchOrders, isFetching } = FetchOrderHistory();
 
   const { mutateAsync, isLoading } = useMutation(deleteOrderById, {
@@ -25,11 +23,11 @@ const OrdersList = () => {
   const onEdit = ({ id }) => {
     history.push({
       pathname: editOrderList,
-      search: '?id' + id,
+      search: '?id=' + id,
     });
   };
   const onDelete = ({ id }) => {
-    mutateAsync({ id, headers });
+    mutateAsync(id);
   };
   const header = ['S.No', 'Name', 'Items', 'status', 'Price', 'edit'];
   return (

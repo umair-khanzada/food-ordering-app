@@ -59,9 +59,14 @@ const Drawer = ({ mutate }) => {
   };
   const placeOrder = () => {
     const items = [];
+    let item = {};
     let amount = 0;
-    cart.map(({ id, price, qty }) => {
-      items.push(id);
+    cart.map(({ name, price, qty }) => {
+      item = {
+        name,
+        quantity: qty,
+      };
+      items.push(JSON.stringify(item));
       amount += price * qty;
     });
     const orders = {
