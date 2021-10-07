@@ -30,14 +30,7 @@ const EditOrderList = () => {
     },
   ]);
 
-  const { mutateAsync, isLoading } = useMutation(updateOrderById, {
-    onSuccess: () => {
-      console.log('success update');
-    },
-    onError: () => {
-      console.log('error update');
-    },
-  });
+  const { mutateAsync, isLoading } = useMutation(updateOrderById);
 
   const { data: orderById, isFetching } = FetchOrderById(id);
 
