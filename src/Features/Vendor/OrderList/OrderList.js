@@ -3,7 +3,7 @@ import React from 'react';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 
-import CustomTable from '../../../components/CustomTable';
+import CollapsibleTable from '../../../components/CollapsibleTable';
 import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
 import { deleteOrderById } from '../mutation';
@@ -20,16 +20,17 @@ const OrdersList = () => {
   });
   const history = useHistory();
   const { editOrderList } = RouteNames;
-  const onEdit = ({ id }) => {
+  const onEdit = (id) => {
     history.push({
       pathname: editOrderList,
       search: '?id=' + id,
     });
   };
-  const onDelete = ({ id }) => {
+  const onDelete = (id) => {
     mutateAsync(id);
   };
-  const header = ['S.No', 'Name', 'Items', 'status', 'Price', 'edit'];
+
+  const header = ['S.No', 'Name', 'Price', 'Total Items', 'status', 'edit'];
   return (
     <>
       {isFetching ? (
@@ -37,7 +38,16 @@ const OrdersList = () => {
       ) : (
         <>
           <OrdersListTitleContainer />
-          <CustomTable
+          {/* <CustomTable
+            header={header}
+            isDeleting={isLoading}
+            isEditDelete
+            onDelete={onDelete}
+            onEdit={onEdit}
+            rows={ordersList}
+            tablewidth="90%"
+          /> */}
+          <CollapsibleTable
             header={header}
             isDeleting={isLoading}
             isEditDelete
