@@ -35,13 +35,11 @@ export const GetCategories = () => {
 
 const itemsByVendor = async (headers, vendorId) => {
   if (vendorId !== '') {
-    const {
-      data: { results },
-    } = await axios.get(baseUrl + 'items ', {
+    const { data } = await axios.get(baseUrl + 'items ', {
       headers,
     });
 
-    return results.filter(({ createdBy }) => createdBy == vendorId);
+    return data.filter(({ createdBy }) => createdBy == vendorId);
   }
 };
 

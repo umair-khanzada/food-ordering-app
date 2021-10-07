@@ -15,7 +15,8 @@ import {
 } from '../../Features/Customer/actions';
 import { GetHeader, SUCCESS, ERROR } from '../../scripts/constants';
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
-import { InsertOrder } from './mutation';
+import { InsertBalance, InsertOrder } from './mutation';
+import { GetBalanceByUserId } from './request';
 import {
   DrawerModal,
   DrawerCard,
@@ -47,6 +48,7 @@ import {
 } from './style';
 const Drawer = () => {
   const { headers } = GetHeader();
+
   const { isDrawerOpen, cart } = useSelector((state) => {
     state.addtocartReducers.isDrawerOpen;
     const {
@@ -71,6 +73,9 @@ const Drawer = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const { data: balance, refetch } = GetBalanceByUserId(userId);
+
   const placeOrder = () => {
     const items = [];
     let amount = 0;
@@ -80,6 +85,7 @@ const Drawer = () => {
       amount += price * qty;
       vendor = vendorId;
     });
+
     const orders = {
       userId,
       vendorId: vendor,
@@ -87,12 +93,43 @@ const Drawer = () => {
       status: 'pending',
       amount,
     };
+    let previousBalance = 0;
+
+    balance.map(({ vendorId: { id }, amount }) => {
+      if (id === vendor) {
+        previousBalance = amount;
+      }
+    });
+
+    const currentBalance = previousBalance - amount;
+
+    const totalBalance = {
+      userId,
+      vendorId: vendor,
+      amount: currentBalance,
+    };
 
     mutate({ orders, headers });
+    addBalanceMutate({ totalBalance, headers });
     setOpen(false);
   };
 
   const { mutate } = useMutation(InsertOrder, {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: message,
+          messageType: ERROR,
+        }),
+      );
+    },
+  });
+  const { mutate: addBalanceMutate } = useMutation(InsertBalance, {
     onSuccess: () => {
       dispatch(clearCart());
       dispatch(
@@ -101,6 +138,7 @@ const Drawer = () => {
           messageType: SUCCESS,
         }),
       );
+      refetch();
     },
     onError: (error) => {
       const {
@@ -116,6 +154,7 @@ const Drawer = () => {
       );
     },
   });
+
   return (
     <>
       <React.Fragment key="right">
