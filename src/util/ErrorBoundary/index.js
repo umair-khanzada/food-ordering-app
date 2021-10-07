@@ -49,9 +49,9 @@ export default class ErrorBoundary extends React.Component {
                 </StyledDivColumn>
                 <StyledDivColumn float="left" width="10%">
                   <StyledDivColumn float="right">
-                    <StyledBarSpan className="bar" />
-                    <StyledBarSpan className="bar" />
-                    <StyledBarSpan className="bar" />
+                    <StyledBarSpan />
+                    <StyledBarSpan />
+                    <StyledBarSpan />
                   </StyledDivColumn>
                 </StyledDivColumn>
               </StyledDivRow>
