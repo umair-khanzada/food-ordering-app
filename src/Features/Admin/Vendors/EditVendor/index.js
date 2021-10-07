@@ -4,7 +4,6 @@ import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
@@ -173,7 +172,6 @@ const EditVendor = () => {
       ) : (
         <>
           <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" />
-          <Snackbar />
         </>
       )}
     </>

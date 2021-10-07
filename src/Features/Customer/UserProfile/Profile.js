@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import SnackBar from '../../../components/AlertMessage';
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../redux/ActionTypes';
@@ -126,7 +125,6 @@ const UserProfile = () => {
   return (
     <>
       <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" />
-      <SnackBar />
     </>
   );
 };
