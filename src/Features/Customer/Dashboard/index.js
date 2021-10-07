@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 import { Box, Grid } from '@material-ui/core';
-import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
 import MainTab from '../../../components/CardMenus/Tabs';
 import AddEditForm from '../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE } from '../../../components/CommonGridBasedForm/FieldTypes';
-import Drawer from '../../../components/Drawer';
 import Loader from '../../../components/Loader';
 import NoDataFound from '../../../components/NoDataFilter';
 import { SelectChangeHandler } from '../../../util/CommonGridBasedFormUtils';
 import { getCardData } from '../actions';
-import { InsertOrder } from '../mutation';
 import { FetchVendors, GetCategories, GetItemsByVendor } from '../request';
 import { Filter } from './style';
 import { FirstTab } from './style';
@@ -70,8 +67,6 @@ function Dashboard() {
     setFields(updatedFields);
   };
 
-  const { mutate } = useMutation(InsertOrder);
-
   return (
     <div>
       <Grid container>
@@ -82,10 +77,7 @@ function Dashboard() {
             </Filter>
 
             {isItemsFething && <Loader />}
-            <FirstTab>
-              <Drawer mutate={mutate} vendorId={vendorId} />
-              {isTabshow && !isItemsFething && <MainTab category={category} />}
-            </FirstTab>
+            <FirstTab>{isTabshow && !isItemsFething && <MainTab category={category} />}</FirstTab>
             {!isTabshow && <NoDataFound text="No Vendor Seleted" />}
           </Box>
         </Grid>

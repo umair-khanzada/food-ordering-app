@@ -10,7 +10,7 @@ import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, SUCCCESS, passwordRegex } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
@@ -22,7 +22,7 @@ const EditVendor = () => {
   const dispatch = useDispatch();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
-  const [fields, setFields] = useState([
+  const initialEditVendorField = [
     {
       type: SELECT,
       label: 'Role',
@@ -31,7 +31,7 @@ const EditVendor = () => {
       name: 'role',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
     },
@@ -44,7 +44,7 @@ const EditVendor = () => {
       name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
     },
@@ -57,7 +57,7 @@ const EditVendor = () => {
       name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -76,7 +76,7 @@ const EditVendor = () => {
       name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -96,7 +96,7 @@ const EditVendor = () => {
       name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -106,17 +106,12 @@ const EditVendor = () => {
         return '';
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialEditVendorField);
   const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
-      const resetFields = fields.map((field) => {
-        return {
-          ...field,
-          value: '',
-        };
-      });
-      setFields(resetFields);
-      dispatch(toggleSnackbarOpen(successMessage));
+      setFields(initialEditVendorField);
+      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: ERROR }));
     },
     onError: (error) => {
       const {
@@ -124,7 +119,7 @@ const EditVendor = () => {
           data: { message },
         },
       } = error;
-      dispatch(toggleSnackbarOpen(message));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
   const [vendor, setVendor] = useState('');
@@ -172,8 +167,7 @@ const EditVendor = () => {
       ) : (
         <>
           <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={isSuccess} />
-          {isSuccess && <Snackbar type={SUCCCESS} />}
-          {isError && <Snackbar type={ERROR} />}
+          <Snackbar />
         </>
       )}
     </>

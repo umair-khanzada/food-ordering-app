@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCCESS } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 
@@ -25,7 +25,7 @@ const AddUser = () => {
         };
       });
       setFields(resetFields);
-      dispatch(toggleSnackbarOpen(successMessage));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: ERROR }));
     },
     onError: (error) => {
       const {
@@ -34,10 +34,10 @@ const AddUser = () => {
         },
       } = error;
 
-      dispatch(toggleSnackbarOpen(message));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
-  const [fields, setFields] = useState([
+  const initialUserField = [
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -47,7 +47,7 @@ const AddUser = () => {
       name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
     },
@@ -60,7 +60,7 @@ const AddUser = () => {
       name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -79,7 +79,7 @@ const AddUser = () => {
       name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -99,7 +99,7 @@ const AddUser = () => {
 
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -109,7 +109,8 @@ const AddUser = () => {
         return '';
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialUserField);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
@@ -145,8 +146,7 @@ const AddUser = () => {
         loading={isLoading}
         onSaveSuccess={isSuccess}
       />
-      {isSuccess && <Snackbar type={SUCCCESS} />}
-      {isError && <Snackbar type={ERROR} />}
+      <Snackbar />
     </>
   );
 };

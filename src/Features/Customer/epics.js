@@ -3,15 +3,16 @@ import { of, concat } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
+import { toggleSnackbarOpen } from '../../components/AlertMessage/alertRedux/actions';
 import { hideLoader, showLoader } from '../../components/Loader/actions';
 import { EDIT_USER } from '../../redux/ActionTypes';
 import { API_ROUTE } from '../../scripts/constants';
-import { updateUserData } from '../Auth/actions';
+import { logout, updateUserData } from '../Auth/actions';
 
 export const editUserEpic = (action$, state) =>
   action$.pipe(
     ofType(EDIT_USER),
-    mergeMap(({ payload: { id, name, email, password, contact, setOnSaveSuccess } }) => {
+    mergeMap(({ payload: { id, name, email, password, contact, setOnSaveSuccess, history } }) => {
       const {
         value: {
           authReducer: {
@@ -44,7 +45,10 @@ export const editUserEpic = (action$, state) =>
               }),
             );
           }),
-          catchError(() => {
+          catchError((err) => {
+            if (err.status === 401) {
+              return concat(of(logout({ history })), of(toggleSnackbarOpen('Session Expired! Please Log in again.')));
+            }
             setOnSaveSuccess(false);
             return of();
           }),

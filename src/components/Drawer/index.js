@@ -3,10 +3,20 @@ import React, { useState } from 'react';
 import { Fade, Backdrop } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
-import { useDispatch, useSelector } from 'react-redux';
+import { useMutation } from 'react-query';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Customer/actions';
-import { GetHeader } from '../../scripts/constants';
+import {
+  increaseQuantity,
+  deleteItem,
+  closeDrawer,
+  decreaseQuantity,
+  clearCart,
+} from '../../Features/Customer/actions';
+import { GetHeader, SUCCESS, ERROR } from '../../scripts/constants';
+import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
+import { InsertBalance, InsertOrder } from './mutation';
+import { GetBalanceByUserId } from './request';
 import {
   DrawerModal,
   DrawerCard,
@@ -36,10 +46,16 @@ import {
   CartPaper,
   ModalDiv,
 } from './style';
-const Drawer = ({ mutate }) => {
-  const cart = useSelector((state) => state.addtocartReducers.cart);
+const Drawer = () => {
   const { headers } = GetHeader();
-  const isDrawerOpen = useSelector((state) => state.addtocartReducers.isDrawerOpen);
+
+  const { isDrawerOpen, cart } = useSelector((state) => {
+    state.addtocartReducers.isDrawerOpen;
+    const {
+      addtocartReducers: { isDrawerOpen, cart },
+    } = state;
+    return { isDrawerOpen, cart };
+  }, shallowEqual);
   const userId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -57,23 +73,87 @@ const Drawer = ({ mutate }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const { data: balance, refetch } = GetBalanceByUserId(userId);
+
   const placeOrder = () => {
     const items = [];
     let amount = 0;
-    cart.map(({ id, price, qty }) => {
+    let vendor = '';
+    cart.map(({ id, price, qty, vendorId }) => {
       items.push(id);
       amount += price * qty;
+      vendor = vendorId;
     });
+
     const orders = {
       userId,
+      vendorId: vendor,
       items,
       status: 'pending',
       amount,
     };
+    let previousBalance = 0;
+
+    balance.map(({ vendorId: { id }, amount }) => {
+      if (id === vendor) {
+        previousBalance = amount;
+      }
+    });
+
+    const currentBalance = previousBalance - amount;
+
+    const totalBalance = {
+      userId,
+      vendorId: vendor,
+      amount: currentBalance,
+    };
 
     mutate({ orders, headers });
+    addBalanceMutate({ totalBalance, headers });
     setOpen(false);
   };
+
+  const { mutate } = useMutation(InsertOrder, {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: message,
+          messageType: ERROR,
+        }),
+      );
+    },
+  });
+  const { mutate: addBalanceMutate } = useMutation(InsertBalance, {
+    onSuccess: () => {
+      dispatch(clearCart());
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: 'Your order has been placed',
+          messageType: SUCCESS,
+        }),
+      );
+      refetch();
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: message,
+          messageType: ERROR,
+        }),
+      );
+    },
+  });
 
   return (
     <>
