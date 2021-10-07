@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
 import { baseUrl, GetHeader } from '../../../scripts/constants';
-import { logout, sessionExpire } from '../../Auth/actions';
+import { logout } from '../../Auth/actions';
 
 const userList = async (headers, userType) => {
   const { data } = await axios.get(baseUrl + 'users', {
@@ -23,7 +23,6 @@ export const FetchUsers = (userType) => {
     onError: (err) => {
       if (err.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(sessionExpire());
         dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
       }
     },

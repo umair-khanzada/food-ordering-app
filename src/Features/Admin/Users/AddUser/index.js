@@ -37,7 +37,7 @@ const AddUser = () => {
       dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
-  const [fields, setFields] = useState([
+  const initialUserField = [
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -47,7 +47,7 @@ const AddUser = () => {
       name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
     },
@@ -60,7 +60,7 @@ const AddUser = () => {
       name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -79,7 +79,7 @@ const AddUser = () => {
       name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -99,7 +99,7 @@ const AddUser = () => {
 
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -109,7 +109,8 @@ const AddUser = () => {
         return '';
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialUserField);
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
