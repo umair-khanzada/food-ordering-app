@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 
-// import { Snackbar } from '@material-ui/core';
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { category } from '../mutation';
 const AddCategory = () => {
-  const dispatch = useDispatch();
-  const successMessage = 'Successfull category has been created';
   const { headers } = GetHeader();
   const adminId = useSelector((state) => {
     const {
@@ -49,10 +48,19 @@ const AddCategory = () => {
       });
     }
   };
+
+  const history = useHistory();
+
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
     onSuccess: (response) => {
       setFields(initialCategoriesField);
       return response;
+    },
+    onError: (err) => {
+      if (err.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+      }
     },
   });
   const buttons = [

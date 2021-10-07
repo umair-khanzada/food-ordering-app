@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
@@ -102,12 +103,14 @@ const UserProfile = () => {
     },
   ]);
 
+  const history = useHistory();
+
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, false);
     setFields(validateArray);
     const [{ value: name }, { value: email }, { value: password }, { value: contact }] = fields;
 
-    isValid && dispatch(editUser({ id, name, email, password, contact, setOnSaveSuccess }));
+    isValid && dispatch(editUser({ id, name, email, password, contact, setOnSaveSuccess, history }));
   };
 
   const buttons = [
