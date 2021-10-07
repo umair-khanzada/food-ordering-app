@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader/index';
 import { GetHeader } from '../../../../scripts/constants';
 import { fieldChangeHandler, SelectChangeHandler, validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { updateItemById } from '../../mutation';
 import { FetchCategories, FetchItemsById, FetchRestaurants } from '../../request';
 
@@ -156,10 +158,19 @@ const EditMenu = () => {
 
     setFields(updatedFields);
   };
+
+  const dispatch = useDispatch();
+
   const { mutate, isLoading, isSuccess } = useMutation(updateItemById, {
     onSuccess: (response) => {
       setFields(initialItemEditField);
       return response;
+    },
+    onError: (err) => {
+      if (err.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+      }
     },
   });
   const buttons = [
