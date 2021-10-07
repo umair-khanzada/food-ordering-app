@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCCESS } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 
@@ -18,8 +18,14 @@ const AddUser = () => {
   const successMessage = 'Successfull User has been created';
   const { isLoading, mutateAsync, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
-      setFields(initialUserField);
-      dispatch(toggleSnackbarOpen(successMessage));
+      const resetFields = fields.map((field) => {
+        return {
+          ...field,
+          value: '',
+        };
+      });
+      setFields(resetFields);
+      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: ERROR }));
     },
     onError: (error) => {
       const {
@@ -28,7 +34,7 @@ const AddUser = () => {
         },
       } = error;
 
-      dispatch(toggleSnackbarOpen(message));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
   const initialUserField = [
@@ -140,8 +146,7 @@ const AddUser = () => {
         loading={isLoading}
         onSaveSuccess={isSuccess}
       />
-      {isSuccess && <Snackbar type={SUCCCESS} />}
-      {isError && <Snackbar type={ERROR} />}
+      <Snackbar />
     </>
   );
 };

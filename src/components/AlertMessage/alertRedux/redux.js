@@ -3,16 +3,19 @@ import { TOGGLE_SNACKBAR_CLOSE, TOGGLE_SNACKBAR_OPEN } from '../../../redux/Acti
 const initialState = {
   toggleSnackbar: false,
   snackbarMessage: '',
+  messageType: '',
 };
 
 const uiReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_SNACKBAR_OPEN: {
       const { payload } = action;
+      const { snackbarMessage, messageType } = payload;
       return {
         ...state,
         toggleSnackbar: true,
-        snackbarMessage: payload,
+        snackbarMessage,
+        messageType,
       };
     }
 
@@ -21,6 +24,7 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         toggleSnackbar: false,
         snackbarMessage: '',
+        messageType: '',
       };
     }
 

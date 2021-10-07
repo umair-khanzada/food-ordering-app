@@ -71,16 +71,18 @@ function CategoryList() {
       {isFetching ? (
         <Loader />
       ) : (
-        <CustomTable
-          cellWidth="400px"
-          header={header}
-          isDeleting={isLoading}
-          isEditDelete
-          onDelete={onDelete}
-          onEdit={onEdit}
-          rows={categoriesData}
-          tablewidth="90%"
-        />
+        <>
+          <CustomTable
+            cellWidth="400px"
+            header={header}
+            isDeleting={isLoading}
+            isEditDelete
+            onDelete={onDelete}
+            onEdit={onEdit}
+            rows={categoriesData}
+            tablewidth="90%"
+          />
+        </>
       )}
     </>
   );

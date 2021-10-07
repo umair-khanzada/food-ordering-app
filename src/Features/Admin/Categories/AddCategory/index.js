@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-// import { Snackbar } from '@material-ui/core';
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -14,8 +12,6 @@ import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGri
 import { logout } from '../../../Auth/actions';
 import { category } from '../mutation';
 const AddCategory = () => {
-  const dispatch = useDispatch();
-  const successMessage = 'Successfull category has been created';
   const { headers } = GetHeader();
   const adminId = useSelector((state) => {
     const {

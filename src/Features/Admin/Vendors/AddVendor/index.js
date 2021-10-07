@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, SUCCCESS, passwordRegex } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 const AddVendor = () => {
@@ -92,7 +92,7 @@ const AddVendor = () => {
   const { mutateAsync, isLoading, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
       setFields(intialVendorFields);
-      dispatch(toggleSnackbarOpen(successMessage));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: ERROR }));
     },
     onError: (error) => {
       const {
@@ -101,7 +101,7 @@ const AddVendor = () => {
         },
       } = error;
 
-      dispatch(toggleSnackbarOpen(message));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
   const saveHandler = () => {
@@ -132,8 +132,7 @@ const AddVendor = () => {
   return (
     <>
       <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={isSuccess} />
-      {isSuccess && <Snackbar type={SUCCCESS} />}
-      {isError && <Snackbar type={ERROR} />}
+      <Snackbar />
     </>
   );
 };

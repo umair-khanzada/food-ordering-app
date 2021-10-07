@@ -10,7 +10,7 @@ import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader, SUCCCESS, passwordRegex, ERROR } from '../../../../scripts/constants';
+import { contactRegex, GetHeader, passwordRegex, ERROR } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { editUserById } from '../../Common Requests/mutation';
@@ -124,13 +124,31 @@ const EditUser = () => {
 
   const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
-      setFields(initialEditUserField);
-      dispatch(toggleSnackbarOpen(successMessage));
+      const resetFields = fields.map((field) => {
+        return {
+          ...field,
+          value: '',
+        };
+      });
+      setFields(resetFields);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: ERROR,
+        }),
+      );
     },
-    onError: (err) => {
-      if (err.response.status === 401) {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
       }
     },
   });
@@ -167,8 +185,7 @@ const EditUser = () => {
       ) : (
         <>
           <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
-          {isSuccess && <Snackbar type={SUCCCESS} />}
-          {isError && <Snackbar type={ERROR} />}
+          <Snackbar />
         </>
       )}
     </>
