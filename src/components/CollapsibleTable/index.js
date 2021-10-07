@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { TableFooter, TablePagination } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -15,6 +16,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';
 
+import TablePaginationActions from '../CustomTable/Pagination';
 import ConfirmDeletModal from '../Modal';
 import { closeModal, openModal } from '../Modal/action';
 import { CollapseTableContainer, CollapseTableHead, DeleteIcon, DeleteProgress, TableHeader } from './style';
@@ -27,7 +29,34 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
     onDelete(currentSelectedRow);
     dispatch(closeModal());
   };
-  const ColapseTableRow = ({ row: { id, name, items, status, price }, SNo }) => {
+  const deletModalButtons = [
+    { property: 'Cancel', clickHandler: onCancel },
+    { property: 'Confirm', clickHandler: onRowDelete },
+  ];
+  const [page, setPage] = useState(0);
+
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(event.target.value, 10);
+
+    setPage(0);
+  };
+  const [rowsData, setRowsData] = useState([...rows]);
+  useEffect(() => {
+    setRowsData([...rows]);
+  }, [rows]);
+  const RowPerPage = (rowsPerPage, rowsData, page) => {
+    if (rowsPerPage > 0) {
+      return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    }
+
+    return rowsData;
+  };
+  const ColapseTableRow = ({ row: { id, name, items, status, price }, SNo, index }) => {
     const [open, setOpen] = React.useState(false);
     return (
       <>
@@ -37,12 +66,11 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell>{SNo + 1}</TableCell>
-          <TableCell component="th" scope="row">
-            {name}
-          </TableCell>
-          <TableCell>{price}</TableCell>
+          <TableCell>{SNo * 5 + index + 1}</TableCell>
+          <TableCell>{name}</TableCell>
           <TableCell>{items.length + 1}</TableCell>
+          <TableCell>{price}</TableCell>
+
           <TableCell>{status}</TableCell>
           {isEditDelete && (
             <TableCell>
@@ -66,7 +94,7 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
           )}
         </TableRow>
         <TableRow>
-          <TableCell colSpan={6} style={{ paddingBottom: 0, paddingTop: 0 }}>
+          <TableCell colSpan={7}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 5 }}>
                 <Typography component="div" gutterBottom variant="h5">
@@ -96,10 +124,6 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
     );
   };
 
-  const deletModalButtons = [
-    { property: 'Cancel', clickHandler: onCancel },
-    { property: 'Confirm', clickHandler: onRowDelete },
-  ];
   return (
     <CollapseTableContainer component={Paper}>
       {isEditDelete && (
@@ -117,10 +141,27 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
           </TableRow>
         </CollapseTableHead>
         <TableBody>
-          {rows.map((order, index) => (
-            <ColapseTableRow key={order.id} row={order} SNo={index} />
+          {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
+            <ColapseTableRow key={row.id} index={index} row={row} SNo={page} />
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              ActionsComponent={TablePaginationActions}
+              colSpan={7}
+              count={rows.length}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              rowsPerPageOptions={[5]}
+              SelectProps={{
+                native: true,
+              }}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     </CollapseTableContainer>
   );

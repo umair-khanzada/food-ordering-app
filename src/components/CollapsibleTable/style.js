@@ -15,8 +15,8 @@ export const IconContainer = styled.div`
 export const CollapseTableContainer = styled(TableContainer)`
   width: 90%;
   & .MuiTableCell-root {
-    padding: 5px 14px;
-    line-height: 38px;
+    padding: 0px 14px;
+    line-height: 55px;
   }
   margin: auto;
 `;
@@ -27,9 +27,7 @@ export const TableHeader = styled(TableCell)`
   font-size: 16px;
   color: white;
 `;
-export const TableCellContainer = styled(TableCell)`
-  width: ${({ cellwidth }) => cellwidth};
-`;
+
 export const DeleteProgress = styled(CircularProgress)`
   margin-left: 10px;
   margin-top: 10px;

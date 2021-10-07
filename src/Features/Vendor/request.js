@@ -78,18 +78,18 @@ const orderHistory = async (vendorId) => {
 
   orders.map((order) => {
     const { items } = order;
-    const itemArray = [];
+    const itemsArray = [];
 
     items.map((item) => {
       const parseItem = JSON.parse(item);
 
-      itemArray.push(parseItem);
+      itemsArray.push(parseItem);
     });
 
     structuredData.push({
       id: order.id,
       name: order.userId.name,
-      items: itemArray,
+      items: itemsArray,
 
       status: order.status,
       price: order.amount,

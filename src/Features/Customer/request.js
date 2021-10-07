@@ -56,15 +56,21 @@ const orderHistory = async (headers, userId) => {
   const orders = data.filter((order) => order.userId.id == userId);
 
   const structuredData = [];
-  orders.map((order) =>
+  orders.map((order) => {
+    const { items } = order;
+    const itemsArray = [];
+    items.map((item) => {
+      const parseItem = JSON.parse(item);
+      itemsArray.push(parseItem);
+    });
     structuredData.push({
       id: order.id,
-      vendorName: order.vendorId.name,
-      items: order.items.join('\n'),
+      name: order.vendorId.name,
+      items: itemsArray,
       status: order.status,
       price: order.amount,
-    }),
-  );
+    });
+  });
   return structuredData;
 };
 export const FetchOrderHistory = () => {
