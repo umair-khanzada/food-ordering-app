@@ -50,7 +50,7 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText, vendorId 
             </div>
 
             <Typography color="textSecondary" component="p" variant="h4">
-              <ItemPrice>{price}</ItemPrice>
+              <ItemPrice>Rs. {price}</ItemPrice>
             </Typography>
           </InsideContent>
         </Content>

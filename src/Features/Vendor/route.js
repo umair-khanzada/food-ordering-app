@@ -6,6 +6,7 @@ import CategoryList from './CategoryList/CategoryList';
 import Menu from './Menu';
 import AddMenu from './Menu/Add Menu';
 import EditMenu from './Menu/Edit Menu';
+import EditOrderList from './OrderList/Edit Order';
 import OrderList from './OrderList/OrderList';
 import AddRestaurantContainer from './Restaurant/AddRestaurant/AddRestaurantContainer';
 import EditRestaurant from './Restaurants/EditRestaurant';
@@ -67,4 +68,9 @@ export const editRestaurantsRoute = {
   path: RouteNames.editRestaurant,
   permissions: isProtectedRoute,
   component: EditRestaurant,
+};
+export const editOrderdListRoute = {
+  path: RouteNames.editOrderList,
+  permissions: isProtectedRoute,
+  component: EditOrderList,
 };

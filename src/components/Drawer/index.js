@@ -7,6 +7,7 @@ import { useMutation } from 'react-query';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useHistory } from 'react-router';
 
+<<<<<<< HEAD
 import { logout } from '../../Features/Auth/actions';
 import {
   increaseQuantity,
@@ -16,9 +17,12 @@ import {
   clearCart,
 } from '../../Features/Customer/actions';
 import { GetHeader, SUCCESS, ERROR } from '../../scripts/constants';
+=======
+import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Customer/actions';
+import { GetHeader, ERROR } from '../../scripts/constants';
+>>>>>>> a399c9039dee66dd0136f0ee339a374556d118eb
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
-import { InsertBalance, InsertOrder } from './mutation';
-import { GetBalanceByUserId } from './request';
+import { InsertOrder } from './mutation';
 import {
   DrawerModal,
   DrawerCard,
@@ -75,19 +79,20 @@ const Drawer = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const { data: balance, refetch } = GetBalanceByUserId(userId);
-
   const placeOrder = () => {
     const items = [];
+    let item = {};
     let amount = 0;
     let vendor = '';
-    cart.map(({ id, price, qty, vendorId }) => {
-      items.push(id);
+    cart.map(({ name, price, qty, vendorId }) => {
+      item = {
+        name,
+        quantity: qty,
+      };
+      items.push(JSON.stringify(item));
       amount += price * qty;
       vendor = vendorId;
     });
-
     const orders = {
       userId,
       vendorId: vendor,
@@ -95,24 +100,9 @@ const Drawer = () => {
       status: 'pending',
       amount,
     };
-    let previousBalance = 0;
-
-    balance.map(({ vendorId: { id }, amount }) => {
-      if (id === vendor) {
-        previousBalance = amount;
-      }
-    });
-
-    const currentBalance = previousBalance - amount;
-
-    const totalBalance = {
-      userId,
-      vendorId: vendor,
-      amount: currentBalance,
-    };
 
     mutate({ orders, headers });
-    addBalanceMutate({ totalBalance, headers });
+
     setOpen(false);
   };
 

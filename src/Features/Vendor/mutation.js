@@ -57,3 +57,17 @@ export async function updateItemById(data) {
 
   return res;
 }
+export const deleteOrderById = async (id) => {
+  const deleteOrderRes = await axios.delete(baseUrl + 'orders/' + id);
+  return deleteOrderRes;
+};
+
+export const updateOrderById = async ({ id, updatedOrder }) => {
+  const updatedOrderRes = await axios.patch(baseUrl + 'orders/' + id, updatedOrder);
+  return updatedOrderRes;
+};
+export async function InsertBalance(totalBalance) {
+  const res = axios.post(`${baseUrl}balance`, totalBalance);
+
+  return res;
+}
