@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 import curry from '../../assets/curry.jpg';
 import CommonCard from './CommonCard';
 import { ControlGrid } from './style';
-
 const CardMenu = ({ foodType }) => {
   const card = useSelector((state) => {
     const { cartItemReducer } = state;
     return cartItemReducer;
   });
+
   return (
     <div>
       <ControlGrid container elevation={3} spacing={3}>

@@ -11,3 +11,13 @@ export async function InsertOrder(data) {
 
   return res;
 }
+
+export async function InsertBalance(data) {
+  const { totalBalance, headers } = data;
+
+  const res = axios.post(`${baseUrl}balance`, totalBalance, {
+    headers,
+  });
+
+  return res;
+}
