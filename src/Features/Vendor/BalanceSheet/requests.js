@@ -7,11 +7,11 @@ import { baseUrl } from '../../../scripts/constants';
 export const FetchBalances = () => {
   const vendorId = useSelector((state) => state.authReducer.id);
   return useQuery('balance', async () => {
-    const { data } = await axios.get(baseUrl + 'balance');
-    const filteredData = data.filter((res) => res.vendorId.id === vendorId);
+    const { data } = await axios.get(baseUrl + 'balance/vendor/' + vendorId);
+
     const structutredData = [];
 
-    filteredData.map((data) =>
+    data.map((data) =>
       structutredData.push({
         user: data.userId.name,
         amount: data.amount,
@@ -27,8 +27,12 @@ export const FetchBalances = () => {
 };
 
 export const FetchBalanceById = (id) => {
-  return useQuery('balance/' + id, async () => {
-    const { data } = await axios.get(baseUrl + 'balance/' + id);
-    return data;
-  });
+  return useQuery(
+    'balance/' + id,
+    async () => {
+      const { data } = await axios.get(baseUrl + 'balance/' + id);
+      return data;
+    },
+    {},
+  );
 };
