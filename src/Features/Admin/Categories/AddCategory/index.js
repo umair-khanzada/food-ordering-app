@@ -14,7 +14,7 @@ import { category } from '../mutation';
 const AddCategory = () => {
   const dispatch = useDispatch();
   const { headers } = GetHeader();
-  const dispatch = useDispatch();
+
   const adminId = useSelector((state) => {
     const {
       authReducer: { id },
