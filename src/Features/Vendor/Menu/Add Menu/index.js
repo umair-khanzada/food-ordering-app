@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, SelectChangeHandler, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { items } from '../../mutation';
@@ -133,10 +133,17 @@ const AddMenu = () => {
       setSubmit(true);
       return response;
     },
-    onError: (err) => {
-      if (err.response.status === 401) {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
       }
     },
   });
@@ -151,8 +158,7 @@ const AddMenu = () => {
   ];
   return (
     <>
-      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} onSaveSuccess={isSuccess} />
-      ;
+      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} />;
     </>
   );
 };

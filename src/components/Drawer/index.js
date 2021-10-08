@@ -6,8 +6,14 @@ import DoneIcon from '@material-ui/icons/Done';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Customer/actions';
-import { GetHeader, ERROR } from '../../scripts/constants';
+import {
+  increaseQuantity,
+  deleteItem,
+  closeDrawer,
+  decreaseQuantity,
+  clearCart,
+} from '../../Features/Customer/actions';
+import { GetHeader, ERROR, SUCCESS } from '../../scripts/constants';
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
 import { InsertOrder } from './mutation';
 import {
@@ -41,7 +47,6 @@ import {
 } from './style';
 const Drawer = () => {
   const { headers } = GetHeader();
-
   const { isDrawerOpen, cart } = useSelector((state) => {
     state.addtocartReducers.isDrawerOpen;
     const {
@@ -56,13 +61,10 @@ const Drawer = () => {
     return id;
   });
   const dispatch = useDispatch();
-
   const [open, setOpen] = useState(false);
-
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -87,13 +89,19 @@ const Drawer = () => {
       status: 'pending',
       amount,
     };
-
     mutate({ orders, headers });
-
     setOpen(false);
   };
-
   const { mutate } = useMutation(InsertOrder, {
+    onSuccess: () => {
+      dispatch(clearCart());
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: 'Your order has been placed',
+          messageType: SUCCESS,
+        }),
+      );
+    },
     onError: (error) => {
       const {
         response: {
@@ -108,7 +116,6 @@ const Drawer = () => {
       );
     },
   });
-
   return (
     <>
       <React.Fragment key="right">
@@ -126,22 +133,18 @@ const Drawer = () => {
                       return (
                         <DrawerCard key={cartdata.id}>
                           <AddToCartImg alt="cart" src={cartdata.img} />
-
                           <DrawerPrice>
                             <CartCancel>
                               <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
                             </CartCancel>
-
                             <Add>
                               <div>
                                 <h4>{cartdata.name}</h4>
                               </div>
-
                               <DrawerItemPrice>
                                 <CartPrice> {cartdata.price}</CartPrice>
                               </DrawerItemPrice>
                               <PriceSpan />
-
                               <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
                               {cartdata.qty}
                               <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
@@ -180,7 +183,6 @@ const Drawer = () => {
                 <ModalDiv>
                   <Modaltext>Are You Sure You Want To Confirm Your Order</Modaltext>
                 </ModalDiv>
-
                 <ModalIcons>
                   <CancelButton color="black" onClick={() => handleClose()} variant="contained">
                     <CloseIcon />
@@ -199,5 +201,4 @@ const Drawer = () => {
     </>
   );
 };
-
 export default Drawer;

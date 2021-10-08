@@ -9,7 +9,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
-import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { updateCategoryById } from '../mutation';
@@ -35,10 +35,17 @@ const EditCategory = () => {
     onSuccess: () => {
       setFields(initialCategoriesEditField);
     },
-    onError: (err) => {
-      if (err.response.status === 401) {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
       }
     },
   });
@@ -98,13 +105,7 @@ const EditCategory = () => {
     },
   ];
   return (
-    <>
-      {isFetching ? (
-        <Loader />
-      ) : (
-        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={isSuccess} />
-      )}
-    </>
+    <>{isFetching ? <Loader /> : <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" />}</>
   );
 };
 

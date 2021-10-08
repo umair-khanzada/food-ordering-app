@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { category } from '../mutation';
@@ -58,10 +58,17 @@ const AddCategory = () => {
       setFields(initialCategoriesField);
       return response;
     },
-    onError: (err) => {
-      if (err.response.status === 401) {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
       }
     },
   });
@@ -76,7 +83,7 @@ const AddCategory = () => {
   ];
   return (
     <>
-      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Category" onSaveSuccess={isSuccess} />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Category" />
     </>
   );
 };

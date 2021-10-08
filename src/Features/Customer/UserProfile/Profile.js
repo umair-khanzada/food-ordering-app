@@ -13,8 +13,7 @@ import { editUser } from '../actions';
 const UserProfile = () => {
   const { id, email, name, isLoading, contact } = useSelector((state) => {
     const {
-      authReducer: { id, email, name, contact },
-      loaderReducer: { isLoading },
+      authReducer: { id, email, name, contact, isLoading },
     } = state;
     return {
       id,
@@ -27,7 +26,6 @@ const UserProfile = () => {
 
   const dispatch = useDispatch();
 
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const [fields, setFields] = useState([
     {
       type: TEXT_FIELD,
@@ -110,7 +108,7 @@ const UserProfile = () => {
     setFields(validateArray);
     const [{ value: name }, { value: email }, { value: password }, { value: contact }] = fields;
 
-    isValid && dispatch(editUser({ id, name, email, password, contact, setOnSaveSuccess, history }));
+    isValid && dispatch(editUser({ id, name, email, password, contact, history }));
   };
 
   const buttons = [
@@ -124,7 +122,11 @@ const UserProfile = () => {
     },
   ];
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <>
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" />
+    </>
+  );
 };
 
 export default UserProfile;

@@ -16,7 +16,6 @@ const AddRestaurant = () => {
       return response;
     },
   });
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const [restaurant, setRestaurant] = useState('');
 
@@ -44,7 +43,6 @@ const AddRestaurant = () => {
     setFields(validateArray);
 
     if (isValid) {
-      setOnSaveSuccess(true);
       const name = fields.map(({ value }) => value);
 
       mutate({ name: name[0], headers });
@@ -63,7 +61,7 @@ const AddRestaurant = () => {
 
   return (
     <>
-      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" onSaveSuccess={isSuccess} />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" />
     </>
   );
 };

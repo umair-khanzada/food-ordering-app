@@ -22,7 +22,7 @@ export default function BaseRouter() {
     };
   }, shallowEqual);
 
-  const { orderHistory, menuList, dashboard, login } = RouteNames;
+  const { orderHistory, menuList, dashboard, login, vendors } = RouteNames;
 
   return (
     <Switch>
@@ -65,7 +65,7 @@ export default function BaseRouter() {
       ))}
       {isLoggedIn && role === admin && (
         <Route>
-          <Redirect to={orderHistory} />
+          <Redirect to={vendors} />
         </Route>
       )}
       {isLoggedIn && role === vendor && (
