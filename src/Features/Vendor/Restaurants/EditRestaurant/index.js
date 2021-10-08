@@ -56,7 +56,7 @@ const EditRestaurant = () => {
   const [fields, setFields] = useState(initialRestaurantsEditField);
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {
