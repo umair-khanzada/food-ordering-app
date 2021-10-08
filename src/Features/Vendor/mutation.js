@@ -66,3 +66,8 @@ export const updateOrderById = async ({ id, updatedOrder }) => {
   const updatedOrderRes = await axios.patch(baseUrl + 'orders/' + id, updatedOrder);
   return updatedOrderRes;
 };
+export async function InsertBalance(totalBalance) {
+  const res = axios.post(`${baseUrl}balance`, totalBalance);
+
+  return res;
+}

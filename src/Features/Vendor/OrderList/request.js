@@ -8,7 +8,6 @@ const balanceByUserId = async (headers, user) => {
     const { data } = await axios.get(baseUrl + 'balance ', {
       headers,
     });
-    console.log('data', data);
     return data.filter(({ userId: { id } }) => id == user);
   }
 };
