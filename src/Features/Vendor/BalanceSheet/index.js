@@ -45,7 +45,6 @@ const BalanceSheet = () => {
         rows={data}
         tablewidth="50%"
       />
-      ;
     </Box>
   );
 };
