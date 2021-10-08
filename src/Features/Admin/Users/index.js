@@ -9,7 +9,7 @@ import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
-import { GetHeader } from '../../../scripts/constants';
+import { ERROR, GetHeader, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 import { deleteUserById } from '../Common Requests/mutation';
 import { FetchUsers } from '../Common Requests/request';
@@ -18,7 +18,7 @@ import { UsersTitleContainer, UsersTitle } from './style';
 function UsersList() {
   const [users, setUsers] = useState([]);
   const { headers } = GetHeader();
-
+  const successMessage = 'Successfull user has been deleted';
   const { data: usersData, refetch: refetchUser, isFetching } = FetchUsers('user');
   const header = ['S.No', 'name', 'email', 'contact', 'Edit'];
 
@@ -36,14 +36,27 @@ function UsersList() {
   const dispatch = useDispatch();
 
   const DeleteUser = useMutation(deleteUserById, {
-    onError: (err) => {
-      if (err.response.status === 401) {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
       }
     },
     onSuccess: () => {
       refetchUser();
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
     },
   });
   const { addUser, editUser } = RouteNames;

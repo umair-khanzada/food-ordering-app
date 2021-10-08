@@ -47,7 +47,8 @@ export const EditBalanceById = () => {
 
 export const DeleteBalanceById = () => {
   const { headers } = GetHeader();
-
+  const successMessage = 'Successfull balacne has been deleted';
+  const dispatch = useDispatch();
   return useMutation(
     async (id) => {
       const response = await axios.delete(baseUrl + 'balance/' + id, {
@@ -57,11 +58,23 @@ export const DeleteBalanceById = () => {
     },
 
     {
-      onSuccess: (data, variables, context) => {
-        // success!
+      onError: (error) => {
+        const {
+          response: {
+            data: { message },
+          },
+        } = error;
+
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
       },
-      onError: (error, variables, context) => {
-        // An error happened!
+
+      onSuccess: () => {
+        dispatch(
+          toggleSnackbarOpen({
+            snackbarMessage: successMessage,
+            messageType: SUCCESS,
+          }),
+        );
       },
     },
   );
