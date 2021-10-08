@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import SnackBar from '../../components/AlertMessage';
 import AppBar from '../../components/AppBar/AppBar';
 import SideMenu from '../../components/sideMenu';
 import History from '../../util/History';
@@ -17,6 +18,8 @@ function MainContainer() {
   });
 
   const baseRouter = <BaseRouter />;
+  const snackBar = <SnackBar />;
+
   return (
     <Router history={History}>
       {isLoggedIn ? (
@@ -30,9 +33,13 @@ function MainContainer() {
               {baseRouter}
             </Grid>
           </Grid>
+          {snackBar}
         </>
       ) : (
-        baseRouter
+        <>
+          {baseRouter}
+          {snackBar}
+        </>
       )}
     </Router>
   );

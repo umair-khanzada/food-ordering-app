@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
-import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { ERROR, GetHeader, SUCCESS } from '../../../../scripts/constants';
+import { GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { restaurants } from '../../mutation';
 const AddRestaurant = () => {
@@ -26,7 +25,6 @@ const AddRestaurant = () => {
       return response;
     },
   });
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
 
   const [restaurant, setRestaurant] = useState('');
 
@@ -54,7 +52,6 @@ const AddRestaurant = () => {
     setFields(validateArray);
 
     if (isValid) {
-      setOnSaveSuccess(true);
       const name = fields.map(({ value }) => value);
 
       mutate({ name: name[0], headers });
@@ -74,8 +71,6 @@ const AddRestaurant = () => {
   return (
     <>
       <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" />
-      {isSuccess && <Snackbar type={SUCCESS} />}
-      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

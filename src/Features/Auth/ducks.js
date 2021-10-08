@@ -7,6 +7,7 @@ import {
   UPDATE_USER_DATA,
   LOGIN,
   SIGNUP,
+  AUTH_LOADING_TOGGLE,
 } from '../../redux/ActionTypes';
 
 const initialAuthState = {
@@ -22,9 +23,8 @@ const initialAuthState = {
 };
 const initialForgotPasswordState = { message: '', status: 0 };
 const initialResponseMessageState = { message: '', status: 0 };
-const initialSessionExpireState = { isSessionExpired: false };
 
-export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => {
+export const authReducer = (state = { ...initialAuthState }, action) => {
   switch (action.type) {
     case LOGIN:
     case SIGNUP:
@@ -59,6 +59,13 @@ export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => 
         name,
         email,
         contact,
+      };
+    }
+
+    case AUTH_LOADING_TOGGLE: {
+      return {
+        ...state,
+        isLoading: !state.isLoading,
       };
     }
 

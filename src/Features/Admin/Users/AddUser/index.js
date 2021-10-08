@@ -25,7 +25,7 @@ const AddUser = () => {
         };
       });
       setFields(resetFields);
-      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: ERROR }));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
     },
     onError: (error) => {
       const {

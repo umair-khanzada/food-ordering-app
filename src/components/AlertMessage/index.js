@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { toggleSnackbarClose } from './alertRedux/actions';
 import { Container, SuccessIconButton, ErrorIconButton, SuccessMessage, CrossIcon, ShowSnackBarButton } from './style';
@@ -17,7 +17,7 @@ const Snackbar = () => {
       message: snackbarMessage,
       type: messageType,
     };
-  });
+  }, shallowEqual);
 
   let TIMER;
   const TIME = 4000;

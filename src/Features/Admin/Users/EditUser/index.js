@@ -134,7 +134,7 @@ const EditUser = () => {
       dispatch(
         toggleSnackbarOpen({
           snackbarMessage: successMessage,
-          messageType: ERROR,
+          messageType: SUCCESS,
         }),
       );
     },

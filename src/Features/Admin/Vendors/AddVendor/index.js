@@ -92,7 +92,7 @@ const AddVendor = () => {
   const { mutateAsync, isLoading, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
       setFields(intialVendorFields);
-      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: ERROR }));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
     },
     onError: (error) => {
       const {
@@ -105,7 +105,9 @@ const AddVendor = () => {
     },
   });
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    console.log(fields);
+
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {
@@ -114,7 +116,6 @@ const AddVendor = () => {
       fields.map(({ name, value }) => {
         userData[name] = value;
       });
-
       mutateAsync({ headers, userData });
     }
   };

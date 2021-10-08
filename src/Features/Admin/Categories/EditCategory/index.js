@@ -5,7 +5,6 @@ import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
@@ -42,10 +41,17 @@ const EditCategory = () => {
         }),
       );
     },
-    onError: (err) => {
-      if (err.response.status === 401) {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
       }
     },
   });
@@ -105,17 +111,7 @@ const EditCategory = () => {
     },
   ];
   return (
-    <>
-      {isFetching ? (
-        <Loader />
-      ) : (
-        <>
-          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" />
-          {isSuccess && <Snackbar type={SUCCESS} />}
-          {isError && <Snackbar type={ERROR} />}
-        </>
-      )}
-    </>
+    <>{isFetching ? <Loader /> : <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" />}</>
   );
 };
 

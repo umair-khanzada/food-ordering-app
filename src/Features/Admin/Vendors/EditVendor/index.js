@@ -111,7 +111,7 @@ const EditVendor = () => {
   const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       setFields(initialEditVendorField);
-      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: ERROR }));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
     },
     onError: (error) => {
       const {
