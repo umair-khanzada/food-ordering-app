@@ -10,9 +10,16 @@ import { restaurants } from '../../mutation';
 
 const AddRestaurant = () => {
   const { headers } = GetHeader();
-  const { mutate, isLoading, isSuccess } = useMutation(restaurants, {
+  const successMessage = 'Successfull resturant has been created';
+  const { mutate, isLoading, isSuccess, isError } = useMutation(restaurants, {
     onSuccess: (response) => {
       setFields(initialRestaurantField);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCCESS,
+        }),
+      );
       return response;
     },
   });
@@ -63,7 +70,9 @@ const AddRestaurant = () => {
 
   return (
     <>
-      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" onSaveSuccess={isSuccess} />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" />
+      {isSuccess && <Snackbar type={SUCCCESS} />}
+      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };
