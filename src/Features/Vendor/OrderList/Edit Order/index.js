@@ -33,7 +33,6 @@ const EditOrderList = () => {
   const { mutateAsync, isLoading } = useMutation(updateOrderById);
 
   const { data: orderById, isFetching } = FetchOrderById(id);
-
   useEffect(() => {
     if (orderById !== undefined) {
       fields[0].value = orderById['status'];

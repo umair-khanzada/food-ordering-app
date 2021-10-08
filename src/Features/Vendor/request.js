@@ -70,14 +70,11 @@ export const FetchItemsById = (id) => {
   return useQuery('fetchItems', () => ItemsById(headers, id));
 };
 const orderHistory = async (vendorId) => {
-  const { data } = await axios.get(baseUrl + 'orders');
-
-  const orders = data.filter((order) => order.vendorId.id == vendorId);
+  const { data: orders } = await axios.get(baseUrl + 'orders/vendor/' + vendorId);
 
   const structuredData = [];
 
-  orders.map((order) => {
-    const { items } = order;
+  orders.map(({ items, userId, status, amount, id }) => {
     const itemsArray = [];
 
     items.map((item) => {
@@ -87,12 +84,12 @@ const orderHistory = async (vendorId) => {
     });
 
     structuredData.push({
-      id: order.id,
-      name: order.userId.name,
+      id,
+      name: userId.name,
       items: itemsArray,
 
-      status: order.status,
-      price: order.amount,
+      status,
+      price: amount,
     });
   });
   return structuredData;
@@ -110,6 +107,7 @@ export const FetchOrderHistory = () => {
 
 const orderById = async (id) => {
   const { data } = await axios.get(baseUrl + 'orders/' + id);
+  console.log('data', data);
   return data;
 };
 

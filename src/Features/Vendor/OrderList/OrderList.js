@@ -38,15 +38,6 @@ const OrdersList = () => {
       ) : (
         <>
           <OrdersListTitleContainer />
-          {/* <CustomTable
-            header={header}
-            isDeleting={isLoading}
-            isEditDelete
-            onDelete={onDelete}
-            onEdit={onEdit}
-            rows={ordersList}
-            tablewidth="90%"
-          /> */}
           <CollapsibleTable
             header={header}
             isDeleting={isLoading}

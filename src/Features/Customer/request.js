@@ -50,15 +50,11 @@ export const GetItemsByVendor = (vendorId) => {
   return useQuery(['itemsByVendor', vendorId], () => itemsByVendor(headers, vendorId));
 };
 const orderHistory = async (headers, user_Id) => {
-  const { data } = await axios.get(baseUrl + 'orders', {
+  const { data: orders } = await axios.get(baseUrl + 'orders/user/' + user_Id, {
     headers,
   });
-
-  const orders = data.filter(({ userId }) => userId.id == user_Id);
-
   const structuredData = [];
-  orders.map((order) => {
-    const { items } = order;
+  orders.map(({ items, vendorId, status, amount, id }) => {
     const itemsArray = [];
     items.map((item) => {
       const parseItem = JSON.parse(item);
@@ -66,11 +62,11 @@ const orderHistory = async (headers, user_Id) => {
     });
 
     structuredData.push({
-      id: order.id,
-      name: order.vendorId.name,
+      id,
+      name: vendorId.name,
       items: itemsArray,
-      status: order.status,
-      price: order.amount,
+      status,
+      price: amount,
     });
   });
 
