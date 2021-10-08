@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
+import Snackbar from '../../../components/AlertMessage';
 import MainTab from '../../../components/CardMenus/Tabs';
 import AddEditForm from '../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE } from '../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../components/Loader';
 import NoDataFound from '../../../components/NoDataFilter';
-import { SelectChangeHandler } from '../../../util/CommonGridBasedFormUtils';
+import { SelectChangeHandler, fieldChangeHandler } from '../../../util/CommonGridBasedFormUtils';
 import { getCardData } from '../actions';
 import { FetchVendors, GetCategories, GetItemsByVendor } from '../request';
 import { Filter } from './style';
@@ -17,8 +18,13 @@ function Dashboard() {
   const [isTabshow, setTabShow] = useState(false);
   const dispatch = useDispatch();
 
+  const setFormFields = (fields, value, index) => {
+    const updatedFields = fieldChangeHandler(fields, value, index);
+    setFields(updatedFields);
+  };
+
   const [vendorId, setVendorId] = useState('');
-  const [fields, setFields] = useState([
+  const initialSelectFeild = [
     {
       type: AUTO_COMPLETE,
       label: '',
@@ -31,18 +37,18 @@ function Dashboard() {
       onChange: (event, value) => {
         if (value) {
           const { id } = value;
-          let [{ value: fieldValue }] = fields;
-
-          fieldValue = id;
 
           setTabShow(true);
           setVendorId(id);
+          setFormFields(initialSelectFeild, id, 0);
         } else {
+          setFormFields(initialSelectFeild, '', 0);
           setTabShow(false);
         }
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialSelectFeild);
 
   const { data: vendors } = FetchVendors('vendor');
   const { data: category } = GetCategories();
@@ -69,6 +75,7 @@ function Dashboard() {
 
   return (
     <div>
+      <Snackbar />
       <Grid container>
         <Grid item md={12}>
           <Box>

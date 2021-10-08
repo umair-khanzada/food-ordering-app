@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
@@ -13,6 +13,7 @@ import { logout } from '../../../Auth/actions';
 import { category } from '../mutation';
 const AddCategory = () => {
   const { headers } = GetHeader();
+  const dispatch = useDispatch();
   const adminId = useSelector((state) => {
     const {
       authReducer: { id },
