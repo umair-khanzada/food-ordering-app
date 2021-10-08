@@ -45,6 +45,7 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
 
     setPage(0);
   };
+
   const [rowsData, setRowsData] = useState([...rows]);
   useEffect(() => {
     setRowsData([...rows]);
@@ -56,6 +57,7 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
 
     return rowsData;
   };
+
   const ColapseTableRow = ({ row: { id, name, items, status, price }, SNo, index }) => {
     const [open, setOpen] = React.useState(false);
     return (

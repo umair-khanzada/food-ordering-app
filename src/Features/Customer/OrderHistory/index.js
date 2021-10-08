@@ -8,6 +8,7 @@ import { FetchOrderHistory } from '../request';
 
 const OrdersList = () => {
   const { data: ordersList, isFetching } = FetchOrderHistory();
+
   const header = ['S.No', 'Vendor', 'Total Items', 'Price', 'status'];
   return (
     <>
