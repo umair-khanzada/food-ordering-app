@@ -12,8 +12,9 @@ import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGri
 import { logout } from '../../../Auth/actions';
 import { category } from '../mutation';
 const AddCategory = () => {
-  const { headers } = GetHeader();
   const dispatch = useDispatch();
+  const { headers } = GetHeader();
+
   const adminId = useSelector((state) => {
     const {
       authReducer: { id },

@@ -6,17 +6,10 @@ import DoneIcon from '@material-ui/icons/Done';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-import {
-  increaseQuantity,
-  deleteItem,
-  closeDrawer,
-  decreaseQuantity,
-  clearCart,
-} from '../../Features/Customer/actions';
-import { GetHeader, SUCCESS, ERROR } from '../../scripts/constants';
+import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Customer/actions';
+import { GetHeader, ERROR } from '../../scripts/constants';
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
-import { InsertBalance, InsertOrder } from './mutation';
-import { GetBalanceByUserId } from './request';
+import { InsertOrder } from './mutation';
 import {
   DrawerModal,
   DrawerCard,
@@ -73,19 +66,20 @@ const Drawer = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const { data: balance, refetch } = GetBalanceByUserId(userId);
-
   const placeOrder = () => {
     const items = [];
+    let item = {};
     let amount = 0;
     let vendor = '';
-    cart.map(({ id, price, qty, vendorId }) => {
-      items.push(id);
+    cart.map(({ name, price, qty, vendorId }) => {
+      item = {
+        name,
+        quantity: qty,
+      };
+      items.push(JSON.stringify(item));
       amount += price * qty;
       vendor = vendorId;
     });
-
     const orders = {
       userId,
       vendorId: vendor,
@@ -93,53 +87,13 @@ const Drawer = () => {
       status: 'pending',
       amount,
     };
-    let previousBalance = 0;
-
-    balance.map(({ vendorId: { id }, amount }) => {
-      if (id === vendor) {
-        previousBalance = amount;
-      }
-    });
-
-    const currentBalance = previousBalance - amount;
-
-    const totalBalance = {
-      userId,
-      vendorId: vendor,
-      amount: currentBalance,
-    };
 
     mutate({ orders, headers });
-    addBalanceMutate({ totalBalance, headers });
+
     setOpen(false);
   };
 
   const { mutate } = useMutation(InsertOrder, {
-    onError: (error) => {
-      const {
-        response: {
-          data: { message },
-        },
-      } = error;
-      dispatch(
-        toggleSnackbarOpen({
-          snackbarMessage: message,
-          messageType: ERROR,
-        }),
-      );
-    },
-  });
-  const { mutate: addBalanceMutate } = useMutation(InsertBalance, {
-    onSuccess: () => {
-      dispatch(clearCart());
-      dispatch(
-        toggleSnackbarOpen({
-          snackbarMessage: 'Your order has been placed',
-          messageType: SUCCESS,
-        }),
-      );
-      refetch();
-    },
     onError: (error) => {
       const {
         response: {

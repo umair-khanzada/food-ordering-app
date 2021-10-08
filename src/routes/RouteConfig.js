@@ -20,6 +20,7 @@ import {
   RestaurantRoute,
   RestaurantListRoute,
   editRestaurantsRoute,
+  editOrderdListRoute,
 } from '../Features/Vendor/route';
 
 const routeConfig = {
@@ -65,6 +66,7 @@ const routeConfig = {
     EditBalanceSheetRoute,
     RestaurantListRoute,
     editRestaurantsRoute,
+    editOrderdListRoute,
   ],
   officeBoy: [],
 
