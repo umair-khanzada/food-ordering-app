@@ -15,9 +15,6 @@ export const FetchBalances = () => {
       structutredData.push({
         user: data.userId.name,
         amount: data.amount,
-        vendor: data.vendorId.name,
-        vendorId: data.vendorId.id,
-        userId: data.userId.id,
         id: data.id,
       }),
     );
