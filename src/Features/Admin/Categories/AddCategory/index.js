@@ -7,13 +7,14 @@ import { useHistory } from 'react-router';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { GetHeader } from '../../../../scripts/constants';
+import { GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { category } from '../mutation';
 const AddCategory = () => {
   const { headers } = GetHeader();
   const dispatch = useDispatch();
+  const successMessage = 'Successfull category has been created';
   const adminId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -55,6 +56,12 @@ const AddCategory = () => {
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
     onSuccess: (response) => {
       setFields(initialCategoriesField);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
       return response;
     },
     onError: (err) => {

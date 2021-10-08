@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { PRICE } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
+import { ERROR, SUCCESS } from '../../../../scripts/constants';
 import { fieldChangeHandler, validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 import { EditBalanceById } from '../mutations';
 import { FetchBalanceById } from '../requests';
@@ -15,7 +17,7 @@ const EditBalanceSheet = () => {
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
 
-  const { mutate, isSuccess, isLoading: isMutating } = EditBalanceById();
+  const { mutate, isSuccess, isLoading: isMutating, isError } = EditBalanceById();
 
   const { isLoading, data } = FetchBalanceById(id);
   const [fields, setFields] = useState([
@@ -70,7 +72,11 @@ const EditBalanceSheet = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Balance" onSaveSuccess={isSuccess} />
+    <>
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Balance" />
+      {isSuccess && <Snackbar type={SUCCESS} />}
+      {isError && <Snackbar type={ERROR} />}
+    </>
   );
 };
 

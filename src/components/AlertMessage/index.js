@@ -49,7 +49,7 @@ const Snackbar = () => {
         {type === 'success' ? <SuccessIconButton /> : <ErrorIconButton />}
 
         <SuccessMessage>{message}</SuccessMessage>
-        <ShowSnackBarButton onClick={handleClose}>
+        <ShowSnackBarButton onClick={() => handleClose()}>
           <CrossIcon />
         </ShowSnackBarButton>
       </Container>

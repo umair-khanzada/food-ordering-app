@@ -4,11 +4,13 @@ import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader/index';
 import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, SUCCESS } from '../../../../scripts/constants';
 import { fieldChangeHandler, SelectChangeHandler, validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { updateItemById } from '../../mutation';
@@ -18,6 +20,7 @@ const EditMenu = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [restaurantData, setRestaurantData] = useState([]);
   const history = useHistory();
+  const SuccessMessage = 'Successfull menu has been updated';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const { headers } = GetHeader();
@@ -162,9 +165,15 @@ const EditMenu = () => {
 
   const dispatch = useDispatch();
 
-  const { mutate, isLoading, isSuccess } = useMutation(updateItemById, {
+  const { mutate, isLoading, isSuccess, isError } = useMutation(updateItemById, {
     onSuccess: (response) => {
       setFields(initialItemEditField);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: SuccessMessage,
+          messageType: SUCCESS,
+        }),
+      );
       return response;
     },
     onError: (err) => {
@@ -189,7 +198,11 @@ const EditMenu = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" onSaveSuccess={isSuccess} />
+        <>
+          <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" />
+          {isSuccess && <Snackbar type={SUCCESS} />}
+          {isError && <Snackbar type={ERROR} />}
+        </>
       )}
     </>
   );

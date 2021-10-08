@@ -87,10 +87,10 @@ function Menu() {
         <Grid item md={12}>
           <ButtonsContainer>
             <ButtonContainer>
-              <CommonButton onClick={showAddRestraunt} property="Add Restaurant" />
+              <CommonButton onClick={() => showAddRestraunt()} property="Add Restaurant" />
             </ButtonContainer>
             <ButtonContainer>
-              <CommonButton onClick={showAddMenu} property="Add Item" />
+              <CommonButton onClick={() => showAddMenu()} property="Add Item" />
             </ButtonContainer>
           </ButtonsContainer>
           {isFetching ? (
@@ -104,7 +104,7 @@ function Menu() {
                   header={header}
                   isDeleting={isLoading}
                   isEditDelete
-                  onDelete={onDelete}
+                  onDelete={() => onDelete()}
                   onEdit={onEdit}
                   padding="5px 11px"
                   rows={items}

@@ -4,10 +4,11 @@ import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, SelectChangeHandler, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { items } from '../../mutation';
@@ -15,6 +16,7 @@ import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
   const { headers } = GetHeader();
   const [isSubmit, setSubmit] = useState(false);
+  const successMessage = 'Successfull menu has been created';
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -127,10 +129,16 @@ const AddMenu = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { mutate, isLoading, isSuccess } = useMutation(items, {
+  const { mutate, isLoading, isSuccess, isError } = useMutation(items, {
     onSuccess: (response) => {
       setFields(initialItemRestaurant);
       setSubmit(true);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
       return response;
     },
     onError: (err) => {
@@ -151,8 +159,9 @@ const AddMenu = () => {
   ];
   return (
     <>
-      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} onSaveSuccess={isSuccess} />
-      ;
+      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} />
+      {isSuccess && <Snackbar type={SUCCESS} />}
+      {isError && <Snackbar type={ERROR} />};
     </>
   );
 };

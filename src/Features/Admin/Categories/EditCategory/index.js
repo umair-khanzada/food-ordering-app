@@ -5,11 +5,12 @@ import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
-import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { updateCategoryById } from '../mutation';
@@ -23,7 +24,7 @@ const EditCategory = () => {
     } = state;
     return id;
   });
-
+  const successMessage = 'Successfull category has been updated';
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
@@ -31,9 +32,15 @@ const EditCategory = () => {
 
   const dispatch = useDispatch();
 
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
+  const { mutate, mutateAsync, isLoading, isSuccess, isError } = useMutation(updateCategoryById, {
     onSuccess: () => {
       setFields(initialCategoriesEditField);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
     },
     onError: (err) => {
       if (err.response.status === 401) {
@@ -102,7 +109,11 @@ const EditCategory = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" onSaveSuccess={isSuccess} />
+        <>
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Category" />
+          {isSuccess && <Snackbar type={SUCCESS} />}
+          {isError && <Snackbar type={ERROR} />}
+        </>
       )}
     </>
   );

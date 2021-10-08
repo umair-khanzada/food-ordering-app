@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, passwordRegex } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 const AddVendor = () => {
@@ -131,8 +131,9 @@ const AddVendor = () => {
 
   return (
     <>
-      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={isSuccess} />
-      <Snackbar />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" />
+      {isSuccess && <Snackbar type={SUCCESS} />}
+      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

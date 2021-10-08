@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 
-import { baseUrl, GetHeader } from '../../../scripts/constants';
+import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
+import { baseUrl, ERROR, GetHeader, SUCCESS } from '../../../scripts/constants';
 
 export const EditBalanceById = () => {
   const { headers } = GetHeader();
+  const dispatch = useDispatch();
   const successMessage = 'Successfull balance has been updated';
   return useMutation(
     async ({ id, data }) => {
@@ -20,7 +23,7 @@ export const EditBalanceById = () => {
         dispatch(
           toggleSnackbarOpen({
             snackbarMessage: successMessage,
-            messageType: SUCCCESS,
+            messageType: SUCCESS,
           }),
         );
       },

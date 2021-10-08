@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { restaurants } from '../../mutation';
-
 const AddRestaurant = () => {
   const { headers } = GetHeader();
+  const dispatch = useDispatch();
   const successMessage = 'Successfull resturant has been created';
   const { mutate, isLoading, isSuccess, isError } = useMutation(restaurants, {
     onSuccess: (response) => {
@@ -17,7 +20,7 @@ const AddRestaurant = () => {
       dispatch(
         toggleSnackbarOpen({
           snackbarMessage: successMessage,
-          messageType: SUCCCESS,
+          messageType: SUCCESS,
         }),
       );
       return response;
@@ -71,7 +74,7 @@ const AddRestaurant = () => {
   return (
     <>
       <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Restaurant" />
-      {isSuccess && <Snackbar type={SUCCCESS} />}
+      {isSuccess && <Snackbar type={SUCCESS} />}
       {isError && <Snackbar type={ERROR} />}
     </>
   );

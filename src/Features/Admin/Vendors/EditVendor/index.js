@@ -10,14 +10,14 @@ import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, passwordRegex } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
 const EditVendor = () => {
   const { headers } = GetHeader();
-  const successMessage = 'Successfull vendor has been edited';
+  const successMessage = 'Successfull vendor has been updated';
   const history = useHistory();
   const dispatch = useDispatch();
   const params = new URLSearchParams(history.location.search);
@@ -166,8 +166,9 @@ const EditVendor = () => {
         <Loader />
       ) : (
         <>
-          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={isSuccess} />
-          <Snackbar />
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" />
+          {isSuccess && <Snackbar type={SUCCESS} />}
+          {isError && <Snackbar type={ERROR} />}
         </>
       )}
     </>

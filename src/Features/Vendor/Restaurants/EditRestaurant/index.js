@@ -2,21 +2,32 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
-import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { updateRestaurantById } from '../mutation';
 import { FetchRestaurantsById } from '../request';
 
 const EditRestaurant = () => {
   const { headers } = GetHeader();
-  const { mutate, isLoading, isSuccess } = useMutation(updateRestaurantById, {
+  const dispatch = useDispatch();
+  const successMessage = 'Successfull resturant has been updated';
+  const { mutate, isLoading, isSuccess, isError } = useMutation(updateRestaurantById, {
     onSuccess: (response) => {
       setFields(initialRestaurantsEditField);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
       return response;
     },
   });
@@ -85,7 +96,11 @@ const EditRestaurant = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Restaurant" onSaveSuccess={isSuccess} />
+        <>
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Restaurant" />
+          {isSuccess && <Snackbar type={SUCCESS} />}
+          {isError && <Snackbar type={ERROR} />}
+        </>
       )}
     </>
   );
