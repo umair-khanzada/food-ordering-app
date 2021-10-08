@@ -4,12 +4,13 @@ import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader, passwordRegex, ERROR } from '../../../../scripts/constants';
+import { contactRegex, GetHeader, passwordRegex, ERROR, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { editUserById } from '../../Common Requests/mutation';
@@ -133,7 +134,7 @@ const EditUser = () => {
       dispatch(
         toggleSnackbarOpen({
           snackbarMessage: successMessage,
-          messageType: ERROR,
+          messageType: SUCCESS,
         }),
       );
     },
@@ -183,7 +184,8 @@ const EditUser = () => {
         <Loader />
       ) : (
         <>
-          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" />;
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
+          <Snackbar />
         </>
       )}
     </>

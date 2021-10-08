@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
-import { baseUrl, ERROR, GetHeader } from '../../../scripts/constants';
+import { baseUrl, GetHeader } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 
 const userList = async (headers, userType) => {
@@ -20,17 +20,10 @@ export const FetchUsers = (userType) => {
   const history = useHistory();
 
   return useQuery('users', () => userList(headers, userType), {
-    onError: (error) => {
-      const {
-        response: {
-          data: { message },
-        },
-      } = error;
-      if (error.response.status === 401) {
+    onError: (err) => {
+      if (err.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
-      } else {
-        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
       }
     },
   });

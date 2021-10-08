@@ -2,23 +2,20 @@ import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, passwordRegex } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
-import { logout } from '../../../Auth/actions';
 import { createUser } from '../../Common Requests/mutation';
 
 const AddUser = () => {
   const dispatch = useDispatch();
   const { headers } = GetHeader();
   const successMessage = 'Successfull User has been created';
-  const history = useHistory();
-
   const { isLoading, mutateAsync, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
@@ -28,7 +25,7 @@ const AddUser = () => {
         };
       });
       setFields(resetFields);
-      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: ERROR }));
+      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
     },
     onError: (error) => {
       const {
@@ -36,12 +33,8 @@ const AddUser = () => {
           data: { message },
         },
       } = error;
-      if (error.response.status === 401) {
-        dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
-      } else {
-        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
-      }
+
+      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
   const initialUserField = [
@@ -146,7 +139,14 @@ const AddUser = () => {
 
   return (
     <>
-      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" loading={isLoading} />
+      <CommonGridBasedForm
+        buttons={buttons}
+        fields={fields}
+        heading="Add User"
+        loading={isLoading}
+        onSaveSuccess={isSuccess}
+      />
+      <Snackbar />
     </>
   );
 };

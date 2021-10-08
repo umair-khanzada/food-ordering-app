@@ -9,7 +9,7 @@ import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
-import { ERROR, GetHeader } from '../../../scripts/constants';
+import { GetHeader } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 import { deleteUserById } from '../Common Requests/mutation';
 import { FetchUsers } from '../Common Requests/request';
@@ -36,17 +36,10 @@ function UsersList() {
   const dispatch = useDispatch();
 
   const DeleteUser = useMutation(deleteUserById, {
-    onError: (error) => {
-      const {
-        response: {
-          data: { message },
-        },
-      } = error;
-      if (error.response.status === 401) {
+    onError: (err) => {
+      if (err.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
-      } else {
-        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
       }
     },
     onSuccess: () => {

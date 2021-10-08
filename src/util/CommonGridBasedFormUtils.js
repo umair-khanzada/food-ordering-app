@@ -7,10 +7,10 @@ export const validateOnSubmit = (fields, checkEmpty) => {
 
       return field;
     }
-    if (field.errorMessage !== '') {
-      isValid = false;
-      return field;
-    }
+    // if (field.errorMessage !== '') {
+    //   isValid = false;
+    //   return field;
+    // }
 
     field.errorMessage = '';
 
