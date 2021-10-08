@@ -52,7 +52,6 @@ const AddCategory = () => {
   };
 
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
     onSuccess: (response) => {

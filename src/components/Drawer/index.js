@@ -7,20 +7,9 @@ import { useMutation } from 'react-query';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useHistory } from 'react-router';
 
-<<<<<<< HEAD
 import { logout } from '../../Features/Auth/actions';
-import {
-  increaseQuantity,
-  deleteItem,
-  closeDrawer,
-  decreaseQuantity,
-  clearCart,
-} from '../../Features/Customer/actions';
-import { GetHeader, SUCCESS, ERROR } from '../../scripts/constants';
-=======
 import { increaseQuantity, deleteItem, closeDrawer, decreaseQuantity } from '../../Features/Customer/actions';
 import { GetHeader, ERROR } from '../../scripts/constants';
->>>>>>> a399c9039dee66dd0136f0ee339a374556d118eb
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
 import { InsertOrder } from './mutation';
 import {
@@ -109,31 +98,6 @@ const Drawer = () => {
   const history = useHistory();
 
   const { mutate } = useMutation(InsertOrder, {
-    onError: (error) => {
-      const {
-        response: {
-          data: { message },
-        },
-      } = error;
-      if (error.response.status === 401) {
-        dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
-      } else {
-        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
-      }
-    },
-  });
-  const { mutate: addBalanceMutate } = useMutation(InsertBalance, {
-    onSuccess: () => {
-      dispatch(clearCart());
-      dispatch(
-        toggleSnackbarOpen({
-          snackbarMessage: 'Your order has been placed',
-          messageType: SUCCESS,
-        }),
-      );
-      refetch();
-    },
     onError: (error) => {
       const {
         response: {
