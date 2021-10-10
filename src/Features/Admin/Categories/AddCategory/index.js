@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
@@ -12,6 +12,7 @@ import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGri
 import { logout } from '../../../Auth/actions';
 import { category } from '../mutation';
 const AddCategory = () => {
+  const dispatch = useDispatch();
   const { headers } = GetHeader();
   const adminId = useSelector((state) => {
     const {
