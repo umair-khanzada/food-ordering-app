@@ -67,11 +67,7 @@ const EditBalanceSheet = () => {
     },
   ];
 
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Balance" onSaveSuccess={isSuccess} />
-  );
+  return isLoading ? <Loader /> : <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Balance" />;
 };
 
 export default EditBalanceSheet;

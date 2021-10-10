@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { addtocart } from '../../Features/Customer/actions';
 import { ERROR } from '../../scripts/constants';
-import Snackbar from '../AlertMessage';
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
 import CommonButton from '../Button/Button';
 import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice, InsideContent, ResturantName } from './style';
@@ -36,7 +35,6 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText, vendorId 
   };
   return (
     <Grid item>
-      <Snackbar />
       <CardRoot>
         <ImageDiv src={img} title={name} />
 
@@ -52,7 +50,7 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText, vendorId 
             </div>
 
             <Typography color="textSecondary" component="p" variant="h4">
-              <ItemPrice>{price}</ItemPrice>
+              <ItemPrice>Rs. {price}</ItemPrice>
             </Typography>
           </InsideContent>
         </Content>

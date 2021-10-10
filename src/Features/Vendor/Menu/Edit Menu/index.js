@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader/index';
-import { GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader } from '../../../../scripts/constants';
 import { fieldChangeHandler, SelectChangeHandler, validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { updateItemById } from '../../mutation';
@@ -167,10 +167,17 @@ const EditMenu = () => {
       setFields(initialItemEditField);
       return response;
     },
-    onError: (err) => {
-      if (err.response.status === 401) {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
       }
     },
   });
@@ -184,15 +191,7 @@ const EditMenu = () => {
     },
   ];
 
-  return (
-    <>
-      {isFetching ? (
-        <Loader />
-      ) : (
-        <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" onSaveSuccess={isSuccess} />
-      )}
-    </>
-  );
+  return <>{isFetching ? <Loader /> : <AddEditForm buttons={buttons} fields={fields} heading="Edit Item" />}</>;
 };
 
 export default EditMenu;

@@ -32,6 +32,7 @@ const RouteNames = {
   balanceSheet: '/balance-sheet',
   editBalanceSheet: '/edit-balance-sheet',
   restaurantList: '/restaurant-list',
+  editOrderList: '/order-list/edit',
   userBalanceSheet: '/user-balance-sheet',
   showTabScreen: '/show-tab',
 };

@@ -10,7 +10,7 @@ import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader, passwordRegex, ERROR } from '../../../../scripts/constants';
+import { contactRegex, GetHeader, passwordRegex, ERROR, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { editUserById } from '../../Common Requests/mutation';
@@ -134,7 +134,7 @@ const EditUser = () => {
       dispatch(
         toggleSnackbarOpen({
           snackbarMessage: successMessage,
-          messageType: ERROR,
+          messageType: SUCCESS,
         }),
       );
     },

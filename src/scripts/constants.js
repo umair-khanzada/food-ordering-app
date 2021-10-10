@@ -32,7 +32,7 @@ export const GetHeader = () => {
   };
 };
 export const defaultRouteForRoles = {
-  admin: RouteNames.orderHistory,
+  admin: RouteNames.vendors,
   vendor: RouteNames.menuList,
   user: RouteNames.dashboard,
 };

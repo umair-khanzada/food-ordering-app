@@ -28,9 +28,8 @@ const uiReducer = (state = initialState, action) => {
       };
     }
 
-    default: {
+    default:
       return state;
-    }
   }
 };
 export default uiReducer;

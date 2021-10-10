@@ -5,13 +5,14 @@ import { PersonRounded } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../components/AlertMessage';
 import MainTab from '../../../components/CardMenus/Tabs';
 import { AUTO_COMPLETE } from '../../../components/CommonGridBasedForm/FieldTypes';
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm/index';
 import Loader from '../../../components/Loader';
 import NoDataFound from '../../../components/NoDataFilter';
 import RouteNames from '../../../routes/RouteNames';
-import { SelectChangeHandler } from '../../../util/CommonGridBasedFormUtils';
+import { fieldChangeHandler, SelectChangeHandler } from '../../../util/CommonGridBasedFormUtils';
 import { getCardData } from '../actions';
 import { FetchVendors, GetCategories, GetItemsByVendor } from '../request';
 import { Filter, FirstTab } from './style';
@@ -22,8 +23,13 @@ function Dashboard() {
   const dispatch = useDispatch();
   const [vendorName, setVendorName] = useState('');
 
+  const setFormFields = (fields, value, index) => {
+    const updatedFields = fieldChangeHandler(fields, value, index);
+    setFields(updatedFields);
+  };
+
   const [vendorId, setVendorId] = useState('');
-  const [fields, setFields] = useState([
+  const initialSelectFeild = [
     {
       type: AUTO_COMPLETE,
       label: '',
@@ -36,18 +42,18 @@ function Dashboard() {
       onChange: (event, value) => {
         if (value) {
           const { id } = value;
-          let [{ value: fieldValue }] = fields;
-
-          fieldValue = id;
 
           setTabShow(true);
           setVendorId(id);
+          setFormFields(initialSelectFeild, id, 0);
         } else {
+          setFormFields(initialSelectFeild, '', 0);
           setTabShow(false);
         }
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialSelectFeild);
 
   const { data: vendors, isFetching: isVendorFetching } = FetchVendors('vendor');
   const { data: category } = GetCategories();
@@ -91,6 +97,7 @@ function Dashboard() {
   };
   return (
     <div>
+      <Snackbar />
       <Grid container>
         <Grid item md={12}>
           <Box>
