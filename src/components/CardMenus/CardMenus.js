@@ -11,15 +11,14 @@ const CardMenu = ({ foodType }) => {
     const { cartItemReducer } = state;
     return cartItemReducer;
   });
-  let count = 0;
+  let itemFound = 0;
   return (
     <div>
-      {console.log('card', card)};
       <ControlGrid container elevation={3} spacing={3}>
         {card.map(({ id, name, price, categoryId, createdBy }) => {
           const { id: category } = categoryId;
           if (category === foodType) {
-            count++;
+            itemFound++;
             return (
               <CommonCard
                 key={id}
@@ -33,10 +32,8 @@ const CardMenu = ({ foodType }) => {
               />
             );
           }
-
-          // return <NoDataFound key={id} text="No Item Found" />;
         })}
-        {count === 0 ? <NoDataFound text="No Item Found" /> : null}
+        {itemFound === 0 ? <NoDataFound text="No Item Found" /> : null}
       </ControlGrid>
     </div>
   );

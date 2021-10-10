@@ -28,3 +28,8 @@ export const StyledLogo = styled.img`
   min-width: 160px;
   margin-left: 20px;
 `;
+
+export const UserName = styled.h1`
+  color: #717271;
+  font-size: 22px;
+`;
