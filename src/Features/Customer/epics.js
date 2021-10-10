@@ -3,15 +3,15 @@ import { of, concat } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { mergeMap, catchError } from 'rxjs/operators';
 
-import { hideLoader, showLoader } from '../../components/Loader/actions';
+import { toggleSnackbarOpen } from '../../components/AlertMessage/alertRedux/actions';
 import { EDIT_USER } from '../../redux/ActionTypes';
-import { API_ROUTE } from '../../scripts/constants';
-import { updateUserData } from '../Auth/actions';
+import { API_ROUTE, ERROR, SUCCESS } from '../../scripts/constants';
+import { authLoadingToggle, logout, updateUserData } from '../Auth/actions';
 
 export const editUserEpic = (action$, state) =>
   action$.pipe(
     ofType(EDIT_USER),
-    mergeMap(({ payload: { id, name, email, password, contact, setOnSaveSuccess } }) => {
+    mergeMap(({ payload: { id, name, email, password, contact, history } }) => {
       const {
         value: {
           authReducer: {
@@ -20,7 +20,7 @@ export const editUserEpic = (action$, state) =>
         },
       } = state;
       return concat(
-        of(showLoader()),
+        of(authLoadingToggle()),
         ajax({
           url: `${API_ROUTE}/users/${id}`,
           method: 'PATCH',
@@ -35,21 +35,32 @@ export const editUserEpic = (action$, state) =>
           },
         }).pipe(
           mergeMap(({ response: { name, email, contact } }) => {
-            setOnSaveSuccess(true);
-            return of(
-              updateUserData({
-                name,
-                email,
-                contact,
-              }),
+            return concat(
+              of(
+                updateUserData({
+                  name,
+                  email,
+                  contact,
+                }),
+              ),
+
+              of(toggleSnackbarOpen({ snackbarMessage: 'Profile Updated!', messageType: SUCCESS })),
             );
           }),
-          catchError(() => {
-            setOnSaveSuccess(false);
-            return of();
+          catchError((err) => {
+            if (err.status === 401) {
+              return concat(
+                of(logout({ history })),
+                of(
+                  toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }),
+                ),
+              );
+            }
+
+            return of(toggleSnackbarOpen({ snackbarMessage: err.message, messageType: ERROR }));
           }),
         ),
-        of(hideLoader()),
+        of(authLoadingToggle()),
       );
     }),
   );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import CommonGridBasedForm from '../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
@@ -12,8 +13,7 @@ import { editUser } from '../actions';
 const UserProfile = () => {
   const { id, email, name, isLoading, contact } = useSelector((state) => {
     const {
-      authReducer: { id, email, name, contact },
-      loaderReducer: { isLoading },
+      authReducer: { id, email, name, contact, isLoading },
     } = state;
     return {
       id,
@@ -26,7 +26,6 @@ const UserProfile = () => {
 
   const dispatch = useDispatch();
 
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
   const [fields, setFields] = useState([
     {
       type: TEXT_FIELD,
@@ -102,12 +101,14 @@ const UserProfile = () => {
     },
   ]);
 
+  const history = useHistory();
+
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, false);
     setFields(validateArray);
     const [{ value: name }, { value: email }, { value: password }, { value: contact }] = fields;
 
-    isValid && dispatch(editUser({ id, name, email, password, contact, setOnSaveSuccess }));
+    isValid && dispatch(editUser({ id, name, email, password, contact, history }));
   };
 
   const buttons = [
@@ -121,7 +122,11 @@ const UserProfile = () => {
     },
   ];
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" onSaveSuccess={onSaveSuccess} />;
+  return (
+    <>
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Profile" />
+    </>
+  );
 };
 
 export default UserProfile;

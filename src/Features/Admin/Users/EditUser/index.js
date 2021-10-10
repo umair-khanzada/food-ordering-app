@@ -1,34 +1,39 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader } from '../../../../scripts/constants';
+import { contactRegex, GetHeader, passwordRegex, ERROR, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
 const EditUser = () => {
   const { headers } = GetHeader();
+  const dispatch = useDispatch();
   const history = useHistory();
+  const successMessage = 'Successfull user has been edited';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [user, setUser] = useState('');
-  const [fields, setFields] = useState([
+  const initialEditUserField = [
     {
       type: SELECT,
       label: 'Role',
-      values: ['User', 'Vendor'],
+      values: ['user', 'vendor'],
       value: [],
       name: 'role',
       errorMessage: '',
-
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
     },
@@ -41,7 +46,7 @@ const EditUser = () => {
       name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -60,7 +65,7 @@ const EditUser = () => {
       name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
     },
@@ -73,14 +78,14 @@ const EditUser = () => {
       name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
-        if (value.length < 8) {
-          return 'Password must be 8 characters long';
+        if (passwordRegex.test(value) && value.length >= 8) {
+          return ['', true];
         }
-        return '';
+        return ['Password must be 8 characters long and contains atleast one number and letter', false];
       },
     },
     {
@@ -92,7 +97,7 @@ const EditUser = () => {
       name: 'contact',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -102,7 +107,8 @@ const EditUser = () => {
         return '';
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialEditUserField);
 
   const { data: userById, isFetching } = FetchUserById(id);
 
@@ -116,7 +122,7 @@ const EditUser = () => {
     }
   }, [userById]);
 
-  const EditUser = useMutation(editUserById, {
+  const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -125,22 +131,40 @@ const EditUser = () => {
         };
       });
       setFields(resetFields);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
     },
   });
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {
       const userData = {};
+
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact' && name !== 'role') {
-          userData[name] = value;
-        }
+        userData[name] = value;
       });
 
-      EditUser.mutateAsync({ id, headers, userData });
+      mutateAsync({ id, headers, userData });
     }
   };
 
@@ -150,6 +174,7 @@ const EditUser = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
@@ -158,15 +183,11 @@ const EditUser = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <CommonGridBasedForm
-          buttons={buttons}
-          fields={fields}
-          heading="Edit User"
-          loading={EditUser.isLoading}
-          onSaveSuccess={EditUser.isSuccess}
-        />
+        <>
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
+          <Snackbar />
+        </>
       )}
-      ;
     </>
   );
 };

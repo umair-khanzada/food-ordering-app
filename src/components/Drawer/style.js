@@ -40,7 +40,7 @@ export const DrwaerIcon = styled.div`
   height: 46px;
 `;
 export const CartPaper = styled.div`
-  padding: 20px;
+  padding: 20px 10px;
 `;
 export const DrawerText = styled(CloseIcon)`
   width: 30%;
@@ -68,6 +68,7 @@ export const DrawerPrice = styled.div`
 export const Add = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
 `;
 export const DrawerItemPrice = styled.div`
   display: flex;
@@ -91,7 +92,8 @@ export const CheckoutButton = styled(Button)`
   bottom: 2px;
   align-items: center;
   margin: 0 10px;
-  width: 53vh;
+  margin-bottom: 10px;
+  width: 365px;
   color: white;
 `;
 export const ConfirmButton = styled(Button)`
@@ -119,6 +121,7 @@ export const DrawerImageDiv = styled.div`
 `;
 export const DeleteIcon = styled(CloseIcon)`
   margin-left: 23vh;
+  font-size: 20px;
 `;
 
 export const CartPrice = styled.span`
@@ -126,11 +129,13 @@ export const CartPrice = styled.span`
 `;
 export const CartCancel = styled.span`
   width: 60%;
+  padding-bottom: 1px;
 `;
 export const CountQuantity = styled.span`
   margin-left: 50px;
 `;
 export const EmptyCart = styled.div`
+  margin-top: 250px;
   height: 100%;
   justify-content: center;
   align-items: center;
@@ -153,7 +158,12 @@ export const PriceSpan = styled.span`
 `;
 export const EmptyCartHeading = styled(Typography)`
   color: #00b3e3;
+  font-size: 20px;
 `;
 export const EmptyCartPara = styled.p`
   color: #717271;
+`;
+export const ModalDiv = styled.div`
+  text-align: center;
+  padding: 20px;
 `;

@@ -3,17 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import Snackbar from '../../../components/AlertMessage';
 import FormComponent from '../../../components/FormComponent';
-import { emailRegex } from '../../../scripts/constants';
+import { emailRegex, ERROR, passwordRegex } from '../../../scripts/constants';
 import { login, setFormMessage } from '../actions';
 
 function LoginForm() {
-  const { message, isLoading } = useSelector((state) => {
+  const { message, isLoading, toggleSnackbar } = useSelector((state) => {
     const {
       responseMessage: { message },
-      loaderReducer: { isLoading },
+      authReducer: { isLoading },
+      uiReducer: { toggleSnackbar },
     } = state;
-    return { message, isLoading };
+    return { message, isLoading, toggleSnackbar };
   }, shallowEqual);
 
   const validateOnSubmit = () => {
@@ -89,10 +91,10 @@ function LoginForm() {
       value: '',
       errorMessage: '',
       getValidation: (value) => {
-        if (value.length < 8) {
-          return ['Password must be 8 characters long', false];
+        if (passwordRegex.test(value) && value.length >= 8) {
+          return ['', true];
         }
-        return ['', true];
+        return ['Password must be 8 characters long and contains atleast one number and letter', false];
       },
     },
   ]);
@@ -127,6 +129,7 @@ function LoginForm() {
         navigationPath="/signup"
         responseError={message}
       />
+      {toggleSnackbar && <Snackbar type={ERROR} />}
     </div>
   );
 }

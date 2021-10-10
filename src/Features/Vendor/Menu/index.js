@@ -1,73 +1,91 @@
 import React, { useEffect, useState } from 'react';
 
 import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
 import { Grid } from '@material-ui/core';
-import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { useMutation } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
-import { GetHeader } from '../../../scripts/constants';
-import { AuthToken } from '../../../scripts/constants';
+import Loader from '../../../components/Loader/index';
+import RouteNames from '../../../routes/RouteNames';
+import { ERROR, GetHeader } from '../../../scripts/constants';
+import { logout } from '../../Auth/actions';
 import { deleteitem } from '../mutation';
 import { FetchItems } from '../request';
-import {
-  ButtonContainer,
-  ButtonsContainer,
-  FilterButton,
-  HeaderLeftContainer,
-  HeaderRightContainer,
-  CustomTableContainer,
-} from './style';
-
+import { ButtonsContainer, CustomTableContainer, ButtonContainer } from './style';
 function Menu() {
+  const vendorId = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
   const history = useHistory();
   const { headers } = GetHeader();
   const [items, setSaveItems] = useState([]);
-
   const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
-  const { isLoading: fetchloading, data: itemsData, refetch } = FetchItems();
-  const token = AuthToken();
+  const { isLoading: fetchloading, data: itemsData, refetch, isFetching } = FetchItems();
+
+  const { editmenu, addmenu, restaurant } = RouteNames;
+
   useEffect(() => {
-    // dispatch(fetchitems(saveItems));
     if (itemsData !== undefined) {
       saveItems(itemsData);
     }
   }, [itemsData]);
+  const saveItems = ({ data }) => {
+    const itemData = data
+      .filter(({ createdBy }) => vendorId === createdBy)
+      .map(({ name, price, id, categoryId, kitchenId }) => {
+        const { name: categoryName } = categoryId;
+        const { name: kitchenName } = kitchenId;
+        return { name, categoryName, kitchenName, price, id };
+      });
 
-  const saveItems = ({ data: { results } }) => {
-    setSaveItems(results);
+    setSaveItems(itemData);
   };
-
   const handleDateChange = (data) => {
     setSelectedDate(data);
   };
-
-  const onEdit = (row) => {
+  const onEdit = ({ id: itemId }) => {
     history.push({
-      pathname: '/editmenu',
-      state: { data: row },
+      pathname: editmenu,
+      search: `?id=${itemId}`,
     });
   };
-  const header = ['No', 'Item Name', 'Type', 'Restraunt', 'Price', 'Edit'];
-
+  const header = ['Sno', 'ItemName', 'Type', 'Restraunt', 'Price', 'Edit'];
   function showAddMenu() {
-    history.push('/addmenu');
+    history.push(addmenu);
   }
   function showAddRestraunt() {
-    history.push('/restaurant');
+    history.push(restaurant);
   }
-  function deleteItem({ id: itemId }) {
+  function onDelete({ id: itemId }) {
     mutate({ itemId, headers });
   }
 
-  const { mutate, mutateAsync, isLoading, error } = useMutation(deleteitem, {
+  const dispatch = useDispatch();
+
+  const { mutate, isLoading } = useMutation(deleteitem, {
     onSuccess: (response) => {
       refetch();
-
       return response;
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
     },
   });
   return (
@@ -75,44 +93,33 @@ function Menu() {
       <Grid container>
         <Grid item md={12}>
           <ButtonsContainer>
-            <HeaderLeftContainer>
-              <ButtonContainer>
-                <CommonButton onClick={showAddRestraunt} property="Add Restraunt" />
-              </ButtonContainer>
-              <ButtonContainer>
-                <CommonButton onClick={showAddMenu} property="Add Item" />
-              </ButtonContainer>
-            </HeaderLeftContainer>
-            <HeaderRightContainer>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardTimePicker
-                  id="time-picker"
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                  label=" Closing time"
-                  margin="normal"
-                  onChange={handleDateChange}
-                  value={selectedDate}
-                />
-              </MuiPickersUtilsProvider>
-              <FilterButton>
-                <CommonButton property="Save Time" />
-              </FilterButton>
-            </HeaderRightContainer>
+            <ButtonContainer>
+              <CommonButton onClick={showAddRestraunt} property="Add Restaurant" />
+            </ButtonContainer>
+            <ButtonContainer>
+              <CommonButton onClick={showAddMenu} property="Add Item" />
+            </ButtonContainer>
           </ButtonsContainer>
-
-          <CustomTableContainer>
-            <CustomTable
-              deleteTableRow={deleteItem}
-              header={header}
-              isEditDelete
-              onEdit={onEdit}
-              padding="5px 11px"
-              rows={items}
-              tablewidth="90%"
-            />
-          </CustomTableContainer>
+          {isFetching ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>
+              <CustomTableContainer>
+                <CustomTable
+                  header={header}
+                  isDeleting={isLoading}
+                  isEditDelete
+                  onDelete={onDelete}
+                  onEdit={onEdit}
+                  padding="5px 11px"
+                  rows={items}
+                  tablewidth="90%"
+                />
+              </CustomTableContainer>
+            </>
+          )}
         </Grid>
       </Grid>
     </div>

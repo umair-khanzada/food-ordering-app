@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { AuthToken } from '../../../../scripts/constants';
-import { GetHeader } from '../../../../scripts/constants';
-import { validateOnSubmit, SelectChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { ERROR, GetHeader } from '../../../../scripts/constants';
+import { validateOnSubmit, SelectChangeHandler, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
-  const token = AuthToken();
   const { headers } = GetHeader();
-
+  const [isSubmit, setSubmit] = useState(false);
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
     } = state;
     return id;
   });
-
+  const [categoryData, setCategoryData] = useState([]);
+  const [restaurantData, setRestaurantData] = useState([]);
   const restaurantsData = FetchRestaurants();
   const categoriesData = FetchCategories();
-
   useEffect(() => {
     if (restaurantsData !== undefined) {
       saveRestaurant(restaurantsData);
@@ -32,39 +33,32 @@ const AddMenu = () => {
       saveCategories(categoriesData);
     }
   }, [restaurantsData, categoriesData]);
-
-  const saveRestaurant = ({ data: { results } }) => {
-    const resData = results.map(({ name, id }) => ({ label: name, id }));
+  const saveRestaurant = (restaurantsDetails) => {
+    const resData = restaurantsDetails.map(({ name, id }) => ({ label: name, id }));
     const updatedFields = SelectChangeHandler(fields, resData, 1);
-
+    setRestaurantData(resData);
     setFields(updatedFields);
   };
-
-  const saveCategories = ({ data: { results } }) => {
-    const resData = results.map(({ name, id }) => ({ label: name, id }));
-
+  const saveCategories = (categoriesDetails) => {
+    const resData = categoriesDetails.map(({ name, id }) => ({ label: name, id }));
     const updatedFields = SelectChangeHandler(fields, resData, 0);
-
+    setCategoryData(resData);
     setFields(updatedFields);
   };
-
-  const [category, setCategory] = useState([]);
-
-  const [price, setPrice] = useState(null);
-  const [name, setName] = useState();
-  const [fields, setFields] = useState([
+  const initialItemRestaurant = [
     {
       type: AUTO_COMPLETE,
       label: '',
-      values: [],
+      values: categoryData,
       placeholder: 'Categories',
       value: '',
       isValid: true,
       errorMessage: '',
-
       onChange: (event, value) => {
-        if (value !== null) {
-          fields[0].value = value.id;
+        if (value) {
+          setFormFields(initialItemRestaurant, value.id, 0);
+        } else {
+          setFormFields(initialItemRestaurant, '', 0);
         }
       },
     },
@@ -72,49 +66,50 @@ const AddMenu = () => {
       type: AUTO_COMPLETE,
       label: '',
       placeholder: 'Restaurants',
-      values: [],
+      values: restaurantData,
       value: '',
       isValid: true,
       errorMessage: '',
-
       onChange: (event, value) => {
-        if (value !== null) {
-          fields[1].value = value.id;
+        if (value) {
+          setFormFields(initialItemRestaurant, value.id, 1);
+        } else {
+          setFormFields(initialItemRestaurant, '', 1);
         }
       },
     },
     {
       type: PRICE,
       label: 'Price',
-      value: price,
+      value: '',
       isValid: true,
       errorMessage: '',
-
       onChange: (event, index) => {
-        setPrice(event.target.value);
-        fields[index].value = event.target.value;
+        setFormFields(initialItemRestaurant, event.target.value, 2);
       },
     },
     {
       type: TEXT_FIELD,
       label: 'Name',
-      value: name,
+      value: '',
       textFieldType: 'text',
       variant: 'standard',
       isValid: true,
       errorMessage: '',
-
       onChange: (event, index) => {
-        setName(event.target.value);
-        fields[index].value = event.target.value;
+        setFormFields(initialItemRestaurant, event.target.value, 3);
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialItemRestaurant);
 
+  const setFormFields = (fields, value, index) => {
+    const updatedFields = fieldChangeHandler(fields, value, index);
+    setFields(updatedFields);
+  };
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
-
     if (isValid) {
       mutate({
         items: {
@@ -129,26 +124,42 @@ const AddMenu = () => {
     }
   };
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const { mutate, isLoading, isSuccess } = useMutation(items, {
+    onSuccess: (response) => {
+      setFields(initialItemRestaurant);
+      setSubmit(true);
+      return response;
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
+    },
+  });
   const buttons = [
     {
       type: 'button',
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
-  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(items, {
-    onSuccess: (response) => {
-      return response;
-    },
-  });
-
   return (
     <>
-      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} onSaveSuccess={isSuccess} />
-      ;
+      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} />;
     </>
   );
 };
-
 export default AddMenu;

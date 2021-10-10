@@ -1,7 +1,8 @@
 import { isProtectedRoute } from '../../routes/Permission';
 import RouteNames from '../../routes/RouteNames';
+import UserBalanceSheet from './BalanceSheet/index';
 import Dashboard from './Dashboard';
-import CustomerOrderHistory from './OrderHistory/OrderHistory';
+import CustomerOrderHistory from './OrderHistory';
 import Profile from './UserProfile/Profile';
 
 export const dashboardRoute = {
@@ -20,4 +21,9 @@ export const customerOrderHistoryRoute = {
   path: RouteNames.orderHistories,
   permissions: isProtectedRoute,
   component: CustomerOrderHistory,
+};
+export const UserBalanceSheetRoute = {
+  path: RouteNames.userBalanceSheet,
+  permissions: isProtectedRoute,
+  component: UserBalanceSheet,
 };

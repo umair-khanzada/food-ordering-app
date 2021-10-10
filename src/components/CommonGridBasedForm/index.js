@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import { Grid, Input, Typography } from '@material-ui/core';
 
@@ -10,8 +10,14 @@ import AutoComplete from './autoComplete';
 import { SELECT, MULTI_SELECT, DATE, PRICE, TEXT_FIELD, AUTO_COMPLETE } from './FieldTypes';
 import { StyledMainContainerGrid, Error, StyledGridItem, StyledGridColumnItem, StyledFormButton } from './style';
 
-const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSuccess }) => {
+const CommonGridBasedForm = ({ fields, buttons, responseError, heading }) => {
   const WIDTH = '100%';
+
+  const [fieldsData, setFieldsData] = useState([fields]);
+
+  useEffect(() => {
+    setFieldsData(fields);
+  }, [fields]);
 
   const getField = (field, props, index) => {
     switch (field) {
@@ -78,23 +84,22 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSu
       </Grid>
       <StyledGridColumnItem item>
         <Grid container direction="row" spacing={3}>
-          {fields &&
-            fields.map((data, index) => {
-              return (
-                <Fragment key={index}>
-                  <StyledGridItem item xs={6}>
-                    <Typography color="secondary" variant="h4">
-                      {data.label}
-                    </Typography>
-                    {getField(data.type, data, index)}
-                    <br />
-                    <Error>{data.errorMessage}</Error>
-                  </StyledGridItem>
-                </Fragment>
-              );
-            })}
+          {fieldsData?.map((data, index) => {
+            return (
+              <Fragment key={index}>
+                <StyledGridItem item xs={6}>
+                  <Typography color="secondary" variant="h4">
+                    {data.label}
+                  </Typography>
+                  {getField(data.type, data, index)}
+                  <br />
+                  <Error>{data.errorMessage}</Error>
+                </StyledGridItem>
+              </Fragment>
+            );
+          })}
         </Grid>
-        {buttons?.map(({ clickHandler, minWidth, name, type, isLoading, color }, i) => (
+        {buttons?.map(({ clickHandler, minWidth, name, type, color, isLoading }, i) => (
           <div key={name + '-' + i}>
             <StyledFormButton
               key={name + '-' + i}
@@ -110,11 +115,6 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading, onSaveSu
         ))}
       </StyledGridColumnItem>
       {responseError && <Error>{responseError}</Error>}
-      {onSaveSuccess && (
-        <Typography color="primary" variant="h4">
-          Save Successfull!
-        </Typography>
-      )}
     </StyledMainContainerGrid>
   );
 };

@@ -13,6 +13,7 @@ export const createUser = ({ headers, userData }) => {
   const createResposnse = axios.post(baseUrl + 'users', userData, {
     headers,
   });
+
   return createResposnse;
 };
 

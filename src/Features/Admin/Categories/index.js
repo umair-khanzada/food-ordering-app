@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
 import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
 import { GetHeader } from '../../../scripts/constants';
+import { logout } from '../../Auth/actions';
 import { deleteCategory } from './mutation';
 import { FetchCategories } from './request';
 import { CategoriesTitleContainer, CategoriesTitle } from './style';
@@ -23,12 +26,13 @@ function CategoryList() {
       search: `?id=${categoryId}`,
     });
   };
-  const { data: categoriesData, refetch, isLoading } = FetchCategories();
+  const { data: categoriesData, refetch, isFetching } = FetchCategories();
+
   function deletecategory({ id: categoryId }) {
     mutate({ categoryId, headers });
   }
-  const onDelete = (row) => {
-    row;
+  const onDelete = ({ id: categoryId }) => {
+    mutate({ categoryId, headers });
   };
 
   const [header, setHeader] = useState([]);
@@ -37,13 +41,26 @@ function CategoryList() {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
 
-  const { mutate } = useMutation(deleteCategory, {
-    onSuccess: (response) => {
-      refetch();
+  const dispatch = useDispatch();
 
-      return response;
+  const { mutate, isLoading } = useMutation(
+    deleteCategory,
+    {
+      onSuccess: (response) => {
+        refetch();
+
+        return response;
+      },
     },
-  });
+    {
+      onError: (err) => {
+        if (err.response.status === 401) {
+          dispatch(logout({ history }));
+          dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+        }
+      },
+    },
+  );
   return (
     <>
       <CategoriesTitleContainer>
@@ -51,19 +68,21 @@ function CategoryList() {
         <CommonButton onClick={() => history.push(addCategory)} property="Add Category" />
       </CategoriesTitleContainer>
 
-      {isLoading ? (
+      {isFetching ? (
         <Loader />
       ) : (
-        <CustomTable
-          cellWidth="400px"
-          deleteTableRow={deletecategory}
-          header={header}
-          isEditDelete
-          onDelete={onDelete}
-          onEdit={onEdit}
-          rows={categoriesData}
-          tablewidth="90%"
-        />
+        <>
+          <CustomTable
+            cellWidth="400px"
+            header={header}
+            isDeleting={isLoading}
+            isEditDelete
+            onDelete={onDelete}
+            onEdit={onEdit}
+            rows={categoriesData}
+            tablewidth="90%"
+          />
+        </>
       )}
     </>
   );

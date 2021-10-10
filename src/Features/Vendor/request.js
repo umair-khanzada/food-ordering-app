@@ -1,15 +1,18 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
 
 import { GetHeader } from '../../scripts/constants';
 import { baseUrl } from '../../scripts/constants';
 
 const Restaurants = async (headers) => {
-  const res = await axios.get(baseUrl + 'kitchens', {
+  const {
+    data: { results },
+  } = await axios.get(baseUrl + 'kitchens', {
     headers,
   });
 
-  return res;
+  return results;
 };
 
 export const FetchRestaurants = () => {
@@ -22,11 +25,13 @@ export const FetchRestaurants = () => {
 };
 
 const Categories = async (headers) => {
-  const res = await axios.get(baseUrl + 'categories', {
+  const {
+    data: { results },
+  } = await axios.get(baseUrl + 'categories', {
     headers,
   });
 
-  return res;
+  return results;
 };
 
 export const FetchCategories = () => {
@@ -50,4 +55,62 @@ export const FetchItems = () => {
   const { headers } = GetHeader();
 
   return useQuery('items', () => Items(headers));
+};
+
+const ItemsById = async (headers, id) => {
+  const { data } = await axios.get(baseUrl + 'items/' + id, {
+    headers,
+  });
+
+  return data;
+};
+export const FetchItemsById = (id) => {
+  const { headers } = GetHeader();
+
+  return useQuery('fetchItems', () => ItemsById(headers, id));
+};
+const orderHistory = async (vendorId) => {
+  const { data: orders } = await axios.get(baseUrl + 'orders/vendor/' + vendorId);
+
+  const structuredData = [];
+
+  orders.map(({ items, userId, status, amount, id }) => {
+    const itemsArray = [];
+
+    items.map((item) => {
+      const parseItem = JSON.parse(item);
+
+      itemsArray.push(parseItem);
+    });
+
+    structuredData.push({
+      id,
+      name: userId.name,
+      items: itemsArray,
+
+      status,
+      price: amount,
+    });
+  });
+  return structuredData;
+};
+export const FetchOrderHistory = () => {
+  const vendorId = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
+
+  return useQuery('orders', () => orderHistory(vendorId));
+};
+
+const orderById = async (id) => {
+  const { data } = await axios.get(baseUrl + 'orders/' + id);
+  console.log('data', data);
+  return data;
+};
+
+export const FetchOrderById = (id) => {
+  return useQuery('ordersById', () => orderById(id));
 };

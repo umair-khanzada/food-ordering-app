@@ -21,7 +21,6 @@ export default function MultipleSelect({ values, width, onChange, index, value }
     onChange(event, index);
   };
 
-  console.log(value, 'value');
   return (
     <Select
       id="demo-mutiple-checkbox"

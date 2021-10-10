@@ -5,6 +5,9 @@ import {
   MESSAGE,
   LOGOUT_SUCCESS,
   UPDATE_USER_DATA,
+  LOGIN,
+  SIGNUP,
+  AUTH_LOADING_TOGGLE,
 } from '../../redux/ActionTypes';
 
 const initialAuthState = {
@@ -16,15 +19,19 @@ const initialAuthState = {
   name: '',
   role: '',
   contact: '',
+  isLoading: false,
 };
 const initialForgotPasswordState = { message: '', status: 0 };
 const initialResponseMessageState = { message: '', status: 0 };
 
-export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => {
+export const authReducer = (state = { ...initialAuthState }, action) => {
   switch (action.type) {
+    case LOGIN:
+    case SIGNUP:
+      return { ...state, isLoading: true };
+
     case LOGOUT_SUCCESS:
-      // return { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
-      return { isLoggedIn: '', user: '' };
+      return { ...initialAuthState };
 
     case LOGIN_SUCCESS: {
       const { accessToken, refreshToken, name, role, id, email, contact } = action.payload;
@@ -38,12 +45,12 @@ export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => 
         name,
         role,
         contact,
+        isLoading: false,
       };
     }
 
     case LOGIN_ERROR:
-      // return { isLoggedIn: '', accessToken: '', refreshToken: '', name: '' };
-      return { isLoggedIn: '', user: '' };
+      return { ...initialAuthState };
 
     case UPDATE_USER_DATA: {
       const { name, email, contact } = action.payload;
@@ -52,6 +59,13 @@ export const authReducer = (state = { isLoggedIn: false, user: {} }, action) => 
         name,
         email,
         contact,
+      };
+    }
+
+    case AUTH_LOADING_TOGGLE: {
+      return {
+        ...state,
+        isLoading: !state.isLoading,
       };
     }
 

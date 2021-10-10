@@ -1,72 +1,55 @@
 import React from 'react';
 
-import CustomTable from '../../../components/CustomTable';
+import { useMutation } from 'react-query';
+import { useHistory } from 'react-router';
+
+import CollapsibleTable from '../../../components/CollapsibleTable';
+import Loader from '../../../components/Loader';
+import RouteNames from '../../../routes/RouteNames';
+import { deleteOrderById } from '../mutation';
+import { FetchOrderHistory } from '../request';
 import { OrdersListTitleContainer } from './Style';
-export const ordersHistoryList = [
-  {
-    id: 1,
-    name: 'Adnan',
-    contact: '13131232',
-    items: 'roti, keema',
-    price: 'Rs 250',
-    date: '25-9-2021',
-  },
-  {
-    id: 2,
-    name: 'Yousuf',
-    contact: '13131232',
-    items: 'roti, karhai',
-    price: 'Rs 200',
-    date: '25-9-2021',
-  },
-  {
-    id: 3,
-    name: 'Baber',
-    contact: '1309232',
-    items: 'burger',
-    price: 'Rs 350',
-    date: '24-9-2021',
-  },
-  {
-    id: 4,
-    name: 'Dilawer',
-    contact: '23131232',
-    items: 'biryani, coldrink',
-    price: 'Rs 200',
-    date: '24-9-2021',
-  },
-  {
-    id: 5,
-    name: 'Naem',
-    contact: '10901232',
-    items: 'biryani',
-    price: 'Rs 150',
-    date: '23-9-2021',
-  },
-  {
-    id: 6,
-    name: 'Kashif',
-    contact: '13131232',
-    items: 'karhai, coldrink, roti',
-    price: 'Rs 450',
-    date: '23-9-2021',
-  },
-  {
-    id: 7,
-    name: 'Dilawer',
-    contact: '13131232',
-    items: 'biryani, coldrink, salad',
-    price: 'Rs 400',
-    date: '22-9-2021',
-  },
-];
-function OrdersList() {
-  const header = ['No', 'Name', 'Contact', 'Items', 'Price', 'Date'];
+
+const OrdersList = () => {
+  const { data: ordersList, refetch: refetchOrders, isFetching } = FetchOrderHistory();
+
+  const { mutateAsync, isLoading } = useMutation(deleteOrderById, {
+    onSuccess: () => {
+      refetchOrders();
+    },
+  });
+  const history = useHistory();
+  const { editOrderList } = RouteNames;
+  const onEdit = (id) => {
+    history.push({
+      pathname: editOrderList,
+      search: '?id=' + id,
+    });
+  };
+  const onDelete = (id) => {
+    mutateAsync(id);
+  };
+
+  const header = ['S.No', 'Name', 'Price', 'Total Items', 'status', 'edit'];
   return (
     <>
-      <OrdersListTitleContainer />
-      <CustomTable header={header} rows={ordersHistoryList} tablewidth="80%" />
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <>
+          <OrdersListTitleContainer />
+          <CollapsibleTable
+            header={header}
+            isDeleting={isLoading}
+            isEditDelete
+            onDelete={onDelete}
+            onEdit={onEdit}
+            rows={ordersList}
+            tablewidth="90%"
+          />
+        </>
+      )}
     </>
   );
-}
+};
 export default OrdersList;

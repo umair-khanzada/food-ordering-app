@@ -1,28 +1,22 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
+import Snackbar from '../../../../components/AlertMessage';
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
-import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
+import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { createUser } from '../../Common Requests/mutation';
 
 const AddUser = () => {
+  const dispatch = useDispatch();
   const { headers } = GetHeader();
-  const { token } = useSelector((state) => {
-    const {
-      authReducer: {
-        accessToken: { token },
-      },
-    } = state;
-    return {
-      token,
-    };
-  });
-  const AddUser = useMutation(createUser, {
+  const successMessage = 'Successfull User has been created';
+  const { isLoading, mutateAsync, isSuccess, isError } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -31,23 +25,19 @@ const AddUser = () => {
         };
       });
       setFields(resetFields);
+      dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+
+      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
-  const [fields, setFields] = useState([
-    {
-      type: SELECT,
-      label: 'Role',
-      values: ['user', 'vendor'],
-      value: [],
-      name: 'role',
-      errorMessage: '',
-
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
-        setFields(updatedFields);
-        console.log(value);
-      },
-    },
+  const initialUserField = [
     {
       type: TEXT_FIELD,
       textFieldType: 'text',
@@ -57,7 +47,7 @@ const AddUser = () => {
       name: 'name',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
     },
@@ -70,7 +60,7 @@ const AddUser = () => {
       name: 'email',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -89,14 +79,14 @@ const AddUser = () => {
       name: 'password',
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
-        if (value.length < 8) {
-          return 'Password must be 8 characters long';
+        if (passwordRegex.test(value) && value.length >= 8) {
+          return ['', true];
         }
-        return '';
+        return ['Password must be 8 characters long and contains atleast one number and letter', false];
       },
     },
     {
@@ -109,7 +99,7 @@ const AddUser = () => {
 
       errorMessage: '',
       onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(fields, value, index);
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
         setFields(updatedFields);
       },
       getValidation: (value) => {
@@ -119,21 +109,21 @@ const AddUser = () => {
         return '';
       },
     },
-  ]);
+  ];
+  const [fields, setFields] = useState(initialUserField);
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 
     if (isValid) {
       const userData = {};
+      userData['role'] = 'user';
       fields.map(({ name, value }) => {
-        if (name !== 'building' && name !== 'contact') {
-          userData[name] = value;
-        }
+        userData[name] = value;
       });
 
-      AddUser.mutateAsync({ headers, userData });
+      mutateAsync({ headers, userData });
     }
   };
 
@@ -143,17 +133,21 @@ const AddUser = () => {
       name: 'save',
       minWidth: '100%',
       clickHandler: saveHandler,
+      isLoading,
     },
   ];
 
   return (
-    <CommonGridBasedForm
-      buttons={buttons}
-      fields={fields}
-      heading="Add User"
-      loading={AddUser.isLoading}
-      onSaveSuccess={AddUser.isSuccess}
-    />
+    <>
+      <CommonGridBasedForm
+        buttons={buttons}
+        fields={fields}
+        heading="Add User"
+        loading={isLoading}
+        onSaveSuccess={isSuccess}
+      />
+      <Snackbar />
+    </>
   );
 };
 

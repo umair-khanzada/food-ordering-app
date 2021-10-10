@@ -5,8 +5,6 @@ import { DATE, MULTI_SELECT, PRICE, SELECT } from '../../../../components/Common
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 
 const AddOrder = () => {
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
-
   const [fields, setFields] = useState([
     {
       type: SELECT,
@@ -57,9 +55,8 @@ const AddOrder = () => {
   ]);
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
-    isValid ? setOnSaveSuccess(true) : setOnSaveSuccess(false);
   };
 
   const buttons = [
@@ -71,7 +68,7 @@ const AddOrder = () => {
     },
   ];
 
-  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Order" onSaveSuccess={onSaveSuccess} />;
+  return <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Order" />;
 };
 
 export default AddOrder;
