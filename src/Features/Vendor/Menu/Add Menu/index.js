@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { ERROR, GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, SelectChangeHandler, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { items } from '../../mutation';
@@ -15,6 +15,7 @@ import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
   const { headers } = GetHeader();
   const [isSubmit, setSubmit] = useState(false);
+  const successMessage = 'Successfull menu has been created';
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -127,10 +128,16 @@ const AddMenu = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { mutate, isLoading, isSuccess } = useMutation(items, {
+  const { mutate, isLoading, isSuccess, isError } = useMutation(items, {
     onSuccess: (response) => {
       setFields(initialItemRestaurant);
       setSubmit(true);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
       return response;
     },
     onError: (error) => {

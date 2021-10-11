@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 
+import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { GetHeader } from '../../../../scripts/constants';
+import { GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { restaurants } from '../../mutation';
-
 const AddRestaurant = () => {
   const { headers } = GetHeader();
-  const { mutate, isLoading, isSuccess } = useMutation(restaurants, {
+  const dispatch = useDispatch();
+  const successMessage = 'Successfull resturant has been created';
+  const { mutate, isLoading, isSuccess, isError } = useMutation(restaurants, {
     onSuccess: (response) => {
       setFields(initialRestaurantField);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
       return response;
     },
   });

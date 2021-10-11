@@ -132,8 +132,9 @@ const AddVendor = () => {
 
   return (
     <>
-      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" onSaveSuccess={isSuccess} />
-      <Snackbar />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" />
+      {isSuccess && <Snackbar type={SUCCESS} />}
+      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

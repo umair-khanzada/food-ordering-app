@@ -20,7 +20,7 @@ const EditUser = () => {
   const { headers } = GetHeader();
   const dispatch = useDispatch();
   const history = useHistory();
-  const successMessage = 'Successfull user has been edited';
+  const successMessage = 'Successfull user has been updated';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [user, setUser] = useState('');
@@ -184,8 +184,9 @@ const EditUser = () => {
         <Loader />
       ) : (
         <>
-          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
-          <Snackbar />
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" />;
+          {isSuccess && <Snackbar type={SUCCESS} />}
+          {isError && <Snackbar type={ERROR} />}
         </>
       )}
     </>

@@ -17,7 +17,7 @@ import { FetchUserById } from '../../Common Requests/request';
 
 const EditVendor = () => {
   const { headers } = GetHeader();
-  const successMessage = 'Successfull vendor has been edited';
+  const successMessage = 'Successfull vendor has been updated';
   const history = useHistory();
   const dispatch = useDispatch();
   const params = new URLSearchParams(history.location.search);
@@ -166,8 +166,9 @@ const EditVendor = () => {
         <Loader />
       ) : (
         <>
-          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" onSaveSuccess={isSuccess} />
-          <Snackbar />
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" />
+          {isSuccess && <Snackbar type={SUCCESS} />}
+          {isError && <Snackbar type={ERROR} />}
         </>
       )}
     </>

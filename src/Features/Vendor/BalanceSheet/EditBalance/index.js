@@ -15,7 +15,7 @@ const EditBalanceSheet = () => {
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
 
-  const { mutate, isSuccess, isLoading: isMutating } = EditBalanceById();
+  const { mutate, isSuccess, isLoading: isMutating, isError } = EditBalanceById();
 
   const { isLoading, data } = FetchBalanceById(id);
   const [fields, setFields] = useState([
