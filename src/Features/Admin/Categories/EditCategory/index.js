@@ -9,7 +9,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
-import { ERROR, GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { updateCategoryById } from '../mutation';
@@ -23,7 +23,7 @@ const EditCategory = () => {
     } = state;
     return id;
   });
-
+  const successMessage = 'Successfull category has been updated';
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
@@ -31,9 +31,15 @@ const EditCategory = () => {
 
   const dispatch = useDispatch();
 
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
+  const { mutate, mutateAsync, isLoading, isSuccess, isError } = useMutation(updateCategoryById, {
     onSuccess: () => {
       setFields(initialCategoriesEditField);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
     },
     onError: (error) => {
       const {
