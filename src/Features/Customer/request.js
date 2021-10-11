@@ -44,12 +44,6 @@ export const itemsByVendor = async (headers, vendorId) => {
   }
 };
 
-// export const GetItemsByVendor = (vendorId) => {
-//   const { headers } = GetHeader();
-//   const dispatch = useDispatch();
-
-//   return
-// };
 const orderHistory = async (headers, user_Id) => {
   const { data: orders } = await axios.get(baseUrl + 'orders/user/' + user_Id, {
     headers,
