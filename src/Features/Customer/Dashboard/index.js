@@ -31,8 +31,8 @@ function Dashboard() {
                 {vendors.map(({ name, id }) => {
                   return (
                     <VendorCardItem key={id} onClick={() => showVendor(id)}>
-                      <div style={{ borderRadius: '50%', boxShadow: '0 0 10px rgb(0 0 0 / 20%)' }}>
-                        <PersonRounded style={{ fontSize: '49px' }} />
+                      <div style={{ borderRadius: '50%', boxShadow: '0 0 10px rgb(0 0 0 / 20%)', padding: '4px' }}>
+                        <PersonRounded style={{ fontSize: '87px' }} />
                       </div>
                       <h1>{name}</h1>
                     </VendorCardItem>

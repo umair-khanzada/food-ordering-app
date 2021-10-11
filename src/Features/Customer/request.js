@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { baseUrl, GetHeader } from '../../scripts/constants';
+import { getCardData } from './actions';
 
 const Vendors = async (headers, userType) => {
   const { data } = await axios.get(baseUrl + 'users', {
@@ -34,7 +35,7 @@ export const GetCategories = () => {
   return useQuery('categories', () => categories(headers));
 };
 
-const itemsByVendor = async (headers, vendorId) => {
+export const itemsByVendor = async (headers, vendorId) => {
   if (vendorId !== '') {
     const { data } = await axios.get(baseUrl + 'items ', {
       headers,
@@ -46,8 +47,13 @@ const itemsByVendor = async (headers, vendorId) => {
 
 export const GetItemsByVendor = (vendorId) => {
   const { headers } = GetHeader();
+  const dispatch = useDispatch();
 
-  return useQuery(['itemsByVendor', vendorId], () => itemsByVendor(headers, vendorId));
+  return useQuery(['itemsByVendor', vendorId], () => itemsByVendor(headers, vendorId), {
+    onSuccess: (data) => {
+      dispatch(getCardData(data));
+    },
+  });
 };
 const orderHistory = async (headers, user_Id) => {
   const { data: orders } = await axios.get(baseUrl + 'orders/user/' + user_Id, {

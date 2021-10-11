@@ -62,4 +62,7 @@ export const VendorCardItem = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: space-around;
+  &:hover {
+    cursor: pointer;
+  }
 `;
