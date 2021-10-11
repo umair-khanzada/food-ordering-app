@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Grid, ListItemIcon, ListItemText, useTheme, Toolbar, IconButton } from '@material-ui/core';
-import { Lock, OfflineBolt, ShoppingCart } from '@material-ui/icons';
+import { Grid, ListItemIcon, useTheme, Toolbar, IconButton } from '@material-ui/core';
+import { ShoppingCart } from '@material-ui/icons';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -10,8 +10,7 @@ import { openDrawer } from '../../Features/Customer/actions';
 import Roles from '../../roles';
 import RouteNames from '../../routes/RouteNames';
 import Drawer from '../Drawer';
-import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
-import { StyledAppBar, StyledDiv, StyledLogo, StyledMenuItem, UserName } from './Style';
+import { LogoutButton, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
 
 const NavBar = () => {
   const theme = useTheme();
@@ -62,21 +61,11 @@ const NavBar = () => {
                 <UserName>{name}</UserName>
               </>
             )}
-
-            <AppBarMenuButton>
-              <StyledMenuItem onClick={() => history.push(resetPassword)} theme={theme}>
-                <ListItemIcon>
-                  <Lock fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Reset Password" />
-              </StyledMenuItem>
-              <StyledMenuItem onClick={logOut} theme={theme}>
-                <ListItemIcon>
-                  <OfflineBolt fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Log Out" />
-              </StyledMenuItem>
-            </AppBarMenuButton>
+            <ListItemIcon>
+              <IconButton>
+                <LogoutButton fontSize="large" onClick={logOut} />
+              </IconButton>
+            </ListItemIcon>
           </Grid>
         </Toolbar>
       </StyledAppBar>
