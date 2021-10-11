@@ -10,7 +10,7 @@ import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader, passwordRegex, ERROR, SUCCESS } from '../../../../scripts/constants';
+import { contactRegex, GetHeader, ERROR, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { editUserById } from '../../Common Requests/mutation';
@@ -69,25 +69,7 @@ const EditUser = () => {
         setFields(updatedFields);
       },
     },
-    {
-      type: TEXT_FIELD,
-      textFieldType: 'password',
-      label: 'Password',
-      variant: 'standard',
-      value: '',
-      name: 'password',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
-        setFields(updatedFields);
-      },
-      getValidation: (value) => {
-        if (passwordRegex.test(value) && value.length >= 8) {
-          return ['', true];
-        }
-        return ['Password must be 8 characters long and contains atleast one number and letter', false];
-      },
-    },
+
     {
       type: TEXT_FIELD,
       textFieldType: 'text',

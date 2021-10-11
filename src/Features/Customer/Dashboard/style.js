@@ -50,16 +50,18 @@ export const VendorCard = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
 `;
-
+export const VendorImage = styled.img`
+  height: 80px;
+`;
 export const VendorCardItem = styled.div`
   display: flex;
-  padding: 10px;
   text-align: center;
-  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
-  margin: 20px 20px 20px 60px;
-  height: 278px;
-  width: 217px;
+  box-shadow: 5px 5px 10px grey;
+  margin: 16px 20px 16px 60px;
+  height: 220px;
+  width: 200px;
   align-items: center;
+  border-radius: 20px;
   flex-direction: column;
   justify-content: space-around;
   &:hover {

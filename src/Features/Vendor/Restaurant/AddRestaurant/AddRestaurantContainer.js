@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { GetHeader, SUCCESS } from '../../../../scripts/constants';
+import { GetHeader, RestraurantRegex, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { restaurants } from '../../mutation';
 const AddRestaurant = () => {
@@ -41,6 +41,12 @@ const AddRestaurant = () => {
         const updatedFields = fieldChangeHandler(fields, value, index);
 
         setFields(updatedFields);
+      },
+      getValidation: (value) => {
+        if (!RestraurantRegex.test(value)) {
+          return 'Restraurant type is not valid';
+        }
+        return '';
       },
     },
   ];
