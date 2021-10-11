@@ -15,13 +15,13 @@ const MainTab = ({ category }) => {
     <>
       <Paper square>
         <Tabs indicatorColor="secondary" onChange={onTabChange} textColor="secondary" value={tabValue}>
-          {category.map(({ name, id }, index) => {
+          {category?.map(({ name, id }, index) => {
             return <Tab key={index} label={name} value={id} />;
           })}
         </Tabs>
       </Paper>
 
-      {category.map(({ id }, index) => {
+      {category?.map(({ id }, index) => {
         return (
           <TabPanel key={index} index={id} value={tabValue}>
             <CardMenus foodType={id} />

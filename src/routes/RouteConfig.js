@@ -8,6 +8,7 @@ import {
   dashboardRoute,
   profileRoute,
   UserBalanceSheetRoute,
+  showTabRoute,
 } from '../Features/Customer/route';
 import {
   AddMenuRoute,
@@ -54,7 +55,7 @@ const routeConfig = {
     editCategoriesRoute,
   ],
 
-  customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute, UserBalanceSheetRoute],
+  customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute, UserBalanceSheetRoute, showTabRoute],
   vendor: [
     OrderListRoute,
     MenuListRoute,

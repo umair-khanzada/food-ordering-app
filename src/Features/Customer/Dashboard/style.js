@@ -45,3 +45,24 @@ export const UserInfo = styled.div`
 export const FirstTab = styled.div`
   padding-right: 30px;
 `;
+export const VendorCard = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
+export const VendorCardItem = styled.div`
+  display: flex;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+  margin: 20px 20px 20px 60px;
+  height: 278px;
+  width: 217px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  &:hover {
+    cursor: pointer;
+  }
+`;

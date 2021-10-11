@@ -34,6 +34,7 @@ const RouteNames = {
   restaurantList: '/restaurant-list',
   editOrderList: '/order-list/edit',
   userBalanceSheet: '/user-balance-sheet',
+  showTabScreen: '/show-tab',
 };
 
 export default RouteNames;

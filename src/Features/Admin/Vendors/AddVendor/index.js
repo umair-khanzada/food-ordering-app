@@ -105,8 +105,6 @@ const AddVendor = () => {
     },
   });
   const saveHandler = () => {
-    console.log(fields);
-
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 

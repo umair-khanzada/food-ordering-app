@@ -11,7 +11,7 @@ import Roles from '../../roles';
 import RouteNames from '../../routes/RouteNames';
 import Drawer from '../Drawer';
 import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
-import { StyledAppBar, StyledDiv, StyledLogo, StyledMenuItem } from './Style';
+import { StyledAppBar, StyledDiv, StyledLogo, StyledMenuItem, UserName } from './Style';
 
 const NavBar = () => {
   const theme = useTheme();
@@ -32,6 +32,14 @@ const NavBar = () => {
 
     return { cart, role };
   }, shallowEqual);
+  const { name } = useSelector((state) => {
+    const {
+      authReducer: { name },
+    } = state;
+    return {
+      name,
+    };
+  }, shallowEqual);
   const { resetPassword } = RouteNames;
 
   const { user } = Roles;
@@ -41,7 +49,7 @@ const NavBar = () => {
       <StyledAppBar position="sticky">
         <Toolbar>
           <StyledLogo alt="logo" src="https://www.nisum.com/hubfs/logo_nisum.svg" />
-          <Grid alignItems="flex-end" container justifyContent="flex-end">
+          <Grid alignItems="center" container justifyContent="flex-end">
             {role === user && (
               <>
                 <Drawer />
@@ -51,6 +59,7 @@ const NavBar = () => {
                   </span>
                   <ShoppingCart />
                 </IconButton>
+                <UserName>{name}</UserName>
               </>
             )}
 

@@ -107,7 +107,7 @@ export const FetchOrderHistory = () => {
 
 const orderById = async (id) => {
   const { data } = await axios.get(baseUrl + 'orders/' + id);
-  console.log('data', data);
+
   return data;
 };
 
