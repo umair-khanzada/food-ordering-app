@@ -14,7 +14,6 @@ import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
   const { headers } = GetHeader();
-  const [, setSubmit] = useState(false);
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -150,7 +149,6 @@ const AddMenu = () => {
   const { mutate, isLoading } = useMutation(items, {
     onSuccess: (response) => {
       setFields(initialItemRestaurant);
-      setSubmit(true);
       return response;
     },
     onError: (error) => {
@@ -176,10 +174,6 @@ const AddMenu = () => {
       isLoading,
     },
   ];
-  return (
-    <>
-      <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} />;
-    </>
-  );
+  return <AddEditForm buttons={buttons} fields={fields} heading="Add Item" loading={isLoading} />;
 };
 export default AddMenu;

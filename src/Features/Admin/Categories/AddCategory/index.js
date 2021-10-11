@@ -39,16 +39,16 @@ const AddCategory = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
-    if (isValid) {
-      const name = fields.map(({ value }) => value);
+    const [{ value: name }] = fields;
+
+    isValid &&
       mutate({
         category: {
-          name: name[0],
+          name,
           createdBy: adminId,
         },
         headers,
       });
-    }
   };
 
   const history = useHistory();

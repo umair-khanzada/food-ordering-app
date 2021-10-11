@@ -28,21 +28,10 @@ export const EditBalanceById = () => {
 export const DeleteBalanceById = () => {
   const { headers } = GetHeader();
 
-  return useMutation(
-    async (id) => {
-      const response = await axios.delete(baseUrl + 'balance/' + id, {
-        headers,
-      });
-      return response;
-    },
-
-    {
-      onSuccess: () => {
-        // success!
-      },
-      onError: () => {
-        // An error happened!
-      },
-    },
-  );
+  return useMutation(async (id) => {
+    const response = await axios.delete(baseUrl + 'balance/' + id, {
+      headers,
+    });
+    return response;
+  });
 };
