@@ -6,13 +6,11 @@ import { GetHeader } from '../../scripts/constants';
 import { baseUrl } from '../../scripts/constants';
 
 const Restaurants = async (headers) => {
-  const {
-    data: { results },
-  } = await axios.get(baseUrl + 'kitchens', {
+  const { data } = await axios.get(baseUrl + 'kitchens', {
     headers,
   });
 
-  return results;
+  return data;
 };
 
 export const FetchRestaurants = () => {
@@ -107,7 +105,6 @@ export const FetchOrderHistory = () => {
 
 const orderById = async (id) => {
   const { data } = await axios.get(baseUrl + 'orders/' + id);
-  console.log('data', data);
   return data;
 };
 

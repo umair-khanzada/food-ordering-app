@@ -7,7 +7,7 @@ import { useHistory } from 'react-router';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { ERROR, GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader, imgURLRegex } from '../../../../scripts/constants';
 import { validateOnSubmit, SelectChangeHandler, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { items } from '../../mutation';
@@ -100,6 +100,24 @@ const AddMenu = () => {
         setFormFields(initialItemRestaurant, event.target.value, 3);
       },
     },
+    {
+      type: TEXT_FIELD,
+      label: 'Image URL',
+      value: '',
+      textFieldType: 'text',
+      variant: 'standard',
+      isValid: true,
+      errorMessage: '',
+      onChange: (event, index) => {
+        setFormFields(initialItemRestaurant, event.target.value, 4);
+      },
+      getValidation: (value) => {
+        if (!imgURLRegex.test(value)) {
+          return 'IMG URL type is not valid';
+        }
+        return '';
+      },
+    },
   ];
   const [fields, setFields] = useState(initialItemRestaurant);
 
@@ -118,6 +136,7 @@ const AddMenu = () => {
           createdBy: vendorId,
           categoryId: fields[0].value,
           kitchenId: fields[1].value,
+          imgUrl: fields[4].value,
         },
         headers,
       });
