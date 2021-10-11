@@ -15,10 +15,10 @@ export const EditBalanceById = () => {
     },
 
     {
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         // success!
       },
-      onError: (error, variables, context) => {
+      onError: () => {
         // An error happened!
       },
     },
@@ -37,10 +37,10 @@ export const DeleteBalanceById = () => {
     },
 
     {
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         // success!
       },
-      onError: (error, variables, context) => {
+      onError: () => {
         // An error happened!
       },
     },

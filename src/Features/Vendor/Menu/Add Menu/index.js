@@ -14,7 +14,7 @@ import { items } from '../../mutation';
 import { FetchCategories, FetchRestaurants } from '../../request';
 const AddMenu = () => {
   const { headers } = GetHeader();
-  const [isSubmit, setSubmit] = useState(false);
+  const [, setSubmit] = useState(false);
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -32,6 +32,7 @@ const AddMenu = () => {
     if (categoriesData !== undefined) {
       saveCategories(categoriesData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restaurantsData, categoriesData]);
   const saveRestaurant = (restaurantsDetails) => {
     const resData = restaurantsDetails.map(({ name, id }) => ({ label: name, id }));
@@ -84,7 +85,7 @@ const AddMenu = () => {
       value: '',
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
+      onChange: (event) => {
         setFormFields(initialItemRestaurant, event.target.value, 2);
       },
     },
@@ -96,7 +97,7 @@ const AddMenu = () => {
       variant: 'standard',
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
+      onChange: (event) => {
         setFormFields(initialItemRestaurant, event.target.value, 3);
       },
     },
@@ -108,7 +109,7 @@ const AddMenu = () => {
       variant: 'standard',
       isValid: true,
       errorMessage: '',
-      onChange: (event, index) => {
+      onChange: (event) => {
         setFormFields(initialItemRestaurant, event.target.value, 4);
       },
       getValidation: (value) => {
@@ -121,8 +122,8 @@ const AddMenu = () => {
   ];
   const [fields, setFields] = useState(initialItemRestaurant);
 
-  const setFormFields = (fields, value, index) => {
-    const updatedFields = fieldChangeHandler(fields, value, index);
+  const setFormFields = (fields, value) => {
+    const updatedFields = fieldChangeHandler(fields, value);
     setFields(updatedFields);
   };
   const saveHandler = () => {
@@ -146,7 +147,7 @@ const AddMenu = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { mutate, isLoading, isSuccess } = useMutation(items, {
+  const { mutate, isLoading } = useMutation(items, {
     onSuccess: (response) => {
       setFields(initialItemRestaurant);
       setSubmit(true);

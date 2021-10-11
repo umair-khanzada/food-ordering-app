@@ -16,7 +16,7 @@ const AddUser = () => {
   const dispatch = useDispatch();
   const { headers } = GetHeader();
   const successMessage = 'Successfull User has been created';
-  const { isLoading, mutateAsync, isSuccess, isError } = useMutation(createUser, {
+  const { isLoading, mutateAsync, isSuccess } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {

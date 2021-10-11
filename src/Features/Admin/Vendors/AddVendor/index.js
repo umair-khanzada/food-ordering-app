@@ -89,7 +89,7 @@ const AddVendor = () => {
     },
   ];
   const [fields, setFields] = useState(intialVendorFields);
-  const { mutateAsync, isLoading, isSuccess, isError } = useMutation(createUser, {
+  const { mutateAsync, isLoading, isSuccess } = useMutation(createUser, {
     onSuccess: () => {
       setFields(intialVendorFields);
       dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));

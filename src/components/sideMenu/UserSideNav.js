@@ -6,7 +6,7 @@ import RouteNames from '../../routes/RouteNames';
 import StyledLink from '../ReactRouterStyledLink';
 
 const UserSideNav = () => {
-  const { orderHistories, dashboard, profile, AccountBalanceWallet, userBalanceSheet } = RouteNames;
+  const { orderHistories, dashboard, profile, userBalanceSheet } = RouteNames;
 
   return (
     <>

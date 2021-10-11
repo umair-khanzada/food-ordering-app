@@ -21,7 +21,7 @@ const EditMenu = () => {
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const { headers } = GetHeader();
-  const [item, setItem] = useState('');
+  const [, setItem] = useState('');
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -31,7 +31,7 @@ const EditMenu = () => {
   const restaurantsData = FetchRestaurants();
   const categoriesData = FetchCategories();
 
-  const { data: itemsById, refetch, isFetching } = FetchItemsById(id);
+  const { data: itemsById, isFetching } = FetchItemsById(id);
 
   useEffect(() => {
     if (restaurantsData !== undefined) {
@@ -40,6 +40,7 @@ const EditMenu = () => {
     if (categoriesData !== undefined) {
       saveCategories(categoriesData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restaurantsData, categoriesData]);
 
   const saveRestaurant = (restaurantsDetail) => {
@@ -61,6 +62,7 @@ const EditMenu = () => {
       setItem(itemsById);
       saveItemsId(itemsById);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsById]);
 
   const saveItemsId = (itemsId) => {
@@ -187,7 +189,7 @@ const EditMenu = () => {
 
   const dispatch = useDispatch();
 
-  const { mutate, isLoading, isSuccess } = useMutation(updateItemById, {
+  const { mutate, isLoading } = useMutation(updateItemById, {
     onSuccess: (response) => {
       setFields(initialItemEditField);
       return response;

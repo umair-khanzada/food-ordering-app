@@ -40,7 +40,7 @@ const AddCategory = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
     if (isValid) {
-      const name = fields.map(({ value }, index) => value);
+      const name = fields.map(({ value }) => value);
       mutate({
         category: {
           name: name[0],
@@ -53,7 +53,7 @@ const AddCategory = () => {
 
   const history = useHistory();
 
-  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
+  const { mutate, isLoading } = useMutation(category, {
     onSuccess: (response) => {
       setFields(initialCategoriesField);
       return response;

@@ -15,7 +15,7 @@ const EditBalanceSheet = () => {
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
 
-  const { mutate, isSuccess, isLoading: isMutating } = EditBalanceById();
+  const { mutate, isLoading: isMutating } = EditBalanceById();
 
   const { isLoading, data } = FetchBalanceById(id);
   const [fields, setFields] = useState([
@@ -37,6 +37,7 @@ const EditBalanceSheet = () => {
       fields[0].value = data.amount;
       setFields(fields);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const saveHandler = () => {

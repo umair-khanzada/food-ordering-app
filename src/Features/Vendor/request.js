@@ -15,9 +15,7 @@ const Restaurants = async (headers) => {
 
 export const FetchRestaurants = () => {
   const { headers } = GetHeader();
-  const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery('restaurants', () =>
-    Restaurants(headers),
-  );
+  const { data } = useQuery('restaurants', () => Restaurants(headers));
 
   return data;
 };
@@ -34,9 +32,7 @@ const Categories = async (headers) => {
 
 export const FetchCategories = () => {
   const { headers } = GetHeader();
-  const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery('categories', () =>
-    Categories(headers),
-  );
+  const { data } = useQuery('categories', () => Categories(headers));
 
   return data;
 };

@@ -4,7 +4,7 @@ import React from 'react';
 import { Autocomplete } from '@mui/material';
 import { TextField } from '@mui/material';
 const AutoComplete = (props) => {
-  const { values, onChange, index, value, options, placeholder } = props;
+  const { values, onChange, value, placeholder } = props;
 
   const labelValue = value
     ? values.find(({ id }) => {

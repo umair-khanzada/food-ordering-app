@@ -26,8 +26,7 @@ function Menu() {
   const history = useHistory();
   const { headers } = GetHeader();
   const [items, setSaveItems] = useState([]);
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
-  const { isLoading: fetchloading, data: itemsData, refetch, isFetching } = FetchItems();
+  const { data: itemsData, refetch, isFetching } = FetchItems();
 
   const { editmenu, addmenu, restaurant } = RouteNames;
 
@@ -35,6 +34,7 @@ function Menu() {
     if (itemsData !== undefined) {
       saveItems(itemsData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsData]);
   const saveItems = ({ data }) => {
     const itemData = data
@@ -47,9 +47,7 @@ function Menu() {
 
     setSaveItems(itemData);
   };
-  const handleDateChange = (data) => {
-    setSelectedDate(data);
-  };
+
   const onEdit = ({ id: itemId }) => {
     history.push({
       pathname: editmenu,

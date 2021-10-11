@@ -6,7 +6,7 @@ import RouteNames from '../../routes/RouteNames';
 import StyledLink from '../ReactRouterStyledLink';
 
 const VendorSideNav = () => {
-  const { categoryList, orderList, menuList, balanceSheet, restaurantList } = RouteNames;
+  const { orderList, menuList, balanceSheet, restaurantList } = RouteNames;
 
   return (
     <>

@@ -23,7 +23,7 @@ const EditUser = () => {
   const successMessage = 'Successfull user has been edited';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
-  const [user, setUser] = useState('');
+  const [, setUser] = useState('');
   const initialEditUserField = [
     {
       type: SELECT,
@@ -120,9 +120,10 @@ const EditUser = () => {
       });
       setFields(fields);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userById]);
 
-  const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
+  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
