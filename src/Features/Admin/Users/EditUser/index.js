@@ -83,9 +83,9 @@ const EditUser = () => {
       },
       getValidation: (value) => {
         if (passwordRegex.test(value) && value.length >= 8) {
-          return ['', true];
+          return '';
         }
-        return ['Password must be 8 characters long and contains atleast one number and letter', false];
+        return 'Password must be 8 characters long and contains atleast one number and letter';
       },
     },
     {
@@ -157,7 +157,7 @@ const EditUser = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
-
+    // console.log(isValid, fields);
     if (isValid) {
       const userData = {};
 
