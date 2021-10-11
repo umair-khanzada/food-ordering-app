@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 import Snackbar from '../../../components/AlertMessage';
 import RouteNames from '../../../routes/RouteNames';
 import { FetchVendors } from '../request';
+import { VendorCard, VendorCardItem } from './style';
 function Dashboard() {
   const { showTabScreen } = RouteNames;
   const history = useHistory();
@@ -26,33 +27,18 @@ function Dashboard() {
         <Grid item md={12}>
           <Box>
             {vendors && (
-              <vendorCard style={{ display: 'flex' }}>
+              <VendorCard>
                 {vendors.map(({ name, id }) => {
                   return (
-                    <div
-                      key={id}
-                      onClick={() => showVendor(id)}
-                      style={{
-                        display: 'flex',
-                        padding: '10px',
-                        textAlign: 'center',
-                        boxShadow: '0 0 10px rgb(0 0 0 / 20%)',
-                        margin: '20px',
-                        height: '278px',
-                        width: '217px',
-                        alignItems: 'center',
-                        flexDirection: 'column',
-                        justifyContent: 'space-around',
-                      }}
-                    >
+                    <VendorCardItem key={id} onClick={() => showVendor(id)}>
                       <div style={{ borderRadius: '50%', boxShadow: '0 0 10px rgb(0 0 0 / 20%)' }}>
                         <PersonRounded style={{ fontSize: '49px' }} />
                       </div>
                       <h1>{name}</h1>
-                    </div>
+                    </VendorCardItem>
                   );
                 })}
-              </vendorCard>
+              </VendorCard>
             )}
           </Box>
         </Grid>
