@@ -139,14 +139,9 @@ const AddUser = () => {
 
   return (
     <>
-      <CommonGridBasedForm
-        buttons={buttons}
-        fields={fields}
-        heading="Add User"
-        loading={isLoading}
-        onSaveSuccess={isSuccess}
-      />
-      <Snackbar />
+      <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" loading={isLoading} />
+      {isSuccess && <Snackbar type={SUCCESS} />}
+      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

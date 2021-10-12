@@ -92,7 +92,7 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading }) => {
                     {data.label}
                   </Typography>
                   {getField(data.type, data, index)}
-                  <br />
+
                   <Error>{data.errorMessage}</Error>
                 </StyledGridItem>
               </Fragment>

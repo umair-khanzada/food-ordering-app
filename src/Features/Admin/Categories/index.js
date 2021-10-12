@@ -9,7 +9,7 @@ import CommonButton from '../../../components/Button/Button';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
 import RouteNames from '../../../routes/RouteNames';
-import { GetHeader } from '../../../scripts/constants';
+import { ERROR, GetHeader, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 import { deleteCategory } from './mutation';
 import { FetchCategories } from './request';
@@ -33,31 +33,37 @@ function CategoryList() {
   };
 
   const [header, setHeader] = useState([]);
-
+  const successMessage = 'Successfull user has been deleted';
   useEffect(() => {
     setHeader(['S.No', 'Categories', 'Edit']);
   }, []);
 
   const dispatch = useDispatch();
 
-  const { mutate, isLoading } = useMutation(
-    deleteCategory,
-    {
-      onSuccess: (response) => {
-        refetch();
-
-        return response;
-      },
+  const { mutate, isLoading } = useMutation(deleteCategory, {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
     },
-    {
-      onError: (err) => {
-        if (err.response.status === 401) {
-          dispatch(logout({ history }));
-          dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
-        }
-      },
+    onSuccess: () => {
+      refetch();
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: successMessage,
+          messageType: SUCCESS,
+        }),
+      );
     },
-  );
+  });
   return (
     <>
       <CategoriesTitleContainer>

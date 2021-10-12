@@ -32,7 +32,7 @@ export const GetCategories = () => {
   return useQuery('categories', () => categories(headers));
 };
 
-const itemsByVendor = async (headers, vendorId) => {
+export const itemsByVendor = async (headers, vendorId) => {
   if (vendorId !== '') {
     const { data } = await axios.get(baseUrl + 'items ', {
       headers,
@@ -41,11 +41,6 @@ const itemsByVendor = async (headers, vendorId) => {
   }
 };
 
-export const GetItemsByVendor = (vendorId) => {
-  const { headers } = GetHeader();
-
-  return useQuery(['itemsByVendor', vendorId], () => itemsByVendor(headers, vendorId));
-};
 const orderHistory = async (headers, user_Id) => {
   const { data: orders } = await axios.get(baseUrl + 'orders/user/' + user_Id, {
     headers,

@@ -112,6 +112,13 @@ const EditOrderList = () => {
       mutateAsync({ id, updatedOrder });
       if (fields[0].value === 'received') {
         setUserBalance();
+      } else {
+        dispatch(
+          toggleSnackbarOpen({
+            snackbarMessage: 'Successfull order has been edited',
+            messageType: SUCCESS,
+          }),
+        );
       }
     }
   };

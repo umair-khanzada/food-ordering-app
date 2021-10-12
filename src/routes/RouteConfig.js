@@ -8,6 +8,7 @@ import {
   dashboardRoute,
   profileRoute,
   UserBalanceSheetRoute,
+  showTabRoute,
 } from '../Features/Customer/route';
 import {
   AddMenuRoute,
@@ -21,6 +22,7 @@ import {
   RestaurantListRoute,
   editRestaurantsRoute,
   editOrderdListRoute,
+  vendorProfileRoute,
 } from '../Features/Vendor/route';
 
 const routeConfig = {
@@ -52,7 +54,7 @@ const routeConfig = {
     editCategoriesRoute,
   ],
 
-  customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute, UserBalanceSheetRoute],
+  customer: [dashboardRoute, profileRoute, customerOrderHistoryRoute, UserBalanceSheetRoute, showTabRoute],
   vendor: [
     OrderListRoute,
     MenuListRoute,
@@ -65,6 +67,7 @@ const routeConfig = {
     RestaurantListRoute,
     editRestaurantsRoute,
     editOrderdListRoute,
+    vendorProfileRoute,
   ],
   officeBoy: [],
 

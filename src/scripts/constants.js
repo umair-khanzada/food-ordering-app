@@ -8,6 +8,7 @@ export const baseUrl = 'http://localhost:4000/v1/';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
 export const imgURLRegex = new RegExp('(https?://.*([.])(?:png|jpg|webp|gif|jpeg))');
+export const RestraurantRegex = new RegExp('(([A-Za-z ]+s*[0-9]*)|([0-9]*s*[A-Za-z ]+))+');
 
 export const AuthToken = () => {
   return useSelector(({ authReducer: { accessToken } }) => {

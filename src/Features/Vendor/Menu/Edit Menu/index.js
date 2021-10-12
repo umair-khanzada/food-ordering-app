@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader/index';
-import { ERROR, GetHeader, imgURLRegex } from '../../../../scripts/constants';
+import { ERROR, GetHeader, imgURLRegex, SUCCESS } from '../../../../scripts/constants';
 import { fieldChangeHandler, SelectChangeHandler, validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { updateItemById } from '../../mutation';
@@ -18,6 +18,7 @@ const EditMenu = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [restaurantData, setRestaurantData] = useState([]);
   const history = useHistory();
+  const SuccessMessage = 'Successfull menu has been updated';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const { headers } = GetHeader();
@@ -192,6 +193,12 @@ const EditMenu = () => {
   const { mutate, isLoading } = useMutation(updateItemById, {
     onSuccess: (response) => {
       setFields(initialItemEditField);
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: SuccessMessage,
+          messageType: SUCCESS,
+        }),
+      );
       return response;
     },
     onError: (error) => {

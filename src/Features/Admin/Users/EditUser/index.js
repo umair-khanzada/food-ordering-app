@@ -4,13 +4,12 @@ import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, GetHeader, passwordRegex, ERROR, SUCCESS } from '../../../../scripts/constants';
+import { contactRegex, GetHeader, ERROR, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { editUserById } from '../../Common Requests/mutation';
@@ -20,7 +19,7 @@ const EditUser = () => {
   const { headers } = GetHeader();
   const dispatch = useDispatch();
   const history = useHistory();
-  const successMessage = 'Successfull user has been edited';
+  const successMessage = 'Successfull user has been updated';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const [, setUser] = useState('');
@@ -71,25 +70,6 @@ const EditUser = () => {
     },
     {
       type: TEXT_FIELD,
-      textFieldType: 'password',
-      label: 'Password',
-      variant: 'standard',
-      value: '',
-      name: 'password',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(initialEditUserField, value, index);
-        setFields(updatedFields);
-      },
-      getValidation: (value) => {
-        if (passwordRegex.test(value) && value.length >= 8) {
-          return '';
-        }
-        return 'Password must be 8 characters long and contains atleast one number and letter';
-      },
-    },
-    {
-      type: TEXT_FIELD,
       textFieldType: 'text',
       label: 'Contact',
       variant: 'standard',
@@ -123,7 +103,7 @@ const EditUser = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userById]);
 
-  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
+  const { isLoading, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -184,8 +164,7 @@ const EditUser = () => {
         <Loader />
       ) : (
         <>
-          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" onSaveSuccess={isSuccess} />;
-          <Snackbar />
+          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit User" />;
         </>
       )}
     </>
