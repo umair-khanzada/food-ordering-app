@@ -3,7 +3,7 @@ import RouteNames from '../../routes/RouteNames';
 import UserBalanceSheet from './BalanceSheet/index';
 import Dashboard from './Dashboard';
 import ShowTab from './Dashboard/ShowTab';
-import CustomerOrderHistory from './OrderHistory/OrderHistory';
+import CustomerOrderHistory from './OrderHistory';
 import Profile from './UserProfile/Profile';
 
 export const dashboardRoute = {
