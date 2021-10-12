@@ -4,7 +4,6 @@ import { Box, Grid } from '@material-ui/core';
 import { PersonRounded } from '@material-ui/icons';
 import { useHistory } from 'react-router';
 
-import Snackbar from '../../../components/AlertMessage';
 import RouteNames from '../../../routes/RouteNames';
 import { FetchVendors } from '../request';
 import { VendorCard, VendorCardItem } from './style';
@@ -22,7 +21,6 @@ function Dashboard() {
   };
   return (
     <div>
-      <Snackbar />
       <Grid container>
         <Grid item md={12}>
           <Box>

@@ -1,9 +1,12 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
-import { GetHeader } from '../../scripts/constants';
+import { toggleSnackbarOpen } from '../../components/AlertMessage/alertRedux/actions';
+import { ERROR, GetHeader } from '../../scripts/constants';
 import { baseUrl } from '../../scripts/constants';
+import { logout } from '../Auth/actions';
 
 const Restaurants = async (headers) => {
   const { data } = await axios.get(baseUrl + 'kitchens', {
@@ -21,19 +24,32 @@ export const FetchRestaurants = () => {
 };
 
 const Categories = async (headers) => {
-  const {
-    data: { results },
-  } = await axios.get(baseUrl + 'categories', {
+  const { data } = await axios.get(baseUrl + 'categories', {
     headers,
   });
-
-  return results;
+  return data;
 };
 
 export const FetchCategories = () => {
   const { headers } = GetHeader();
-  const { data } = useQuery('categories', () => Categories(headers));
-
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { data } = useQuery('categories', () => Categories(headers), {
+    onSuccess: () => {},
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
+    },
+  });
   return data;
 };
 
