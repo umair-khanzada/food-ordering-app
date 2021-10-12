@@ -65,7 +65,6 @@ export const FetchItemsById = (id) => {
 };
 const orderHistory = async (vendorId) => {
   const { data: orders } = await axios.get(baseUrl + 'orders/vendor/' + vendorId);
-
   const structuredData = [];
 
   orders.map(({ items, userId, status, amount, id }) => {
