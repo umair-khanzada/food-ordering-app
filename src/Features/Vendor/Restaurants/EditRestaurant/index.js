@@ -18,7 +18,7 @@ const EditRestaurant = () => {
   const { headers } = GetHeader();
   const dispatch = useDispatch();
   const successMessage = 'Successfull resturant has been updated';
-  const { mutate, isLoading, isSuccess, isError } = useMutation(updateRestaurantById, {
+  const { mutate, isLoading } = useMutation(updateRestaurantById, {
     onSuccess: (response) => {
       setFields(initialRestaurantsEditField);
       dispatch(
@@ -33,13 +33,14 @@ const EditRestaurant = () => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
-  const { data: restaurantsId, refetch, isFetching } = FetchRestaurantsById(id);
-  const [restaurants, setRestaurantsId] = useState([]);
+  const { data: restaurantsId, isFetching } = FetchRestaurantsById(id);
+  const [setRestaurantsId] = useState([]);
 
   useEffect(() => {
     if (restaurantsId !== undefined) {
       saveRestaurantsId(restaurantsId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restaurantsId]);
 
   const saveRestaurantsId = (restaurantsId) => {
@@ -70,7 +71,7 @@ const EditRestaurant = () => {
     setFields(validateArray);
 
     if (isValid) {
-      const name = fields.map(({ value }, index) => value);
+      const name = fields.map(({ value }) => value);
       mutate({
         restaurant: {
           name: name[0],

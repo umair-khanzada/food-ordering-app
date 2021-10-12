@@ -13,13 +13,11 @@ const Vendors = async (headers, userType) => {
 };
 
 const categories = async (headers) => {
-  const {
-    data: { results },
-  } = await axios.get(baseUrl + 'categories ', {
+  const { data } = await axios.get(baseUrl + 'categories ', {
     headers,
   });
 
-  return results;
+  return data;
 };
 
 export const FetchVendors = (userType) => {
@@ -39,8 +37,7 @@ export const itemsByVendor = async (headers, vendorId) => {
     const { data } = await axios.get(baseUrl + 'items ', {
       headers,
     });
-
-    return data.filter(({ createdBy }) => createdBy == vendorId);
+    return data.filter(({ createdBy }) => createdBy === vendorId);
   }
 };
 

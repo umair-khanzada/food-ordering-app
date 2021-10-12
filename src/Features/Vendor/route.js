@@ -11,6 +11,7 @@ import OrderList from './OrderList/OrderList';
 import AddRestaurantContainer from './Restaurant/AddRestaurant/AddRestaurantContainer';
 import EditRestaurant from './Restaurants/EditRestaurant';
 import RestaurantList from './Restaurants/index';
+import VendorProfile from './vendorProfile';
 
 export const MenuListRoute = {
   path: RouteNames.menuList,
@@ -73,4 +74,10 @@ export const editOrderdListRoute = {
   path: RouteNames.editOrderList,
   permissions: isProtectedRoute,
   component: EditOrderList,
+};
+
+export const vendorProfileRoute = {
+  path: RouteNames.vendorProfile,
+  permissions: isProtectedRoute,
+  component: VendorProfile,
 };

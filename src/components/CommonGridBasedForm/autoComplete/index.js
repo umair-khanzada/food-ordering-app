@@ -4,14 +4,13 @@ import React from 'react';
 import { Autocomplete } from '@mui/material';
 import { TextField } from '@mui/material';
 const AutoComplete = (props) => {
-  const { values, onChange, index, value, options, placeholder } = props;
+  const { values, onChange, value, placeholder } = props;
 
   const labelValue = value
     ? values.find(({ id }) => {
         return id === value;
       })
     : '';
-  // const [label, setLabel] = useState('');
 
   return (
     <Autocomplete
@@ -20,11 +19,9 @@ const AutoComplete = (props) => {
       id="combo-box-demo"
       onChange={onChange}
       options={values}
-      renderInput={(params) => <TextField {...params} label={placeholder} />}
-      sx={{ width: 300 }}
-      // value={labelValue ? labelValue.label : labelValue}
+      renderInput={(params) => <TextField variant="standard" {...params} label={placeholder} />}
+      sx={{ width: 250 }}
       value={labelValue ? labelValue : ''}
-      // value={value}
     />
   );
 };

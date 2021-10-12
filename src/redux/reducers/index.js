@@ -10,16 +10,22 @@ import { forgotPassword, responseMessage, authReducer } from '../../Features/Aut
 import { addtocartReducers, cartItemReducer } from '../../Features/Customer/ducks';
 
 const persistConfig = {
-  blacklist: ['forgotPassword', 'loaderReducer', 'modalReducer', 'responseMessage', 'uiReducer'],
+  blacklist: ['forgotPassword', 'loaderReducer', 'modalReducer', 'responseMessage', 'uiReducer', 'authReducer'],
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
 };
 
+const authPersistConfig = {
+  key: 'authReducer',
+  storage,
+  blacklist: ['isLoading'],
+};
+
 const reducer = combineReducers({
   forgotPassword,
   responseMessage,
-  authReducer,
+  authReducer: persistReducer(authPersistConfig, authReducer),
   addtocartReducers,
   modalReducer,
   uiReducer,

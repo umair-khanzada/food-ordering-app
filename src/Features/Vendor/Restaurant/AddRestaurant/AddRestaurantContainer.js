@@ -6,14 +6,14 @@ import { useDispatch } from 'react-redux';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
-import { GetHeader, SUCCESS } from '../../../../scripts/constants';
+import { GetHeader, RestraurantRegex, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { restaurants } from '../../mutation';
 const AddRestaurant = () => {
   const { headers } = GetHeader();
   const dispatch = useDispatch();
   const successMessage = 'Successfull resturant has been created';
-  const { mutate, isLoading, isSuccess, isError } = useMutation(restaurants, {
+  const { mutate, isLoading } = useMutation(restaurants, {
     onSuccess: (response) => {
       setFields(initialRestaurantField);
       dispatch(
@@ -26,7 +26,7 @@ const AddRestaurant = () => {
     },
   });
 
-  const [restaurant, setRestaurant] = useState('');
+  const [restaurant] = useState('');
 
   const initialRestaurantField = [
     {
@@ -41,6 +41,12 @@ const AddRestaurant = () => {
         const updatedFields = fieldChangeHandler(fields, value, index);
 
         setFields(updatedFields);
+      },
+      getValidation: (value) => {
+        if (!RestraurantRegex.test(value)) {
+          return 'Restraurant type is not valid';
+        }
+        return '';
       },
     },
   ];

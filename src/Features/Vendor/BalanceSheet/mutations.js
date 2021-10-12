@@ -18,7 +18,7 @@ export const EditBalanceById = () => {
     },
 
     {
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         // success!
         dispatch(
           toggleSnackbarOpen({
@@ -27,7 +27,7 @@ export const EditBalanceById = () => {
           }),
         );
       },
-      onError: (error, variables, context) => {
+      onError: (error) => {
         // An error happened!
         const {
           response: {

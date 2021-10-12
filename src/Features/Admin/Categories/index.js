@@ -28,9 +28,6 @@ function CategoryList() {
   };
   const { data: categoriesData, refetch, isFetching } = FetchCategories();
 
-  function deletecategory({ id: categoryId }) {
-    mutate({ categoryId, headers });
-  }
   const onDelete = ({ id: categoryId }) => {
     mutate({ categoryId, headers });
   };

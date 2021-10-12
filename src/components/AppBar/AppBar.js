@@ -1,20 +1,18 @@
 import React from 'react';
 
-import { Grid, ListItemIcon, ListItemText, useTheme, Toolbar, IconButton } from '@material-ui/core';
-import { Lock, OfflineBolt, ShoppingCart } from '@material-ui/icons';
+import { Grid, ListItemIcon, Toolbar, IconButton } from '@material-ui/core';
+import { ShoppingCart } from '@material-ui/icons';
+import { CircularProgress } from '@mui/material';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { logout } from '../../Features/Auth/actions';
 import { openDrawer } from '../../Features/Customer/actions';
 import Roles from '../../roles';
-import RouteNames from '../../routes/RouteNames';
 import Drawer from '../Drawer';
-import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
-import { StyledAppBar, StyledDiv, StyledLogo, StyledMenuItem, UserName } from './Style';
+import { LogoutButton, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
 
 const NavBar = () => {
-  const theme = useTheme();
   const dispatch = useDispatch();
   const history = useHistory();
   const logOut = () => {
@@ -32,15 +30,15 @@ const NavBar = () => {
 
     return { cart, role };
   }, shallowEqual);
-  const { name } = useSelector((state) => {
+  const { name, isLoading } = useSelector((state) => {
     const {
-      authReducer: { name },
+      authReducer: { name, isLoading },
     } = state;
     return {
       name,
+      isLoading,
     };
   }, shallowEqual);
-  const { resetPassword } = RouteNames;
 
   const { user } = Roles;
 
@@ -63,20 +61,15 @@ const NavBar = () => {
               </>
             )}
 
-            <AppBarMenuButton>
-              <StyledMenuItem onClick={() => history.push(resetPassword)} theme={theme}>
-                <ListItemIcon>
-                  <Lock fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Reset Password" />
-              </StyledMenuItem>
-              <StyledMenuItem onClick={logOut} theme={theme}>
-                <ListItemIcon>
-                  <OfflineBolt fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Log Out" />
-              </StyledMenuItem>
-            </AppBarMenuButton>
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <ListItemIcon>
+                <IconButton>
+                  <LogoutButton fontSize="large" onClick={logOut} />
+                </IconButton>
+              </ListItemIcon>
+            )}
           </Grid>
         </Toolbar>
       </StyledAppBar>

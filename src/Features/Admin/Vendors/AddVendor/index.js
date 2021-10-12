@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
-import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
@@ -62,9 +61,9 @@ const AddVendor = () => {
       },
       getValidation: (value) => {
         if (passwordRegex.test(value) && value.length >= 8) {
-          return ['', true];
+          return '';
         }
-        return ['Password must be 8 characters long and contains atleast one number and letter', false];
+        return 'Password must be 8 characters long and contains atleast one number and letter';
       },
     },
 
@@ -89,7 +88,7 @@ const AddVendor = () => {
     },
   ];
   const [fields, setFields] = useState(intialVendorFields);
-  const { mutateAsync, isLoading, isSuccess, isError } = useMutation(createUser, {
+  const { mutateAsync, isLoading } = useMutation(createUser, {
     onSuccess: () => {
       setFields(intialVendorFields);
       dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
@@ -131,8 +130,6 @@ const AddVendor = () => {
   return (
     <>
       <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" />
-      {isSuccess && <Snackbar type={SUCCESS} />}
-      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

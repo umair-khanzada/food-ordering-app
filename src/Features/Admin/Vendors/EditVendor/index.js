@@ -4,13 +4,12 @@ import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { SELECT, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
-import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCESS } from '../../../../scripts/constants';
+import { contactRegex, ERROR, GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
@@ -67,25 +66,6 @@ const EditVendor = () => {
         return '';
       },
     },
-    {
-      type: TEXT_FIELD,
-      textFieldType: 'password',
-      label: 'Password',
-      variant: 'standard',
-      value: '',
-      name: 'password',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(initialEditVendorField, value, index);
-        setFields(updatedFields);
-      },
-      getValidation: (value) => {
-        if (passwordRegex.test(value) && value.length >= 8) {
-          return ['', true];
-        }
-        return ['Password must be 8 characters long and contains atleast one number and letter', false];
-      },
-    },
 
     {
       type: TEXT_FIELD,
@@ -108,7 +88,7 @@ const EditVendor = () => {
     },
   ];
   const [fields, setFields] = useState(initialEditVendorField);
-  const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
+  const { isLoading, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       setFields(initialEditVendorField);
       dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
@@ -122,7 +102,7 @@ const EditVendor = () => {
       dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
-  const [vendor, setVendor] = useState('');
+  const [, setVendor] = useState('');
 
   const { data: vendorById, isFetching } = FetchUserById(id);
 
@@ -134,6 +114,7 @@ const EditVendor = () => {
       });
       setFields(fields);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vendorById]);
 
   const saveHandler = () => {
@@ -161,17 +142,7 @@ const EditVendor = () => {
   ];
 
   return (
-    <>
-      {isFetching ? (
-        <Loader />
-      ) : (
-        <>
-          <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" />
-          {isSuccess && <Snackbar type={SUCCESS} />}
-          {isError && <Snackbar type={ERROR} />}
-        </>
-      )}
-    </>
+    <>{isFetching ? <Loader /> : <CommonGridBasedForm buttons={buttons} fields={fields} heading="Edit Vendor" />}</>
   );
 };
 

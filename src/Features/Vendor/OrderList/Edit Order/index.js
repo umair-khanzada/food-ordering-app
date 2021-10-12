@@ -16,7 +16,7 @@ import { GetBalanceByUserId } from '../request';
 
 const EditOrderList = () => {
   const dispatch = useDispatch();
-  const [onSaveSuccess, setOnSaveSuccess] = useState(false);
+  const [onSaveSuccess] = useState(false);
   const vendor_Id = useSelector((state) => {
     const {
       authReducer: { id },
@@ -98,6 +98,7 @@ const EditOrderList = () => {
       setUserId(userId);
       setFields(fields);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderById]);
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
@@ -111,6 +112,13 @@ const EditOrderList = () => {
       mutateAsync({ id, updatedOrder });
       if (fields[0].value === 'received') {
         setUserBalance();
+      } else {
+        dispatch(
+          toggleSnackbarOpen({
+            snackbarMessage: 'Successfull order has been edited',
+            messageType: SUCCESS,
+          }),
+        );
       }
     }
   };

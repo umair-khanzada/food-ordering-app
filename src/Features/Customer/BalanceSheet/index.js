@@ -15,7 +15,7 @@ const UserBalanceSheet = () => {
     <Loader />
   ) : (
     <Box mt={8}>
-      <CustomTable cellWidth="30%" header={header} rows={data} tablewidth="50%" />;
+      <CustomTable cellWidth="30%" header={header} rows={data} tablewidth="50%" />
     </Box>
   );
 };

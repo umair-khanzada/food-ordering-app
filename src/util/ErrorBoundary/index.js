@@ -21,7 +21,7 @@ export default class ErrorBoundary extends React.Component {
     this.state = { hasError: false, error: '', errorStack: '' };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
@@ -32,7 +32,10 @@ export default class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (this.state.hasError) {
+    const { hasError, error, errorStack } = this.state;
+    const { children } = this.props;
+
+    if (hasError) {
       // You can render any custom fallback UI
       return (
         <Grid container direction="row" spacing={3}>
@@ -57,8 +60,8 @@ export default class ErrorBoundary extends React.Component {
               </StyledDivRow>
 
               <StyledDivContent>
-                <Typography variant="h4">{this.state.error}</Typography>
-                <Typography variant="h4">{this.state.errorStack}</Typography>
+                <Typography variant="h4">{error}</Typography>
+                <Typography variant="h4">{errorStack}</Typography>
               </StyledDivContent>
             </StyledDivContainer>
           </Grid>
@@ -69,6 +72,6 @@ export default class ErrorBoundary extends React.Component {
       );
     }
 
-    return this.props.children;
+    return children;
   }
 }

@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import curry from '../../assets/curry.jpg';
 import NoDataFound from '../NoDataFilter';
 import CommonCard from './CommonCard';
 import { ControlGrid } from './style';
@@ -15,7 +14,7 @@ const CardMenu = ({ foodType }) => {
   return (
     <div>
       <ControlGrid container elevation={3} spacing={3}>
-        {card.map(({ id, name, price, categoryId, createdBy }) => {
+        {card.map(({ id, name, price, categoryId, createdBy, imgUrl }) => {
           const { id: category } = categoryId;
           if (category === foodType) {
             itemFound++;
@@ -24,7 +23,7 @@ const CardMenu = ({ foodType }) => {
                 key={id}
                 buttonText="Add to Cart"
                 id={id}
-                img={curry}
+                img={imgUrl}
                 name={name}
                 price={price}
                 resturantName="Dominos"

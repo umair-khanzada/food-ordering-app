@@ -1,8 +1,7 @@
 import { addCategoriesRoute, categoriesRoute, editCategoriesRoute } from '../Features/Admin/Categories/route';
-import { addOrderdRoute, editOrderdRoute } from '../Features/Admin/OrderHistory/route';
 import { addUserRoute, editUserRoute, usersRoute } from '../Features/Admin/Users/route';
 import { addVendorsRoute, editVendorsRoute, vendorsRoute } from '../Features/Admin/Vendors/route';
-import { loginRoute, signUpRoute, resetPasswordRoute, forgetPasswordRoute } from '../Features/Auth/route';
+import { loginRoute, signUpRoute } from '../Features/Auth/route';
 import {
   customerOrderHistoryRoute,
   dashboardRoute,
@@ -22,20 +21,15 @@ import {
   RestaurantListRoute,
   editRestaurantsRoute,
   editOrderdListRoute,
+  vendorProfileRoute,
 } from '../Features/Vendor/route';
 
 const routeConfig = {
-  auth: [loginRoute, signUpRoute, resetPasswordRoute, resetPasswordRoute, forgetPasswordRoute],
+  auth: [loginRoute, signUpRoute],
 
   orderPlacer: [dashboardRoute, MenuListRoute],
 
   admin: [
-    // orderHistorydRoute,
-
-    addOrderdRoute,
-
-    editOrderdRoute,
-
     usersRoute,
 
     editUserRoute,
@@ -68,6 +62,7 @@ const routeConfig = {
     RestaurantListRoute,
     editRestaurantsRoute,
     editOrderdListRoute,
+    vendorProfileRoute,
   ],
   officeBoy: [],
 

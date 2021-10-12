@@ -8,9 +8,9 @@ import { TEXT_FIELD } from '../../../components/CommonGridBasedForm/FieldTypes';
 import { emailRegex } from '../../../redux/ActionTypes';
 import { contactRegex } from '../../../scripts/constants';
 import { fieldChangeHandler, validateOnSubmit } from '../../../util/CommonGridBasedFormUtils';
-import { editUser } from '../actions';
+import { editUser } from '../../Customer/actions';
 
-const UserProfile = () => {
+const VendorProfile = () => {
   const { id, email, name, isLoading, contact } = useSelector((state) => {
     const {
       authReducer: { id, email, name, contact, isLoading },
@@ -104,9 +104,10 @@ const UserProfile = () => {
   const history = useHistory();
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields, true);
+    const { validateArray, isValid } = validateOnSubmit(fields, false);
     setFields(validateArray);
     const [{ value: name }, { value: email }, { value: password }, { value: contact }] = fields;
+
     isValid && dispatch(editUser({ id, name, email, password, contact, history }));
   };
 
@@ -128,4 +129,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default VendorProfile;
