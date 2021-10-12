@@ -10,14 +10,14 @@ import { restaurants } from '../../mutation';
 
 const AddRestaurant = () => {
   const { headers } = GetHeader();
-  const { mutate, isLoading, isSuccess } = useMutation(restaurants, {
+  const { mutate, isLoading } = useMutation(restaurants, {
     onSuccess: (response) => {
       setFields(initialRestaurantField);
       return response;
     },
   });
 
-  const [restaurant, setRestaurant] = useState('');
+  const [restaurant] = useState('');
 
   const initialRestaurantField = [
     {

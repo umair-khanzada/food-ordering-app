@@ -104,10 +104,9 @@ const UserProfile = () => {
   const history = useHistory();
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields, false);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
     const [{ value: name }, { value: email }, { value: password }, { value: contact }] = fields;
-
     isValid && dispatch(editUser({ id, name, email, password, contact, history }));
   };
 

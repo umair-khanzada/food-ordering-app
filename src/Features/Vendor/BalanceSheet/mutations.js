@@ -15,10 +15,10 @@ export const EditBalanceById = () => {
     },
 
     {
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         // success!
       },
-      onError: (error, variables, context) => {
+      onError: () => {
         // An error happened!
       },
     },
@@ -28,21 +28,10 @@ export const EditBalanceById = () => {
 export const DeleteBalanceById = () => {
   const { headers } = GetHeader();
 
-  return useMutation(
-    async (id) => {
-      const response = await axios.delete(baseUrl + 'balance/' + id, {
-        headers,
-      });
-      return response;
-    },
-
-    {
-      onSuccess: (data, variables, context) => {
-        // success!
-      },
-      onError: (error, variables, context) => {
-        // An error happened!
-      },
-    },
-  );
+  return useMutation(async (id) => {
+    const response = await axios.delete(baseUrl + 'balance/' + id, {
+      headers,
+    });
+    return response;
+  });
 };

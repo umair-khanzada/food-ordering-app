@@ -81,9 +81,9 @@ const EditVendor = () => {
       },
       getValidation: (value) => {
         if (passwordRegex.test(value) && value.length >= 8) {
-          return ['', true];
+          return '';
         }
-        return ['Password must be 8 characters long and contains atleast one number and letter', false];
+        return 'Password must be 8 characters long and contains atleast one number and letter';
       },
     },
 
@@ -108,7 +108,7 @@ const EditVendor = () => {
     },
   ];
   const [fields, setFields] = useState(initialEditVendorField);
-  const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
+  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       setFields(initialEditVendorField);
       dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
@@ -122,7 +122,7 @@ const EditVendor = () => {
       dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
     },
   });
-  const [vendor, setVendor] = useState('');
+  const [, setVendor] = useState('');
 
   const { data: vendorById, isFetching } = FetchUserById(id);
 
@@ -134,6 +134,7 @@ const EditVendor = () => {
       });
       setFields(fields);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vendorById]);
 
   const saveHandler = () => {

@@ -39,21 +39,21 @@ const AddCategory = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
-    if (isValid) {
-      const name = fields.map(({ value }, index) => value);
+    const [{ value: name }] = fields;
+
+    isValid &&
       mutate({
         category: {
-          name: name[0],
+          name,
           createdBy: adminId,
         },
         headers,
       });
-    }
   };
 
   const history = useHistory();
 
-  const { mutate, mutateAsync, isLoading, error, isSuccess } = useMutation(category, {
+  const { mutate, isLoading } = useMutation(category, {
     onSuccess: (response) => {
       setFields(initialCategoriesField);
       return response;

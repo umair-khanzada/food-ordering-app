@@ -29,8 +29,6 @@ const routeConfig = {
   orderPlacer: [dashboardRoute, MenuListRoute],
 
   admin: [
-    // orderHistorydRoute,
-
     addOrderdRoute,
 
     editOrderdRoute,

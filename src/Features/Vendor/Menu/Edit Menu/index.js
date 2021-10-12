@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRed
 import AddEditForm from '../../../../components/CommonGridBasedForm';
 import { AUTO_COMPLETE, PRICE, TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader/index';
-import { ERROR, GetHeader } from '../../../../scripts/constants';
+import { ERROR, GetHeader, imgURLRegex } from '../../../../scripts/constants';
 import { fieldChangeHandler, SelectChangeHandler, validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { updateItemById } from '../../mutation';
@@ -21,7 +21,7 @@ const EditMenu = () => {
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const { headers } = GetHeader();
-  const [item, setItem] = useState('');
+  const [, setItem] = useState('');
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -31,7 +31,7 @@ const EditMenu = () => {
   const restaurantsData = FetchRestaurants();
   const categoriesData = FetchCategories();
 
-  const { data: itemsById, refetch, isFetching } = FetchItemsById(id);
+  const { data: itemsById, isFetching } = FetchItemsById(id);
 
   useEffect(() => {
     if (restaurantsData !== undefined) {
@@ -40,6 +40,7 @@ const EditMenu = () => {
     if (categoriesData !== undefined) {
       saveCategories(categoriesData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restaurantsData, categoriesData]);
 
   const saveRestaurant = (restaurantsDetail) => {
@@ -61,17 +62,23 @@ const EditMenu = () => {
       setItem(itemsById);
       saveItemsId(itemsById);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsById]);
 
   const saveItemsId = (itemsId) => {
-    const { name, price, categoryId, kitchenId } = itemsId;
-    const { id: categoryid } = categoryId;
-    const { id: kitchenid } = kitchenId;
+    const {
+      name,
+      price,
+      categoryId: { categoryid },
+      kitchenId: { kitchenid },
+      imgUrl,
+    } = itemsId;
 
     setFields(fieldChangeHandler(fields, categoryid, 0));
     setFields(fieldChangeHandler(fields, kitchenid, 1));
     setFields(fieldChangeHandler(fields, price, 2));
     setFields(fieldChangeHandler(fields, name, 3));
+    setFields(fieldChangeHandler(fields, imgUrl, 4));
   };
   const initialItemEditField = [
     {
@@ -134,6 +141,25 @@ const EditMenu = () => {
         setFields(updatedFields);
       },
     },
+    {
+      type: TEXT_FIELD,
+      label: 'Image URL',
+      value: '',
+      textFieldType: 'text',
+      variant: 'standard',
+      isValid: true,
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(initialItemEditField, value, index);
+        setFields(updatedFields);
+      },
+      getValidation: (value) => {
+        if (!imgURLRegex.test(value)) {
+          return 'IMG URL type is not valid';
+        }
+        return '';
+      },
+    },
   ];
   const [fields, setFields] = useState(initialItemEditField);
 
@@ -148,6 +174,7 @@ const EditMenu = () => {
           createdBy: vendorId,
           categoryId: fields[0].value,
           kitchenId: fields[1].value,
+          imgUrl: fields[4].value,
         },
         headers,
         itemsById,
@@ -162,7 +189,7 @@ const EditMenu = () => {
 
   const dispatch = useDispatch();
 
-  const { mutate, isLoading, isSuccess } = useMutation(updateItemById, {
+  const { mutate, isLoading } = useMutation(updateItemById, {
     onSuccess: (response) => {
       setFields(initialItemEditField);
       return response;

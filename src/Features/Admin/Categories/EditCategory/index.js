@@ -27,11 +27,11 @@ const EditCategory = () => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
-  const { data: categoriesId, refetch, isFetching } = FetchCategoriesById(id);
+  const { data: categoriesId, isFetching } = FetchCategoriesById(id);
 
   const dispatch = useDispatch();
 
-  const { mutate, mutateAsync, isLoading, isSuccess } = useMutation(updateCategoryById, {
+  const { mutate, isLoading } = useMutation(updateCategoryById, {
     onSuccess: () => {
       setFields(initialCategoriesEditField);
     },
@@ -54,6 +54,7 @@ const EditCategory = () => {
     if (categoriesId !== undefined) {
       saveCategoriesId(categoriesId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoriesId]);
 
   const saveCategoriesId = (categoriesId) => {
@@ -83,7 +84,7 @@ const EditCategory = () => {
     setFields(validateArray);
 
     if (isValid) {
-      const name = fields.map(({ value }, index) => value);
+      const name = fields.map(({ value }) => value);
       mutate({
         category: {
           name: name[0],

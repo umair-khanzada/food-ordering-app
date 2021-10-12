@@ -6,20 +6,16 @@ import { GetHeader } from '../../scripts/constants';
 import { baseUrl } from '../../scripts/constants';
 
 const Restaurants = async (headers) => {
-  const {
-    data: { results },
-  } = await axios.get(baseUrl + 'kitchens', {
+  const { data } = await axios.get(baseUrl + 'kitchens', {
     headers,
   });
 
-  return results;
+  return data;
 };
 
 export const FetchRestaurants = () => {
   const { headers } = GetHeader();
-  const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery('restaurants', () =>
-    Restaurants(headers),
-  );
+  const { data } = useQuery('restaurants', () => Restaurants(headers));
 
   return data;
 };
@@ -36,9 +32,7 @@ const Categories = async (headers) => {
 
 export const FetchCategories = () => {
   const { headers } = GetHeader();
-  const { status, isLoading, isError, error, data, isFetching, isPreviousData } = useQuery('categories', () =>
-    Categories(headers),
-  );
+  const { data } = useQuery('categories', () => Categories(headers));
 
   return data;
 };
@@ -107,7 +101,6 @@ export const FetchOrderHistory = () => {
 
 const orderById = async (id) => {
   const { data } = await axios.get(baseUrl + 'orders/' + id);
-  console.log('data', data);
   return data;
 };
 

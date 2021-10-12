@@ -58,12 +58,14 @@ function Dashboard() {
     if (vendors) {
       saveVendors(vendors);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vendors]);
 
   useEffect(() => {
     if (items) {
       dispatch(getCardData(items));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   const saveVendors = (data) => {

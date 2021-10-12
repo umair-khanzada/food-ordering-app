@@ -22,7 +22,7 @@ export default function BaseRouter() {
     };
   }, shallowEqual);
 
-  const { orderHistory, menuList, dashboard, login, vendors } = RouteNames;
+  const { menuList, dashboard, login, vendors } = RouteNames;
 
   return (
     <Switch>

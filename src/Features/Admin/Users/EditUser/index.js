@@ -23,7 +23,7 @@ const EditUser = () => {
   const successMessage = 'Successfull user has been edited';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
-  const [user, setUser] = useState('');
+  const [, setUser] = useState('');
   const initialEditUserField = [
     {
       type: SELECT,
@@ -83,9 +83,9 @@ const EditUser = () => {
       },
       getValidation: (value) => {
         if (passwordRegex.test(value) && value.length >= 8) {
-          return ['', true];
+          return '';
         }
-        return ['Password must be 8 characters long and contains atleast one number and letter', false];
+        return 'Password must be 8 characters long and contains atleast one number and letter';
       },
     },
     {
@@ -120,9 +120,10 @@ const EditUser = () => {
       });
       setFields(fields);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userById]);
 
-  const { isLoading, isSuccess, isError, mutateAsync } = useMutation(editUserById, {
+  const { isLoading, isSuccess, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -156,7 +157,6 @@ const EditUser = () => {
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
-
     if (isValid) {
       const userData = {};
 

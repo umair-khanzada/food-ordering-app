@@ -62,9 +62,9 @@ const AddVendor = () => {
       },
       getValidation: (value) => {
         if (passwordRegex.test(value) && value.length >= 8) {
-          return ['', true];
+          return '';
         }
-        return ['Password must be 8 characters long and contains atleast one number and letter', false];
+        return 'Password must be 8 characters long and contains atleast one number and letter';
       },
     },
 
@@ -89,7 +89,7 @@ const AddVendor = () => {
     },
   ];
   const [fields, setFields] = useState(intialVendorFields);
-  const { mutateAsync, isLoading, isSuccess, isError } = useMutation(createUser, {
+  const { mutateAsync, isLoading, isSuccess } = useMutation(createUser, {
     onSuccess: () => {
       setFields(intialVendorFields);
       dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
@@ -105,8 +105,6 @@ const AddVendor = () => {
     },
   });
   const saveHandler = () => {
-    console.log(fields);
-
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
 

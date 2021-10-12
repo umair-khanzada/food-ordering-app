@@ -56,7 +56,7 @@ const EditOrder = () => {
 
   const saveHandler = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
-    setFields(validateArray);
+    isValid && setFields(validateArray);
   };
 
   const buttons = [
