@@ -8,6 +8,7 @@ import {
   LOGIN,
   SIGNUP,
   AUTH_LOADING_TOGGLE,
+  LOGOUT,
 } from '../../redux/ActionTypes';
 
 const initialAuthState = {
@@ -28,10 +29,11 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
   switch (action.type) {
     case LOGIN:
     case SIGNUP:
+    case LOGOUT:
       return { ...state, isLoading: true };
 
     case LOGOUT_SUCCESS:
-      return { ...initialAuthState };
+      return { ...initialAuthState, isLoading: false };
 
     case LOGIN_SUCCESS: {
       const { accessToken, refreshToken, name, role, id, email, contact } = action.payload;

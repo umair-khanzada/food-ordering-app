@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Grid, ListItemIcon, Toolbar, IconButton } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
+import { CircularProgress } from '@mui/material';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -29,12 +30,13 @@ const NavBar = () => {
 
     return { cart, role };
   }, shallowEqual);
-  const { name } = useSelector((state) => {
+  const { name, isLoading } = useSelector((state) => {
     const {
-      authReducer: { name },
+      authReducer: { name, isLoading },
     } = state;
     return {
       name,
+      isLoading,
     };
   }, shallowEqual);
 
@@ -58,11 +60,16 @@ const NavBar = () => {
                 <UserName>{name}</UserName>
               </>
             )}
-            <ListItemIcon>
-              <IconButton>
-                <LogoutButton fontSize="large" onClick={logOut} />
-              </IconButton>
-            </ListItemIcon>
+
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <ListItemIcon>
+                <IconButton>
+                  <LogoutButton fontSize="large" onClick={logOut} />
+                </IconButton>
+              </ListItemIcon>
+            )}
           </Grid>
         </Toolbar>
       </StyledAppBar>
