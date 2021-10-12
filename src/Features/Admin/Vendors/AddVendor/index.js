@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
-import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
@@ -89,7 +88,7 @@ const AddVendor = () => {
     },
   ];
   const [fields, setFields] = useState(intialVendorFields);
-  const { mutateAsync, isLoading, isSuccess } = useMutation(createUser, {
+  const { mutateAsync, isLoading } = useMutation(createUser, {
     onSuccess: () => {
       setFields(intialVendorFields);
       dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
@@ -131,8 +130,6 @@ const AddVendor = () => {
   return (
     <>
       <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add Vendor" />
-      {isSuccess && <Snackbar type={SUCCESS} />}
-      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

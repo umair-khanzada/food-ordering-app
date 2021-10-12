@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 
-import Snackbar from '../../../../components/AlertMessage';
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
 import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldTypes';
@@ -16,7 +15,7 @@ const AddUser = () => {
   const dispatch = useDispatch();
   const { headers } = GetHeader();
   const successMessage = 'Successfull User has been created';
-  const { isLoading, mutateAsync, isSuccess } = useMutation(createUser, {
+  const { isLoading, mutateAsync } = useMutation(createUser, {
     onSuccess: () => {
       const resetFields = fields.map((field) => {
         return {
@@ -140,8 +139,6 @@ const AddUser = () => {
   return (
     <>
       <CommonGridBasedForm buttons={buttons} fields={fields} heading="Add User" loading={isLoading} />
-      {isSuccess && <Snackbar type={SUCCESS} />}
-      {isError && <Snackbar type={ERROR} />}
     </>
   );
 };

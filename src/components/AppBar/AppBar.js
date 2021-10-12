@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, ListItemIcon, useTheme, Toolbar, IconButton } from '@material-ui/core';
+import { Grid, ListItemIcon, Toolbar, IconButton } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -8,12 +8,10 @@ import { useHistory } from 'react-router';
 import { logout } from '../../Features/Auth/actions';
 import { openDrawer } from '../../Features/Customer/actions';
 import Roles from '../../roles';
-import RouteNames from '../../routes/RouteNames';
 import Drawer from '../Drawer';
 import { LogoutButton, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
 
 const NavBar = () => {
-  const theme = useTheme();
   const dispatch = useDispatch();
   const history = useHistory();
   const logOut = () => {
@@ -39,7 +37,6 @@ const NavBar = () => {
       name,
     };
   }, shallowEqual);
-  const { resetPassword } = RouteNames;
 
   const { user } = Roles;
 
