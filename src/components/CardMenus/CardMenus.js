@@ -1,31 +1,39 @@
 import React from 'react';
 
-import { Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
-import UserData from '../../Mock/Data';
+import NoDataFound from '../NoDataFilter';
 import CommonCard from './CommonCard';
-const useStyles = makeStyles((theme) => ({
-  control: {
-    padding: theme.spacing(3),
-    width: '75%',
-    marginTop: '20px',
-  },
-}));
-
-const CardMenu = () => {
-  const classes = useStyles();
-
-  const { control } = classes;
-
+import { ControlGrid } from './style';
+const CardMenu = ({ foodType }) => {
+  const card = useSelector((state) => {
+    const { cartItemReducer } = state;
+    return cartItemReducer;
+  });
+  let itemFound = 0;
   return (
     <div>
-      <Grid className={control} container elevation justifyContent="space-around" spacing={3}>
-        {UserData.map((usedata) => {
-          const { id, name, price, resturantName, img } = usedata;
-          return <CommonCard key={id} img={img} name={name} price={price} resturantName={resturantName} />;
+      <ControlGrid container elevation={3} spacing={3}>
+        {card.map(({ id, name, price, categoryId, createdBy, imgUrl }) => {
+          const { id: category } = categoryId;
+          if (category === foodType) {
+            itemFound++;
+            return (
+              <CommonCard
+                key={id}
+                buttonText="Add to Cart"
+                id={id}
+                img={imgUrl}
+                name={name}
+                price={price}
+                resturantName="Dominos"
+                vendorId={createdBy}
+              />
+            );
+          }
         })}
-      </Grid>
+        {itemFound === 0 ? <NoDataFound text="No Item Found" /> : null}
+      </ControlGrid>
     </div>
   );
 };

@@ -1,29 +1,88 @@
+/* eslint-disable import/no-named-as-default */
 import React from 'react';
 
-import { useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { useSelector, shallowEqual } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
-import LoginContainer from '../Features/Auth/Login/LoginContainer';
-import { HomeContainer as Home } from '../Features/Home';
-import AuthRoute from './AuthRoute';
-import RouteConfig from './RouteConfig';
+import Roles from '../roles';
+import routeConfig from './RouteConfig';
+import RouteNames from './RouteNames';
+import ValidRoute from './ValidRoute';
 
 export default function BaseRouter() {
-  const { isLoggedIn } = useSelector((state) => {
+  const { vendor, admin, user } = Roles;
+
+  const { isLoggedIn, role } = useSelector((state) => {
     const {
-      login_logout: { isLoggedIn },
+      authReducer: { isLoggedIn, role },
     } = state;
     return {
+      role,
       isLoggedIn,
     };
-  });
+  }, shallowEqual);
+
+  const { menuList, dashboard, login, vendors } = RouteNames;
 
   return (
     <Switch>
-      {RouteConfig.auth.map((route, index) => {
-        return <Route key={index} component={() => <AuthRoute route={route} />} exact path={route.path} />;
+      {routeConfig.auth.map((route, index) => {
+        return (
+          <Route
+            key={index}
+            component={() => <ValidRoute authorizedRole={null} route={route} />}
+            exact
+            path={route.path}
+          />
+        );
       })}
-      {isLoggedIn ? <Route component={Home} /> : <Route component={LoginContainer} />}
+      {routeConfig.common.map((route, index) => {
+        return <Route key={index} component={() => route.component()} exact path={route.path} />;
+      })}
+      {routeConfig.customer.map((route, index) => (
+        <Route
+          key={index}
+          component={() => <ValidRoute authorizedRole={user} route={route} />}
+          exact
+          path={route.path}
+        />
+      ))}
+      {routeConfig.vendor.map((route, index) => (
+        <Route
+          key={index}
+          component={() => <ValidRoute authorizedRole={vendor} route={route} />}
+          exact
+          path={route.path}
+        />
+      ))}
+      {routeConfig.admin.map((route, index) => (
+        <Route
+          key={index}
+          component={() => <ValidRoute authorizedRole={admin} route={route} />}
+          exact
+          path={route.path}
+        />
+      ))}
+      {isLoggedIn && role === admin && (
+        <Route>
+          <Redirect to={vendors} />
+        </Route>
+      )}
+      {isLoggedIn && role === vendor && (
+        <Route>
+          <Redirect to={menuList} />
+        </Route>
+      )}
+      {isLoggedIn && role === Roles.user && (
+        <Route>
+          <Redirect to={dashboard} />
+        </Route>
+      )}
+      {!isLoggedIn && (
+        <Route>
+          <Redirect to={login} />
+        </Route>
+      )}
     </Switch>
   );
 }

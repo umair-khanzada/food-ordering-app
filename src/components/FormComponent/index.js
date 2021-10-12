@@ -1,53 +1,94 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Grid } from '@material-ui/core';
+import { Collapse } from '@material-ui/core';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
-import { FormHeading, ForgotPassword, Form, FormContainer, InputBox, Label, BasicLink } from './styles';
+import {
+  FormHeading,
+  ForgotPassword,
+  Form,
+  FormContainer,
+  InputBox,
+  Label,
+  BasicLink,
+  Error,
+  GridContainer,
+  GridItem,
+  NavTitle,
+  NisumText,
+  NisumTextColor,
+  ErrorResponse,
+} from './styles';
 
-const FormComponent = ({ inputFields, basicButtons, formTitle, forgotPassword, label, navigationPath }) => {
+const FormComponent = ({
+  inputFields,
+  basicButtons,
+  formTitle,
+  forgotPassword,
+  label,
+  navigationPath,
+  changeHandler,
+  responseError,
+}) => {
+  const [checked, setChecked] = useState(false);
+  useEffect(() => {
+    setChecked(true);
+  }, []);
   return (
-    <FormContainer>
-      <Grid alignItems="center" container justifyContent="center" style={{ padding: '0 5px', height: '100vh' }}>
-        <Grid item md={4} xs={12}>
-          <Form>
-            <FormHeading>{formTitle}</FormHeading>
-            {inputFields.fields.map(({ changeHandler, required, label, name, type, value }, i) => (
-              <InputBox key={name + '-' + i} className="inputFields">
-                <BasicTextFields
-                  key={name + '-' + i}
-                  changeHandler={changeHandler}
-                  label={label}
-                  name={name}
-                  required={required}
-                  type={type}
-                  value={value}
-                  variant="outlined"
-                  width="100%"
-                />
-              </InputBox>
-            ))}
-            {basicButtons.button.map(({ clickHandler, minWidth, name, type }, i) => (
-              <div key={name + '-' + i}>
-                <CommonButton
-                  key={name + '-' + i}
-                  clickHandler={clickHandler}
-                  minWidth={minWidth}
-                  property={name}
-                  type={type}
-                />
-              </div>
-            ))}
-            <BasicLink>
-              <Label to={navigationPath}>{label}</Label>
+    <>
+      <NavTitle elevation={0}>
+        <NisumText>
+          Ni<NisumTextColor>sum</NisumTextColor>
+        </NisumText>
+      </NavTitle>
+      <FormContainer>
+        <GridContainer>
+          <GridItem>
+            <Collapse in={checked} timeout={1000}>
+              <Form elevation={10}>
+                <FormHeading>{formTitle}</FormHeading>
+                {responseError !== '' && <ErrorResponse>{responseError}</ErrorResponse>}
+                {inputFields.map(({ required, label, name, type, value, errorMessage }, i) => (
+                  <InputBox key={name + '-' + i} className="inputFields">
+                    <BasicTextFields
+                      key={name + '-' + i}
+                      changeHandler={(e) => changeHandler(e, i)}
+                      label={label}
+                      name={name}
+                      required={required}
+                      type={type}
+                      value={value}
+                      width="100%"
+                    />
+                    <Error>{errorMessage}</Error>
+                  </InputBox>
+                ))}
+                {basicButtons.button.map(({ clickHandler, minWidth, name, type, isLoading }, i) => (
+                  <div key={name + '-' + i}>
+                    <CommonButton
+                      key={name + '-' + i}
+                      fontSize="16px"
+                      loading={isLoading}
+                      minwidth={minWidth}
+                      onClick={clickHandler}
+                      property={name}
+                      type={type}
+                    />
+                  </div>
+                ))}
 
-              <ForgotPassword to="/login">{forgotPassword}</ForgotPassword>
-            </BasicLink>
-          </Form>
-        </Grid>
-      </Grid>
-    </FormContainer>
+                <BasicLink>
+                  <Label to={navigationPath}>{label}</Label>
+
+                  <ForgotPassword to="/forget-password">{forgotPassword}</ForgotPassword>
+                </BasicLink>
+              </Form>
+            </Collapse>
+          </GridItem>
+        </GridContainer>
+      </FormContainer>
+    </>
   );
 };
 

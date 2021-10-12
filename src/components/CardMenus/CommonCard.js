@@ -1,67 +1,61 @@
 import React from 'react';
 
-import { Card, CardMedia, CardContent, CardHeader, Typography, Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Typography } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-    width: '72%',
-    marginLeft: '250px',
-  },
-  media: {
-    height: 0,
+import { addtocart } from '../../Features/Customer/actions';
+import { ERROR } from '../../scripts/constants';
+import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
+import CommonButton from '../Button/Button';
+import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice, InsideContent, ResturantName } from './style';
 
-    paddingTop: '56.25%', // 16:9
-  },
-  content: {
-    padding: '0px',
-    marginLeft: '18px',
-  },
-  header: {
-    padding: '0px',
-    marginLeft: '18px',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: 'red',
-  },
-  image: {
-    padding: '30px',
-    border: '10px',
-    borderRadius: '200px',
-  },
-}));
-const CommonCard = ({ name, price, resturantName, img }) => {
-  const classes = useStyles();
+const CommonCard = ({ id, name, price, resturantName, img, buttonText, vendorId }) => {
+  const dispatch = useDispatch();
 
-  const { root, image, media, header, content } = classes;
+  const cart = useSelector((state) => state.addtocartReducers.cart);
+  const addToCart = () => {
+    let vendorFlag = 0;
+    cart.map(({ vendorId: createdBy }) => {
+      if (createdBy !== vendorId) {
+        vendorFlag = 1;
 
+        return false;
+      }
+    });
+    if (vendorFlag === 1) {
+      dispatch(
+        toggleSnackbarOpen({
+          snackbarMessage: 'Make a Separate Order for different Vendor',
+          messageType: ERROR,
+        }),
+      );
+    } else {
+      dispatch(addtocart({ id, name, price, img, qty: 1, vendorId }));
+    }
+  };
   return (
-    <div>
-      <Card className={root}>
-        <Box className={image}>
-          <CardMedia className={media} image={img} title={name} />
-        </Box>
-        <CardHeader className={header} subheader={<h4>{resturantName}</h4>} title={<h2>{name}</h2>} />
-        <CardContent className={content}>
-          <Typography color="textSecondary" component="p" variant="h4">
-            <b>
-              Price:<span style={{ marginLeft: '10px', marginBottom: '20px' }}>{price}</span>
-            </b>
-          </Typography>
-        </CardContent>
-      </Card>
-    </div>
+    <Grid item>
+      <CardRoot>
+        <ImageDiv src={img} title={name} />
+
+        <HeaderCard
+          subheader={<ResturantName>{resturantName}</ResturantName>}
+          title={<FoodTitle variant="h2">{name}</FoodTitle>}
+        />
+
+        <Content>
+          <InsideContent>
+            <div>
+              <CommonButton fontSize="14px" minwidth="30px" onClick={addToCart} property={buttonText} />
+            </div>
+
+            <Typography color="textSecondary" component="p" variant="h4">
+              <ItemPrice>Rs. {price}</ItemPrice>
+            </Typography>
+          </InsideContent>
+        </Content>
+      </CardRoot>
+    </Grid>
   );
 };
 export default CommonCard;

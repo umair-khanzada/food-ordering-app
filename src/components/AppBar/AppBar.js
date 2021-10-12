@@ -1,51 +1,78 @@
 import React from 'react';
 
-import { Grid, ListItemIcon, ListItemText, AppBar, useTheme, Toolbar } from '@material-ui/core';
-import { Lock, MoreVert, OfflineBolt, PersonRounded } from '@material-ui/icons';
-import { useDispatch } from 'react-redux';
+import { Grid, ListItemIcon, Toolbar, IconButton } from '@material-ui/core';
+import { ShoppingCart } from '@material-ui/icons';
+import { CircularProgress } from '@mui/material';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { logout } from '../../Features/Auth/actions';
-import AppBarMenuButton from './AppBarMenuButton/AppBarMenuButton';
-import { StyledDiv, StyledMenuItem } from './Style';
+import { openDrawer } from '../../Features/Customer/actions';
+import Roles from '../../roles';
+import Drawer from '../Drawer';
+import { LogoutButton, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
 
 const NavBar = () => {
-  const theme = useTheme();
   const dispatch = useDispatch();
+  const history = useHistory();
   const logOut = () => {
-    dispatch(logout());
+    dispatch(logout({ history }));
   };
 
-  const history = useHistory();
+  const {
+    cart: { length: cartItemCount },
+    role,
+  } = useSelector((state) => {
+    const {
+      addtocartReducers: { cart },
+      authReducer: { role },
+    } = state;
+
+    return { cart, role };
+  }, shallowEqual);
+  const { name, isLoading } = useSelector((state) => {
+    const {
+      authReducer: { name, isLoading },
+    } = state;
+    return {
+      name,
+      isLoading,
+    };
+  }, shallowEqual);
+
+  const { user } = Roles;
 
   return (
     <StyledDiv>
-      <AppBar color="secondary" position="sticky">
+      <StyledAppBar position="sticky">
         <Toolbar>
-          <Grid alignItems="flex-end" container justifyContent="flex-end">
-            <AppBarMenuButton buttonIcon={<MoreVert />}>
-              <StyledMenuItem onClick={() => history.push('/profile')} theme={theme}>
-                <ListItemIcon>
-                  <PersonRounded fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Profile" />
-              </StyledMenuItem>
-              <StyledMenuItem onClick={() => history.push('/reset-password')} theme={theme}>
-                <ListItemIcon>
-                  <Lock fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Reset Password" />
-              </StyledMenuItem>
-              <StyledMenuItem onClick={logOut} theme={theme}>
-                <ListItemIcon>
-                  <OfflineBolt fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Log Out" />
-              </StyledMenuItem>
-            </AppBarMenuButton>
+          <StyledLogo alt="logo" src="https://www.nisum.com/hubfs/logo_nisum.svg" />
+          <Grid alignItems="center" container justifyContent="flex-end">
+            {role === user && (
+              <>
+                <Drawer />
+                <IconButton onClick={() => dispatch(openDrawer())}>
+                  <span style={{ position: 'absolute', top: 0, right: '8px', color: 'red', fontSize: '16px' }}>
+                    {cartItemCount === 0 ? null : cartItemCount}
+                  </span>
+                  <ShoppingCart />
+                </IconButton>
+                <UserName>{name}</UserName>
+              </>
+            )}
+
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <ListItemIcon>
+                <IconButton>
+                  <LogoutButton fontSize="large" onClick={logOut} />
+                </IconButton>
+              </ListItemIcon>
+            )}
           </Grid>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
     </StyledDiv>
   );
 };
