@@ -122,8 +122,8 @@ const AddMenu = () => {
   ];
   const [fields, setFields] = useState(initialItemRestaurant);
 
-  const setFormFields = (fields, value) => {
-    const updatedFields = fieldChangeHandler(fields, value);
+  const setFormFields = (fields, value, index) => {
+    const updatedFields = fieldChangeHandler(fields, value, index);
     setFields(updatedFields);
   };
   const saveHandler = () => {
