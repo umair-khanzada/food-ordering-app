@@ -21,13 +21,11 @@ export const FetchRestaurants = () => {
 };
 
 const Categories = async (headers) => {
-  const {
-    data: { results },
-  } = await axios.get(baseUrl + 'categories', {
+  const { data } = await axios.get(baseUrl + 'categories', {
     headers,
   });
 
-  return results;
+  return data;
 };
 
 export const FetchCategories = () => {
