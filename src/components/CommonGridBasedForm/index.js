@@ -99,11 +99,12 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading }) => {
             );
           })}
         </Grid>
-        {buttons?.map(({ clickHandler, minWidth, name, type, color, isLoading }, i) => (
+        {buttons?.map(({ clickHandler, minWidth, name, type, color, isLoading, disableButton }, i) => (
           <div key={name + '-' + i}>
             <StyledFormButton
               key={name + '-' + i}
               color={color}
+              disableButton={disableButton}
               fontSize="16px"
               loading={isLoading}
               minwidth={minWidth}

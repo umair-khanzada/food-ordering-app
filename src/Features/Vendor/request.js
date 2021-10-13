@@ -120,5 +120,5 @@ const orderById = async (id) => {
 };
 
 export const FetchOrderById = (id) => {
-  return useQuery('ordersById', () => orderById(id));
+  return useQuery(['ordersById', id], () => orderById(id));
 };

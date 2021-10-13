@@ -42,9 +42,20 @@ const EditOrderList = () => {
     },
   ]);
 
+  const [disableButton, setDisableButton] = useState();
+
   const { mutateAsync, isLoading } = useMutation(updateOrderById);
 
   const { data: orderById, isFetching } = FetchOrderById(id);
+
+  useEffect(() => {
+    if (orderById && orderById.status === 'received') {
+      setDisableButton(true);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderById]);
+
   const { data: balance, refetch } = GetBalanceByUserId(userId);
   const { mutate: addBalanceMutate } = useMutation(InsertBalance, {
     onSuccess: () => {
@@ -94,6 +105,7 @@ const EditOrderList = () => {
   useEffect(() => {
     if (orderById) {
       fields[0].value = orderById['status'];
+
       const { userId } = orderById;
       setUserId(userId);
       setFields(fields);
@@ -130,6 +142,7 @@ const EditOrderList = () => {
       minWidth: '100%',
       clickHandler: saveHandler,
       isLoading,
+      disableButton,
     },
   ];
 
