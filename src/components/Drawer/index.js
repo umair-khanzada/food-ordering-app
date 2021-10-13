@@ -142,7 +142,7 @@ const Drawer = () => {
                                 <h4>{cartdata.name}</h4>
                               </div>
                               <DrawerItemPrice>
-                                <CartPrice> {cartdata.price}</CartPrice>
+                                <CartPrice> Rs. {cartdata.price}</CartPrice>
                               </DrawerItemPrice>
                               <PriceSpan />
                               <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />

@@ -53,7 +53,7 @@ const OrdersList = () => {
     mutateAsync(id);
   };
 
-  const header = ['S.No', 'Name', 'Price', 'Total Items', 'status', 'edit'];
+  const header = ['S.No', 'Name', 'Total Items', 'Price', 'status', 'edit'];
   return (
     <>
       {isFetching ? (
