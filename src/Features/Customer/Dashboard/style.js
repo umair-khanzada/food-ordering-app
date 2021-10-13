@@ -56,15 +56,23 @@ export const VendorImage = styled.img`
 export const VendorCardItem = styled.div`
   display: flex;
   text-align: center;
-  box-shadow: 5px 5px 10px grey;
-  margin: 16px 20px 16px 60px;
-  height: 220px;
-  width: 200px;
+  box-shadow: 5px 5px 5px grey;
+  margin: 30px 20px 16px 60px;
+  height: 110px;
+  width: 280px;
+  border: 1px solid wheat;
   align-items: center;
-  border-radius: 20px;
-  flex-direction: column;
+  border-radius: 50px 0 20px 0;
+
   justify-content: space-around;
   &:hover {
     cursor: pointer;
   }
+`;
+export const ImageContainer = styled.div`
+  height: 70px;
+  width: 70px;
+`;
+export const DetailsVendor = styled.div`
+  text-align: left;
 `;
