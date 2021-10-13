@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/umair-khanzada/food-ordering-app/static/css/main.a18b70b7.chunk.css",
+    "main.js": "/umair-khanzada/food-ordering-app/static/js/main.cc9efb24.chunk.js",
+    "main.js.map": "/umair-khanzada/food-ordering-app/static/js/main.cc9efb24.chunk.js.map",
+    "runtime-main.js": "/umair-khanzada/food-ordering-app/static/js/runtime-main.013654e2.js",
+    "runtime-main.js.map": "/umair-khanzada/food-ordering-app/static/js/runtime-main.013654e2.js.map",
+    "static/js/2.fd34d9bb.chunk.js": "/umair-khanzada/food-ordering-app/static/js/2.fd34d9bb.chunk.js",
+    "static/js/2.fd34d9bb.chunk.js.map": "/umair-khanzada/food-ordering-app/static/js/2.fd34d9bb.chunk.js.map",
+    "static/js/3.cf077fea.chunk.js": "/umair-khanzada/food-ordering-app/static/js/3.cf077fea.chunk.js",
+    "static/js/3.cf077fea.chunk.js.map": "/umair-khanzada/food-ordering-app/static/js/3.cf077fea.chunk.js.map",
+    "index.html": "/umair-khanzada/food-ordering-app/index.html",
+    "static/css/main.a18b70b7.chunk.css.map": "/umair-khanzada/food-ordering-app/static/css/main.a18b70b7.chunk.css.map",
+    "static/js/2.fd34d9bb.chunk.js.LICENSE.txt": "/umair-khanzada/food-ordering-app/static/js/2.fd34d9bb.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/umair-khanzada/food-ordering-app/static/media/Lato-Thin.01923cbb.ttf",
+    "static/media/foodimage3.ec460758.jpg": "/umair-khanzada/food-ordering-app/static/media/foodimage3.ec460758.jpg",
+    "static/media/no-data.bb3f4da6.jpg": "/umair-khanzada/food-ordering-app/static/media/no-data.bb3f4da6.jpg",
+    "static/media/something-went-wrong.0b7d80f7.gif": "/umair-khanzada/food-ordering-app/static/media/something-went-wrong.0b7d80f7.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.013654e2.js",
+    "static/js/2.fd34d9bb.chunk.js",
+    "static/css/main.a18b70b7.chunk.css",
+    "static/js/main.cc9efb24.chunk.js"
+  ]
+}
