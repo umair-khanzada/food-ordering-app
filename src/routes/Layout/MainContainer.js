@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
@@ -20,14 +20,20 @@ function MainContainer() {
   const baseRouter = <BaseRouter />;
   const snackBar = <SnackBar />;
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  function handleDrawerToggle() {
+    setMobileOpen((prev) => !prev);
+  }
+
   return (
     <Router history={History}>
       {isLoggedIn ? (
         <>
-          <AppBar />
+          <AppBar handleDrawerToggle={handleDrawerToggle} />
           <Grid container direction="row">
             <Grid item style={{ position: 'relative' }} xs={2}>
-              <SideMenu />
+              <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
             </Grid>
             <Grid item xs={10}>
               {baseRouter}

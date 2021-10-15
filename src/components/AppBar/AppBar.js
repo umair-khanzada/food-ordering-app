@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Grid, ListItemIcon, Toolbar, IconButton } from '@material-ui/core';
+import { Grid, ListItemIcon, Toolbar, IconButton, makeStyles } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
+import MenuIcon from '@material-ui/icons/Menu';
 import { CircularProgress } from '@mui/material';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -12,7 +13,16 @@ import Roles from '../../roles';
 import Drawer from '../Drawer';
 import { LogoutButton, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
 
-const NavBar = () => {
+const useStyles = makeStyles((theme) => ({
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+}));
+
+const NavBar = ({ handleDrawerToggle }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const logOut = () => {
@@ -42,10 +52,21 @@ const NavBar = () => {
 
   const { user } = Roles;
 
+  const classes = useStyles();
+
   return (
     <StyledDiv>
       <StyledAppBar position="sticky">
         <Toolbar>
+          <IconButton
+            aria-label="Open drawer"
+            className={classes.menuButton}
+            color="inherit"
+            edge="start"
+            onClick={handleDrawerToggle}
+          >
+            <MenuIcon style={{ color: 'black' }} />
+          </IconButton>
           <StyledLogo alt="logo" src="https://www.nisum.com/hubfs/logo_nisum.svg" />
           <Grid alignItems="center" container justifyContent="flex-end">
             {role === user && (
