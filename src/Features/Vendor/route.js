@@ -8,9 +8,6 @@ import AddMenu from './Menu/Add Menu';
 import EditMenu from './Menu/Edit Menu';
 import EditOrderList from './OrderList/Edit Order';
 import OrderList from './OrderList/OrderList';
-import AddRestaurantContainer from './Restaurant/AddRestaurant/AddRestaurantContainer';
-import EditRestaurant from './Restaurants/EditRestaurant';
-import RestaurantList from './Restaurants/index';
 import VendorProfile from './vendorProfile';
 
 export const MenuListRoute = {
@@ -25,21 +22,10 @@ export const OrderListRoute = {
   component: OrderList,
 };
 
-export const RestaurantRoute = {
-  path: RouteNames.restaurant,
-  permissions: isProtectedRoute, // to intimate it is public route
-  component: AddRestaurantContainer,
-};
-
 export const CategoryListRoute = {
   path: RouteNames.categoryList,
   permissions: isProtectedRoute,
   component: CategoryList,
-};
-export const RestaurantListRoute = {
-  path: RouteNames.restaurantList,
-  permissions: isProtectedRoute,
-  component: RestaurantList,
 };
 
 export const AddMenuRoute = {
@@ -65,11 +51,6 @@ export const EditBalanceSheetRoute = {
   component: EditBalanceSheet,
 };
 
-export const editRestaurantsRoute = {
-  path: RouteNames.editRestaurant,
-  permissions: isProtectedRoute,
-  component: EditRestaurant,
-};
 export const editOrderdListRoute = {
   path: RouteNames.editOrderList,
   permissions: isProtectedRoute,

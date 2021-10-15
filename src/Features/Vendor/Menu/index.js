@@ -28,7 +28,7 @@ function Menu() {
   const [items, setSaveItems] = useState([]);
   const { data: itemsData, refetch, isFetching } = FetchItems();
 
-  const { editmenu, addmenu, restaurant } = RouteNames;
+  const { editmenu, addmenu } = RouteNames;
 
   useEffect(() => {
     if (itemsData !== undefined) {
@@ -39,10 +39,10 @@ function Menu() {
   const saveItems = ({ data }) => {
     const itemData = data
       .filter(({ createdBy }) => vendorId === createdBy)
-      .map(({ name, price, id, categoryId, kitchenId }) => {
+      .map(({ name, price, id, categoryId }) => {
         const { name: categoryName } = categoryId;
-        const { name: kitchenName } = kitchenId;
-        return { name, categoryName, kitchenName, price, id };
+
+        return { name, categoryName, price, id };
       });
 
     setSaveItems(itemData);
@@ -54,13 +54,11 @@ function Menu() {
       search: `?id=${itemId}`,
     });
   };
-  const header = ['Sno', 'ItemName', 'Type', 'Restraunt', 'Price', 'Edit'];
+  const header = ['Sno', 'ItemName', 'Type', 'Price', 'Edit'];
   function showAddMenu() {
     history.push(addmenu);
   }
-  function showAddRestraunt() {
-    history.push(restaurant);
-  }
+
   function onDelete({ id: itemId }) {
     mutate({ itemId, headers });
   }
@@ -87,14 +85,12 @@ function Menu() {
       }
     },
   });
+
   return (
     <div>
       <Grid container>
         <Grid item md={12}>
           <ButtonsContainer>
-            <ButtonContainer>
-              <CommonButton onClick={() => showAddRestraunt()} property="Add Restaurant" />
-            </ButtonContainer>
             <ButtonContainer>
               <CommonButton onClick={() => showAddMenu()} property="Add Item" />
             </ButtonContainer>
@@ -110,7 +106,7 @@ function Menu() {
                   header={header}
                   isDeleting={isLoading}
                   isEditDelete
-                  onDelete={() => onDelete()}
+                  onDelete={onDelete}
                   onEdit={onEdit}
                   padding="5px 11px"
                   rows={items}

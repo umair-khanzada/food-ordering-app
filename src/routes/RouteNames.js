@@ -22,8 +22,6 @@ const RouteNames = {
   categories: '/categories',
   addCategory: '/categories/add',
   editCategory: '/categories/edit',
-  restaurant: '/restaurant',
-  editRestaurant: '/restaurant/edit',
   menuList: '/menu',
   orderList: '/order-list',
   addmenu: '/add-menu',
