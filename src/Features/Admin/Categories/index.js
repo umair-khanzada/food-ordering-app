@@ -13,7 +13,7 @@ import { ERROR, GetHeader, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 import { deleteCategory } from './mutation';
 import { FetchCategories } from './request';
-import { CategoriesTitleContainer, CategoriesTitle } from './style';
+import { CategoriesTitleContainer, CategoriesTitle, CustomTableContainer } from './style';
 
 function CategoryList() {
   const { headers } = GetHeader();
@@ -74,7 +74,7 @@ function CategoryList() {
       {isFetching ? (
         <Loader />
       ) : (
-        <>
+        <CustomTableContainer>
           <CustomTable
             cellWidth="400px"
             header={header}
@@ -85,7 +85,7 @@ function CategoryList() {
             rows={categoriesData}
             tablewidth="90%"
           />
-        </>
+        </CustomTableContainer>
       )}
     </>
   );
