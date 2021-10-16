@@ -14,5 +14,5 @@ export const CategoriesTitle = styled.div`
 `;
 export const CustomTableContainer = styled.div`
   margin-top: 20px;
-  height: 70vh;
+  height: 85vh;
 `;

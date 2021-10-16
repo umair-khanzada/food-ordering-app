@@ -13,7 +13,7 @@ import { ERROR, GetHeader, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 import { deleteUserById } from '../Common Requests/mutation';
 import { FetchUsers } from '../Common Requests/request';
-import { VendorTitleContainer, VendorTitle } from './style';
+import { VendorTitleContainer, VendorTitle, CustomTableContainer } from './style';
 function VendorList() {
   const { headers } = GetHeader();
   const dispatch = useDispatch();
@@ -79,16 +79,17 @@ function VendorList() {
             <VendorTitle>Vendors</VendorTitle>
             <CommonButton onClick={() => history.push(addVendor)} property="Add Vendor" />
           </VendorTitleContainer>
-
-          <CustomTable
-            header={header}
-            isDeleting={Deletevendor.isLoading}
-            isEditDelete
-            onDelete={onDelete}
-            onEdit={onEdit}
-            rows={vendors}
-            tablewidth="90%"
-          />
+          <CustomTableContainer>
+            <CustomTable
+              header={header}
+              isDeleting={Deletevendor.isLoading}
+              isEditDelete
+              onDelete={onDelete}
+              onEdit={onEdit}
+              rows={vendors}
+              tablewidth="90%"
+            />
+          </CustomTableContainer>
         </>
       )}
     </>

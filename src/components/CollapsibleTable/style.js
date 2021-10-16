@@ -14,6 +14,7 @@ export const IconContainer = styled.div`
 `;
 export const CollapseTableContainer = styled(TableContainer)`
   width: 90%;
+  max-height: 95%;
   & .MuiTableCell-root {
     padding: 0px 14px;
     line-height: 55px;

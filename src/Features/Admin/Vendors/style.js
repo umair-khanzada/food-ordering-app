@@ -13,7 +13,8 @@ export const VendorTitle = styled.div`
   font-weight: 500;
 `;
 export const CustomTableContainer = styled.div`
-  padding: 20px;
+  margin-top: 20px;
+  height: 70vh;
 `;
 export const DeleteIcon = styled(Delete)`
   color: #ff4d4d;

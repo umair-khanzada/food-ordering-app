@@ -13,7 +13,7 @@ import { ERROR, GetHeader, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 import { deleteUserById } from '../Common Requests/mutation';
 import { FetchUsers } from '../Common Requests/request';
-import { UsersTitleContainer, UsersTitle } from './style';
+import { UsersTitleContainer, UsersTitle, CustomTableContainer } from './style';
 
 function UsersList() {
   const [users, setUsers] = useState([]);
@@ -78,7 +78,7 @@ function UsersList() {
       {isFetching ? (
         <Loader />
       ) : (
-        <>
+        <CustomTableContainer>
           <UsersTitleContainer>
             <UsersTitle>Users</UsersTitle>
             <CommonButton onClick={() => history.push(addUser)} property="Add Users" />
@@ -93,7 +93,7 @@ function UsersList() {
             rows={users}
             tablewidth="90%"
           />
-        </>
+        </CustomTableContainer>
       )}
     </>
   );
