@@ -69,10 +69,7 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
       const { role } = action.payload;
 
       const { role: previousrole } = state;
-      // let isUserRoleChange = false;
-      // // if (previousrole !== role) {
-      // //   isUserRoleChange = true;
-      // // }
+
       return { ...state, role, isUserRoleChange: previousrole !== role };
     }
     case AUTH_LOADING_TOGGLE: {
