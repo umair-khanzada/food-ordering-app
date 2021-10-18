@@ -5,18 +5,23 @@ import { History, Dashboard, Person, AccountBalanceWalletOutlined } from '@mater
 import RouteNames from '../../routes/RouteNames';
 import StyledLink from '../ReactRouterStyledLink';
 
-const UserSideNav = () => {
+const UserSideNav = ({ setMobileView }) => {
   const { orderHistories, dashboard, profile, userBalanceSheet } = RouteNames;
 
   return (
     <>
-      <StyledLink icon={<Dashboard />} label="Dashboard" to={dashboard} />
+      <StyledLink icon={<Dashboard />} label="Dashboard" onclick={() => setMobileView(false)} to={dashboard} />
 
-      <StyledLink icon={<Person />} label="Profile" to={profile} />
+      <StyledLink icon={<Person />} label="Profile" onclick={() => setMobileView(false)} to={profile} />
 
-      <StyledLink icon={<History />} label="Order History" to={orderHistories} />
+      <StyledLink icon={<History />} label="Order History" onclick={() => setMobileView(false)} to={orderHistories} />
 
-      <StyledLink icon={<AccountBalanceWalletOutlined />} label="Balance Sheet" to={userBalanceSheet} />
+      <StyledLink
+        icon={<AccountBalanceWalletOutlined />}
+        label="Balance Sheet"
+        onclick={() => setMobileView(false)}
+        to={userBalanceSheet}
+      />
     </>
   );
 };

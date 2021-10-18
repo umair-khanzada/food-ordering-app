@@ -12,7 +12,7 @@ import AdminSideNav from './AdminSideNav';
 import UserSideNav from './UserSideNav';
 import VendorSideNav from './VendorSideNav';
 
-function SideMenu({ mobileOpen, handleDrawerToggle }) {
+function SideMenu({ mobileOpen, handleDrawerToggle, setMobile }) {
   const useStyles = makeStyles(() => ({
     drawerPaper: {
       position: 'absolute',
@@ -25,6 +25,7 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
     },
     backgroundHover: {
       marginRight: 'auto',
+      color: 'grey',
       marginLeft: '5px',
       marginTop: '5px',
     },
@@ -46,11 +47,11 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
 
   const drawer = (
     <div className={navigation}>
-      {role === admin && <AdminSideNav drawerToggle={handleDrawerToggle} />}
+      {role === admin && <AdminSideNav drawerToggle={handleDrawerToggle} setMobileView={setMobile} />}
 
-      {role === user && <UserSideNav drawerToggle={handleDrawerToggle} />}
+      {role === user && <UserSideNav drawerToggle={handleDrawerToggle} setMobileView={setMobile} />}
 
-      {role === vendor && <VendorSideNav drawerToggle={handleDrawerToggle} />}
+      {role === vendor && <VendorSideNav drawerToggle={handleDrawerToggle} setMobileView={setMobile} />}
     </div>
   );
 
@@ -80,8 +81,6 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
             classes={{
               paper: drawerPaper,
             }}
-            onClose={handleDrawerToggle}
-            open={mobileOpen}
             variant="permanent"
           >
             {drawer}

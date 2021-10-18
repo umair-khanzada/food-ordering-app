@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import ConfirmDeletModal from '../Modal';
 import { closeModal, openModal } from '../Modal/action';
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, DeleteProgress } from './style';
+import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, DeleteProgress, EditDeletCell } from './style';
 export default function CustomTable({
   isDeleting,
   rows,
@@ -102,7 +102,7 @@ export default function CustomTable({
               })}
 
               {isEditDelete && (
-                <TableCell>
+                <EditDeletCell>
                   <IconButton onClick={() => onEdit(row)}>
                     <Edit />
                   </IconButton>
@@ -119,7 +119,7 @@ export default function CustomTable({
                       <DeleteIcon />
                     </IconButton>
                   )}
-                </TableCell>
+                </EditDeletCell>
               )}
             </TableRow>
           ))}

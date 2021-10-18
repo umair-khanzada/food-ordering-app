@@ -33,7 +33,7 @@ function MainContainer() {
           <AppBar handleDrawerToggle={handleDrawerToggle} />
           <Grid container direction="row">
             <Grid item style={{ position: 'relative' }} xs={2}>
-              <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
+              <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setMobile={setMobileOpen} />
             </Grid>
             <Grid item md={10} xs={12}>
               {baseRouter}

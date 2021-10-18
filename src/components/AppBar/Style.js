@@ -20,11 +20,9 @@ export const StyledMenuItem = styled(MenuItem)`
 `;
 export const LogoutButton = styled(LogoutRounded)`
   color: grey;
-
   &:hover {
     cursor: pointer;
   }
-  size: 50px;
 `;
 export const StyledAppBar = styled(AppBar)`
   background: white;
@@ -35,6 +33,11 @@ export const StyledLogo = styled.img`
   height: 80px;
   min-width: 160px;
   margin-left: 20px;
+  @media (max-width: 768px) {
+    height: 50px;
+    min-width: 120px;
+    margin-left: 0;
+  }
 `;
 
 export const UserName = styled.h1`

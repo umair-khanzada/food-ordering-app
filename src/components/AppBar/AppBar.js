@@ -65,7 +65,7 @@ const NavBar = ({ handleDrawerToggle }) => {
             edge="start"
             onClick={handleDrawerToggle}
           >
-            <MenuIcon style={{ color: 'black' }} />
+            <MenuIcon style={{ color: 'grey' }} />
           </IconButton>
           <StyledLogo alt="logo" src="https://www.nisum.com/hubfs/logo_nisum.svg" />
           <Grid alignItems="center" container justifyContent="flex-end">
