@@ -9,6 +9,7 @@ import {
   SIGNUP,
   AUTH_LOADING_TOGGLE,
   LOGOUT,
+  UPDATE_ROLE,
 } from '../../redux/ActionTypes';
 
 const initialAuthState = {
@@ -21,6 +22,7 @@ const initialAuthState = {
   role: '',
   contact: '',
   isLoading: false,
+  isUserRoleChange: false,
 };
 const initialForgotPasswordState = { message: '', status: 0 };
 const initialResponseMessageState = { message: '', status: 0 };
@@ -63,7 +65,16 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
         contact,
       };
     }
+    case UPDATE_ROLE: {
+      const { role } = action.payload;
 
+      const { role: previousrole } = state;
+      let isUserRoleChange = false;
+      if (previousrole !== role) {
+        isUserRoleChange = true;
+      }
+      return { ...state, role, isUserRoleChange };
+    }
     case AUTH_LOADING_TOGGLE: {
       return {
         ...state,
