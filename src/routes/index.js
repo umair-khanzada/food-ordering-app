@@ -34,7 +34,7 @@ export default function BaseRouter() {
         history.push('/menu');
       }
     }
-  });
+  }, [isUserRoleChange]);
 
   const { menuList, dashboard, login, vendors } = RouteNames;
 
