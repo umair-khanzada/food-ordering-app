@@ -4,7 +4,7 @@ import { baseUrl } from '../../../scripts/constants';
 export async function deleteRestaurant(data) {
   const { restaurantId, headers } = data;
 
-  const res = axios.delete(`${baseUrl}kitchens/${restaurantId}`, {
+  const res = axios.delete(`${baseUrl()}kitchens/${restaurantId}`, {
     headers,
   });
 
@@ -18,7 +18,7 @@ export async function updateRestaurantById(data) {
     headers,
   } = data;
 
-  const res = axios.patch(`${baseUrl}kitchens/${id}`, restaurant, {
+  const res = axios.patch(`${baseUrl()}kitchens/${id}`, restaurant, {
     headers,
   });
 

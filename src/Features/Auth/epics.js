@@ -5,7 +5,7 @@ import { mergeMap, catchError } from 'rxjs/operators';
 
 import { FORGOT_PASSWORD, LOGIN, LOGOUT, SIGNUP, LOGIN_SUCCESS, RESET_PASSWORD } from '../../redux/ActionTypes';
 import { baseUrl } from '../../scripts/constants';
-import { API_ROUTE, defaultRouteForRoles } from '../../scripts/constants';
+import { defaultRouteForRoles } from '../../scripts/constants';
 import { clearCart } from '../Customer/actions';
 import { loginError, loginSuccess, logoutError, logoutSuccess, setFormMessage } from './actions';
 export const loginEpic = (action$) =>
@@ -13,7 +13,7 @@ export const loginEpic = (action$) =>
     ofType(LOGIN),
     mergeMap(({ payload: { userData, history } }) => {
       return ajax({
-        url: `${baseUrl}auth/login`,
+        url: `${baseUrl()}auth/login`,
         method: 'POST',
         body: userData,
       }).pipe(
@@ -60,7 +60,7 @@ export const signUpEpic = (action$) =>
     ofType(SIGNUP),
     mergeMap(({ payload: { userData, history } }) => {
       return ajax({
-        url: `${baseUrl}/auth/register`,
+        url: `${baseUrl()}auth/register`,
         method: 'POST',
         body: userData,
       }).pipe(
@@ -97,7 +97,7 @@ export const forgotPasswordEpic = (action$) =>
     ofType(FORGOT_PASSWORD),
     mergeMap(({ payload }) => {
       return ajax({
-        url: `${baseUrl}/auth/forgot-password`,
+        url: `${baseUrl()}auth/forgot-password`,
         method: 'POST',
         body: payload,
       }).pipe(
@@ -131,7 +131,7 @@ export const logoutEpic = (action$, state) =>
         },
       } = state;
       return ajax({
-        url: `${baseUrl}/auth/logout`,
+        url: `${baseUrl()}auth/logout`,
         method: 'POST',
         body: { refreshToken: token },
       }).pipe(
@@ -162,7 +162,7 @@ export const resetPasswordEpic = (action$, state) =>
         },
       } = state;
       return ajax({
-        url: API_ROUTE + '/auth/reset-password/?token=' + id,
+        url: baseUrl() + 'auth/reset-password/?token=' + id,
         method: 'POST',
         headers: {
           Authorization: 'Bearer ' + token,

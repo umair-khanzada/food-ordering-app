@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { baseUrl, GetHeader } from '../../scripts/constants';
 
 const Vendors = async (headers, userType) => {
-  const { data } = await axios.get(baseUrl + 'users', {
+  const { data } = await axios.get(baseUrl() + 'users', {
     headers,
   });
 
@@ -13,7 +13,7 @@ const Vendors = async (headers, userType) => {
 };
 
 const categories = async (headers) => {
-  const { data } = await axios.get(baseUrl + 'categories ', {
+  const { data } = await axios.get(baseUrl() + 'categories ', {
     headers,
   });
 
@@ -34,7 +34,7 @@ export const GetCategories = () => {
 
 export const itemsByVendor = async (headers, vendorId) => {
   if (vendorId !== '') {
-    const { data } = await axios.get(baseUrl + 'items ', {
+    const { data } = await axios.get(baseUrl() + 'items ', {
       headers,
     });
     return data.filter(({ createdBy }) => createdBy === vendorId);
@@ -42,7 +42,7 @@ export const itemsByVendor = async (headers, vendorId) => {
 };
 
 const orderHistory = async (headers, user_Id) => {
-  const { data: orders } = await axios.get(baseUrl + 'orders/user/' + user_Id, {
+  const { data: orders } = await axios.get(baseUrl() + 'orders/user/' + user_Id, {
     headers,
   });
   const structuredData = [];

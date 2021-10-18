@@ -6,7 +6,7 @@ export async function restaurants(data) {
   const { name, headers } = data;
 
   const res = axios.post(
-    baseUrl + 'kitchens',
+    baseUrl() + 'kitchens',
 
     { name },
 
@@ -22,7 +22,7 @@ export async function items(data) {
   const { items, headers } = data;
 
   const res = axios.post(
-    baseUrl + 'items',
+    baseUrl() + 'items',
 
     items,
 
@@ -37,7 +37,7 @@ export async function items(data) {
 export async function deleteitem(data) {
   const { itemId, headers } = data;
 
-  const res = axios.delete(`${baseUrl}items/${itemId}`, {
+  const res = axios.delete(`${baseUrl()}items/${itemId}`, {
     headers,
   });
 
@@ -51,23 +51,23 @@ export async function updateItemById(data) {
     headers,
   } = data;
 
-  const res = axios.patch(`${baseUrl}items/${id}`, items, {
+  const res = axios.patch(`${baseUrl()}items/${id}`, items, {
     headers,
   });
 
   return res;
 }
 export const deleteOrderById = async (id) => {
-  const deleteOrderRes = await axios.delete(baseUrl + 'orders/' + id);
+  const deleteOrderRes = await axios.delete(baseUrl() + 'orders/' + id);
   return deleteOrderRes;
 };
 
 export const updateOrderById = async ({ id, updatedOrder }) => {
-  const updatedOrderRes = await axios.patch(baseUrl + 'orders/' + id, updatedOrder);
+  const updatedOrderRes = await axios.patch(baseUrl() + 'orders/' + id, updatedOrder);
   return updatedOrderRes;
 };
 export async function InsertBalance(totalBalance) {
-  const res = axios.post(`${baseUrl}balance`, totalBalance);
+  const res = axios.post(`${baseUrl()}balance`, totalBalance);
 
   return res;
 }
