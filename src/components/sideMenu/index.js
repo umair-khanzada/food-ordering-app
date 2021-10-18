@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Drawer } from '@material-ui/core';
+import { Drawer, IconButton } from '@material-ui/core';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useSelector } from 'react-redux';
 
 import Roles from '../../roles';
@@ -24,8 +25,8 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
     },
     backgroundHover: {
       marginRight: 'auto',
-      marginLeft: '10px',
-      marginTop: '10px',
+      marginLeft: '5px',
+      marginTop: '5px',
     },
   }));
   const theme = useTheme();
@@ -58,7 +59,6 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
       <Hidden implementation="css" xsDown>
         <div>
           <Drawer
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             classes={{
               paper: drawerPaper,
             }}
@@ -66,7 +66,9 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
             open={mobileOpen}
             variant="temporary"
           >
-            <CloseIcon className={classes.backgroundHover} onClick={handleDrawerToggle} />
+            <IconButton className={classes.backgroundHover} onClick={handleDrawerToggle}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
 
             {drawer}
           </Drawer>
@@ -75,7 +77,6 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
       <Hidden implementation="css" xsDown>
         <div>
           <Drawer
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             classes={{
               paper: drawerPaper,
             }}
