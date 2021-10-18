@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Drawer, IconButton } from '@material-ui/core';
+import { Drawer } from '@material-ui/core';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
@@ -15,16 +15,17 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
   const useStyles = makeStyles(() => ({
     drawerPaper: {
       position: 'absolute',
-      width: '100%',
-      height: '88vh',
+      minWidth: '250px',
+      minHeight: '88vh',
       backgroundColor: 'white',
     },
     navigation: {
       marginTop: '50px',
     },
-    closeMenuButton: {
+    backgroundHover: {
       marginRight: 'auto',
-      marginLeft: 0,
+      marginLeft: '10px',
+      marginTop: '10px',
     },
   }));
   const theme = useTheme();
@@ -41,13 +42,14 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
   const classes = useStyles();
 
   const { drawerPaper, navigation } = classes;
+
   const drawer = (
     <div className={navigation}>
-      {role === admin && <AdminSideNav />}
+      {role === admin && <AdminSideNav drawerToggle={handleDrawerToggle} />}
 
-      {role === user && <UserSideNav />}
+      {role === user && <UserSideNav drawerToggle={handleDrawerToggle} />}
 
-      {role === vendor && <VendorSideNav />}
+      {role === vendor && <VendorSideNav drawerToggle={handleDrawerToggle} />}
     </div>
   );
 
@@ -64,9 +66,8 @@ function SideMenu({ mobileOpen, handleDrawerToggle }) {
             open={mobileOpen}
             variant="temporary"
           >
-            <IconButton onClick={handleDrawerToggle}>
-              <CloseIcon className={classes.closeMenuButton} />
-            </IconButton>
+            <CloseIcon className={classes.backgroundHover} onClick={handleDrawerToggle} />
+
             {drawer}
           </Drawer>
         </div>

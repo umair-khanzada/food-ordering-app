@@ -35,7 +35,7 @@ function MainContainer() {
             <Grid item style={{ position: 'relative' }} xs={2}>
               <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
             </Grid>
-            <Grid item xs={10}>
+            <Grid item md={10} xs={12}>
               {baseRouter}
             </Grid>
           </Grid>
