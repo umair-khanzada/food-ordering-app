@@ -84,7 +84,15 @@ export const GridContainer = styled(Grid)`
   height: 100vh;
 `;
 export const GridItem = styled(Grid)`
-  margin-left: 150px;
+  display: flex;
+  justify-content: center;
+  align-item: center;
+  margin-left: 15%;
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: start;
+    width: 100%;
+  }
 `;
 
 export const NavTitle = styled(AppBar)`
