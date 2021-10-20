@@ -33,3 +33,6 @@ export const DeleteProgress = styled(CircularProgress)`
   margin-left: 10px;
   margin-top: 10px;
 `;
+export const OrderItems = styled(TableCell)`
+  font-weight: bold;
+`;

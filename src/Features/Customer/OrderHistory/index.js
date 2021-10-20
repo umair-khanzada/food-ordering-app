@@ -15,7 +15,7 @@ const OrdersList = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <Box height="80vh" mt={8}>
+        <Box height="80vh" mt={5}>
           <CollapsibleTable header={header} rows={ordersList} />
         </Box>
       )}

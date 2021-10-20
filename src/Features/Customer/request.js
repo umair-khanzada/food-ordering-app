@@ -12,18 +12,18 @@ const Vendors = async (headers, userType) => {
   return data.filter((user) => user.role == userType);
 };
 
+export const FetchVendors = (userType) => {
+  const { headers } = GetHeader();
+
+  return useQuery('vendors', () => Vendors(headers, userType));
+};
+
 const categories = async (headers) => {
   const { data } = await axios.get(baseUrl() + 'categories ', {
     headers,
   });
 
   return data;
-};
-
-export const FetchVendors = (userType) => {
-  const { headers } = GetHeader();
-
-  return useQuery('vendors', () => Vendors(headers, userType));
 };
 
 export const GetCategories = () => {
