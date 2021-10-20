@@ -6,7 +6,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import SnackBar from '../../components/AlertMessage';
 import AppBar from '../../components/AppBar/AppBar';
-import SideMenu from '../../components/sideMenu';
 import History from '../../util/History';
 import BaseRouter from '../index';
 function MainContainer() {
@@ -32,14 +31,12 @@ function MainContainer() {
         <>
           <AppBar handleDrawerToggle={handleDrawerToggle} />
           <Grid container direction="row">
-            <Grid item style={{ position: 'relative' }} xs={2}>
-              <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setMobile={setMobileOpen} />
-            </Grid>
+            <Grid item style={{ position: 'relative' }} xs={2} />
             <Grid item md={10} xs={12}>
               {baseRouter}
             </Grid>
           </Grid>
-          {snackBar}
+          ` ` {snackBar}
         </>
       ) : (
         <>

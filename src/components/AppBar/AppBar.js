@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Grid, ListItemIcon, Toolbar, IconButton, makeStyles } from '@material-ui/core';
-import { ShoppingCart } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import { CircularProgress } from '@mui/material';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -11,7 +10,8 @@ import { logout } from '../../Features/Auth/actions';
 import { openDrawer } from '../../Features/Customer/actions';
 import Roles from '../../roles';
 import Drawer from '../Drawer';
-import { LogoutButton, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
+import SideMenu from '../sideMenu';
+import { LogoutButton, ShoppingCartIcon, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = ({ handleDrawerToggle }) => {
+const NavBar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const logOut = () => {
@@ -53,11 +53,15 @@ const NavBar = ({ handleDrawerToggle }) => {
   const { user } = Roles;
 
   const classes = useStyles();
+  function handleDrawerToggle() {
+    setMobileOpen((prev) => !prev);
+  }
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <StyledDiv>
       <StyledAppBar position="sticky">
-        <Toolbar>
+        <Toolbar padding="0px">
           <IconButton
             aria-label="Open drawer"
             className={classes.menuButton}
@@ -76,7 +80,7 @@ const NavBar = ({ handleDrawerToggle }) => {
                   <span style={{ position: 'absolute', top: 0, right: '8px', color: 'red', fontSize: '16px' }}>
                     {cartItemCount === 0 ? null : cartItemCount}
                   </span>
-                  <ShoppingCart />
+                  <ShoppingCartIcon />
                 </IconButton>
                 <UserName>{name}</UserName>
               </>
@@ -94,6 +98,9 @@ const NavBar = ({ handleDrawerToggle }) => {
           </Grid>
         </Toolbar>
       </StyledAppBar>
+      {/* {isMobile && ( */}
+      <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setMobile={setMobileOpen} />
+      {/* )} */}
     </StyledDiv>
   );
 };

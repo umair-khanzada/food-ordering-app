@@ -4,7 +4,7 @@ import { PeopleAlt, Category } from '@material-ui/icons';
 
 import RouteNames from '../../routes/RouteNames';
 import StyledLink from '../ReactRouterStyledLink';
-const AdminSideNav = ({ drawerToggle, setMobileView }) => {
+const AdminSideNav = ({ setMobileView }) => {
   const { users, vendors, categories } = RouteNames;
   return (
     <>

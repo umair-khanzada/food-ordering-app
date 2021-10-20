@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 export const MainDrawer = styled(Drawer)`
   height: 20px;
-  width: 90vh;
+
   margin-top: 12px;
 `;
 export const DrawerModal = styled(Modal)`

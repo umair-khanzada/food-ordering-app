@@ -17,8 +17,12 @@ function SideMenu({ mobileOpen, handleDrawerToggle, setMobile }) {
     drawerPaper: {
       position: 'absolute',
       minWidth: '250px',
+
       minHeight: '88vh',
       backgroundColor: 'white',
+      ['@media(min-width:768px)']: {
+        marginTop: '85px',
+      },
     },
     navigation: {
       marginTop: '50px',
