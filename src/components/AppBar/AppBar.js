@@ -57,18 +57,20 @@ const NavBar = () => {
                   </span>
                   <ShoppingCart />
                 </IconButton>
-                <UserName>{name}</UserName>
               </>
             )}
 
             {isLoading ? (
               <CircularProgress />
             ) : (
-              <ListItemIcon>
-                <IconButton>
-                  <LogoutButton fontSize="large" onClick={logOut} />
-                </IconButton>
-              </ListItemIcon>
+              <>
+                <UserName>{name}</UserName>
+                <ListItemIcon>
+                  <IconButton>
+                    <LogoutButton fontSize="large" onClick={logOut} />
+                  </IconButton>
+                </ListItemIcon>
+              </>
             )}
           </Grid>
         </Toolbar>

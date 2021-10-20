@@ -12,6 +12,7 @@ import History from '../../util/History';
 import BaseRouter from '../index';
 import { FetchUserById } from './request';
 function MainContainer() {
+  console.log('runing');
   const { isLoggedIn, id, role, isUserRoleChange } = useSelector((state) => {
     const {
       authReducer: { isLoggedIn, id, role, isUserRoleChange },
