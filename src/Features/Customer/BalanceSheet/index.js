@@ -14,7 +14,7 @@ const UserBalanceSheet = () => {
   return isFetching ? (
     <Loader />
   ) : (
-    <Box mt={8}>
+    <Box height="80vh" mt={8}>
       <CustomTable cellWidth="30%" header={header} rows={data} tablewidth="50%" />
     </Box>
   );

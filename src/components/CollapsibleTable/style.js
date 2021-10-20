@@ -14,6 +14,7 @@ export const IconContainer = styled.div`
 `;
 export const CollapseTableContainer = styled(TableContainer)`
   width: 90%;
+  max-height: 95%;
   & .MuiTableCell-root {
     padding: 0px 14px;
     line-height: 55px;
@@ -31,4 +32,7 @@ export const TableHeader = styled(TableCell)`
 export const DeleteProgress = styled(CircularProgress)`
   margin-left: 10px;
   margin-top: 10px;
+`;
+export const OrderItems = styled(TableCell)`
+  font-weight: bold;
 `;

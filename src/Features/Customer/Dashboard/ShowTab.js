@@ -29,6 +29,7 @@ function ShowTab() {
     },
   });
 
+  useEffect(() => {}, [category]);
   useEffect(() => {
     setTabShow(true);
   }, [vendorId]);

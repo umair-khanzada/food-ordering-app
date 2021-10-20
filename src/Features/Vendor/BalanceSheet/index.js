@@ -34,7 +34,7 @@ const BalanceSheet = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <Box mt={4}>
+    <Box height="80vh" mt={4}>
       <CustomTable
         cellWidth="30%"
         header={header}

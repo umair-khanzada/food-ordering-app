@@ -5,6 +5,7 @@ import styled from 'styled-components';
 export const CustomTableHead = styled(TableHead)`
   background-color: #00b3e3;
   height: 40px;
+
   & .MuiTableCell-head {
     font-weight: bold;
   }
@@ -14,6 +15,7 @@ export const IconContainer = styled.div`
 `;
 export const CustomTableContainer = styled(TableContainer)`
   width: ${({ tablewidth }) => tablewidth};
+  max-height: 95%;
   & .MuiTableCell-root {
     padding: 5px 14px;
     line-height: 38px;

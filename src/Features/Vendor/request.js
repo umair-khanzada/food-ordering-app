@@ -9,7 +9,7 @@ import { baseUrl } from '../../scripts/constants';
 import { logout } from '../Auth/actions';
 
 const Restaurants = async (headers) => {
-  const { data } = await axios.get(baseUrl + 'kitchens', {
+  const { data } = await axios.get(baseUrl() + 'kitchens', {
     headers,
   });
 
@@ -24,7 +24,7 @@ export const FetchRestaurants = () => {
 };
 
 const Categories = async (headers) => {
-  const { data } = await axios.get(baseUrl + 'categories', {
+  const { data } = await axios.get(baseUrl() + 'categories', {
     headers,
   });
   return data;
@@ -54,7 +54,7 @@ export const FetchCategories = () => {
 };
 
 const Items = async (headers) => {
-  const res = await axios.get(baseUrl + 'items', {
+  const res = await axios.get(baseUrl() + 'items', {
     headers,
   });
 
@@ -68,7 +68,7 @@ export const FetchItems = () => {
 };
 
 const ItemsById = async (headers, id) => {
-  const { data } = await axios.get(baseUrl + 'items/' + id, {
+  const { data } = await axios.get(baseUrl() + 'items/' + id, {
     headers,
   });
 
@@ -80,26 +80,26 @@ export const FetchItemsById = (id) => {
   return useQuery('fetchItems', () => ItemsById(headers, id));
 };
 const orderHistory = async (vendorId) => {
-  const { data: orders } = await axios.get(baseUrl + 'orders/vendor/' + vendorId);
+  const { data: orders } = await axios.get(baseUrl() + 'orders/vendor/' + vendorId);
   const structuredData = [];
 
   orders.map(({ items, userId, status, amount, id }) => {
     const itemsArray = [];
+    if (userId) {
+      items.map((item) => {
+        const parseItem = JSON.parse(item);
 
-    items.map((item) => {
-      const parseItem = JSON.parse(item);
+        itemsArray.push(parseItem);
+      });
 
-      itemsArray.push(parseItem);
-    });
-
-    structuredData.push({
-      id,
-      name: userId.name,
-      items: itemsArray,
-
-      status,
-      price: amount,
-    });
+      structuredData.push({
+        id,
+        name: userId.name,
+        items: itemsArray,
+        status,
+        price: amount,
+      });
+    }
   });
   return structuredData;
 };
@@ -115,7 +115,7 @@ export const FetchOrderHistory = () => {
 };
 
 const orderById = async (id) => {
-  const { data } = await axios.get(baseUrl + 'orders/' + id);
+  const { data } = await axios.get(baseUrl() + 'orders/' + id);
   return data;
 };
 
