@@ -85,21 +85,21 @@ const orderHistory = async (vendorId) => {
 
   orders.map(({ items, userId, status, amount, id }) => {
     const itemsArray = [];
+    if (userId) {
+      items.map((item) => {
+        const parseItem = JSON.parse(item);
 
-    items.map((item) => {
-      const parseItem = JSON.parse(item);
+        itemsArray.push(parseItem);
+      });
 
-      itemsArray.push(parseItem);
-    });
-
-    structuredData.push({
-      id,
-      name: userId.name,
-      items: itemsArray,
-
-      status,
-      price: amount,
-    });
+      structuredData.push({
+        id,
+        name: userId.name,
+        items: itemsArray,
+        status,
+        price: amount,
+      });
+    }
   });
   return structuredData;
 };

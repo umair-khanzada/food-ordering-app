@@ -45,21 +45,24 @@ const orderHistory = async (headers, user_Id) => {
   const { data: orders } = await axios.get(baseUrl() + 'orders/user/' + user_Id, {
     headers,
   });
+
   const structuredData = [];
   orders.map(({ items, vendorId, status, amount, id }) => {
-    const itemsArray = [];
-    items.map((item) => {
-      const parseItem = JSON.parse(item);
-      itemsArray.push(parseItem);
-    });
+    if (vendorId) {
+      const itemsArray = [];
+      items.map((item) => {
+        const parseItem = JSON.parse(item);
+        itemsArray.push(parseItem);
+      });
 
-    structuredData.push({
-      id,
-      name: vendorId.name,
-      items: itemsArray,
-      status,
-      price: amount,
-    });
+      structuredData.push({
+        id,
+        name: vendorId.name,
+        items: itemsArray,
+        status,
+        price: amount,
+      });
+    }
   });
 
   return structuredData;
