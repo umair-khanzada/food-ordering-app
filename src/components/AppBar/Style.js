@@ -7,6 +7,9 @@ import Color from '../../util/Color';
 
 export const StyledDiv = styled.div`
   flex-grow: 1;
+  & .MuiToolbar-gutters {
+    padding-right: 0px;
+  }
 `;
 
 export const StyledMenuItem = styled(MenuItem)`

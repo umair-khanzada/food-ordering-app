@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MenuOutlined, Edit, AccountBalanceWallet, Person, Restaurant } from '@material-ui/icons';
+import { MenuOutlined, Edit, AccountBalanceWallet, Person } from '@material-ui/icons';
 
 import RouteNames from '../../routes/RouteNames';
 import StyledLink from '../ReactRouterStyledLink';
@@ -11,8 +11,6 @@ const VendorSideNav = ({ setMobileView }) => {
   return (
     <>
       <StyledLink icon={<MenuOutlined />} label="Menu" onclick={() => setMobileView(false)} to={menuList} />
-
-      <StyledLink icon={<Restaurant />} label="Restaurant" onclick={() => setMobileView(false)} to={restaurantList} />
 
       <StyledLink icon={<Edit />} label="Order" onclick={() => setMobileView(false)} to={orderList} />
       <StyledLink icon={<Person />} label="Profile" onclick={() => setMobileView(false)} to={vendorProfile} />

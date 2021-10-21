@@ -12,11 +12,14 @@ export const FetchBalances = () => {
 
     const filteredData = [];
     data.map((item) => {
-      filteredData.push({
-        name: item.vendorId.name,
-        amount: item.amount,
-        id: item.id,
-      });
+      const { vendorId, amount, id } = item;
+      if (vendorId) {
+        filteredData.push({
+          name: vendorId.name,
+          amount,
+          id,
+        });
+      }
     });
 
     return filteredData;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import 'date-fns';
-import { Grid } from '@material-ui/core';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -88,35 +87,31 @@ function Menu() {
 
   return (
     <div>
-      <Grid container>
-        <Grid item md={12}>
-          <ButtonsContainer>
-            <ButtonContainer>
-              <CommonButton onClick={() => showAddMenu()} property="Add Item" />
-            </ButtonContainer>
-          </ButtonsContainer>
-          {isFetching ? (
-            <>
-              <Loader />
-            </>
-          ) : (
-            <>
-              <CustomTableContainer>
-                <CustomTable
-                  header={header}
-                  isDeleting={isLoading}
-                  isEditDelete
-                  onDelete={onDelete}
-                  onEdit={onEdit}
-                  padding="5px 11px"
-                  rows={items}
-                  tablewidth="90%"
-                />
-              </CustomTableContainer>
-            </>
-          )}
-        </Grid>
-      </Grid>
+      <ButtonsContainer>
+        <ButtonContainer>
+          <CommonButton onClick={() => showAddMenu()} property="Add Item" />
+        </ButtonContainer>
+      </ButtonsContainer>
+      {isFetching ? (
+        <>
+          <Loader />
+        </>
+      ) : (
+        <>
+          <CustomTableContainer>
+            <CustomTable
+              header={header}
+              isDeleting={isLoading}
+              isEditDelete
+              onDelete={onDelete}
+              onEdit={onEdit}
+              padding="5px 11px"
+              rows={items}
+              tablewidth="90%"
+            />
+          </CustomTableContainer>
+        </>
+      )}
     </div>
   );
 }
