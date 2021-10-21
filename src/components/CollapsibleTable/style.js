@@ -13,7 +13,7 @@ export const IconContainer = styled.div`
   flex-shrink: 0;
 `;
 export const CollapseTableContainer = styled(TableContainer)`
-  width: 90%;
+  width: 80vw;
   max-height: 95%;
   & .MuiTableCell-root {
     padding: 0px 14px;

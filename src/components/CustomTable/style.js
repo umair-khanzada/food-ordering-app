@@ -5,7 +5,6 @@ import styled from 'styled-components';
 export const CustomTableHead = styled(TableHead)`
   background-color: #00b3e3;
   height: 40px;
-
   & .MuiTableCell-head {
     font-weight: bold;
   }
@@ -15,10 +14,15 @@ export const IconContainer = styled.div`
 `;
 export const CustomTableContainer = styled(TableContainer)`
   width: ${({ tablewidth }) => tablewidth};
-  max-height: 95%;
   & .MuiTableCell-root {
     padding: 5px 14px;
     line-height: 38px;
+  }
+  @media (max-width: 768px) {
+    & .MuiTableCell-root {
+      padding: 5px 11px;
+      line-height: 15px;
+    }
   }
   margin: auto;
 `;
@@ -35,4 +39,7 @@ export const TableCellContainer = styled(TableCell)`
 export const DeleteProgress = styled(CircularProgress)`
   margin-left: 10px;
   margin-top: 10px;
+`;
+export const EditDeletCell = styled(TableCell)`
+  display: flex;
 `;

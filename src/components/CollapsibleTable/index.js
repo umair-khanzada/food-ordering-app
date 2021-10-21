@@ -78,7 +78,7 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
           <TableCell>{SNo * 5 + index + 1}</TableCell>
           <TableCell>{name}</TableCell>
           <TableCell>{items.length}</TableCell>
-          <TableCell>Rs. {price}</TableCell>
+          <TableCell>{price}</TableCell>
 
           <TableCell>{status}</TableCell>
           {isEditDelete && (

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Grid, ListItemIcon, Toolbar, IconButton } from '@material-ui/core';
-import { ShoppingCart } from '@material-ui/icons';
+import { Grid, ListItemIcon, Toolbar, IconButton, makeStyles } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 import { CircularProgress } from '@mui/material';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -10,7 +10,17 @@ import { logout } from '../../Features/Auth/actions';
 import { openDrawer } from '../../Features/Customer/actions';
 import Roles from '../../roles';
 import Drawer from '../Drawer';
-import { LogoutButton, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
+import SideMenu from '../sideMenu';
+import { LogoutButton, ShoppingCartIcon, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
+
+const useStyles = makeStyles((theme) => ({
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+}));
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -42,10 +52,25 @@ const NavBar = () => {
 
   const { user } = Roles;
 
+  const classes = useStyles();
+  function handleDrawerToggle() {
+    setMobileOpen((prev) => !prev);
+  }
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
     <StyledDiv>
       <StyledAppBar position="sticky">
-        <Toolbar>
+        <Toolbar padding="0px">
+          <IconButton
+            aria-label="Open drawer"
+            className={classes.menuButton}
+            color="inherit"
+            edge="start"
+            onClick={handleDrawerToggle}
+          >
+            <MenuIcon style={{ color: 'grey' }} />
+          </IconButton>
           <StyledLogo alt="logo" src="https://www.nisum.com/hubfs/logo_nisum.svg" />
           <Grid alignItems="center" container justifyContent="flex-end">
             {role === user && (
@@ -55,7 +80,7 @@ const NavBar = () => {
                   <span style={{ position: 'absolute', top: 0, right: '8px', color: 'red', fontSize: '16px' }}>
                     {cartItemCount === 0 ? null : cartItemCount}
                   </span>
-                  <ShoppingCart />
+                  <ShoppingCartIcon />
                 </IconButton>
               </>
             )}
@@ -75,6 +100,9 @@ const NavBar = () => {
           </Grid>
         </Toolbar>
       </StyledAppBar>
+      {/* {isMobile && ( */}
+      <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setMobile={setMobileOpen} />
+      {/* )} */}
     </StyledDiv>
   );
 };

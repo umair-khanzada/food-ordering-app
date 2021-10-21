@@ -10,11 +10,18 @@ export const StyledMainContainerGrid = styled(Grid)`
 
 export const StyledGridItem = styled(Grid)`
   margin-bottom: 50px;
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
 `;
 
 export const StyledGridColumnItem = styled(Grid)`
   width: 50%;
   margin-top: 30px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const StyledFormButton = styled(CommonButton)`
