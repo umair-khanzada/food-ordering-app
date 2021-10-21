@@ -17,12 +17,15 @@ function SideMenu({ mobileOpen, handleDrawerToggle, setMobile }) {
     drawerPaper: {
       position: 'absolute',
       minWidth: '250px',
-
-      minHeight: '88vh',
+      maxHeight: '88vh',
       backgroundColor: 'white',
       ['@media(min-width:768px)']: {
         marginTop: '85px',
       },
+    },
+    drawerPaperTemporary: {
+      maxHeight: '100vh',
+      minWidth: '250px',
     },
     navigation: {
       marginTop: '50px',
@@ -47,7 +50,7 @@ function SideMenu({ mobileOpen, handleDrawerToggle, setMobile }) {
   const { vendor, admin, user } = Roles;
   const classes = useStyles();
 
-  const { drawerPaper, navigation } = classes;
+  const { drawerPaper, drawerPaperTemporary, navigation } = classes;
 
   const drawer = (
     <div className={navigation}>
@@ -65,7 +68,7 @@ function SideMenu({ mobileOpen, handleDrawerToggle, setMobile }) {
         <div>
           <Drawer
             classes={{
-              paper: drawerPaper,
+              paper: drawerPaperTemporary,
             }}
             onClose={mobileOpen}
             open={mobileOpen}
