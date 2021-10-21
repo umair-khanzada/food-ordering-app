@@ -60,6 +60,11 @@ export const Container = styled.div`
   align-items: center;
 
   animation: ${fadein} 0.5s, ${fadeout} 0.9s ${(props) => props.time};
+  @media (max-width: 768px) {
+    left: 5%;
+    max-height: 100px;
+    padding: 2px;
+  }
 `;
 
 export const ShowSnackBarButton = styled.button`
@@ -68,7 +73,6 @@ export const ShowSnackBarButton = styled.button`
   align-items: center;
   margin-left: 0.875rem;
   padding: 0;
-  margin-left: 1rem;
   height: 1.75rem;
   width: 1.75rem;
   text-align: center;
@@ -77,4 +81,7 @@ export const ShowSnackBarButton = styled.button`
   color: white;
   cursor: pointer;
   border-radius: 50%;
+  @media (max-width: 768px) {
+    margin-left: 0;
+    margin-right: 0.875rem;
 `;

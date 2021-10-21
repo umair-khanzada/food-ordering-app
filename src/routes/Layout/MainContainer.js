@@ -36,7 +36,7 @@ function MainContainer() {
               {baseRouter}
             </Grid>
           </Grid>
-          ` ` {snackBar}
+          {snackBar}
         </>
       ) : (
         <>
