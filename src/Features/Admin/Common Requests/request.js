@@ -8,7 +8,7 @@ import { baseUrl, GetHeader } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 
 const userList = async (headers, userType) => {
-  const { data } = await axios.get(baseUrl + 'users', {
+  const { data } = await axios.get(baseUrl() + 'users', {
     headers,
   });
   return data.filter((user) => user.role == userType);
@@ -30,7 +30,7 @@ export const FetchUsers = (userType) => {
 };
 
 const userById = async (headers, id) => {
-  const { data } = await axios.get(baseUrl + 'users/' + id, {
+  const { data } = await axios.get(baseUrl() + 'users/' + id, {
     headers,
   });
 

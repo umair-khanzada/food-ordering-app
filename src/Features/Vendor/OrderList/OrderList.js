@@ -12,7 +12,7 @@ import { ERROR, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 import { deleteOrderById } from '../mutation';
 import { FetchOrderHistory } from '../request';
-import { OrdersListTitleContainer } from './Style';
+import { CollapseTableContainer, OrdersListTitleContainer } from './Style';
 
 const OrdersList = () => {
   const { data: ordersList, refetch: refetchOrders, isFetching } = FetchOrderHistory();
@@ -52,7 +52,6 @@ const OrdersList = () => {
   const onDelete = (id) => {
     mutateAsync(id);
   };
-
   const header = ['S.No', 'Name', 'Total Items', 'Price', 'status', 'edit'];
   return (
     <>
@@ -61,15 +60,17 @@ const OrdersList = () => {
       ) : (
         <>
           <OrdersListTitleContainer />
-          <CollapsibleTable
-            header={header}
-            isDeleting={isLoading}
-            isEditDelete
-            onDelete={onDelete}
-            onEdit={onEdit}
-            rows={ordersList}
-            tablewidth="90%"
-          />
+          <CollapseTableContainer>
+            <CollapsibleTable
+              header={header}
+              isDeleting={isLoading}
+              isEditDelete
+              onDelete={onDelete}
+              onEdit={onEdit}
+              rows={ordersList}
+              tablewidth="90%"
+            />
+          </CollapseTableContainer>
         </>
       )}
     </>

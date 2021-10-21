@@ -12,3 +12,7 @@ export const CategoriesTitle = styled.div`
 
   font-weight: 500;
 `;
+export const CustomTableContainer = styled.div`
+  margin-top: 20px;
+  height: 85vh;
+`;

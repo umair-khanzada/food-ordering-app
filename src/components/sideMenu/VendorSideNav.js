@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MenuOutlined, Edit, AccountBalanceWallet, Restaurant, Person } from '@material-ui/icons';
+import { MenuOutlined, Edit, AccountBalanceWallet, Person, Restaurant } from '@material-ui/icons';
 
 import RouteNames from '../../routes/RouteNames';
 import StyledLink from '../ReactRouterStyledLink';

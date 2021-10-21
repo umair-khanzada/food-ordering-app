@@ -45,7 +45,7 @@ export default function CustomTable({
   }, [rows]);
   const [page, setPage] = useState(0);
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -72,7 +72,7 @@ export default function CustomTable({
         </ConfirmDeletModal>
       )}
 
-      <Table aria-label="custom pagination table">
+      <Table>
         <CustomTableHead>
           <TableRow>
             {header.map((head, index) => {
@@ -84,7 +84,7 @@ export default function CustomTable({
         <TableBody>
           {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
             <TableRow key={row.id}>
-              <TableCell>{page * 5 + index + 1}</TableCell>
+              <TableCell>{page * rowsPerPage + index + 1}</TableCell>
               {Object.keys(row).map((data, index) => {
                 if (data != 'id' && data !== 'role' && data != 'createdBy') {
                   return (
@@ -135,7 +135,7 @@ export default function CustomTable({
               onRowsPerPageChange={handleChangeRowsPerPage}
               page={page}
               rowsPerPage={rowsPerPage}
-              rowsPerPageOptions={[5]}
+              rowsPerPageOptions={[50]}
               SelectProps={{
                 native: true,
               }}

@@ -10,6 +10,7 @@ import { SELECT } from '../../../../components/CommonGridBasedForm/FieldTypes';
 import Loader from '../../../../components/Loader';
 import { ERROR, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { InsertBalance, updateOrderById } from '../../mutation';
 import { FetchOrderById } from '../../request';
 import { GetBalanceByUserId } from '../request';
@@ -73,12 +74,12 @@ const EditOrderList = () => {
           data: { message },
         },
       } = error;
-      dispatch(
-        toggleSnackbarOpen({
-          snackbarMessage: message,
-          messageType: ERROR,
-        }),
-      );
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
     },
   });
 

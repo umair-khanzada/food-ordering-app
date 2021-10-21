@@ -5,7 +5,7 @@ import { mergeMap, catchError } from 'rxjs/operators';
 
 import { toggleSnackbarOpen } from '../../components/AlertMessage/alertRedux/actions';
 import { EDIT_USER } from '../../redux/ActionTypes';
-import { API_ROUTE, ERROR, SUCCESS } from '../../scripts/constants';
+import { baseUrl, ERROR, SUCCESS } from '../../scripts/constants';
 import { authLoadingToggle, logout, updateUserData } from '../Auth/actions';
 
 export const editUserEpic = (action$, state) =>
@@ -22,7 +22,7 @@ export const editUserEpic = (action$, state) =>
       return concat(
         of(authLoadingToggle()),
         ajax({
-          url: `${API_ROUTE}/users/${id}`,
+          url: `${baseUrl()}users/${id}`,
           method: 'PATCH',
           headers: {
             Authorization: `Bearer ${token}`,

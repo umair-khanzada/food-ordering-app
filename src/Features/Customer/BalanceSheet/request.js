@@ -8,7 +8,7 @@ export const FetchBalances = () => {
   const userId = useSelector((state) => state.authReducer.id);
 
   return useQuery('balance', async () => {
-    const { data } = await axios.get(baseUrl + 'balance/user/' + userId);
+    const { data } = await axios.get(baseUrl() + 'balance/user/' + userId);
 
     const filteredData = [];
     data.map((item) => {

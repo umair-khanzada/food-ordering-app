@@ -19,7 +19,14 @@ import { useDispatch } from 'react-redux';
 import TablePaginationActions from '../CustomTable/Pagination';
 import ConfirmDeletModal from '../Modal';
 import { closeModal, openModal } from '../Modal/action';
-import { CollapseTableContainer, CollapseTableHead, DeleteIcon, DeleteProgress, TableHeader } from './style';
+import {
+  CollapseTableContainer,
+  CollapseTableHead,
+  DeleteIcon,
+  DeleteProgress,
+  OrderItems,
+  TableHeader,
+} from './style';
 
 const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, onEdit }) => {
   const dispatch = useDispatch();
@@ -35,7 +42,7 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
   ];
   const [page, setPage] = useState(0);
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -105,8 +112,8 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
                 <Table size="small">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Item</TableCell>
-                      <TableCell align="center">Quantity </TableCell>
+                      <OrderItems align="center">Item</OrderItems>
+                      <OrderItems align="center">Quantity </OrderItems>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -157,7 +164,7 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
               onRowsPerPageChange={handleChangeRowsPerPage}
               page={page}
               rowsPerPage={rowsPerPage}
-              rowsPerPageOptions={[5]}
+              rowsPerPageOptions={[50]}
               SelectProps={{
                 native: true,
               }}

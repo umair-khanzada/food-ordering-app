@@ -5,25 +5,25 @@ import { useSelector } from 'react-redux';
 import { baseUrl, GetHeader } from '../../scripts/constants';
 
 const Vendors = async (headers, userType) => {
-  const { data } = await axios.get(baseUrl + 'users', {
+  const { data } = await axios.get(baseUrl() + 'users', {
     headers,
   });
 
   return data.filter((user) => user.role == userType);
 };
 
-const categories = async (headers) => {
-  const { data } = await axios.get(baseUrl + 'categories ', {
-    headers,
-  });
-
-  return data;
-};
-
 export const FetchVendors = (userType) => {
   const { headers } = GetHeader();
 
   return useQuery('vendors', () => Vendors(headers, userType));
+};
+
+const categories = async (headers) => {
+  const { data } = await axios.get(baseUrl() + 'categories ', {
+    headers,
+  });
+
+  return data;
 };
 
 export const GetCategories = () => {
@@ -34,7 +34,7 @@ export const GetCategories = () => {
 
 export const itemsByVendor = async (headers, vendorId) => {
   if (vendorId !== '') {
-    const { data } = await axios.get(baseUrl + 'items ', {
+    const { data } = await axios.get(baseUrl() + 'items ', {
       headers,
     });
     return data.filter(({ createdBy }) => createdBy === vendorId);
@@ -42,24 +42,27 @@ export const itemsByVendor = async (headers, vendorId) => {
 };
 
 const orderHistory = async (headers, user_Id) => {
-  const { data: orders } = await axios.get(baseUrl + 'orders/user/' + user_Id, {
+  const { data: orders } = await axios.get(baseUrl() + 'orders/user/' + user_Id, {
     headers,
   });
+
   const structuredData = [];
   orders.map(({ items, vendorId, status, amount, id }) => {
-    const itemsArray = [];
-    items.map((item) => {
-      const parseItem = JSON.parse(item);
-      itemsArray.push(parseItem);
-    });
+    if (vendorId) {
+      const itemsArray = [];
+      items.map((item) => {
+        const parseItem = JSON.parse(item);
+        itemsArray.push(parseItem);
+      });
 
-    structuredData.push({
-      id,
-      name: vendorId.name,
-      items: itemsArray,
-      status,
-      price: amount,
-    });
+      structuredData.push({
+        id,
+        name: vendorId.name,
+        items: itemsArray,
+        status,
+        price: amount,
+      });
+    }
   });
 
   return structuredData;

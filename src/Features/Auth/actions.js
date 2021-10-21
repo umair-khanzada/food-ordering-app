@@ -11,6 +11,7 @@ import {
   UPDATE_USER_DATA,
   RESET_PASSWORD,
   AUTH_LOADING_TOGGLE,
+  UPDATE_ROLE,
 } from '../../redux/ActionTypes';
 
 export const login = (data) => ({ type: LOGIN, payload: data });
@@ -31,3 +32,4 @@ export const resetPassword = (data) => ({ type: RESET_PASSWORD, payload: data })
 export const updateUserData = (data) => ({ type: UPDATE_USER_DATA, payload: data });
 
 export const authLoadingToggle = () => ({ type: AUTH_LOADING_TOGGLE });
+export const updateUserRole = (data) => ({ type: UPDATE_ROLE, payload: data });

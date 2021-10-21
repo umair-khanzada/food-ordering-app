@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Grid } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import SnackBar from '../../components/AlertMessage';
 import AppBar from '../../components/AppBar/AppBar';
+import { updateUserRole } from '../../Features/Auth/actions';
 import History from '../../util/History';
 import BaseRouter from '../index';
+import { FetchUserById } from './request';
 function MainContainer() {
-  const isLoggedIn = useSelector((state) => {
+  const { isLoggedIn, id, role, isUserRoleChange } = useSelector((state) => {
     const {
-      authReducer: { isLoggedIn },
+      authReducer: { isLoggedIn, id, role, isUserRoleChange },
     } = state;
-    return isLoggedIn;
-  });
+    return { isLoggedIn, id, role, isUserRoleChange };
+  }, shallowEqual);
+  const dispatch = useDispatch();
+
+  const { data: userById } = FetchUserById(id, isLoggedIn);
 
   const baseRouter = <BaseRouter />;
   const snackBar = <SnackBar />;
@@ -24,6 +29,13 @@ function MainContainer() {
   function handleDrawerToggle() {
     setMobileOpen((prev) => !prev);
   }
+  useEffect(() => {
+    if (userById) {
+      const { role } = userById;
+
+      dispatch(updateUserRole({ role }));
+    }
+  }, [userById]);
 
   return (
     <Router history={History}>

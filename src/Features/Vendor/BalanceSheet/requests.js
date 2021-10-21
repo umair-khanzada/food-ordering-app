@@ -7,7 +7,7 @@ import { baseUrl } from '../../../scripts/constants';
 export const FetchBalances = () => {
   const vendorId = useSelector((state) => state.authReducer.id);
   return useQuery('balance', async () => {
-    const { data } = await axios.get(baseUrl + 'balance/vendor/' + vendorId);
+    const { data } = await axios.get(baseUrl() + 'balance/vendor/' + vendorId);
 
     const structutredData = [];
 
@@ -27,7 +27,7 @@ export const FetchBalanceById = (id) => {
   return useQuery(
     'balance/' + id,
     async () => {
-      const { data } = await axios.get(baseUrl + 'balance/' + id);
+      const { data } = await axios.get(baseUrl() + 'balance/' + id);
       return data;
     },
     {},
