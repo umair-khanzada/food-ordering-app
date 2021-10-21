@@ -15,7 +15,6 @@ import {
   Error,
   GridContainer,
   GridItem,
-  NavTitle,
   NisumText,
   NisumTextColor,
   ErrorResponse,
@@ -37,12 +36,10 @@ const FormComponent = ({
   }, []);
   return (
     <>
-      <NavTitle elevation={0}>
+      <FormContainer>
         <NisumText>
           Ni<NisumTextColor>sum</NisumTextColor>
         </NisumText>
-      </NavTitle>
-      <FormContainer>
         <GridContainer>
           <GridItem>
             <Collapse in={checked} timeout={1000}>
