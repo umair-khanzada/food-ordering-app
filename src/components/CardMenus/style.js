@@ -4,15 +4,20 @@ import styled from 'styled-components';
 export const CardRoot = styled(Card)`
   display: flex;
   flex-direction: column;
-
   width: 280px;
-  margin-top: -40px;
   box-shadow: 0px 0px 10px lightgrey;
+  @media (max-width: 768px) {
+    width: 150px;
+  }
 `;
 
 export const FoodTitle = styled(Typography)`
   text-align: center;
   margin-bottom: 10px;
+  @media (max-width: 768px) {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
 `;
 export const Content = styled(CardContent)`
   padding: 0px;
@@ -33,14 +38,25 @@ export const ImageDiv = styled.img`
   padding: 14px;
   height: 200px;
   width: 300px;
+  @media (max-width: 768px) {
+    border: 50px;
+    border-radius: 5px;
+    padding: 7px;
+    height: 100px;
+    width: 150px;
+  }
 `;
 export const ItemPrice = styled.div`
   margin-left: 10vh;
   margin-top: 10px;
+  @media (max-width: 768px) {
+    margin-left: 10vh;
+    margin-top: 0px;
+  }
 `;
 export const ControlGrid = styled(Grid)`
-  padding: 20px;
-  margin-top: 50px;
+  padding: 0 20px;
+  margin-top: 20px;
 `;
 export const InsideContent = styled.div`
   display: flex;

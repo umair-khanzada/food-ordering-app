@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addtocart } from '../../Features/Customer/actions';
@@ -34,28 +34,26 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText, vendorId 
     }
   };
   return (
-    <Grid item>
-      <CardRoot>
-        <ImageDiv src={img} title={name} />
+    <CardRoot>
+      <ImageDiv src={img} title={name} />
 
-        <HeaderCard
-          subheader={<ResturantName>{resturantName}</ResturantName>}
-          title={<FoodTitle variant="h2">{name}</FoodTitle>}
-        />
+      <HeaderCard
+        subheader={<ResturantName>{resturantName}</ResturantName>}
+        title={<FoodTitle variant="h2">{name}</FoodTitle>}
+      />
 
-        <Content>
-          <InsideContent>
-            <div>
-              <CommonButton fontSize="14px" minwidth="30px" onClick={addToCart} property={buttonText} />
-            </div>
+      <Content>
+        <InsideContent>
+          <div>
+            <CommonButton fontSize="14px" minwidth="30px" onClick={addToCart} property={buttonText} />
+          </div>
 
-            <Typography color="textSecondary" component="p" variant="h4">
-              <ItemPrice>Rs. {price}</ItemPrice>
-            </Typography>
-          </InsideContent>
-        </Content>
-      </CardRoot>
-    </Grid>
+          <Typography color="textSecondary" component="p" variant="h4">
+            <ItemPrice>Rs. {price}</ItemPrice>
+          </Typography>
+        </InsideContent>
+      </Content>
+    </CardRoot>
   );
 };
 export default CommonCard;
