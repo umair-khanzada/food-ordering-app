@@ -38,5 +38,14 @@ const userById = async (headers, id) => {
 };
 export const FetchUserById = (id) => {
   const { headers } = GetHeader();
-  return useQuery('usersById', () => userById(headers, id));
+  const dispatch = useDispatch();
+  const history = useHistory();
+  return useQuery('usersById', () => userById(headers, id), {
+    onError: (err) => {
+      if (err.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen('Session Expired! Please Log in again.'));
+      }
+    },
+  });
 };

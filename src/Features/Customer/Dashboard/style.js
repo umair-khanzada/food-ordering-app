@@ -42,9 +42,7 @@ export const OrderDetails = styled.div`
 export const UserInfo = styled.div`
   padding-right: 40px;
 `;
-export const FirstTab = styled.div`
-  padding-right: 30px;
-`;
+
 export const VendorCard = styled.div`
   display: flex;
   flex-direction: row;

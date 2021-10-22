@@ -1,63 +1,67 @@
-import { Card, CardContent, CardHeader, Grid, Typography } from '@material-ui/core';
+import { Card, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const CardRoot = styled(Card)`
   display: flex;
+  padding: 2px;
+  margin: 20px;
   flex-direction: column;
-  width: 280px;
-  box-shadow: 0px 0px 10px lightgrey;
+  width: 260px;
+  box-shadow: 5px 5px 10px 2px grey;
   @media (max-width: 768px) {
-    width: 150px;
+    width: 160px;
+    margin: 10px;
+  }
+  & .MuiCardHeader-root {
+    padding: 5px;
   }
 `;
 
 export const FoodTitle = styled(Typography)`
   text-align: center;
-  margin-bottom: 10px;
+  font-size: 25px;
   @media (max-width: 768px) {
     margin-bottom: 5px;
-    font-size: 14px;
+    font-size: 20px;
   }
 `;
-export const Content = styled(CardContent)`
-  padding: 0px;
-  margin-left: 18px;
-`;
-export const HeaderCard = styled(CardHeader)`
-padding: 0px
-margin-left: 18px
-`;
-export const ResturantName = styled(Typography)`
-  margin-left: 4px;
-  font-weight: 8px;
+export const Content = styled.div`
+  padding: 10px 5px;
+  width: 100%;
+  text-align: center;
 `;
 
+export const Dishes = styled.div`
+  margin: 20px 10px;
+  display: flex;
+
+  flex-wrap: wrap;
+  @media (max-width: 768px) {
+    margin: 20px 0px;
+  }
+`;
 export const ImageDiv = styled.img`
-  border: 100px;
-  border-radius: 10px;
-  padding: 14px;
+  padding: 10px;
   height: 200px;
   width: 300px;
   @media (max-width: 768px) {
-    border: 50px;
-    border-radius: 5px;
     padding: 7px;
-    height: 100px;
-    width: 150px;
+    height: 110px;
+    width: 100%;
   }
 `;
-export const ItemPrice = styled.div`
-  margin-left: 10vh;
-  margin-top: 10px;
+export const ItemPrice = styled.div``;
+export const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
   @media (max-width: 768px) {
-    margin-left: 10vh;
-    margin-top: 0px;
+    flex-direction: column;
+    text-align: center;
   }
 `;
-export const ControlGrid = styled(Grid)`
-  padding: 0 20px;
-  margin-top: 20px;
-`;
+
 export const InsideContent = styled.div`
   display: flex;
 `;
