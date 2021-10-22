@@ -14,10 +14,10 @@ export const FetchBalances = () => {
   return useQuery(
     'balance',
     async () => {
-      const { data } = await axios.get(baseUrl() + 'balance/user/' + userId);
+      const { data } = await axios.get(baseUrl() + `balance/user/${userId}`);
 
       const filteredData = [];
-      data.map((item) => {
+      data.forEach((item) => {
         const { vendorId, amount, id } = item;
         if (vendorId) {
           filteredData.push({
@@ -27,18 +27,18 @@ export const FetchBalances = () => {
           });
         }
       });
-
       return filteredData;
     },
     {
-      onSuccess: () => {},
       onError: (error) => {
         const {
           response: {
             data: { message },
+            status,
           },
         } = error;
-        if (error.response.status === 401) {
+
+        if (status === 401) {
           dispatch(logout({ history }));
           dispatch(
             toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }),

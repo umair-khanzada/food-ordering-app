@@ -21,7 +21,6 @@ export const FetchVendors = (userType) => {
   const dispatch = useDispatch();
   const history = useHistory();
   return useQuery('vendors', () => Vendors(headers, userType), {
-    onSuccess: () => {},
     onError: (error) => {
       const {
         response: {
@@ -51,14 +50,14 @@ export const GetCategories = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   return useQuery('categories', () => categories(headers), {
-    onSuccess: () => {},
     onError: (error) => {
       const {
         response: {
           data: { message },
+          status,
         },
       } = error;
-      if (error.response.status === 401) {
+      if (status === 401) {
         dispatch(logout({ history }));
         dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
       } else {
@@ -78,15 +77,15 @@ export const itemsByVendor = async (headers, vendorId) => {
 };
 
 const orderHistory = async (headers, user_Id) => {
-  const { data: orders } = await axios.get(baseUrl() + 'orders/user/' + user_Id, {
+  const { data: orders } = await axios.get(baseUrl() + `orders/user/${user_Id}`, {
     headers,
   });
 
   const structuredData = [];
-  orders.map(({ items, vendorId, status, amount, id }) => {
+  orders.forEach(({ items, vendorId, status, amount, id }) => {
     if (vendorId) {
       const itemsArray = [];
-      items.map((item) => {
+      items.forEach((item) => {
         const parseItem = JSON.parse(item);
         itemsArray.push(parseItem);
       });
@@ -115,7 +114,6 @@ export const FetchOrderHistory = () => {
 
   const { headers } = GetHeader();
   return useQuery('orders', () => orderHistory(headers, userId), {
-    onSuccess: () => {},
     onError: (error) => {
       const {
         response: {

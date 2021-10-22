@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -6,17 +6,19 @@ import NoDataFound from '../NoDataFilter';
 import CommonCard from './CommonCard';
 import { Dishes } from './style';
 const CardMenu = ({ foodType }) => {
-  const card = useSelector((state) => {
+  const foodItems = useSelector((state) => {
     const { cartItemReducer } = state;
     return cartItemReducer;
   });
-  let itemFound = 0;
+  const [itemFound, setItemFound] = useState(false);
   return (
     <Dishes>
-      {card.map(({ id, name, price, categoryId, createdBy, imgUrl }) => {
+      {foodItems.map(({ id, name, price, categoryId, createdBy, imgUrl }) => {
         const { id: category } = categoryId;
         if (category === foodType) {
-          itemFound++;
+          if (!itemFound) {
+            setItemFound(true);
+          }
           return (
             <CommonCard
               key={id}
@@ -30,7 +32,7 @@ const CardMenu = ({ foodType }) => {
           );
         }
       })}
-      {itemFound === 0 ? <NoDataFound text="No Item Found" /> : null}
+      {itemFound ? null : <NoDataFound text="No Item Found" />}
     </Dishes>
   );
 };
