@@ -6,6 +6,7 @@ import RouteNames from '../../../routes/RouteNames';
 import { FetchVendors } from '../request';
 import { DetailsVendor, ImageContainer, VendorCard, VendorCardItem } from './style';
 function Dashboard() {
+  const profileImage = 'https://www.shareicon.net/data/512x512/2017/01/06/868320_people_512x512.png';
   const { showTabScreen } = RouteNames;
   const history = useHistory();
 
@@ -25,11 +26,7 @@ function Dashboard() {
             return (
               <VendorCardItem key={id} onClick={() => showVendor(id)}>
                 <ImageContainer>
-                  <img
-                    alt="profile"
-                    src="https://www.shareicon.net/data/512x512/2017/01/06/868320_people_512x512.png"
-                    width="100%"
-                  />
+                  <img alt="profile" src={profileImage} width="100%" />
                 </ImageContainer>
 
                 <DetailsVendor>
