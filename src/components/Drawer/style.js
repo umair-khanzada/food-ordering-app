@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 export const MainDrawer = styled(Drawer)`
   height: 20px;
-  width: 90vh;
   margin-top: 12px;
 `;
 export const DrawerModal = styled(Modal)`
@@ -16,11 +15,9 @@ export const DrawerModal = styled(Modal)`
 `;
 export const DrawerCard = styled(Card)`
   display: flex;
-  width: 50vh;
-
+  width: 42vh;
   align-items: center;
-  margin-bottom: 20px;
-  height: 15vh;
+  margin-bottom: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3;
   &:hover {
@@ -40,7 +37,7 @@ export const DrwaerIcon = styled.div`
   height: 46px;
 `;
 export const CartPaper = styled.div`
-  padding: 20px 10px;
+  padding: 10px 5px;
 `;
 export const DrawerText = styled(CloseIcon)`
   width: 30%;
@@ -62,7 +59,7 @@ export const Image = styled.img`
 export const DrawerPrice = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 13px;
+
   align-items: center;
 `;
 export const Add = styled.div`
@@ -72,7 +69,6 @@ export const Add = styled.div`
 `;
 export const DrawerItemPrice = styled.div`
   display: flex;
-  padding-left: 5;
 `;
 export const PositiveIcon = styled(AddCircleIcon)`
   color: #00b3e3;
@@ -91,9 +87,9 @@ export const CheckoutButton = styled(Button)`
   position: fixed;
   bottom: 2px;
   align-items: center;
-  margin: 0 10px;
+  margin: 0 20px;
   margin-bottom: 10px;
-  width: 365px;
+  width: 240px;
   color: white;
 `;
 export const ConfirmButton = styled(Button)`
@@ -125,7 +121,7 @@ export const DeleteIcon = styled(CloseIcon)`
 `;
 
 export const CartPrice = styled.span`
-  margin-left: 20px;
+  margin-left: 10px;
 `;
 export const CartCancel = styled.span`
   width: 60%;
@@ -145,7 +141,7 @@ export const EmptyCart = styled.div`
 export const AddToCartImg = styled.img`
   width: 25%;
   display: flex;
-  margin-left: 2.5vh;
+
   border-radius: 10px;
 `;
 export const ModalIcons = styled.div`

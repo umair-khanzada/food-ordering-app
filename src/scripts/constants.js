@@ -1,10 +1,16 @@
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 
 import RouteNames from '../routes/RouteNames';
 export const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
 export const passwordRegex = new RegExp('^(.*(([A-Za-z]+(.*)[0-9]+)|([0-9]+(.*)[A-Za-z]+))(.*))$');
 export const contactRegex = new RegExp('^[0-9]{11,12}$');
-export const baseUrl = 'https://nisum-food-ordering-backend.herokuapp.com/v1/';
+export const baseUrl = () => {
+  if (process.env.NODE_ENV === 'development') {
+    return 'http://localhost:4000/v1/';
+  }
+  return 'https://nisum-food-ordering-backend.herokuapp.com/v1/';
+};
+
 export const SUCCESS = 'success';
 export const ERROR = 'error';
 export const imgURLRegex = new RegExp('(https?://.*([.])(?:png|jpg|webp|gif|jpeg))');
@@ -26,7 +32,7 @@ export const GetHeader = () => {
     return {
       token,
     };
-  });
+  }, shallowEqual);
   return {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -38,4 +44,3 @@ export const defaultRouteForRoles = {
   vendor: RouteNames.menuList,
   user: RouteNames.dashboard,
 };
-export const API_ROUTE = 'https://nisum-food-ordering-backend.herokuapp.com/v1';

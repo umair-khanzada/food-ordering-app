@@ -87,7 +87,7 @@ const CommonGridBasedForm = ({ fields, buttons, responseError, heading }) => {
           {fieldsData?.map((data, index) => {
             return (
               <Fragment key={index}>
-                <StyledGridItem item xs={6}>
+                <StyledGridItem item lg={6} md={10} xs={12}>
                   <Typography color="secondary" variant="h4">
                     {data.label}
                   </Typography>

@@ -16,3 +16,7 @@ export const UsersTitle = styled.div`
 export const DeleteIcon = styled(Delete)`
   color: #ff4d4d;
 `;
+export const CustomTableContainer = styled.div`
+  margin-top: 20px;
+  height: 70vh;
+`;

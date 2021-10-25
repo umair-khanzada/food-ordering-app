@@ -16,13 +16,12 @@ import { FetchCategories, FetchItemsById, FetchRestaurants } from '../../request
 
 const EditMenu = () => {
   const [categoryData, setCategoryData] = useState([]);
-  const [restaurantData, setRestaurantData] = useState([]);
   const history = useHistory();
   const SuccessMessage = 'Successfull menu has been updated';
   const params = new URLSearchParams(history.location.search);
   const id = params.get('id');
   const { headers } = GetHeader();
-  const [, setItem] = useState('');
+
   const vendorId = useSelector((state) => {
     const {
       authReducer: { id },
@@ -35,21 +34,11 @@ const EditMenu = () => {
   const { data: itemsById, isFetching } = FetchItemsById(id);
 
   useEffect(() => {
-    if (restaurantsData !== undefined) {
-      saveRestaurant(restaurantsData);
-    }
     if (categoriesData !== undefined) {
       saveCategories(categoriesData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [restaurantsData, categoriesData]);
-
-  const saveRestaurant = (restaurantsDetail) => {
-    const resData = restaurantsDetail.map(({ name, id }) => ({ label: name, id }));
-    const updatedFields = SelectChangeHandler(fields, resData, 1);
-    setRestaurantData(resData);
-    setFields(updatedFields);
-  };
+  }, [categoriesData]);
 
   const saveCategories = (categoriesDetail) => {
     const resData = categoriesDetail.map(({ name, id }) => ({ label: name, id }));
@@ -60,7 +49,6 @@ const EditMenu = () => {
   };
   useEffect(() => {
     if (itemsById !== undefined) {
-      setItem(itemsById);
       saveItemsId(itemsById);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,16 +58,14 @@ const EditMenu = () => {
     const {
       name,
       price,
-      categoryId: { categoryid },
-      kitchenId: { kitchenid },
+      categoryId: { id },
       imgUrl,
     } = itemsId;
 
-    setFields(fieldChangeHandler(fields, categoryid, 0));
-    setFields(fieldChangeHandler(fields, kitchenid, 1));
-    setFields(fieldChangeHandler(fields, price, 2));
-    setFields(fieldChangeHandler(fields, name, 3));
-    setFields(fieldChangeHandler(fields, imgUrl, 4));
+    setFields(fieldChangeHandler(fields, id, 0));
+    setFields(fieldChangeHandler(fields, price, 1));
+    setFields(fieldChangeHandler(fields, name, 2));
+    setFields(fieldChangeHandler(fields, imgUrl, 3));
   };
   const initialItemEditField = [
     {
@@ -88,6 +74,7 @@ const EditMenu = () => {
       values: categoryData,
       placeholder: 'Categories',
       value: '',
+      name: 'categoryId',
       isValid: true,
       errorMessage: '',
 
@@ -99,27 +86,12 @@ const EditMenu = () => {
         }
       },
     },
-    {
-      type: AUTO_COMPLETE,
-      label: '',
-      placeholder: 'Restaurants',
-      values: restaurantData,
-      value: '',
-      isValid: true,
-      errorMessage: '',
 
-      onChange: (event, value) => {
-        if (value) {
-          setFormFields(initialItemEditField, value.id, 1);
-        } else {
-          setFormFields(initialItemEditField, '', 1);
-        }
-      },
-    },
     {
       type: PRICE,
       label: 'Price',
       value: '',
+      name: 'price',
       isValid: true,
       errorMessage: '',
 
@@ -132,6 +104,7 @@ const EditMenu = () => {
       type: TEXT_FIELD,
       label: 'Name',
       value: '',
+      name: 'name',
       textFieldType: 'text',
       variant: 'standard',
       isValid: true,
@@ -146,6 +119,7 @@ const EditMenu = () => {
       type: TEXT_FIELD,
       label: 'Image URL',
       value: '',
+      name: 'imgUrl',
       textFieldType: 'text',
       variant: 'standard',
       isValid: true,
@@ -168,18 +142,10 @@ const EditMenu = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
     if (isValid) {
-      mutate({
-        items: {
-          name: fields[3].value,
-          price: fields[2].value,
-          createdBy: vendorId,
-          categoryId: fields[0].value,
-          kitchenId: fields[1].value,
-          imgUrl: fields[4].value,
-        },
-        headers,
-        itemsById,
-      });
+      const items = {};
+      items['createdBy'] = vendorId;
+      fields.map(({ name, value }) => (items[name] = value));
+      mutate({ items, headers, itemsById });
     }
   };
   const setFormFields = (fields, value, index) => {
@@ -205,9 +171,11 @@ const EditMenu = () => {
       const {
         response: {
           data: { message },
+          status,
         },
       } = error;
-      if (error.response.status === 401) {
+
+      if (status === 401) {
         dispatch(logout({ history }));
         dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
       } else {

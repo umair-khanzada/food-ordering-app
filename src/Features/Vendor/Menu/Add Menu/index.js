@@ -11,7 +11,7 @@ import { ERROR, GetHeader, SUCCESS, imgURLRegex } from '../../../../scripts/cons
 import { validateOnSubmit, SelectChangeHandler, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { items } from '../../mutation';
-import { FetchCategories, FetchRestaurants } from '../../request';
+import { FetchCategories } from '../../request';
 const AddMenu = () => {
   const { headers } = GetHeader();
   const successMessage = 'Successfull menu has been created';
@@ -22,24 +22,14 @@ const AddMenu = () => {
     return id;
   });
   const [categoryData, setCategoryData] = useState([]);
-  const [restaurantData, setRestaurantData] = useState([]);
-  const restaurantsData = FetchRestaurants();
   const categoriesData = FetchCategories();
   useEffect(() => {
-    if (restaurantsData !== undefined) {
-      saveRestaurant(restaurantsData);
-    }
     if (categoriesData !== undefined) {
       saveCategories(categoriesData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [restaurantsData, categoriesData]);
-  const saveRestaurant = (restaurantsDetails) => {
-    const resData = restaurantsDetails.map(({ name, id }) => ({ label: name, id }));
-    const updatedFields = SelectChangeHandler(fields, resData, 1);
-    setRestaurantData(resData);
-    setFields(updatedFields);
-  };
+  }, [categoriesData]);
+
   const saveCategories = (categoriesDetails) => {
     const resData = categoriesDetails.map(({ name, id }) => ({ label: name, id }));
     const updatedFields = SelectChangeHandler(fields, resData, 0);
@@ -51,6 +41,7 @@ const AddMenu = () => {
       type: AUTO_COMPLETE,
       label: '',
       values: categoryData,
+      name: 'categoryId',
       placeholder: 'Categories',
       value: '',
       isValid: true,
@@ -63,26 +54,25 @@ const AddMenu = () => {
         }
       },
     },
+
     {
-      type: AUTO_COMPLETE,
-      label: '',
-      placeholder: 'Restaurants',
-      values: restaurantData,
+      type: PRICE,
+      name: 'price',
+      label: 'Price',
       value: '',
       isValid: true,
       errorMessage: '',
-      onChange: (event, value) => {
-        if (value) {
-          setFormFields(initialItemRestaurant, value.id, 1);
-        } else {
-          setFormFields(initialItemRestaurant, '', 1);
-        }
+      onChange: (event) => {
+        setFormFields(initialItemRestaurant, event.target.value, 1);
       },
     },
     {
-      type: PRICE,
-      label: 'Price',
+      type: TEXT_FIELD,
+      label: 'Name',
       value: '',
+      name: 'name',
+      textFieldType: 'text',
+      variant: 'standard',
       isValid: true,
       errorMessage: '',
       onChange: (event) => {
@@ -91,26 +81,15 @@ const AddMenu = () => {
     },
     {
       type: TEXT_FIELD,
-      label: 'Name',
+      label: 'Image URL',
       value: '',
+      name: 'imgUrl',
       textFieldType: 'text',
       variant: 'standard',
       isValid: true,
       errorMessage: '',
       onChange: (event) => {
         setFormFields(initialItemRestaurant, event.target.value, 3);
-      },
-    },
-    {
-      type: TEXT_FIELD,
-      label: 'Image URL',
-      value: '',
-      textFieldType: 'text',
-      variant: 'standard',
-      isValid: true,
-      errorMessage: '',
-      onChange: (event) => {
-        setFormFields(initialItemRestaurant, event.target.value, 4);
       },
       getValidation: (value) => {
         if (!imgURLRegex.test(value)) {
@@ -130,15 +109,12 @@ const AddMenu = () => {
     const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
     if (isValid) {
+      const items = {};
+      items['createdBy'] = vendorId;
+      fields.map(({ name, value }) => (items[name] = value));
+
       mutate({
-        items: {
-          name: fields[3].value,
-          price: fields[2].value,
-          createdBy: vendorId,
-          categoryId: fields[0].value,
-          kitchenId: fields[1].value,
-          imgUrl: fields[4].value,
-        },
+        items,
         headers,
       });
     }
@@ -162,9 +138,11 @@ const AddMenu = () => {
       const {
         response: {
           data: { message },
+          status,
         },
       } = error;
-      if (error.response.status === 401) {
+
+      if (status === 401) {
         dispatch(logout({ history }));
         dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
       } else {

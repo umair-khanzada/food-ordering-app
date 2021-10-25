@@ -18,6 +18,12 @@ export const CustomTableContainer = styled(TableContainer)`
     padding: 5px 14px;
     line-height: 38px;
   }
+  @media (max-width: 768px) {
+    & .MuiTableCell-root {
+      padding: 5px 11px;
+      line-height: 15px;
+    }
+  }
   margin: auto;
 `;
 export const DeleteIcon = styled(Delete)`
@@ -33,4 +39,7 @@ export const TableCellContainer = styled(TableCell)`
 export const DeleteProgress = styled(CircularProgress)`
   margin-left: 10px;
   margin-top: 10px;
+`;
+export const EditDeletCell = styled(TableCell)`
+  display: flex;
 `;

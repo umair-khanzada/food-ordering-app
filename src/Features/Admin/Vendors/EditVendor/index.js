@@ -11,6 +11,7 @@ import Loader from '../../../../components/Loader';
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, ERROR, GetHeader, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { editUserById } from '../../Common Requests/mutation';
 import { FetchUserById } from '../../Common Requests/request';
 
@@ -97,9 +98,16 @@ const EditVendor = () => {
       const {
         response: {
           data: { message },
+          status,
         },
       } = error;
-      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+
+      if (status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
     },
   });
   const [, setVendor] = useState('');

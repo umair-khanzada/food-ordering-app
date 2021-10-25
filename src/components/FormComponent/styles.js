@@ -72,7 +72,7 @@ export const Label = styled(Link)`
 export const FormContainer = styled.div`
   background-size: cover;
   background-attachment: fixed;
-  background-position: center center;
+  background-position: center;
   min-height: 100vh;
   background-image: url(${background});
   width: 100%;
@@ -85,6 +85,14 @@ export const GridContainer = styled(Grid)`
 `;
 export const GridItem = styled(Grid)`
   margin-left: 150px;
+  @media (max-width: 991px) {
+    margin: auto;
+    width: 70%;
+  }
+  @media (max-width: 450px) {
+    margin: auto;
+    width: 90%;
+  }
 `;
 
 export const NavTitle = styled(AppBar)`

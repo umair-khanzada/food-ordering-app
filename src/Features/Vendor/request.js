@@ -9,7 +9,7 @@ import { baseUrl } from '../../scripts/constants';
 import { logout } from '../Auth/actions';
 
 const Restaurants = async (headers) => {
-  const { data } = await axios.get(baseUrl + 'kitchens', {
+  const { data } = await axios.get(baseUrl() + 'kitchens', {
     headers,
   });
 
@@ -24,7 +24,7 @@ export const FetchRestaurants = () => {
 };
 
 const Categories = async (headers) => {
-  const { data } = await axios.get(baseUrl + 'categories', {
+  const { data } = await axios.get(baseUrl() + 'categories', {
     headers,
   });
   return data;
@@ -35,14 +35,15 @@ export const FetchCategories = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { data } = useQuery('categories', () => Categories(headers), {
-    onSuccess: () => {},
     onError: (error) => {
       const {
         response: {
           data: { message },
+          status,
         },
       } = error;
-      if (error.response.status === 401) {
+
+      if (status === 401) {
         dispatch(logout({ history }));
         dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
       } else {
@@ -54,7 +55,7 @@ export const FetchCategories = () => {
 };
 
 const Items = async (headers) => {
-  const res = await axios.get(baseUrl + 'items', {
+  const res = await axios.get(baseUrl() + 'items', {
     headers,
   });
 
@@ -62,44 +63,80 @@ const Items = async (headers) => {
 };
 
 export const FetchItems = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { headers } = GetHeader();
 
-  return useQuery('items', () => Items(headers));
+  return useQuery('items', () => Items(headers), {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+          status,
+        },
+      } = error;
+
+      if (status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
+    },
+  });
 };
 
 const ItemsById = async (headers, id) => {
-  const { data } = await axios.get(baseUrl + 'items/' + id, {
+  const { data } = await axios.get(baseUrl() + `items/${id}`, {
     headers,
   });
 
   return data;
 };
 export const FetchItemsById = (id) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { headers } = GetHeader();
 
-  return useQuery('fetchItems', () => ItemsById(headers, id));
+  return useQuery('fetchItems', () => ItemsById(headers, id), {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+          status,
+        },
+      } = error;
+
+      if (status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
+    },
+  });
 };
 const orderHistory = async (vendorId) => {
-  const { data: orders } = await axios.get(baseUrl + 'orders/vendor/' + vendorId);
+  const { data: orders } = await axios.get(baseUrl() + `orders/vendor/${vendorId}`);
   const structuredData = [];
 
-  orders.map(({ items, userId, status, amount, id }) => {
+  orders.forEach(({ items, userId, status, amount, id }) => {
     const itemsArray = [];
+    if (userId) {
+      items.forEach((item) => {
+        const parseItem = JSON.parse(item);
 
-    items.map((item) => {
-      const parseItem = JSON.parse(item);
+        itemsArray.push(parseItem);
+      });
 
-      itemsArray.push(parseItem);
-    });
-
-    structuredData.push({
-      id,
-      name: userId.name,
-      items: itemsArray,
-
-      status,
-      price: amount,
-    });
+      structuredData.push({
+        id,
+        name: userId.name,
+        items: itemsArray,
+        status,
+        price: amount,
+      });
+    }
   });
   return structuredData;
 };
@@ -115,10 +152,28 @@ export const FetchOrderHistory = () => {
 };
 
 const orderById = async (id) => {
-  const { data } = await axios.get(baseUrl + 'orders/' + id);
+  const { data } = await axios.get(baseUrl() + `orders/${id}`);
   return data;
 };
 
 export const FetchOrderById = (id) => {
-  return useQuery(['ordersById', id], () => orderById(id));
+  const history = useHistory();
+  const dispatch = useDispatch();
+  return useQuery(['ordersById', id], () => orderById(id), {
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+          status,
+        },
+      } = error;
+
+      if (status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
+    },
+  });
 };

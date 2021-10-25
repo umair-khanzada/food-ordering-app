@@ -42,9 +42,7 @@ export const OrderDetails = styled.div`
 export const UserInfo = styled.div`
   padding-right: 40px;
 `;
-export const FirstTab = styled.div`
-  padding-right: 30px;
-`;
+
 export const VendorCard = styled.div`
   display: flex;
   flex-direction: row;
@@ -68,10 +66,19 @@ export const VendorCardItem = styled.div`
   &:hover {
     cursor: pointer;
   }
+  @media (max-width: 768px) {
+    height: 75px;
+    width: 220px;
+    border-radius: 20px 0 20px 0;
+  }
 `;
 export const ImageContainer = styled.div`
   height: 70px;
   width: 70px;
+  @media (max-width: 768px) {
+    height: 50px;
+    width: 50px;
+  }
 `;
 export const DetailsVendor = styled.div`
   text-align: left;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../../../components/AlertMessage/alertRedux/actions';
 import CommonGridBasedForm from '../../../../components/CommonGridBasedForm';
@@ -9,6 +10,7 @@ import { TEXT_FIELD } from '../../../../components/CommonGridBasedForm/FieldType
 import { emailRegex } from '../../../../redux/ActionTypes';
 import { contactRegex, ERROR, GetHeader, passwordRegex, SUCCESS } from '../../../../scripts/constants';
 import { validateOnSubmit, fieldChangeHandler } from '../../../../util/CommonGridBasedFormUtils';
+import { logout } from '../../../Auth/actions';
 import { createUser } from '../../Common Requests/mutation';
 const AddVendor = () => {
   const { headers } = GetHeader();
@@ -87,6 +89,7 @@ const AddVendor = () => {
       },
     },
   ];
+  const history = useHistory();
   const [fields, setFields] = useState(intialVendorFields);
   const { mutateAsync, isLoading } = useMutation(createUser, {
     onSuccess: () => {
@@ -97,10 +100,16 @@ const AddVendor = () => {
       const {
         response: {
           data: { message },
+          status,
         },
       } = error;
 
-      dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      if (status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
     },
   });
   const saveHandler = () => {

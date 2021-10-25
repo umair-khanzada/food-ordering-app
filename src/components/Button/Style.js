@@ -16,8 +16,12 @@ const StyledButton = styled(LoadingButton)`
     background-color: white !important;
     color: #00B3E3;
   }
-   ${theme.breakpoints.up('sm')} {
+   ${theme.breakpoints.down('sm')} {
+    
   }
   `};
+  @media (max-width: 768px) {
+    min-width: 40px !important;
+  }
 `;
 export default StyledButton;

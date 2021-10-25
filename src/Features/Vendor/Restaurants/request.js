@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { GetHeader } from '../../../scripts/constants';
 import { baseUrl } from '../../../scripts/constants';
 const Restaurants = async (headers) => {
-  const { data } = await axios.get(baseUrl + 'kitchens', {
+  const { data } = await axios.get(baseUrl() + 'kitchens', {
     headers,
   });
 
@@ -18,7 +18,7 @@ export const FetchRestaurants = () => {
 };
 
 const RestaurantsById = async (headers, id) => {
-  const { data } = await axios.get(baseUrl + 'kitchens/' + id, {
+  const { data } = await axios.get(baseUrl() + 'kitchens/' + id, {
     headers,
   });
 

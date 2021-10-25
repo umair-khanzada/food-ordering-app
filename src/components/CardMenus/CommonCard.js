@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { Grid, Typography } from '@material-ui/core';
+import { CardHeader, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addtocart } from '../../Features/Customer/actions';
 import { ERROR } from '../../scripts/constants';
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
 import CommonButton from '../Button/Button';
-import { CardRoot, ImageDiv, FoodTitle, HeaderCard, Content, ItemPrice, InsideContent, ResturantName } from './style';
+import { CardRoot, ImageDiv, FoodTitle, Content, ItemPrice, DetailsContainer } from './style';
 
-const CommonCard = ({ id, name, price, resturantName, img, buttonText, vendorId }) => {
+const CommonCard = ({ id, name, price, img, buttonText, vendorId }) => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.addtocartReducers.cart);
@@ -34,28 +34,18 @@ const CommonCard = ({ id, name, price, resturantName, img, buttonText, vendorId 
     }
   };
   return (
-    <Grid item>
-      <CardRoot>
-        <ImageDiv src={img} title={name} />
-
-        <HeaderCard
-          subheader={<ResturantName>{resturantName}</ResturantName>}
-          title={<FoodTitle variant="h2">{name}</FoodTitle>}
-        />
-
-        <Content>
-          <InsideContent>
-            <div>
-              <CommonButton fontSize="14px" minwidth="30px" onClick={addToCart} property={buttonText} />
-            </div>
-
-            <Typography color="textSecondary" component="p" variant="h4">
-              <ItemPrice>Rs. {price}</ItemPrice>
-            </Typography>
-          </InsideContent>
-        </Content>
-      </CardRoot>
-    </Grid>
+    <CardRoot>
+      <ImageDiv src={img} title={name} />
+      <DetailsContainer>
+        <CardHeader title={<FoodTitle variant="h2">{name}</FoodTitle>} />
+        <Typography color="textSecondary" component="p" variant="h3">
+          <ItemPrice>Rs. {price}</ItemPrice>
+        </Typography>
+      </DetailsContainer>
+      <Content>
+        <CommonButton fontSize="14px" minwidth="220px" onClick={addToCart} property={buttonText} />
+      </Content>
+    </CardRoot>
   );
 };
 export default CommonCard;
