@@ -38,7 +38,6 @@ import {
   EmptyCart,
   AddToCartImg,
   ModalIcons,
-  PriceSpan,
   EmptyCartHeading,
   EmptyCartPara,
   ConfirmButton,
@@ -144,7 +143,7 @@ const Drawer = () => {
                               <DrawerItemPrice>
                                 <CartPrice> Rs. {cartdata.price}</CartPrice>
                               </DrawerItemPrice>
-                              <PriceSpan />
+
                               <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
                               {cartdata.qty}
                               <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
