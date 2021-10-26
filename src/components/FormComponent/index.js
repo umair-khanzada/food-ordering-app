@@ -70,6 +70,7 @@ const FormComponent = ({
                       minwidth={minWidth}
                       onClick={clickHandler}
                       property={name}
+                      style={{ width: '100%' }}
                       type={type}
                     />
                   </div>
