@@ -14,5 +14,5 @@ export const ImageContainer = styled.div`
 `;
 
 export const PlaceHolder = styled.h1`
-  margin: -48px;
+  margin: -48px 0;
 `;

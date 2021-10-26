@@ -52,7 +52,7 @@ export const ImageDiv = styled.img`
 `;
 export const ItemPrice = styled.div``;
 export const DetailsContainer = styled.div`
-  display: flex;
+  display: flex;s
   flex-direction: row;
   align-items: center;
   justify-content: space-around;

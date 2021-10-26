@@ -7,7 +7,7 @@ function NoDataFound({ text }) {
   return (
     <NoDataContainer>
       <ImageContainer>
-        <img alt="No Data" src={NoData} />
+        <img alt="No Data" src={NoData} style={{ marginTop: '50px' }} />
       </ImageContainer>
       <PlaceHolder>{text}</PlaceHolder>
     </NoDataContainer>
