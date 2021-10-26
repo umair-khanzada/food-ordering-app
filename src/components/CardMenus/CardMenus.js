@@ -1,40 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
 import NoDataFound from '../NoDataFilter';
 import CommonCard from './CommonCard';
-import { ControlGrid } from './style';
+import { Dishes } from './style';
 const CardMenu = ({ foodType }) => {
-  const card = useSelector((state) => {
+  const foodItems = useSelector((state) => {
     const { cartItemReducer } = state;
     return cartItemReducer;
   });
-  let itemFound = 0;
+  const [itemFound, setItemFound] = useState(false);
   return (
-    <div>
-      <ControlGrid container elevation={3} spacing={3}>
-        {card.map(({ id, name, price, categoryId, createdBy, imgUrl }) => {
-          const { id: category } = categoryId;
-          if (category === foodType) {
-            itemFound++;
-            return (
-              <CommonCard
-                key={id}
-                buttonText="Add to Cart"
-                id={id}
-                img={imgUrl}
-                name={name}
-                price={price}
-                resturantName="Dominos"
-                vendorId={createdBy}
-              />
-            );
+    <Dishes>
+      {foodItems.map(({ id, name, price, categoryId, createdBy, imgUrl }) => {
+        const { id: category } = categoryId;
+        if (category === foodType) {
+          if (!itemFound) {
+            setItemFound(true);
           }
-        })}
-        {itemFound === 0 ? <NoDataFound text="No Item Found" /> : null}
-      </ControlGrid>
-    </div>
+          return (
+            <CommonCard
+              key={id}
+              buttonText="Add to Cart"
+              id={id}
+              img={imgUrl}
+              name={name}
+              price={price}
+              vendorId={createdBy}
+            />
+          );
+        }
+      })}
+      {itemFound ? null : <NoDataFound text="No Item Found" />}
+    </Dishes>
   );
 };
 export default CardMenu;

@@ -9,7 +9,7 @@ import { baseUrl, ERROR, GetHeader } from '../../scripts/constants';
 
 const userById = async (headers, id, isLoggedIn) => {
   if (isLoggedIn) {
-    const { data } = await axios.get(baseUrl() + 'users/' + id, {
+    const { data } = await axios.get(baseUrl() + `users/${id}`, {
       headers,
     });
     return data;
@@ -20,7 +20,6 @@ export const FetchUserById = (id, isLoggedIn) => {
   const history = useHistory();
   const dispatch = useDispatch();
   return useQuery(['usersById', id], () => userById(headers, id, isLoggedIn), {
-    onSuccess: () => {},
     onError: (error) => {
       const {
         response: {

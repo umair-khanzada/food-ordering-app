@@ -10,6 +10,7 @@ import { updateUserRole } from '../../Features/Auth/actions';
 import History from '../../util/History';
 import BaseRouter from '../index';
 import { FetchUserById } from './request';
+import { BaseRouterGrid } from './style';
 function MainContainer() {
   const { isLoggedIn, id, role, isUserRoleChange } = useSelector((state) => {
     const {
@@ -44,9 +45,9 @@ function MainContainer() {
           <AppBar handleDrawerToggle={handleDrawerToggle} />
           <Grid container direction="row">
             <Grid item style={{ position: 'relative' }} xs={2} />
-            <Grid item md={10} xs={12}>
+            <BaseRouterGrid item md={10} xs={12}>
               {baseRouter}
-            </Grid>
+            </BaseRouterGrid>
           </Grid>
           {snackBar}
         </>

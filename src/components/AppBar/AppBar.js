@@ -100,9 +100,10 @@ const NavBar = () => {
           </Grid>
         </Toolbar>
       </StyledAppBar>
-      {/* {isMobile && ( */}
-      <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setMobile={setMobileOpen} />
-      {/* )} */}
+
+      <div>
+        <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setMobile={setMobileOpen} />
+      </div>
     </StyledDiv>
   );
 };

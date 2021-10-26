@@ -14,7 +14,7 @@ export const EditBalanceById = () => {
   const successMessage = 'Successfull balance has been updated';
   return useMutation(
     async ({ id, data }) => {
-      const response = await axios.patch(baseUrl() + 'balance/' + id, data, {
+      const response = await axios.patch(baseUrl() + `balance/${id}`, data, {
         headers,
       });
       return response;
@@ -34,9 +34,11 @@ export const EditBalanceById = () => {
         const {
           response: {
             data: { message },
+            status,
           },
         } = error;
-        if (error.response.status === 401) {
+
+        if (status === 401) {
           dispatch(logout({ history }));
           dispatch(
             toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }),
@@ -56,7 +58,7 @@ export const DeleteBalanceById = () => {
   const dispatch = useDispatch();
   return useMutation(
     async (id) => {
-      const response = await axios.delete(baseUrl() + 'balance/' + id, {
+      const response = await axios.delete(baseUrl() + `balance/${id}`, {
         headers,
       });
       return response;
@@ -67,9 +69,11 @@ export const DeleteBalanceById = () => {
         const {
           response: {
             data: { message },
+            status,
           },
         } = error;
-        if (error.response.status === 401) {
+
+        if (status === 401) {
           dispatch(logout({ history }));
           dispatch(
             toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }),
