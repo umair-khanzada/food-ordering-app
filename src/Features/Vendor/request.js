@@ -123,7 +123,6 @@ const orderHistory = async (vendorId) => {
   const date = new Date();
   const currentDate = date.toLocaleDateString();
   const todayOrders = orders.filter(({ date }) => date === currentDate);
-
   todayOrders.forEach(({ items, userId, status, amount, id }) => {
     const itemsArray = [];
     if (userId) {

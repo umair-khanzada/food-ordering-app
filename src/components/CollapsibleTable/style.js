@@ -23,6 +23,11 @@ export const CollapseTableContainer = styled(TableContainer)`
 `;
 export const CrossIcon = styled(HighlightOffOutlined)`
   color: red;
+  margin: 12px 5px;
+`;
+export const DisabledCrossIcon = styled(HighlightOffOutlined)`
+  color: #ff9999;
+  margin: 12px 5px;
 `;
 export const TableHeader = styled(TableCell)`
   font-size: 16px;
@@ -31,6 +36,11 @@ export const TableHeader = styled(TableCell)`
 
 export const RecievedIcon = styled(CheckCircleOutline)`
   color: #00b3e3;
+  margin: 12px 5px;
+`;
+export const DisabledRecievedIcon = styled(CheckCircleOutline)`
+  color: #99e6ff;
+  margin: 12px 5px;
 `;
 export const DeleteProgress = styled(CircularProgress)`
   margin-left: 10px;
@@ -41,4 +51,7 @@ export const OrderItems = styled(TableCell)`
 `;
 export const EditCell = styled(TableCell)`
   display: flex;
+  & .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+    padding: 0px;
+  }
 `;

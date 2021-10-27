@@ -27,6 +27,8 @@ import {
   CrossIcon,
   RecievedIcon,
   EditCell,
+  DisabledRecievedIcon,
+  DisabledCrossIcon,
 } from './style';
 
 const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, isEditDelete, onEdit }) => {
@@ -83,21 +85,30 @@ const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, is
           <TableCell>{status}</TableCell>
           {isEditDelete && (
             <EditCell>
-              <IconButton onClick={() => onEdit({ id, status, price, user_id })}>
-                <RecievedIcon />
-              </IconButton>
+              {status === 'pending' ? (
+                <>
+                  <IconButton onClick={() => onEdit({ id, status, price, user_id })}>
+                    <RecievedIcon />
+                  </IconButton>
 
-              {isDeleting && currentSelectedRow.id == id ? (
-                <DeleteProgress size="20px" />
+                  {isDeleting && currentSelectedRow.id == id ? (
+                    <DeleteProgress size="20px" />
+                  ) : (
+                    <IconButton
+                      onClick={() => {
+                        setCurrentSelectedRow({ id, status, price });
+                        dispatch(openModal());
+                      }}
+                    >
+                      <CrossIcon />
+                    </IconButton>
+                  )}
+                </>
               ) : (
-                <IconButton
-                  onClick={() => {
-                    setCurrentSelectedRow({ id, status, price });
-                    dispatch(openModal());
-                  }}
-                >
-                  <CrossIcon />
-                </IconButton>
+                <>
+                  <DisabledRecievedIcon />
+                  <DisabledCrossIcon />
+                </>
               )}
             </EditCell>
           )}
