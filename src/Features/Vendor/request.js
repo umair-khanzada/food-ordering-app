@@ -72,12 +72,11 @@ export const FetchItems = () => {
       const {
         response: {
           data: { message },
-          status,
         },
       } = error;
-
-      if (status === 401) {
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
+
         dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
       } else {
         dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
@@ -120,7 +119,10 @@ const orderHistory = async (vendorId) => {
   const { data: orders } = await axios.get(baseUrl() + `orders/vendor/${vendorId}`);
   const structuredData = [];
 
-  orders.forEach(({ items, userId, status, amount, id }) => {
+  const date = new Date();
+  const currentDate = date.toLocaleDateString();
+  const todayOrders = orders.filter(({ date }) => date === currentDate);
+  todayOrders.forEach(({ items, userId, status, amount, id }) => {
     const itemsArray = [];
     if (userId) {
       items.forEach((item) => {
@@ -132,6 +134,7 @@ const orderHistory = async (vendorId) => {
       structuredData.push({
         id,
         name: userId.name,
+        user_id: userId.id,
         items: itemsArray,
         status,
         price: amount,
@@ -152,9 +155,11 @@ export const FetchOrderHistory = () => {
   return useQuery('orders', () => orderHistory(vendorId));
 };
 
-const orderById = async (id) => {
-  const { data } = await axios.get(baseUrl() + `orders/${id}`);
-  return data;
+const orderById = async (id, isUpdateOrder) => {
+  if (isUpdateOrder) {
+    const { data } = await axios.get(baseUrl() + `orders/${id}`);
+    return data;
+  }
 };
 
 export const FetchOrderById = (id) => {

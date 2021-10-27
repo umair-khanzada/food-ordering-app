@@ -16,7 +16,7 @@ const OrdersList = () => {
         <Loader />
       ) : (
         <Box height="80vh" mt={5}>
-          <CollapsibleTable header={header} rows={ordersList} />
+          <CollapsibleTable header={header} isPagination rows={ordersList} />
         </Box>
       )}
     </>

@@ -35,8 +35,6 @@ export const authReducer = (state = { ...initialAuthState }, action) => {
       return { ...state, isLoading: true };
 
     case LOGOUT_SUCCESS:
-      localStorage.removeItem('persist:authReducer');
-      localStorage.removeItem('persist:root');
       return { ...initialAuthState, isLoading: false };
 
     case LOGIN_SUCCESS: {

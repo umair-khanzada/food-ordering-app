@@ -7,48 +7,11 @@ import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/
 import { baseUrl, ERROR, GetHeader, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 
-export const EditBalanceById = () => {
-  const history = useHistory();
-  const { headers } = GetHeader();
-  const dispatch = useDispatch();
-  const successMessage = 'Successfull balance has been updated';
-  return useMutation(
-    async ({ id, data }) => {
-      const response = await axios.patch(baseUrl() + `balance/${id}`, data, {
-        headers,
-      });
-      return response;
-    },
-
-    {
-      onSuccess: () => {
-        // success!
-        dispatch(
-          toggleSnackbarOpen({
-            snackbarMessage: successMessage,
-            messageType: SUCCESS,
-          }),
-        );
-      },
-      onError: (error) => {
-        const {
-          response: {
-            data: { message },
-            status,
-          },
-        } = error;
-
-        if (status === 401) {
-          dispatch(logout({ history }));
-          dispatch(
-            toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }),
-          );
-        } else {
-          dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
-        }
-      },
-    },
-  );
+export const editBalnceByUser = async ({ id, data, headers }) => {
+  const response = await axios.patch(baseUrl() + `balance/${id}`, data, {
+    headers,
+  });
+  return response;
 };
 
 export const DeleteBalanceById = () => {

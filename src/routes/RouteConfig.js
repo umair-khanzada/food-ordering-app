@@ -17,7 +17,6 @@ import {
   EditMenuRoute,
   MenuListRoute,
   OrderListRoute,
-  editOrderdListRoute,
   vendorProfileRoute,
 } from '../Features/Vendor/route';
 
@@ -55,7 +54,7 @@ const routeConfig = {
     EditMenuRoute,
     BalanceSheetRoute,
     EditBalanceSheetRoute,
-    editOrderdListRoute,
+
     vendorProfileRoute,
   ],
   officeBoy: [],
