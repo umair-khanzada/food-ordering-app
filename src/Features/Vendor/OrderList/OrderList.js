@@ -85,7 +85,6 @@ const OrdersList = () => {
   useEffect(() => {
     if (balance && fetchBalance) {
       setUserBalance(orderAmount);
-      ('hello world');
       setFetchBalance(false);
     }
   }, [balance, fetchBalance]);
