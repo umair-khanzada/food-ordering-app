@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
+import { Box } from '@mui/system';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
 import CollapsibleTable from '../../../components/CollapsibleTable';
+import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
 import { ERROR, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
@@ -62,6 +64,28 @@ const OrdersList = () => {
     }
   };
 
+  const [itemSummary, setItemSummary] = useState([]);
+  useEffect(() => {
+    const itemQuantity = {};
+    const itemSummary = [];
+    if (ordersList) {
+      ordersList.map(({ items, status }) => {
+        items.map(({ name, quantity }) => {
+          if (status === 'received') {
+            itemQuantity[name] = quantity + (itemQuantity[name] || 0);
+          }
+        });
+      });
+      for (const key in itemQuantity) {
+        itemSummary.push({
+          name: key,
+          quantity: itemQuantity[key],
+        });
+      }
+
+      setItemSummary(itemSummary);
+    }
+  }, [ordersList]);
   const { data: balance, refetch } = GetBalanceByUserId(userId, isUpdateOrder);
 
   const { mutate: addBalanceMutate } = useMutation(InsertBalance, {
@@ -121,6 +145,7 @@ const OrdersList = () => {
     }
   };
   const header = ['S.No', 'Name', 'Total Items', 'Price', 'status', 'edit'];
+  const itemSummaryHeader = ['S.No', 'itemName', 'total'];
 
   return (
     <>
@@ -139,6 +164,10 @@ const OrdersList = () => {
               rows={ordersList}
               tablewidth="90%"
             />
+
+            <Box height="80vh" mt={4}>
+              <CustomTable cellWidth="30%" header={itemSummaryHeader} rows={itemSummary} tablewidth="50%" />
+            </Box>
           </CollapseTableContainer>
         </>
       )}
