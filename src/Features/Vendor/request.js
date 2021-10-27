@@ -72,12 +72,11 @@ export const FetchItems = () => {
       const {
         response: {
           data: { message },
-          status,
         },
       } = error;
-
-      if (status === 401) {
+      if (error.response.status === 401) {
         dispatch(logout({ history }));
+
         dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
       } else {
         dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
