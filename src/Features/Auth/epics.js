@@ -136,6 +136,8 @@ export const logoutEpic = (action$, state) =>
         body: { refreshToken: token },
       }).pipe(
         mergeMap(() => {
+          localStorage.removeItem('persist:authReducer');
+          localStorage.removeItem('persist:root');
           history.push('/login');
           if (role === 'user') {
             return concat(of(clearCart()), of(logoutSuccess()));

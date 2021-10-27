@@ -6,7 +6,6 @@ import CategoryList from './CategoryList/CategoryList';
 import Menu from './Menu';
 import AddMenu from './Menu/Add Menu';
 import EditMenu from './Menu/Edit Menu';
-import EditOrderList from './OrderList/Edit Order';
 import OrderList from './OrderList/OrderList';
 import VendorProfile from './vendorProfile';
 
@@ -50,13 +49,6 @@ export const EditBalanceSheetRoute = {
   permissions: isProtectedRoute,
   component: EditBalanceSheet,
 };
-
-export const editOrderdListRoute = {
-  path: RouteNames.editOrderList,
-  permissions: isProtectedRoute,
-  component: EditOrderList,
-};
-
 export const vendorProfileRoute = {
   path: RouteNames.vendorProfile,
   permissions: isProtectedRoute,
