@@ -138,6 +138,7 @@ const orderHistory = async (vendorId) => {
       });
     }
   });
+
   return structuredData;
 };
 export const FetchOrderHistory = () => {
