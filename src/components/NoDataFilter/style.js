@@ -4,9 +4,6 @@ export const NoDataContainer = styled.div`
   width: 100%;
   height: 440px;
   text-align: center;
-  /* display: flex;
-  justify-content: center; */
-  /* flex-direction: column; */
 `;
 export const ImageContainer = styled.div`
   display: flex;
@@ -14,5 +11,9 @@ export const ImageContainer = styled.div`
 `;
 
 export const PlaceHolder = styled.h1`
-  margin: -48px;
+  margin: -48px 0;
+`;
+
+export const DoNotFound = styled.img`
+  margin-top: 50px;
 `;

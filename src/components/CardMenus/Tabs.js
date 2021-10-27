@@ -14,7 +14,13 @@ const MainTab = ({ category }) => {
   return (
     <>
       <Paper square>
-        <Tabs indicatorColor="secondary" onChange={onTabChange} textColor="secondary" value={tabValue}>
+        <Tabs
+          indicatorColor="secondary"
+          onChange={onTabChange}
+          textColor="secondary"
+          value={tabValue}
+          variant="scrollable"
+        >
           {category?.map(({ name, id }, index) => {
             return <Tab key={index} label={name} value={id} />;
           })}
