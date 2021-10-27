@@ -24,9 +24,11 @@ const OrdersList = () => {
     const itemQuantity = {};
     const itemSummary = [];
     if (ordersList) {
-      ordersList.map(({ items }) => {
+      ordersList.map(({ items, status }) => {
         items.map(({ name, quantity }) => {
-          itemQuantity[name] = quantity + (itemQuantity[name] || 0);
+          if (status === 'received') {
+            itemQuantity[name] = quantity + (itemQuantity[name] || 0);
+          }
         });
       });
       for (const key in itemQuantity) {
@@ -38,7 +40,7 @@ const OrdersList = () => {
 
       setItemSummary(itemSummary);
     }
-  }, []);
+  }, [ordersList]);
   const { mutateAsync, isLoading } = useMutation(deleteOrderById, {
     onError: (error) => {
       const {
@@ -94,11 +96,11 @@ const OrdersList = () => {
               rows={ordersList}
               tablewidth="90%"
             />
-          </CollapseTableContainer>
 
-          <Box height="80vh" mt={4}>
-            <CustomTable cellWidth="30%" header={itemSummaryHeader} rows={itemSummary} tablewidth="50%" />
-          </Box>
+            <Box height="80vh" mt={4}>
+              <CustomTable cellWidth="30%" header={itemSummaryHeader} rows={itemSummary} tablewidth="50%" />
+            </Box>
+          </CollapseTableContainer>
         </>
       )}
     </>
