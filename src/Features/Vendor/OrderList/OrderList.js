@@ -84,9 +84,8 @@ const OrdersList = () => {
   });
   useEffect(() => {
     if (balance && fetchBalance) {
-      console.log('check', balance);
       setUserBalance(orderAmount);
-      console.log('hello world');
+      ('hello world');
       setFetchBalance(false);
     }
   }, [balance, fetchBalance]);
@@ -98,7 +97,6 @@ const OrdersList = () => {
       status: 'received',
       amount: price,
     };
-    console.log('balance', balance);
 
     setFetchBalance(true);
     mutateAsync({ id, updatedOrder });
@@ -111,9 +109,9 @@ const OrdersList = () => {
           previousBalance = amount;
         }
       });
-      console.log('prev', previousBalance);
+
       const currentBalance = previousBalance - orderAmount;
-      console.log('current', currentBalance);
+
       const totalBalance = {
         userId,
         vendorId: vendor_Id,
@@ -124,7 +122,7 @@ const OrdersList = () => {
     }
   };
   const header = ['S.No', 'Name', 'Total Items', 'Price', 'status', 'edit'];
-  console.log('run');
+
   return (
     <>
       {isFetching ? (
