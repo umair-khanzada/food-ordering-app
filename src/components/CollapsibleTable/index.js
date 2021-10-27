@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { TableFooter, TablePagination } from '@material-ui/core';
-import { Edit } from '@material-ui/icons';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from '@mui/material/Box';
@@ -22,18 +21,20 @@ import { closeModal, openModal } from '../Modal/action';
 import {
   CollapseTableContainer,
   CollapseTableHead,
-  DeleteIcon,
   DeleteProgress,
   OrderItems,
   TableHeader,
+  CrossIcon,
+  RecievedIcon,
+  EditCell,
 } from './style';
 
-const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, onEdit }) => {
+const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, isEditDelete, onEdit }) => {
   const dispatch = useDispatch();
   const [currentSelectedRow, setCurrentSelectedRow] = React.useState({});
   const onCancel = () => dispatch(closeModal());
   const onRowDelete = () => {
-    onDelete(currentSelectedRow);
+    onReject(currentSelectedRow);
     dispatch(closeModal());
   };
   const deletModalButtons = [
@@ -64,8 +65,7 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
 
     return rowsData;
   };
-
-  const ColapseTableRow = ({ row: { id, name, items, status, price }, SNo, index }) => {
+  const ColapseTableRow = ({ row: { id, name, items, status, price, user_id }, SNo, index }) => {
     const [open, setOpen] = React.useState(false);
     return (
       <>
@@ -82,24 +82,24 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
 
           <TableCell>{status}</TableCell>
           {isEditDelete && (
-            <TableCell>
-              <IconButton onClick={() => onEdit(id)}>
-                <Edit />
+            <EditCell>
+              <IconButton onClick={() => onEdit({ id, status, price, user_id })}>
+                <RecievedIcon />
               </IconButton>
 
-              {isDeleting && currentSelectedRow == id ? (
+              {isDeleting && currentSelectedRow.id == id ? (
                 <DeleteProgress size="20px" />
               ) : (
                 <IconButton
                   onClick={() => {
-                    setCurrentSelectedRow(id);
+                    setCurrentSelectedRow({ id, status, price });
                     dispatch(openModal());
                   }}
                 >
-                  <DeleteIcon />
+                  <CrossIcon />
                 </IconButton>
               )}
-            </TableCell>
+            </EditCell>
           )}
         </TableRow>
         <TableRow>
@@ -137,7 +137,7 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
     <CollapseTableContainer component={Paper}>
       {isEditDelete && (
         <ConfirmDeletModal modalButtons={deletModalButtons}>
-          <div>Are you sure you want to delete ?</div>
+          <div>Are you sure you want to reject ?</div>
         </ConfirmDeletModal>
       )}
       <Table aria-label="collapsible table">
@@ -154,23 +154,25 @@ const CollapsibleTable = ({ isDeleting, onDelete, header, rows, isEditDelete, on
             <ColapseTableRow key={row.id} index={index} row={row} SNo={page} />
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              ActionsComponent={TablePaginationActions}
-              colSpan={7}
-              count={rows.length}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              rowsPerPageOptions={[50]}
-              SelectProps={{
-                native: true,
-              }}
-            />
-          </TableRow>
-        </TableFooter>
+        {isPagination ? (
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                ActionsComponent={TablePaginationActions}
+                colSpan={7}
+                count={rows.length}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                rowsPerPageOptions={[50]}
+                SelectProps={{
+                  native: true,
+                }}
+              />
+            </TableRow>
+          </TableFooter>
+        ) : null}
       </Table>
     </CollapseTableContainer>
   );

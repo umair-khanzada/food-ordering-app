@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/actions';
 import CollapsibleTable from '../../../components/CollapsibleTable';
 import Loader from '../../../components/Loader';
-import RouteNames from '../../../routes/RouteNames';
 import { ERROR, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
-import { deleteOrderById } from '../mutation';
+import { InsertBalance, updateOrderById } from '../mutation';
 import { FetchOrderHistory } from '../request';
+import { GetBalanceByUserId } from './request';
 import { CollapseTableContainer, OrdersListTitleContainer } from './Style';
 
 const OrdersList = () => {
   const { data: ordersList, refetch: refetchOrders, isFetching } = FetchOrderHistory();
+  const [fetchBalance, setFetchBalance] = useState(false);
+  const [userId, setUserId] = useState(0);
+  const [orderAmount, setOrderAmount] = useState(0);
+  const [isUpdateOrder, setIsUpdateOrder] = useState(false);
+  const vendor_Id = useSelector((state) => {
+    const {
+      authReducer: { id },
+    } = state;
+    return id;
+  });
   const dispatch = useDispatch();
-  const { mutateAsync, isLoading } = useMutation(deleteOrderById, {
+  const { mutateAsync, isLoading } = useMutation(updateOrderById, {
     onError: (error) => {
       const {
         response: {
@@ -35,24 +45,86 @@ const OrdersList = () => {
       refetchOrders();
       dispatch(
         toggleSnackbarOpen({
-          snackbarMessage: 'Successfull order has been deleted',
+          snackbarMessage: 'Successfull order has been updated',
           messageType: SUCCESS,
         }),
       );
     },
   });
   const history = useHistory();
-  const { editOrderList } = RouteNames;
-  const onEdit = (id) => {
-    history.push({
-      pathname: editOrderList,
-      search: '?id=' + id,
-    });
+  const onReject = ({ id, status, price }) => {
+    if (status !== 'recieved' || status !== 'rejected') {
+      const updatedOrder = {
+        status: 'rejected',
+        amount: price,
+      };
+      mutateAsync({ id, updatedOrder });
+    }
   };
-  const onDelete = (id) => {
-    mutateAsync(id);
+
+  const { data: balance, refetch } = GetBalanceByUserId(userId, isUpdateOrder);
+
+  const { mutate: addBalanceMutate } = useMutation(InsertBalance, {
+    onSuccess: () => {
+      refetch();
+    },
+    onError: (error) => {
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
+      if (error.response.status === 401) {
+        dispatch(logout({ history }));
+        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
+      } else {
+        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
+      }
+    },
+  });
+  useEffect(() => {
+    if (balance && fetchBalance) {
+      console.log('check', balance);
+      setUserBalance(orderAmount);
+      console.log('hello world');
+      setFetchBalance(false);
+    }
+  }, [balance, fetchBalance]);
+  const onEdit = ({ id, status, price, user_id }) => {
+    setIsUpdateOrder(true);
+    setOrderAmount(price);
+    setUserId(user_id);
+    const updatedOrder = {
+      status: 'received',
+      amount: price,
+    };
+    console.log('balance', balance);
+
+    setFetchBalance(true);
+    mutateAsync({ id, updatedOrder });
+  };
+  const setUserBalance = (orderAmount) => {
+    if (balance) {
+      let previousBalance = 0;
+      balance.map(({ vendorId: { id }, amount }) => {
+        if (id === vendor_Id) {
+          previousBalance = amount;
+        }
+      });
+      console.log('prev', previousBalance);
+      const currentBalance = previousBalance - orderAmount;
+      console.log('current', currentBalance);
+      const totalBalance = {
+        userId,
+        vendorId: vendor_Id,
+        amount: currentBalance,
+      };
+
+      addBalanceMutate(totalBalance);
+    }
   };
   const header = ['S.No', 'Name', 'Total Items', 'Price', 'status', 'edit'];
+  console.log('run');
   return (
     <>
       {isFetching ? (
@@ -65,8 +137,8 @@ const OrdersList = () => {
               header={header}
               isDeleting={isLoading}
               isEditDelete
-              onDelete={onDelete}
               onEdit={onEdit}
+              onReject={onReject}
               rows={ordersList}
               tablewidth="90%"
             />

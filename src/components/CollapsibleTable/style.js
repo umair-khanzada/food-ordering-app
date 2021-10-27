@@ -1,6 +1,6 @@
 import { TableHead, TableContainer, CircularProgress } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { CheckCircleOutline, HighlightOffOutlined } from '@material-ui/icons';
 import styled from 'styled-components';
 export const CollapseTableHead = styled(TableHead)`
   background-color: #00b3e3;
@@ -21,18 +21,24 @@ export const CollapseTableContainer = styled(TableContainer)`
   }
   margin: auto;
 `;
-export const DeleteIcon = styled(Delete)`
-  color: #00b3e3;
+export const CrossIcon = styled(HighlightOffOutlined)`
+  color: red;
 `;
 export const TableHeader = styled(TableCell)`
   font-size: 16px;
   color: white;
 `;
 
+export const RecievedIcon = styled(CheckCircleOutline)`
+  color: #00b3e3;
+`;
 export const DeleteProgress = styled(CircularProgress)`
   margin-left: 10px;
   margin-top: 10px;
 `;
 export const OrderItems = styled(TableCell)`
   font-weight: bold;
+`;
+export const EditCell = styled(TableCell)`
+  display: flex;
 `;
