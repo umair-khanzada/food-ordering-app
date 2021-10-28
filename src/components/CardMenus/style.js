@@ -2,11 +2,12 @@ import { Card, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const CardRoot = styled(Card)`
+  border-radius: 0px;
   display: flex;
-  padding: 2px;
+  padding: 0px;
   margin: 20px;
   flex-direction: column;
-  width: 260px;
+  width: 230px;
   box-shadow: 5px 5px 10px 2px grey;
   @media (max-width: 768px) {
     width: 160px;
@@ -41,9 +42,9 @@ export const Dishes = styled.div`
   }
 `;
 export const ImageDiv = styled.img`
-  padding: 10px;
-  height: 200px;
-  width: 300px;
+  padding: 7px;
+  height: 170px;
+  width: 250px;
   @media (max-width: 768px) {
     padding: 7px;
     height: 110px;
@@ -60,8 +61,4 @@ export const DetailsContainer = styled.div`
     flex-direction: column;
     text-align: center;
   }
-`;
-
-export const InsideContent = styled.div`
-  display: flex;
 `;

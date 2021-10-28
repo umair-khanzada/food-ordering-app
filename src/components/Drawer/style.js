@@ -1,5 +1,5 @@
 import { Button, Card, Drawer, Modal, Typography } from '@material-ui/core';
-import { HighlightOffOutlined } from '@material-ui/icons';
+import { Delete, HighlightOffOutlined } from '@material-ui/icons';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import styled from 'styled-components';
@@ -16,17 +16,18 @@ export const DrawerModal = styled(Modal)`
 export const DrawerCard = styled(Card)`
   display: flex;
   padding-right: 4px;
-  width: 20vw;
+  width: 290px;
+  height: 80px;
   align-items: center;
   border-radius: 0;
-  border-bottom: 3px solid #00b3e3;
+  border-bottom: 2px solid #00b3e3;
   margin-bottom: 10px;
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
 `;
 export const ItemImage = styled.img`
-  width: 26%;
+  width: 34%;
 `;
 export const Paper = styled.div`
   background-color: white;
@@ -38,8 +39,8 @@ export const DrawerHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: #00b3e3;
-  width: 20vw;
-  height: 8vh;
+  width: 290px;
+  height: 50px;
 `;
 export const CartPaper = styled.div`
   margin-top: 5px;
@@ -58,20 +59,14 @@ export const DrawerHeading = styled.h2`
   color: white;
   margin-left: 10px;
 `;
-export const Image = styled.img`
-  border: 100px;
-  padding: 20px;
-  border-radius: 20px;
-  boxshadow: 10px 10px F0F0F0;
-  width: 20px;
-`;
+
 export const ItemDetails = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 `;
 
-export const DrawerItemPrice = styled.div`
+export const ItemPrice = styled.div`
   display: flex;
 `;
 export const PositiveIcon = styled(AddCircleIcon)`
@@ -86,14 +81,26 @@ export const NegativeIcon = styled(RemoveCircleRoundedIcon)`
     cursor: pointer;
   }
 `;
+export const ItemNameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+`;
+export const QuantityContainer = styled.div`
+  margin-top: 5px;
+  display: flex;
+`;
+export const Quantity = styled.h4`
+  margin: 0 5px;
+`;
 export const CheckoutButton = styled(Button)`
   backgroundcolor: #00b3e3;
   position: fixed;
+  width: 290px;
+  border-radius: 0;
   bottom: 2px;
   align-items: center;
-
-  margin-bottom: 10px;
-
   color: white;
 `;
 export const ConfirmButton = styled(Button)`
@@ -119,11 +126,12 @@ export const DrawerImageDiv = styled.div`
   padding: 20px;
   margin: 100px;
 `;
-export const DeleteIcon = styled(HighlightOffOutlined)`
+export const DeleteIcon = styled(Delete)`
   font-size: 25px;
-  color: #ff4d4d;
-
-  float: top;
+  color: grey;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const CartPrice = styled.span`
@@ -135,7 +143,6 @@ export const CountQuantity = styled.span`
 `;
 export const EmptyCart = styled.div`
   margin-top: 250px;
-  height: 100%;
   justify-content: center;
   align-items: center;
   flex-direction: column;

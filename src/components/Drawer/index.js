@@ -7,11 +7,11 @@ import { useMutation } from 'react-query';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import {
-  increaseQuantity,
   closeDrawer,
-  decreaseQuantity,
   clearCart,
   deleteItem,
+  increaseQuantity,
+  decreaseQuantity,
 } from '../../Features/Customer/actions';
 import { GetHeader, ERROR, SUCCESS } from '../../scripts/constants';
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
@@ -23,12 +23,9 @@ import {
   DrawerHeader,
   MainDrawer,
   DrawerHeading,
-  PositiveIcon,
   CheckoutButton,
   CancelButton,
   Modaltext,
-  NegativeIcon,
-  DrawerItemPrice,
   CartPrice,
   EmptyCart,
   ModalIcons,
@@ -41,6 +38,12 @@ import {
   ItemImage,
   ItemDetails,
   DeleteIcon,
+  ItemPrice,
+  ItemNameContainer,
+  PositiveIcon,
+  NegativeIcon,
+  QuantityContainer,
+  Quantity,
 } from './style';
 const Drawer = () => {
   const { headers } = GetHeader();
@@ -131,15 +134,18 @@ const Drawer = () => {
                 <ItemDetails>
                   <ItemImage alt="cart" src={cartdata.img} />
 
-                  <h4>{cartdata.name}</h4>
+                  <ItemNameContainer>
+                    <h4>{cartdata.name}</h4>
+                    <QuantityContainer>
+                      <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
+                      <Quantity>{cartdata.qty}</Quantity>
+                      <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
+                    </QuantityContainer>
+                  </ItemNameContainer>
 
-                  <DrawerItemPrice>
+                  <ItemPrice>
                     <CartPrice> Rs. {cartdata.price}</CartPrice>
-                  </DrawerItemPrice>
-
-                  <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
-                  {cartdata.qty}
-                  <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
+                  </ItemPrice>
                 </ItemDetails>
                 <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
               </DrawerCard>
@@ -154,11 +160,9 @@ const Drawer = () => {
       )}
 
       {cart.length > 0 && (
-        <div>
-          <CheckoutButton color="primary" onClick={handleOpen} variant="contained">
-            Checkout
-          </CheckoutButton>
-        </div>
+        <CheckoutButton color="primary" onClick={handleOpen} variant="contained">
+          Checkout
+        </CheckoutButton>
       )}
       <DrawerModal
         aria-describedby="transition-modal-description"
