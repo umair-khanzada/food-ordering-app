@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { Collapse, makeStyles } from '@material-ui/core';
+import { Collapse } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
@@ -20,6 +21,12 @@ import {
   ErrorResponse,
 } from './styles';
 
+const useStyles = makeStyles((theme) => ({
+  loginButton: {
+    width: '100%',
+  },
+}));
+
 const FormComponent = ({
   inputFields,
   basicButtons,
@@ -30,16 +37,17 @@ const FormComponent = ({
   changeHandler,
   responseError,
 }) => {
+  const classes = useStyles();
+
   const [checked, setChecked] = useState(false);
   useEffect(() => {
     setChecked(true);
   }, []);
-  const useStyles = makeStyles((theme) => ({
-    LoginButtonWidth: {
-      width: '100%',
-    },
-  }));
-  const classes = useStyles();
+  // const useStyles = makeStyles(() => ({
+  //   LoginButton: {
+  //     width: '100%',
+  //   },
+  // }));
   return (
     <>
       <FormContainer>
@@ -67,14 +75,13 @@ const FormComponent = ({
                     <Error>{errorMessage}</Error>
                   </InputBox>
                 ))}
-                {basicButtons.button.map(({ clickHandler, minWidth, name, type, isLoading }, i) => (
+                {basicButtons.button.map(({ clickHandler, name, type, isLoading }, i) => (
                   <div key={name + '-' + i}>
                     <CommonButton
                       key={name + '-' + i}
-                      className={classes.LoginButtonWidth}
+                      className={classes.loginButton}
                       fontSize="16px"
                       loading={isLoading}
-                      minwidth={minWidth}
                       onClick={clickHandler}
                       property={name}
                       type={type}

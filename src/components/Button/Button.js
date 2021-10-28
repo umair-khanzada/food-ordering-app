@@ -15,11 +15,13 @@ export default function CommonButton({
   style,
   loading,
   disableButton,
+  className,
 }) {
   const theme = useTheme();
 
   return (
     <StyledButton
+      className={className}
       color={color}
       disabled={disableButton}
       fontSize={fontSize}
