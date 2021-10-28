@@ -91,8 +91,8 @@ const NavBar = () => {
               <>
                 <UserName>{name}</UserName>
                 <ListItemIcon>
-                  <IconButton>
-                    <LogoutButton fontSize="large" onClick={logOut} />
+                  <IconButton onClick={logOut}>
+                    <LogoutButton fontSize="large" />
                   </IconButton>
                 </ListItemIcon>
               </>
