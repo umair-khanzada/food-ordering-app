@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Collapse } from '@material-ui/core';
+import { Collapse, makeStyles } from '@material-ui/core';
 
 import CommonButton from '../Button/Button';
 import BasicTextFields from '../TextField/TextField';
@@ -34,6 +34,12 @@ const FormComponent = ({
   useEffect(() => {
     setChecked(true);
   }, []);
+  const useStyles = makeStyles((theme) => ({
+    LoginButtonWidth: {
+      width: '100%',
+    },
+  }));
+  const classes = useStyles();
   return (
     <>
       <FormContainer>
@@ -65,12 +71,12 @@ const FormComponent = ({
                   <div key={name + '-' + i}>
                     <CommonButton
                       key={name + '-' + i}
+                      className={classes.LoginButtonWidth}
                       fontSize="16px"
                       loading={isLoading}
                       minwidth={minWidth}
                       onClick={clickHandler}
                       property={name}
-                      style={{ width: '100%' }}
                       type={type}
                     />
                   </div>

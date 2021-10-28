@@ -14,7 +14,7 @@ import { logout } from '../../Auth/actions';
 import { InsertBalance, updateOrderById } from '../mutation';
 import { FetchOrderHistory } from '../request';
 import { GetBalanceByUserId } from './request';
-import { CollapseTableContainer, OrdersListTitleContainer, SummaryHeader } from './Style';
+import { CollapseTableContainer, SummaryHeader } from './Style';
 
 const OrdersList = () => {
   const { data: ordersList, refetch: refetchOrders, isFetching } = FetchOrderHistory();
@@ -153,7 +153,6 @@ const OrdersList = () => {
         <Loader />
       ) : (
         <>
-          <OrdersListTitleContainer />
           <CollapseTableContainer>
             <CollapsibleTable
               header={header}
