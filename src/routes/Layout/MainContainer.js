@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { Grid } from '@material-ui/core';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import SnackBar from '../../components/AlertMessage';
 import AppBar from '../../components/AppBar/AppBar';
 import { updateUserRole } from '../../Features/Auth/actions';
-import History from '../../util/History';
 import BaseRouter from '../index';
 import { FetchUserById } from './request';
 import { BaseRouterGrid } from './style';
@@ -39,7 +37,7 @@ function MainContainer() {
   }, [userById]);
 
   return (
-    <Router history={History}>
+    <>
       {isLoggedIn ? (
         <>
           <AppBar handleDrawerToggle={handleDrawerToggle} />
@@ -57,7 +55,7 @@ function MainContainer() {
           {snackBar}
         </>
       )}
-    </Router>
+    </>
   );
 }
 
