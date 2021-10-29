@@ -121,7 +121,9 @@ export const forgotPasswordEpic = (action$) =>
 export const logoutEpic = (action$, state) =>
   action$.pipe(
     ofType(LOGOUT),
-    mergeMap(({ payload: { history } }) => {
+    mergeMap(({ payload }) => {
+      console.log('logout 11312', payload);
+      const history = null;
       const {
         value: {
           authReducer: {
@@ -136,15 +138,17 @@ export const logoutEpic = (action$, state) =>
         body: { refreshToken: token },
       }).pipe(
         mergeMap(() => {
+          history.push('/login');
+          console.log('logout 1');
           localStorage.removeItem('persist:authReducer');
           localStorage.removeItem('persist:root');
-          history.push('/login');
           if (role === 'user') {
             return concat(of(clearCart()), of(logoutSuccess()));
           }
           return of(logoutSuccess());
         }),
-        catchError(() => {
+        catchError((e) => {
+          console.log(e, 'error');
           return of(logoutError());
         }),
       );
