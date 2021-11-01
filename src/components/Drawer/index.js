@@ -7,11 +7,11 @@ import { useMutation } from 'react-query';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import {
-  increaseQuantity,
-  deleteItem,
   closeDrawer,
-  decreaseQuantity,
   clearCart,
+  deleteItem,
+  increaseQuantity,
+  decreaseQuantity,
 } from '../../Features/Customer/actions';
 import { GetHeader, ERROR, SUCCESS } from '../../scripts/constants';
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
@@ -20,29 +20,30 @@ import {
   DrawerModal,
   DrawerCard,
   Paper,
-  DrwaerIcon,
+  DrawerHeader,
   MainDrawer,
-  DrawerText,
-  DrawerHeadingText,
-  DrawerPrice,
-  Add,
-  PositiveIcon,
+  DrawerHeading,
   CheckoutButton,
   CancelButton,
   Modaltext,
-  NegativeIcon,
-  DeleteIcon,
-  DrawerItemPrice,
   CartPrice,
-  CartCancel,
   EmptyCart,
-  AddToCartImg,
   ModalIcons,
   EmptyCartHeading,
   EmptyCartPara,
   ConfirmButton,
   CartPaper,
   ModalDiv,
+  DrawerCloseIcon,
+  ItemImage,
+  ItemDetails,
+  DeleteIcon,
+  ItemPrice,
+  ItemNameContainer,
+  PositiveIcon,
+  NegativeIcon,
+  QuantityContainer,
+  Quantity,
 } from './style';
 const Drawer = () => {
   const { headers } = GetHeader();
@@ -120,88 +121,78 @@ const Drawer = () => {
     },
   });
   return (
-    <>
-      <React.Fragment key="right">
-        <MainDrawer anchor="right" onClose={() => dispatch(closeDrawer())} open={isDrawerOpen} variant="persistent">
-          <div>
-            <DrwaerIcon>
-              <DrawerHeadingText>My Cart</DrawerHeadingText>
-              <DrawerText onClick={() => dispatch(closeDrawer())} />
-            </DrwaerIcon>
-            <div>
-              {cart.length > 0 ? (
-                <>
-                  <CartPaper>
-                    {cart.map((cartdata) => {
-                      return (
-                        <DrawerCard key={cartdata.id}>
-                          <AddToCartImg alt="cart" src={cartdata.img} />
-                          <DrawerPrice>
-                            <CartCancel>
-                              <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
-                            </CartCancel>
-                            <Add>
-                              <div>
-                                <h4>{cartdata.name}</h4>
-                              </div>
-                              <DrawerItemPrice>
-                                <CartPrice> Rs. {cartdata.price}</CartPrice>
-                              </DrawerItemPrice>
+    <MainDrawer anchor="right" onClose={() => dispatch(closeDrawer())} open={isDrawerOpen} variant="persistent">
+      <DrawerHeader>
+        <DrawerHeading>Cart</DrawerHeading>
+        <DrawerCloseIcon onClick={() => dispatch(closeDrawer())} />
+      </DrawerHeader>
+      {cart.length > 0 ? (
+        <CartPaper>
+          {cart.map((cartdata) => {
+            return (
+              <DrawerCard key={cartdata.id}>
+                <ItemDetails>
+                  <ItemImage alt="cart" src={cartdata.img} />
 
-                              <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
-                              {cartdata.qty}
-                              <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
-                            </Add>
-                          </DrawerPrice>
-                        </DrawerCard>
-                      );
-                    })}
-                  </CartPaper>
-                </>
-              ) : (
-                <EmptyCart>
-                  <EmptyCartHeading variant="h5">No Item in your cart </EmptyCartHeading>
-                  <EmptyCartPara>Your favorite items are just a click away</EmptyCartPara>
-                </EmptyCart>
-              )}
-            </div>
-          </div>
-          {cart.length > 0 && (
-            <CheckoutButton color="primary" onClick={handleOpen} variant="contained">
-              Checkout
-            </CheckoutButton>
-          )}
-          <DrawerModal
-            aria-describedby="transition-modal-description"
-            aria-labelledby="transition-modal-title"
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-            closeAfterTransition
-            open={open}
-          >
-            <Fade in={open}>
-              <Paper>
-                <ModalDiv>
-                  <Modaltext>Are You Sure You Want To Confirm Your Order</Modaltext>
-                </ModalDiv>
-                <ModalIcons>
-                  <CancelButton color="black" onClick={() => handleClose()} variant="contained">
-                    <CloseIcon />
-                    Cancel
-                  </CancelButton>
-                  <ConfirmButton color="primary" onClick={placeOrder} variant="contained">
-                    <DoneIcon />
-                    Confirm
-                  </ConfirmButton>
-                </ModalIcons>
-              </Paper>
-            </Fade>
-          </DrawerModal>
-        </MainDrawer>
-      </React.Fragment>
-    </>
+                  <ItemNameContainer>
+                    <h4>{cartdata.name}</h4>
+                    <QuantityContainer>
+                      <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
+                      <Quantity>{cartdata.qty}</Quantity>
+                      <NegativeIcon onClick={() => dispatch(decreaseQuantity(cartdata.id))} />
+                    </QuantityContainer>
+                  </ItemNameContainer>
+
+                  <ItemPrice>
+                    <CartPrice> Rs. {cartdata.price}</CartPrice>
+                  </ItemPrice>
+                </ItemDetails>
+                <DeleteIcon onClick={() => dispatch(deleteItem(cartdata.id))} />
+              </DrawerCard>
+            );
+          })}
+        </CartPaper>
+      ) : (
+        <EmptyCart>
+          <EmptyCartHeading variant="h5">No Item in your cart </EmptyCartHeading>
+          <EmptyCartPara>Your favorite items are just a click away</EmptyCartPara>
+        </EmptyCart>
+      )}
+
+      {cart.length > 0 && (
+        <CheckoutButton color="primary" onClick={handleOpen} variant="contained">
+          Checkout
+        </CheckoutButton>
+      )}
+      <DrawerModal
+        aria-describedby="transition-modal-description"
+        aria-labelledby="transition-modal-title"
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        closeAfterTransition
+        open={open}
+      >
+        <Fade in={open}>
+          <Paper>
+            <ModalDiv>
+              <Modaltext>Are You Sure You Want To Confirm Your Order</Modaltext>
+            </ModalDiv>
+            <ModalIcons>
+              <CancelButton color="black" onClick={() => handleClose()} variant="contained">
+                <CloseIcon />
+                Cancel
+              </CancelButton>
+              <ConfirmButton color="primary" onClick={placeOrder} variant="contained">
+                <DoneIcon />
+                Confirm
+              </ConfirmButton>
+            </ModalIcons>
+          </Paper>
+        </Fade>
+      </DrawerModal>
+    </MainDrawer>
   );
 };
 export default Drawer;
