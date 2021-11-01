@@ -1,6 +1,6 @@
-import { TableHead, TableContainer, CircularProgress } from '@material-ui/core';
-import { TableCell } from '@material-ui/core';
+import { TableHead, TableContainer, CircularProgress, Table } from '@material-ui/core';
 import { CheckCircleOutline, HighlightOffOutlined } from '@material-ui/icons';
+import TableCell from '@mui/material/TableCell';
 import styled from 'styled-components';
 export const CollapseTableHead = styled(TableHead)`
   background-color: #00b3e3;
@@ -12,12 +12,18 @@ export const CollapseTableHead = styled(TableHead)`
 export const IconContainer = styled.div`
   flex-shrink: 0;
 `;
+export const ItemsTable = styled(Table)`
+  & .MuiTableCell-root {
+    padding: 0px 14px;
+    line-height: 55px;
+  }
+`;
+
 export const CollapseTableContainer = styled(TableContainer)`
   width: 80vw;
   max-height: 95%;
   & .MuiTableCell-root {
     padding: 0px 14px;
-    line-height: 55px;
   }
   margin: auto;
 `;
@@ -47,10 +53,11 @@ export const DeleteProgress = styled(CircularProgress)`
   margin-top: 10px;
 `;
 export const OrderItems = styled(TableCell)`
-  font-weight: bold;
+  width: 40%;
 `;
-export const EditCell = styled(TableCell)`
+export const AcceptReject = styled(TableCell)`
   display: flex;
+
   & .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
     padding: 0px;
   }

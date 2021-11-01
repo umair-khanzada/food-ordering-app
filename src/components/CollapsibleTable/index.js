@@ -22,13 +22,14 @@ import {
   CollapseTableContainer,
   CollapseTableHead,
   DeleteProgress,
-  OrderItems,
   TableHeader,
   CrossIcon,
   RecievedIcon,
-  EditCell,
   DisabledRecievedIcon,
   DisabledCrossIcon,
+  AcceptReject,
+  ItemsTable,
+  OrderItems,
 } from './style';
 
 const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, isEditDelete, onEdit }) => {
@@ -83,8 +84,9 @@ const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, is
           <TableCell>{price}</TableCell>
 
           <TableCell>{status}</TableCell>
+
           {isEditDelete && (
-            <EditCell>
+            <AcceptReject>
               {status === 'pending' ? (
                 <>
                   <IconButton onClick={() => onEdit({ id, status, price, user_id })}>
@@ -110,21 +112,25 @@ const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, is
                   <DisabledCrossIcon />
                 </>
               )}
-            </EditCell>
+            </AcceptReject>
           )}
         </TableRow>
         <TableRow>
-          <TableCell colSpan={7}>
+          <TableCell colSpan={12}>
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 5 }}>
+              <Box sx={{ margin: 1 }}>
                 <Typography component="div" gutterBottom variant="h5">
                   Items
                 </Typography>
-                <Table size="small">
+                <ItemsTable size="small">
                   <TableHead>
                     <TableRow>
-                      <OrderItems align="center">Item</OrderItems>
-                      <OrderItems align="center">Quantity </OrderItems>
+                      <OrderItems align="center">
+                        <h3>item</h3>
+                      </OrderItems>
+                      <OrderItems align="center">
+                        <h3>Quantity</h3>
+                      </OrderItems>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -135,7 +141,7 @@ const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, is
                       </TableRow>
                     ))}
                   </TableBody>
-                </Table>
+                </ItemsTable>
               </Box>
             </Collapse>
           </TableCell>

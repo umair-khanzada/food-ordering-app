@@ -1,12 +1,12 @@
 import { Button, Card, Drawer, Modal, Typography } from '@material-ui/core';
+import { Delete, HighlightOffOutlined } from '@material-ui/icons';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import CloseIcon from '@material-ui/icons/Close';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import styled from 'styled-components';
 
 export const MainDrawer = styled(Drawer)`
-  height: 20px;
-  margin-top: 12px;
+  width: 20vw !important;
+  height: 100%;
 `;
 export const DrawerModal = styled(Modal)`
   display: flex;
@@ -15,59 +15,58 @@ export const DrawerModal = styled(Modal)`
 `;
 export const DrawerCard = styled(Card)`
   display: flex;
-  width: 42vh;
+  padding-right: 4px;
+  width: 290px;
+  height: 80px;
   align-items: center;
+  border-radius: 0;
+  border-bottom: 2px solid #00b3e3;
   margin-bottom: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3;
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
+`;
+export const ItemImage = styled.img`
+  width: 34%;
 `;
 export const Paper = styled.div`
   background-color: white;
   border-radius: 12px;
   padding: 10px 10px 17px 10px;
 `;
-export const DrwaerIcon = styled.div`
+export const DrawerHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #00b3e3;
-  height: 46px;
+  width: 290px;
+  height: 50px;
 `;
 export const CartPaper = styled.div`
-  padding: 10px 5px;
+  margin-top: 5px;
+  padding: 0;
 `;
-export const DrawerText = styled(CloseIcon)`
-  width: 30%;
+export const DrawerCloseIcon = styled(HighlightOffOutlined)`
   color: white;
-  float: right;
+  height: 50%;
+  width: 16%;
+  &:hover {
+    cursor: pointer;
+    color: red;
+  }
 `;
-export const DrawerHeadingText = styled.h4`
-  width: 30%;
+export const DrawerHeading = styled.h2`
   color: white;
-  margin-left: 5vh;
+  margin-left: 10px;
 `;
-export const Image = styled.img`
-  border: 100px;
-  padding: 20px;
-  border-radius: 20px;
-  boxshadow: 10px 10px F0F0F0;
-  width: 20px;
-`;
-export const DrawerPrice = styled.div`
-  display: flex;
-  flex-direction: column;
 
-  align-items: center;
-`;
-export const Add = styled.div`
+export const ItemDetails = styled.div`
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
-  margin-bottom: 20px;
 `;
-export const DrawerItemPrice = styled.div`
+
+export const ItemPrice = styled.div`
   display: flex;
 `;
 export const PositiveIcon = styled(AddCircleIcon)`
@@ -82,14 +81,26 @@ export const NegativeIcon = styled(RemoveCircleRoundedIcon)`
     cursor: pointer;
   }
 `;
+export const ItemNameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+`;
+export const QuantityContainer = styled.div`
+  margin-top: 5px;
+  display: flex;
+`;
+export const Quantity = styled.h4`
+  margin: 0 5px;
+`;
 export const CheckoutButton = styled(Button)`
   backgroundcolor: #00b3e3;
   position: fixed;
+  width: 290px;
+  border-radius: 0;
   bottom: 2px;
   align-items: center;
-  margin: 0 20px;
-  margin-bottom: 10px;
-  width: 240px;
   color: white;
 `;
 export const ConfirmButton = styled(Button)`
@@ -115,35 +126,29 @@ export const DrawerImageDiv = styled.div`
   padding: 20px;
   margin: 100px;
 `;
-export const DeleteIcon = styled(CloseIcon)`
-  margin-left: 23vh;
-  font-size: 20px;
+export const DeleteIcon = styled(Delete)`
+  font-size: 25px;
+  color: grey;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const CartPrice = styled.span`
   margin-left: 10px;
 `;
-export const CartCancel = styled.span`
-  width: 60%;
-  padding-bottom: 1px;
-`;
+export const CartCancel = styled.span``;
 export const CountQuantity = styled.span`
   margin-left: 50px;
 `;
 export const EmptyCart = styled.div`
   margin-top: 250px;
-  height: 100%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   display: flex;
 `;
-export const AddToCartImg = styled.img`
-  width: 25%;
-  display: flex;
 
-  border-radius: 10px;
-`;
 export const ModalIcons = styled.div`
   margin-top: 30px;
   display: flex;
