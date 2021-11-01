@@ -1,8 +1,13 @@
 import React from 'react';
 
-import MainContainer from './routes/Layout/MainContainer';
+import { BrowserRouter as Router } from 'react-router-dom';
 
+import MainContainer from './routes/Layout/MainContainer';
 const App = () => {
-  return <MainContainer />;
+  return (
+    <Router>
+      <MainContainer />;
+    </Router>
+  );
 };
 export default App;

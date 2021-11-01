@@ -130,6 +130,7 @@ export const logoutEpic = (action$, state) =>
           },
         },
       } = state;
+
       return ajax({
         url: `${baseUrl()}auth/logout`,
         method: 'POST',
