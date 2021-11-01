@@ -43,11 +43,6 @@ const FormComponent = ({
   useEffect(() => {
     setChecked(true);
   }, []);
-  // const useStyles = makeStyles(() => ({
-  //   LoginButton: {
-  //     width: '100%',
-  //   },
-  // }));
   return (
     <>
       <FormContainer>
