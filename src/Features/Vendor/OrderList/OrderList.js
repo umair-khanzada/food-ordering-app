@@ -14,7 +14,7 @@ import { logout } from '../../Auth/actions';
 import { InsertBalance, updateOrderById } from '../mutation';
 import { FetchOrderHistory } from '../request';
 import { GetBalanceByUserId } from './request';
-import { CollapseTableContainer, OrdersListTitleContainer } from './Style';
+import { CollapseTableContainer, SummaryHeader } from './Style';
 
 const OrdersList = () => {
   const { data: ordersList, refetch: refetchOrders, isFetching } = FetchOrderHistory();
@@ -153,7 +153,6 @@ const OrdersList = () => {
         <Loader />
       ) : (
         <>
-          <OrdersListTitleContainer />
           <CollapseTableContainer>
             <CollapsibleTable
               header={header}
@@ -165,9 +164,12 @@ const OrdersList = () => {
               tablewidth="90%"
             />
 
-            <Box height="80vh" mt={4}>
-              <CustomTable cellWidth="30%" header={itemSummaryHeader} rows={itemSummary} tablewidth="50%" />
-            </Box>
+            {itemSummary.length !== 0 && (
+              <Box height="80vh" mt={4}>
+                <SummaryHeader>Item Summary</SummaryHeader>
+                <CustomTable cellWidth="30%" header={itemSummaryHeader} rows={itemSummary} tablewidth="80%" />
+              </Box>
+            )}
           </CollapseTableContainer>
         </>
       )}

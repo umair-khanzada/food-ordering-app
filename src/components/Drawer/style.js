@@ -17,7 +17,7 @@ export const DrawerCard = styled(Card)`
   display: flex;
   padding-right: 4px;
   width: 290px;
-  height: 80px;
+  height: 75px;
   align-items: center;
   border-radius: 0;
   border-bottom: 2px solid #00b3e3;
@@ -45,6 +45,8 @@ export const DrawerHeader = styled.div`
 export const CartPaper = styled.div`
   margin-top: 5px;
   padding: 0;
+  height: 85vh;
+  overflow-y: scroll;
 `;
 export const DrawerCloseIcon = styled(HighlightOffOutlined)`
   color: white;
