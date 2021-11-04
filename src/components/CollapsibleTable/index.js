@@ -27,9 +27,9 @@ import {
   RecievedIcon,
   DisabledRecievedIcon,
   DisabledCrossIcon,
-  AcceptReject,
   ItemsTable,
   OrderItems,
+  AcceptReject,
 } from './style';
 
 const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, isEditDelete, onEdit }) => {
@@ -86,9 +86,9 @@ const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, is
           <TableCell>{status}</TableCell>
 
           {isEditDelete && (
-            <AcceptReject>
+            <TableCell>
               {status === 'pending' ? (
-                <>
+                <AcceptReject>
                   <IconButton onClick={() => onEdit({ id, status, price, user_id })}>
                     <RecievedIcon />
                   </IconButton>
@@ -105,14 +105,14 @@ const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, is
                       <CrossIcon />
                     </IconButton>
                   )}
-                </>
+                </AcceptReject>
               ) : (
-                <>
+                <AcceptReject>
                   <DisabledRecievedIcon />
                   <DisabledCrossIcon />
-                </>
+                </AcceptReject>
               )}
-            </AcceptReject>
+            </TableCell>
           )}
         </TableRow>
         <TableRow>

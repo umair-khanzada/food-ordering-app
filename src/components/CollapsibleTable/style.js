@@ -20,7 +20,7 @@ export const ItemsTable = styled(Table)`
 `;
 
 export const CollapseTableContainer = styled(TableContainer)`
-  width: 80vw;
+  width: 90%;
   max-height: 95%;
   & .MuiTableCell-root {
     padding: 0px 14px;
@@ -55,9 +55,9 @@ export const DeleteProgress = styled(CircularProgress)`
 export const OrderItems = styled(TableCell)`
   width: 40%;
 `;
-export const AcceptReject = styled(TableCell)`
-  display: flex;
 
+export const AcceptReject = styled.div`
+  display: flex;
   & .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
     padding: 0px;
   }
