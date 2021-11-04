@@ -55,9 +55,9 @@ export const DeleteProgress = styled(CircularProgress)`
 export const OrderItems = styled(TableCell)`
   width: 40%;
 `;
-export const AcceptReject = styled(TableCell)`
-  display: flex;
 
+export const AcceptReject = styled.div`
+  display: flex;
   & .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
     padding: 0px;
   }
