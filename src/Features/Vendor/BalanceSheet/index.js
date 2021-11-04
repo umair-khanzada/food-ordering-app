@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Box } from '@mui/system';
 import { useHistory } from 'react-router';
@@ -11,6 +11,7 @@ import { FetchBalances } from './requests';
 
 const BalanceSheet = () => {
   const { isLoading, data, refetch } = FetchBalances();
+  const [pageName] = useState('BalanceSheet');
 
   const header = ['No', 'User', 'Balance', 'Edit'];
   const history = useHistory();
@@ -42,6 +43,7 @@ const BalanceSheet = () => {
         isEditDelete
         onDelete={onDelete}
         onEdit={onEdit}
+        pageName={pageName}
         rows={data}
         tablewidth="50%"
       />

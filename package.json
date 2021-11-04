@@ -21,6 +21,7 @@
     "history": "^5.0.1",
     "json-server": "^0.16.3",
     "lodash": "^4.17.21",
+    "material-ui-search-bar": "^1.0.0",
     "react": "^17.0.2",
     "react-alert": "^7.0.3",
     "react-alert-template-basic": "^1.0.2",
