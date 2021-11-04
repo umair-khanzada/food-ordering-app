@@ -9,6 +9,7 @@ import { toggleSnackbarOpen } from '../../../components/AlertMessage/alertRedux/
 import CollapsibleTable from '../../../components/CollapsibleTable';
 import CustomTable from '../../../components/CustomTable';
 import Loader from '../../../components/Loader';
+import NoDataFound from '../../../components/NoDataFilter';
 import { ERROR, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 import { InsertBalance, updateOrderById } from '../mutation';
@@ -153,24 +154,27 @@ const OrdersList = () => {
         <Loader />
       ) : (
         <>
-          <CollapseTableContainer>
-            <CollapsibleTable
-              header={header}
-              isDeleting={isLoading}
-              isEditDelete
-              onEdit={onEdit}
-              onReject={onReject}
-              rows={ordersList}
-              tablewidth="90%"
-            />
-
-            {itemSummary.length !== 0 && (
-              <Box height="80vh" mt={4}>
-                <SummaryHeader>Item Summary</SummaryHeader>
-                <CustomTable cellWidth="30%" header={itemSummaryHeader} rows={itemSummary} tablewidth="80%" />
-              </Box>
-            )}
-          </CollapseTableContainer>
+          {ordersList.length !== 0 ? (
+            <CollapseTableContainer>
+              <CollapsibleTable
+                header={header}
+                isDeleting={isLoading}
+                isEditDelete
+                onEdit={onEdit}
+                onReject={onReject}
+                rows={ordersList}
+                tablewidth="90%"
+              />
+              {itemSummary.length !== 0 && (
+                <Box height="80vh" mt={4}>
+                  <SummaryHeader>Items Summary</SummaryHeader>
+                  <CustomTable cellWidth="30%" header={itemSummaryHeader} rows={itemSummary} tablewidth="80%" />
+                </Box>
+              )}
+            </CollapseTableContainer>
+          ) : (
+            <NoDataFound text="There is no order" />
+          )}
         </>
       )}
     </>
