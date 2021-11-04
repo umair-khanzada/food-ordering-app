@@ -18,7 +18,7 @@ export const CollapseTableContainer = styled.div`
   margin-top: 20px;
 `;
 export const SummaryHeader = styled.h1`
-  text-align: center;
+  margin-left: 5%;
   margin-bottom: 20px;
   color: #00b3e3;
 `;

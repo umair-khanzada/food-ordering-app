@@ -12,14 +12,12 @@ import Loader from '../../../components/Loader';
 import NoDataFound from '../../../components/NoDataFilter';
 import { ERROR, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
-import { InsertBalance, updateOrderById } from '../mutation';
+import { updateOrderById } from '../mutation';
 import { FetchOrderHistory } from '../request';
-import { GetBalanceByUserId } from './request';
 import { CollapseTableContainer, SummaryHeader } from './Style';
 
 const OrdersList = () => {
   const { data: ordersList, refetch: refetchOrders, isFetching } = FetchOrderHistory();
-  const [fetchBalance, setFetchBalance] = useState(false);
   const [userId, setUserId] = useState(0);
   const [orderAmount, setOrderAmount] = useState(0);
   const [isUpdateOrder, setIsUpdateOrder] = useState(false);
@@ -87,33 +85,8 @@ const OrdersList = () => {
       setItemSummary(itemSummary);
     }
   }, [ordersList]);
-  const { data: balance, refetch } = GetBalanceByUserId(userId, isUpdateOrder);
 
-  const { mutate: addBalanceMutate } = useMutation(InsertBalance, {
-    onSuccess: () => {
-      refetch();
-    },
-    onError: (error) => {
-      const {
-        response: {
-          data: { message },
-        },
-      } = error;
-      if (error.response.status === 401) {
-        dispatch(logout({ history }));
-        dispatch(toggleSnackbarOpen({ snackbarMessage: 'Session Expired! Please Log in again.', messageType: ERROR }));
-      } else {
-        dispatch(toggleSnackbarOpen({ snackbarMessage: message, messageType: ERROR }));
-      }
-    },
-  });
-  useEffect(() => {
-    if (balance && fetchBalance) {
-      setUserBalance(orderAmount);
-      setFetchBalance(false);
-    }
-  }, [balance, fetchBalance]);
-  const onEdit = ({ id, status, price, user_id }) => {
+  const onEdit = ({ id, price, user_id }) => {
     setIsUpdateOrder(true);
     setOrderAmount(price);
     setUserId(user_id);
@@ -121,30 +94,9 @@ const OrdersList = () => {
       status: 'received',
       amount: price,
     };
-
-    setFetchBalance(true);
     mutateAsync({ id, updatedOrder });
   };
-  const setUserBalance = (orderAmount) => {
-    if (balance) {
-      let previousBalance = 0;
-      balance.map(({ vendorId: { id }, amount }) => {
-        if (id === vendor_Id) {
-          previousBalance = amount;
-        }
-      });
 
-      const currentBalance = previousBalance - orderAmount;
-
-      const totalBalance = {
-        userId,
-        vendorId: vendor_Id,
-        amount: currentBalance,
-      };
-
-      addBalanceMutate(totalBalance);
-    }
-  };
   const header = ['S.No', 'Name', 'Total Items', 'Price', 'status', 'edit'];
   const itemSummaryHeader = ['S.No', 'itemName', 'total'];
 
@@ -156,6 +108,7 @@ const OrdersList = () => {
         <>
           {ordersList.length !== 0 ? (
             <CollapseTableContainer>
+              <SummaryHeader>Order History</SummaryHeader>
               <CollapsibleTable
                 header={header}
                 isDeleting={isLoading}
@@ -166,9 +119,9 @@ const OrdersList = () => {
                 tablewidth="90%"
               />
               {itemSummary.length !== 0 && (
-                <Box height="80vh" mt={4}>
+                <Box mt={4}>
                   <SummaryHeader>Items Summary</SummaryHeader>
-                  <CustomTable cellWidth="30%" header={itemSummaryHeader} rows={itemSummary} tablewidth="80%" />
+                  <CustomTable cellWidth="30%" header={itemSummaryHeader} rows={itemSummary} tablewidth="90%" />
                 </Box>
               )}
             </CollapseTableContainer>
