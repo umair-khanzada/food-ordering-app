@@ -11,14 +11,21 @@ import {
   Table,
 } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
-import SearchBar from 'material-ui-search-bar';
 import { useDispatch } from 'react-redux';
 
 import { searchFilter } from '../../scripts/constants';
 import ConfirmDeletModal from '../Modal';
 import { closeModal, openModal } from '../Modal/action';
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, DeleteProgress, EditDeletCell } from './style';
+import {
+  CustomTableHead,
+  CustomTableContainer,
+  TableHeader,
+  DeleteIcon,
+  DeleteProgress,
+  EditDeletCell,
+  BalanceSheetFilter,
+} from './style';
 export default function CustomTable({
   isDeleting,
   rows,
@@ -84,7 +91,7 @@ export default function CustomTable({
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
       {searchFilter.includes(pageName) && (
-        <SearchBar
+        <BalanceSheetFilter
           onCancelSearch={() => cancelSearch()}
           onChange={(searchVal) => requestSearch(searchVal)}
           value={searched}

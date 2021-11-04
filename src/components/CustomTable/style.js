@@ -1,6 +1,7 @@
 import { TableHead, TableContainer, CircularProgress } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
+import SearchBar from 'material-ui-search-bar';
 import styled from 'styled-components';
 export const CustomTableHead = styled(TableHead)`
   background-color: #00b3e3;
@@ -43,4 +44,8 @@ export const DeleteProgress = styled(CircularProgress)`
 `;
 export const EditDeletCell = styled(TableCell)`
   display: flex;
+`;
+export const BalanceSheetFilter = styled(SearchBar)`
+  margin: 10px;
+  width: 25%;
 `;
