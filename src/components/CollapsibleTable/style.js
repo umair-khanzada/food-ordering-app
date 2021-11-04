@@ -20,7 +20,7 @@ export const ItemsTable = styled(Table)`
 `;
 
 export const CollapseTableContainer = styled(TableContainer)`
-  width: 80vw;
+  width: 90%;
   max-height: 95%;
   & .MuiTableCell-root {
     padding: 0px 14px;
