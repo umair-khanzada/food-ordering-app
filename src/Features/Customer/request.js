@@ -9,7 +9,7 @@ import { baseUrl, ERROR, GetHeader } from '../../scripts/constants';
 import { logout } from '../Auth/actions';
 
 const Vendors = async (headers, userType) => {
-  const { data } = await axios.get(baseUrl() + 'users', {
+  const { data } = await axios.get(baseUrl + 'users', {
     headers,
   });
 
@@ -39,7 +39,7 @@ export const FetchVendors = (userType) => {
 };
 
 const categories = async (headers) => {
-  const { data } = await axios.get(baseUrl() + 'categories ', {
+  const { data } = await axios.get(baseUrl + 'categories ', {
     headers,
   });
 
@@ -70,7 +70,7 @@ export const GetCategories = () => {
 
 export const itemsByVendor = async (headers, vendorId) => {
   if (vendorId !== '') {
-    const { data } = await axios.get(baseUrl() + 'items ', {
+    const { data } = await axios.get(baseUrl + 'items ', {
       headers,
     });
     return data.filter(({ createdBy }) => createdBy === vendorId);
@@ -78,7 +78,7 @@ export const itemsByVendor = async (headers, vendorId) => {
 };
 
 const orderHistory = async (headers, user_Id) => {
-  const { data: orders } = await axios.get(baseUrl() + `orders/user/${user_Id}`, {
+  const { data: orders } = await axios.get(baseUrl + `orders/user/${user_Id}`, {
     headers,
   });
 

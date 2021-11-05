@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { toggleSnackbarOpen } from '../../components/AlertMessage/alertRedux/actions';
-import { ERROR, GetHeader } from '../../scripts/constants';
-import { baseUrl } from '../../scripts/constants';
+import { ERROR, GetHeader, baseUrl } from '../../scripts/constants';
 import { logout } from '../Auth/actions';
 
 const Restaurants = async (headers) => {
-  const { data } = await axios.get(baseUrl() + 'kitchens', {
+  const { data } = await axios.get(baseUrl + 'kitchens', {
     headers,
   });
 
@@ -24,7 +23,7 @@ export const FetchRestaurants = () => {
 };
 
 const Categories = async (headers) => {
-  const { data } = await axios.get(baseUrl() + 'categories', {
+  const { data } = await axios.get(baseUrl + 'categories', {
     headers,
   });
   return data;
@@ -55,7 +54,7 @@ export const FetchCategories = () => {
 };
 
 const Items = async (headers) => {
-  const res = await axios.get(baseUrl() + 'items', {
+  const res = await axios.get(baseUrl + 'items', {
     headers,
   });
 
@@ -86,7 +85,7 @@ export const FetchItems = () => {
 };
 
 const ItemsById = async (headers, id) => {
-  const { data } = await axios.get(baseUrl() + `items/${id}`, {
+  const { data } = await axios.get(baseUrl + `items/${id}`, {
     headers,
   });
 
@@ -116,9 +115,8 @@ export const FetchItemsById = (id) => {
   });
 };
 const orderHistory = async (vendorId) => {
-  const { data: orders } = await axios.get(baseUrl() + `orders/vendor/${vendorId}`);
+  const { data: orders } = await axios.get(baseUrl + `orders/vendor/${vendorId}`);
   const structuredData = [];
-
   const date = new Date();
   const currentDate = date.toLocaleDateString();
   const todayOrders = orders.filter(({ date }) => date === currentDate);
@@ -157,7 +155,7 @@ export const FetchOrderHistory = () => {
 
 const orderById = async (id, isUpdateOrder) => {
   if (isUpdateOrder) {
-    const { data } = await axios.get(baseUrl() + `orders/${id}`);
+    const { data } = await axios.get(baseUrl + `orders/${id}`);
     return data;
   }
 };
