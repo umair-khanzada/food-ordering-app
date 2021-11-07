@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
-import { baseUrl, GetHeader } from '../../../scripts/constants';
+import { GetHeader, baseUrl } from '../../../scripts/constants';
 
 const balanceByUserId = async (headers, user, isUpdateOrder) => {
   if (user.length > 0 && isUpdateOrder) {
-    const { data } = await axios.get(baseUrl() + 'balance', {
+    const { data } = await axios.get(baseUrl + 'balance', {
       headers,
     });
     const newData = [];

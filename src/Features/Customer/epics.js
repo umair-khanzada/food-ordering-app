@@ -22,7 +22,7 @@ export const editUserEpic = (action$, state) =>
       return concat(
         of(authLoadingToggle()),
         ajax({
-          url: `${baseUrl()}users/${id}`,
+          url: `${baseUrl}users/${id}`,
           method: 'PATCH',
           headers: {
             Authorization: `Bearer ${token}`,

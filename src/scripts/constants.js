@@ -4,13 +4,11 @@ import RouteNames from '../routes/RouteNames';
 export const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
 export const passwordRegex = new RegExp('^(.*(([A-Za-z]+(.*)[0-9]+)|([0-9]+(.*)[A-Za-z]+))(.*))$');
 export const contactRegex = new RegExp('^[0-9]{11,12}$');
-export const baseUrl = () => {
-  if (process.env.NODE_ENV === 'development') {
-    return 'http://localhost:4000/v1/';
-  }
-  return 'https://nisum-food-ordering-backend.herokuapp.com/v1/';
-};
 
+export const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:4000/v1/'
+    : 'https://nisum-food-ordering-backend.herokuapp.com/v1/';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
 export const imgURLRegex = new RegExp('(https?://.*([.])(?:png|jpg|webp|gif|jpeg))');

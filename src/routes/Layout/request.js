@@ -9,7 +9,7 @@ import { baseUrl, ERROR, GetHeader } from '../../scripts/constants';
 
 const userById = async (headers, id, isLoggedIn) => {
   if (isLoggedIn) {
-    const { data } = await axios.get(baseUrl() + `users/${id}`, {
+    const { data } = await axios.get(baseUrl + `users/${id}`, {
       headers,
     });
     return data;

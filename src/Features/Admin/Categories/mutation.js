@@ -5,7 +5,7 @@ export async function category(data) {
   const { category, headers } = data;
 
   const res = axios.post(
-    baseUrl() + 'categories',
+    baseUrl + 'categories',
 
     category,
     {
@@ -19,7 +19,7 @@ export async function category(data) {
 export async function deleteCategory(data) {
   const { categoryId, headers } = data;
 
-  const res = axios.delete(`${baseUrl()}categories/${categoryId}`, {
+  const res = axios.delete(`${baseUrl}categories/${categoryId}`, {
     headers,
   });
 
@@ -33,7 +33,7 @@ export async function updateCategoryById(data) {
     headers,
   } = data;
 
-  const res = axios.patch(`${baseUrl()}categories/${id}`, category, {
+  const res = axios.patch(`${baseUrl}categories/${id}`, category, {
     headers,
   });
 

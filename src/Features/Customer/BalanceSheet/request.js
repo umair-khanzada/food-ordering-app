@@ -14,7 +14,7 @@ export const FetchBalances = () => {
   return useQuery(
     'balance',
     async () => {
-      const { data } = await axios.get(baseUrl() + `balance/user/${userId}`);
+      const { data } = await axios.get(baseUrl + `balance/user/${userId}`);
 
       const filteredData = [];
       data.forEach((item) => {

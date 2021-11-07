@@ -8,7 +8,7 @@ import { baseUrl, ERROR, GetHeader, SUCCESS } from '../../../scripts/constants';
 import { logout } from '../../Auth/actions';
 
 export const editBalnceByUser = async ({ id, data, headers }) => {
-  const response = await axios.patch(baseUrl() + `balance/${id}`, data, {
+  const response = await axios.patch(baseUrl + `balance/${id}`, data, {
     headers,
   });
   return response;
@@ -21,7 +21,7 @@ export const DeleteBalanceById = () => {
   const dispatch = useDispatch();
   return useMutation(
     async (id) => {
-      const response = await axios.delete(baseUrl() + `balance/${id}`, {
+      const response = await axios.delete(baseUrl + `balance/${id}`, {
         headers,
       });
       return response;

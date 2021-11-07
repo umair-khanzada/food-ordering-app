@@ -43,7 +43,7 @@ const BalanceSheet = () => {
         onDelete={onDelete}
         onEdit={onEdit}
         rows={data}
-        tablewidth="50%"
+        tablewidth="80%"
       />
     </Box>
   );
