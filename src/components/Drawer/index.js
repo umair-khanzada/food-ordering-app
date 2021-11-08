@@ -82,8 +82,12 @@ const Drawer = () => {
       amount += price * qty;
       vendor = vendorId;
     });
-    const date = new Date();
-    const currentDate = date.toLocaleDateString();
+
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const orderDate = dd + '/' + mm + '/' + yyyy;
 
     const orders = {
       userId,
@@ -91,7 +95,7 @@ const Drawer = () => {
       items,
       status: 'pending',
       amount,
-      date: currentDate,
+      date: orderDate,
     };
     mutate({ orders, headers });
     setOpen(false);
