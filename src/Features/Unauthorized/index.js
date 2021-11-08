@@ -32,7 +32,7 @@ const Unauthorized = () => {
               const defaultRouteAfterLogin = defaultRouteForRoles[role];
               history.push(defaultRouteAfterLogin || '/');
             }}
-            property="GO To Default Route"
+            property="Go To Default Route"
           />
         </Grid>
       </Grid>
