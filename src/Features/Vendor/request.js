@@ -117,9 +117,12 @@ export const FetchItemsById = (id) => {
 const orderHistory = async (vendorId) => {
   const { data: orders } = await axios.get(baseUrl + `orders/vendor/${vendorId}`);
   const structuredData = [];
-  const date = new Date();
-  const currentDate = date.toLocaleDateString();
-  const todayOrders = orders.filter(({ date }) => date === currentDate);
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const yyyy = today.getFullYear();
+  const orderDate = dd + '/' + mm + '/' + yyyy;
+  const todayOrders = orders.filter(({ date }) => date === orderDate);
   todayOrders.forEach(({ items, userId, status, amount, id }) => {
     const itemsArray = [];
     if (userId) {

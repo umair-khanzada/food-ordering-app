@@ -44,7 +44,7 @@ const BalanceSheet = () => {
         onEdit={onEdit}
         pageName="BalanceSheet"
         rows={data}
-        tablewidth="80%"
+        tablewidth="90%"
       />
     </Box>
   );
