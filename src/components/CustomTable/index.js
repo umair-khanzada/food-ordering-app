@@ -89,7 +89,7 @@ export default function CustomTable({
   };
 
   return (
-    <CustomTableContainer component={Paper} tablewidth={tablewidth}>
+    <div style={{ height: '100%' }}>
       {searchFilter.includes(pageName) && (
         <BalanceSheetFilter
           onCancelSearch={() => cancelSearch()}
@@ -97,83 +97,85 @@ export default function CustomTable({
           value={searched}
         />
       )}
-      {isEditDelete && (
-        <ConfirmDeletModal modalButtons={deletModalButtons}>
-          <div>Are you sure you want to delete ?</div>
-        </ConfirmDeletModal>
-      )}
+      <CustomTableContainer component={Paper} tablewidth={tablewidth}>
+        {isEditDelete && (
+          <ConfirmDeletModal modalButtons={deletModalButtons}>
+            <div>Are you sure you want to delete ?</div>
+          </ConfirmDeletModal>
+        )}
 
-      <Table>
-        <CustomTableHead>
-          <TableRow>
-            {header.map((head, index) => {
-              return <TableHeader key={index}>{head}</TableHeader>;
-            })}
-          </TableRow>
-        </CustomTableHead>
-
-        <TableBody>
-          {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
-            <TableRow key={row.id}>
-              <TableCell>{page * rowsPerPage + index + 1}</TableCell>
-              {Object.keys(row).map((data, index) => {
-                if (data != 'id' && data !== 'role' && data != 'createdBy') {
-                  return (
-                    <TableCell
-                      key={index}
-                      cellwidth={cellWidth}
-                      style={{
-                        color: `${data === 'amount' && row[data] < 0 ? 'red' : 'black'}`,
-                      }}
-                    >
-                      {row[data]}
-                    </TableCell>
-                  );
-                }
+        <Table>
+          <CustomTableHead>
+            <TableRow>
+              {header.map((head, index) => {
+                return <TableHeader key={index}>{head}</TableHeader>;
               })}
-
-              {isEditDelete && (
-                <EditDeletCell>
-                  <IconButton onClick={() => onEdit(row)}>
-                    <Edit />
-                  </IconButton>
-
-                  {isDeleting && currentSelectedRow.id == row.id ? (
-                    <DeleteProgress size="20px" />
-                  ) : (
-                    <IconButton
-                      onClick={() => {
-                        setCurrentSelectedRow(row);
-                        dispatch(openModal());
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  )}
-                </EditDeletCell>
-              )}
             </TableRow>
-          ))}
-        </TableBody>
+          </CustomTableHead>
 
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              ActionsComponent={TablePaginationActions}
-              colSpan={7}
-              count={rows.length}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              rowsPerPageOptions={[50]}
-              SelectProps={{
-                native: true,
-              }}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </CustomTableContainer>
+          <TableBody>
+            {RowPerPage(rowsPerPage, rowsData, page).map((row, index) => (
+              <TableRow key={row.id}>
+                <TableCell>{page * rowsPerPage + index + 1}</TableCell>
+                {Object.keys(row).map((data, index) => {
+                  if (data != 'id' && data !== 'role' && data != 'createdBy') {
+                    return (
+                      <TableCell
+                        key={index}
+                        cellwidth={cellWidth}
+                        style={{
+                          color: `${data === 'amount' && row[data] < 0 ? 'red' : 'black'}`,
+                        }}
+                      >
+                        {row[data]}
+                      </TableCell>
+                    );
+                  }
+                })}
+
+                {isEditDelete && (
+                  <EditDeletCell>
+                    <IconButton onClick={() => onEdit(row)}>
+                      <Edit />
+                    </IconButton>
+
+                    {isDeleting && currentSelectedRow.id == row.id ? (
+                      <DeleteProgress size="20px" />
+                    ) : (
+                      <IconButton
+                        onClick={() => {
+                          setCurrentSelectedRow(row);
+                          dispatch(openModal());
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    )}
+                  </EditDeletCell>
+                )}
+              </TableRow>
+            ))}
+          </TableBody>
+
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                ActionsComponent={TablePaginationActions}
+                colSpan={7}
+                count={rows.length}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                rowsPerPageOptions={[50]}
+                SelectProps={{
+                  native: true,
+                }}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </CustomTableContainer>
+    </div>
   );
 }

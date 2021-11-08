@@ -46,6 +46,9 @@ export const EditDeletCell = styled(TableCell)`
   display: flex;
 `;
 export const BalanceSheetFilter = styled(SearchBar)`
-  margin: 10px;
-  width: 25%;
+  margin: 10px 5%;
+  width: 34%;
+  @media (max-width: 768px) {
+    width: 70%;
+  }
 `;
