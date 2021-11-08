@@ -13,10 +13,19 @@ import {
 import { Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 
+import { searchFilter } from '../../scripts/constants';
 import ConfirmDeletModal from '../Modal';
 import { closeModal, openModal } from '../Modal/action';
 import TablePaginationActions from './Pagination';
-import { CustomTableHead, CustomTableContainer, TableHeader, DeleteIcon, DeleteProgress, EditDeletCell } from './style';
+import {
+  CustomTableHead,
+  CustomTableContainer,
+  TableHeader,
+  DeleteIcon,
+  DeleteProgress,
+  EditDeletCell,
+  BalanceSheetFilter,
+} from './style';
 export default function CustomTable({
   isDeleting,
   rows,
@@ -26,6 +35,7 @@ export default function CustomTable({
   tablewidth,
   onEdit,
   isEditDelete,
+  pageName,
 }) {
   const dispatch = useDispatch();
   const [currentSelectedRow, setCurrentSelectedRow] = useState({});
@@ -40,6 +50,8 @@ export default function CustomTable({
     { property: 'Confirm', clickHandler: onRowDelete },
   ];
   const [rowsData, setRowsData] = useState([...rows]);
+  const [searched, setSearched] = useState('');
+
   useEffect(() => {
     setRowsData([...rows]);
   }, [rows]);
@@ -56,6 +68,18 @@ export default function CustomTable({
     setPage(0);
   };
 
+  const requestSearch = (searchedVal) => {
+    const filteredRows = rows.filter(({ user }) => {
+      return user.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRowsData(filteredRows);
+  };
+
+  const cancelSearch = () => {
+    setSearched('');
+    requestSearch(searched);
+  };
+
   const RowPerPage = (rowsPerPage, rowsData, page) => {
     if (rowsPerPage > 0) {
       return rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
@@ -66,6 +90,13 @@ export default function CustomTable({
 
   return (
     <CustomTableContainer component={Paper} tablewidth={tablewidth}>
+      {searchFilter.includes(pageName) && (
+        <BalanceSheetFilter
+          onCancelSearch={() => cancelSearch()}
+          onChange={(searchVal) => requestSearch(searchVal)}
+          value={searched}
+        />
+      )}
       {isEditDelete && (
         <ConfirmDeletModal modalButtons={deletModalButtons}>
           <div>Are you sure you want to delete ?</div>

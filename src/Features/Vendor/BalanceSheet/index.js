@@ -42,6 +42,7 @@ const BalanceSheet = () => {
         isEditDelete
         onDelete={onDelete}
         onEdit={onEdit}
+        pageName="BalanceSheet"
         rows={data}
         tablewidth="80%"
       />
