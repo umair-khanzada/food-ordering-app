@@ -2,11 +2,20 @@ import React from 'react';
 
 import { Grid, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import Button from '../../components/Button/Button';
+import { defaultRouteForRoles } from '../../scripts/constants';
 
 const Unauthorized = () => {
+  const role = useSelector((state) => {
+    const {
+      authReducer: { role },
+    } = state;
+    return role;
+  });
+
   const history = useHistory();
 
   return (
@@ -20,9 +29,10 @@ const Unauthorized = () => {
         <Grid item>
           <Button
             onClick={() => {
-              history.goBack();
+              const defaultRouteAfterLogin = defaultRouteForRoles[role];
+              history.push(defaultRouteAfterLogin || '/');
             }}
-            property="GO BACK"
+            property="Go To Default Route"
           />
         </Grid>
       </Grid>
