@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const CardRoot = styled(Card)`
   border-radius: 0px;
+  position: relative;
   display: flex;
   padding: 0px;
   margin: 20px;
@@ -27,8 +28,11 @@ export const FoodTitle = styled(Typography)`
   }
 `;
 export const Content = styled.div`
-  padding: 10px 5px;
+  padding: 5px;
   width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   text-align: center;
 `;
 
@@ -54,6 +58,7 @@ export const ImageDiv = styled.img`
 export const ItemPrice = styled.div``;
 export const DetailsContainer = styled.div`
   display: flex;
+  padding-bottom: 50px;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;

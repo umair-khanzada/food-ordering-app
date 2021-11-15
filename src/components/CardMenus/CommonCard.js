@@ -7,7 +7,7 @@ import { addtocart } from '../../Features/Customer/actions';
 import { ERROR } from '../../scripts/constants';
 import { toggleSnackbarOpen } from '../AlertMessage/alertRedux/actions';
 import CommonButton from '../Button/Button';
-import { CardRoot, ImageDiv, FoodTitle, Content, ItemPrice, DetailsContainer } from './style';
+import { CardRoot, ImageDiv, FoodTitle, Content, DetailsContainer } from './style';
 
 const CommonCard = ({ id, name, price, img, buttonText, vendorId }) => {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const CommonCard = ({ id, name, price, img, buttonText, vendorId }) => {
       <DetailsContainer>
         <CardHeader title={<FoodTitle variant="h2">{name}</FoodTitle>} />
         <Typography color="textSecondary" component="p" variant="h3">
-          <ItemPrice>Rs. {price}</ItemPrice>
+          Rs. {price}
         </Typography>
       </DetailsContainer>
       <Content>
