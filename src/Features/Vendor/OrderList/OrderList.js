@@ -97,8 +97,8 @@ const OrdersList = () => {
     mutateAsync({ id, updatedOrder });
   };
 
-  const header = ['S.No', 'Name', 'Total Items', 'Price', 'status', 'edit'];
-  const itemSummaryHeader = ['S.No', 'itemName', 'total'];
+  const header = ['S.No', 'Name', 'Total Items', 'Price', 'Status', 'Edit'];
+  const itemSummaryHeader = ['S.No', 'ItemName', 'Total'];
 
   return (
     <>
