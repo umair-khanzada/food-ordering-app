@@ -70,7 +70,7 @@ function SignUpForm() {
       errorMessage: '',
       getValidation: (value) => {
         if (!emailRegex.test(value)) {
-          return ['Email is invalid', false];
+          return ['Invalid email', false];
         }
         return ['', true];
       },
@@ -106,7 +106,7 @@ function SignUpForm() {
         if (passwordRegex.test(value) && value.length >= 8) {
           return ['', true];
         }
-        return ['Password must be 8 characters long and contains atleast one number and letter', false];
+        return ['Password must be 8 characters and contains atleast one number', false];
       },
     },
     {
