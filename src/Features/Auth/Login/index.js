@@ -74,7 +74,7 @@ function LoginForm() {
       errorMessage: '',
       getValidation: (value) => {
         if (!emailRegex.test(value)) {
-          return ['invalid', false];
+          return ['Invalid email', false];
         }
         return ['', true];
       },
