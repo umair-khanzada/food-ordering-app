@@ -70,7 +70,7 @@ function SignUpForm() {
       errorMessage: '',
       getValidation: (value) => {
         if (!emailRegex.test(value)) {
-          return ['Email type is not valid', false];
+          return ['Invalid email', false];
         }
         return ['', true];
       },
@@ -85,10 +85,10 @@ function SignUpForm() {
       errorMessage: '',
       getValidation: (value) => {
         if (value.length < 3) {
-          return ['Name should be gratter then 3', false];
+          return ['Name should be greater than 3 letters', false];
         }
         if (value.length > 10) {
-          return ['Name should be less then 10 letters', false];
+          return ['Name should be less than 10 letters', false];
         }
         return ['', true];
       },
@@ -106,7 +106,7 @@ function SignUpForm() {
         if (passwordRegex.test(value) && value.length >= 8) {
           return ['', true];
         }
-        return ['Password must be 8 characters long and contains atleast one number and letter', false];
+        return ['Password must be 8 characters and contains atleast one number', false];
       },
     },
     {

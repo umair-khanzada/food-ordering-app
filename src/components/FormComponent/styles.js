@@ -13,7 +13,7 @@ export const Form = styled.form`
   }
 `;
 export const InputBox = styled.div`
-  height: 95px;
+  height: 100px;
 `;
 export const ErrorResponse = styled.div`
   margin-bottom: 32px;
@@ -27,8 +27,9 @@ export const ErrorResponse = styled.div`
   height: 40px;
   font-size: 16px;
 `;
-export const Error = styled.span`
-  margin: 10px;
+export const Error = styled.div`
+  margin-left: 10px;
+  padding-bottom: 10px;
   color: red;
 `;
 export const FormHeading = styled.h1`

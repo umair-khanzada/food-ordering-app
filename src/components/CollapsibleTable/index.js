@@ -83,7 +83,7 @@ const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, is
           <TableCell>{items.length}</TableCell>
           <TableCell>{price}</TableCell>
 
-          <TableCell>{status}</TableCell>
+          <TableCell>{status.charAt(0).toUpperCase() + status.slice(1)}</TableCell>
 
           {isEditDelete && (
             <TableCell>

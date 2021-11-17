@@ -12,7 +12,7 @@ import { ERROR, GetHeader, imgURLRegex, SUCCESS } from '../../../../scripts/cons
 import { fieldChangeHandler, SelectChangeHandler, validateOnSubmit } from '../../../../util/CommonGridBasedFormUtils';
 import { logout } from '../../../Auth/actions';
 import { updateItemById } from '../../mutation';
-import { FetchCategories, FetchItemsById, FetchRestaurants } from '../../request';
+import { FetchCategories, FetchItemsById } from '../../request';
 
 const EditMenu = () => {
   const [categoryData, setCategoryData] = useState([]);
@@ -28,7 +28,7 @@ const EditMenu = () => {
     } = state;
     return id;
   });
-  const restaurantsData = FetchRestaurants();
+
   const categoriesData = FetchCategories();
 
   const { data: itemsById, isFetching } = FetchItemsById(id);
@@ -158,7 +158,6 @@ const EditMenu = () => {
 
   const { mutate, isLoading } = useMutation(updateItemById, {
     onSuccess: (response) => {
-      setFields(initialItemEditField);
       dispatch(
         toggleSnackbarOpen({
           snackbarMessage: SuccessMessage,

@@ -6,7 +6,7 @@ import MainContainer from './routes/Layout/MainContainer';
 const App = () => {
   return (
     <Router>
-      <MainContainer />;
+      <MainContainer />
     </Router>
   );
 };
