@@ -126,7 +126,7 @@ const CollapsibleTable = ({ isDeleting, isPagination, onReject, header, rows, is
                   <TableHead>
                     <TableRow>
                       <OrderItems align="center">
-                        <h3>item</h3>
+                        <h3>Item</h3>
                       </OrderItems>
                       <OrderItems align="center">
                         <h3>Quantity</h3>

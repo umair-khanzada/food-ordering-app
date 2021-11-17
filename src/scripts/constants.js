@@ -7,7 +7,7 @@ export const contactRegex = new RegExp('^[0-9]{11,12}$');
 
 export const baseUrl =
   process.env.NODE_ENV === 'development'
-    ? 'http://10.4.41.72:4000/v1/'
+    ? 'http://localhost:4000/v1/'
     : 'https://nisum-food-ordering-backend.herokuapp.com/v1/';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
