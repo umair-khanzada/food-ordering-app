@@ -7,21 +7,6 @@ import { toggleSnackbarOpen } from '../../components/AlertMessage/alertRedux/act
 import { ERROR, GetHeader, baseUrl } from '../../scripts/constants';
 import { logout } from '../Auth/actions';
 
-const Restaurants = async (headers) => {
-  const { data } = await axios.get(baseUrl + 'kitchens', {
-    headers,
-  });
-
-  return data;
-};
-
-export const FetchRestaurants = () => {
-  const { headers } = GetHeader();
-  const { data } = useQuery('restaurants', () => Restaurants(headers));
-
-  return data;
-};
-
 const Categories = async (headers) => {
   const { data } = await axios.get(baseUrl + 'categories', {
     headers,
