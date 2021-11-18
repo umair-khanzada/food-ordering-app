@@ -54,6 +54,14 @@ export function register(config) {
 }
 
 function registerValidSW(swUrl, config) {
+  navigator.serviceWorker.getRegistration('https://nisum-food-ordering-app.herokuapp.com/').then((swReg) => {
+    if (swReg) {
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        window.swUpdateReady = true;
+      });
+    }
+  });
+
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
