@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { Grid } from '@material-ui/core';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import SnackBar from '../../components/AlertMessage';
@@ -8,7 +7,7 @@ import AppBar from '../../components/AppBar/AppBar';
 import { updateUserRole } from '../../Features/Auth/actions';
 import BaseRouter from '../index';
 import { FetchUserById } from './request';
-import { BaseRouterGrid } from './style';
+import { BaseRouterGrid, MainGrid, RelativeGrid } from './style';
 function MainContainer() {
   const { isLoggedIn, id, role, isUserRoleChange } = useSelector((state) => {
     const {
@@ -41,12 +40,12 @@ function MainContainer() {
       {isLoggedIn ? (
         <>
           <AppBar handleDrawerToggle={handleDrawerToggle} />
-          <Grid container direction="row">
-            <Grid item style={{ position: 'relative' }} xs={2} />
+          <MainGrid container direction="row">
+            <RelativeGrid item style={{ position: 'relative' }} xs={2} />
             <BaseRouterGrid item md={10} xs={12}>
               {baseRouter}
             </BaseRouterGrid>
-          </Grid>
+          </MainGrid>
           {snackBar}
         </>
       ) : (
