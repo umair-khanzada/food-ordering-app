@@ -7,3 +7,11 @@ export const BaseRouterGrid = styled(Grid)`
     margin-left: 0;
   }
 `;
+export const MainGrid = styled(Grid)`
+  height: 88vh;
+  overflow: scroll;
+`;
+
+export const RelativeGrid = styled(Grid)`
+  position: absolute;
+`;

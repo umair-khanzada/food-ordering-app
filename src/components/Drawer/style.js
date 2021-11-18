@@ -19,6 +19,7 @@ export const DrawerCard = styled(Card)`
   width: 290px;
   height: 75px;
   align-items: center;
+  justify-content: space-between;
   border-radius: 0;
   border-bottom: 2px solid #00b3e3;
   margin-bottom: 10px;
@@ -27,7 +28,14 @@ export const DrawerCard = styled(Card)`
   }
 `;
 export const ItemImage = styled.img`
-  width: 34%;
+  width: 80px;
+  height: 70px;
+`;
+export const ItemName = styled.h4`
+  width: 100px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 export const Paper = styled.div`
   background-color: white;
@@ -64,6 +72,7 @@ export const DrawerHeading = styled.h2`
 
 export const ItemDetails = styled.div`
   display: flex;
+  width: 250px;
   justify-content: space-evenly;
   align-items: center;
 `;
@@ -87,7 +96,8 @@ export const ItemNameContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  text-align: center;
+  align-items: center;
+  width: 110px;
 `;
 export const QuantityContainer = styled.div`
   margin-top: 5px;
@@ -137,7 +147,7 @@ export const DeleteIcon = styled(Delete)`
 `;
 
 export const CartPrice = styled.span`
-  margin-left: 10px;
+  width: 50px;
 `;
 export const CartCancel = styled.span``;
 export const CountQuantity = styled.span`

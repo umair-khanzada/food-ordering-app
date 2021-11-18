@@ -29,11 +29,11 @@ export const CollapseTableContainer = styled(TableContainer)`
 `;
 export const CrossIcon = styled(HighlightOffOutlined)`
   color: red;
-  margin: 12px 5px;
+  margin: 12px 2px;
 `;
 export const DisabledCrossIcon = styled(HighlightOffOutlined)`
   color: #ff9999;
-  margin: 12px 5px;
+  margin: 12px 2px;
 `;
 export const TableHeader = styled(TableCell)`
   font-size: 16px;
@@ -42,11 +42,11 @@ export const TableHeader = styled(TableCell)`
 
 export const RecievedIcon = styled(CheckCircleOutline)`
   color: #00b3e3;
-  margin: 12px 5px;
+  margin: 12px 2px;
 `;
 export const DisabledRecievedIcon = styled(CheckCircleOutline)`
   color: #99e6ff;
-  margin: 12px 5px;
+  margin: 12px 2px;
 `;
 export const DeleteProgress = styled(CircularProgress)`
   margin-left: 10px;

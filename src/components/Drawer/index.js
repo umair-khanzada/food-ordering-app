@@ -44,6 +44,7 @@ import {
   NegativeIcon,
   QuantityContainer,
   Quantity,
+  ItemName,
 } from './style';
 const Drawer = () => {
   const { headers } = GetHeader();
@@ -136,10 +137,11 @@ const Drawer = () => {
             return (
               <DrawerCard key={cartdata.id}>
                 <ItemDetails>
-                  <ItemImage alt="cart" src={cartdata.img} />
-
+                  <div>
+                    <ItemImage alt="cart" src={cartdata.img} />
+                  </div>
                   <ItemNameContainer>
-                    <h4>{cartdata.name}</h4>
+                    <ItemName>{cartdata.name}</ItemName>
                     <QuantityContainer>
                       <PositiveIcon onClick={() => dispatch(increaseQuantity(cartdata.id))} />
                       <Quantity>{cartdata.qty}</Quantity>
