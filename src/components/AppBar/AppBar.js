@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Grid, ListItemIcon, Toolbar, IconButton, makeStyles } from '@material-ui/core';
+import { ListItemIcon, Toolbar, IconButton, makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { CircularProgress } from '@mui/material';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,15 @@ import { openDrawer } from '../../Features/Customer/actions';
 import Roles from '../../roles';
 import Drawer from '../Drawer';
 import SideMenu from '../sideMenu';
-import { LogoutButton, ShoppingCartIcon, StyledAppBar, StyledDiv, StyledLogo, UserName } from './Style';
+import {
+  LogoutButton,
+  ShoppingCartIcon,
+  StyledAppBar,
+  StyledDiv,
+  StyledLogo,
+  UserName,
+  NameLogoutContainer,
+} from './Style';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -72,7 +80,7 @@ const NavBar = () => {
             <MenuIcon style={{ color: 'grey' }} />
           </IconButton>
           <StyledLogo alt="logo" src="https://www.nisum.com/hubfs/logo_nisum.svg" />
-          <Grid alignItems="center" container justifyContent="flex-end">
+          <NameLogoutContainer alignItems="center" container>
             {role === user && (
               <>
                 <Drawer />
@@ -97,7 +105,7 @@ const NavBar = () => {
                 </ListItemIcon>
               </>
             )}
-          </Grid>
+          </NameLogoutContainer>
         </Toolbar>
       </StyledAppBar>
 

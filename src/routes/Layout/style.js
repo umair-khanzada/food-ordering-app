@@ -13,5 +13,5 @@ export const MainGrid = styled(Grid)`
 `;
 
 export const RelativeGrid = styled(Grid)`
-  position: relative;
+  position: absolute;
 `;

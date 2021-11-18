@@ -1,4 +1,4 @@
-import { MenuItem, AppBar } from '@material-ui/core';
+import { MenuItem, AppBar, Grid } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import { LogoutRounded } from '@mui/icons-material';
 import styled from 'styled-components';
@@ -21,6 +21,14 @@ export const StyledMenuItem = styled(MenuItem)`
     }
    }
   `};
+`;
+export const NameLogoutContainer = styled(Grid)`
+  justify-content: flex-end;
+  @media (max-width: 460px) {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: inherit;
+  }
 `;
 export const LogoutButton = styled(LogoutRounded)`
   color: grey;

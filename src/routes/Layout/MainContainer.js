@@ -41,7 +41,7 @@ function MainContainer() {
         <>
           <AppBar handleDrawerToggle={handleDrawerToggle} />
           <MainGrid container direction="row">
-            <RelativeGrid item style={{ position: 'relative' }} xs={2} />
+            <RelativeGrid item xs={2} />
             <BaseRouterGrid item md={10} xs={12}>
               {baseRouter}
             </BaseRouterGrid>
