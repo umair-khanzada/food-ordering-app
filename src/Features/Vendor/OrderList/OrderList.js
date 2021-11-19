@@ -17,7 +17,20 @@ import { FetchOrderHistory } from '../request';
 import { CollapseTableContainer, SummaryHeader } from './Style';
 
 const OrdersList = () => {
-  const { data: ordersList, refetch: refetchOrders, isFetching } = FetchOrderHistory();
+  const { data: ordersList, refetch: refetchOrders, isFetching, isPreviousData } = FetchOrderHistory();
+  const [list, setList] = useState([]);
+  const [isFetchingData, setIsFetchingData] = useState(true);
+
+  useEffect(() => {
+    if (ordersList) {
+      if (!isPreviousData) {
+        setList([...ordersList]);
+
+        setIsFetchingData(false);
+      }
+    }
+  }, [ordersList]);
+
   const [userId, setUserId] = useState(0);
   const [orderAmount, setOrderAmount] = useState(0);
   const [isUpdateOrder, setIsUpdateOrder] = useState(false);
@@ -67,8 +80,8 @@ const OrdersList = () => {
   useEffect(() => {
     const itemQuantity = {};
     const itemSummary = [];
-    if (ordersList) {
-      ordersList.map(({ items, status }) => {
+    if (list) {
+      list.map(({ items, status }) => {
         items.map(({ name, quantity }) => {
           if (status === 'received') {
             itemQuantity[name] = quantity + (itemQuantity[name] || 0);
@@ -84,7 +97,7 @@ const OrdersList = () => {
 
       setItemSummary(itemSummary);
     }
-  }, [ordersList]);
+  }, [list]);
 
   const onEdit = ({ id, price, user_id }) => {
     setIsUpdateOrder(true);
@@ -102,11 +115,11 @@ const OrdersList = () => {
 
   return (
     <>
-      {isFetching ? (
+      {isFetchingData ? (
         <Loader />
       ) : (
         <>
-          {ordersList.length !== 0 ? (
+          {list.length !== 0 ? (
             <CollapseTableContainer>
               <SummaryHeader>Order History</SummaryHeader>
               <CollapsibleTable
@@ -115,7 +128,7 @@ const OrdersList = () => {
                 isEditDelete
                 onEdit={onEdit}
                 onReject={onReject}
-                rows={ordersList}
+                rows={list}
                 tablewidth="90%"
               />
               {itemSummary.length !== 0 && (
