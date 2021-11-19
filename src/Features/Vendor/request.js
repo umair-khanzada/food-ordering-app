@@ -138,7 +138,11 @@ export const FetchOrderHistory = () => {
     return id;
   });
 
-  return useQuery('orders', () => orderHistory(vendorId));
+  return useQuery('orders', () => orderHistory(vendorId), {
+    keepPreviousData: true,
+    refetchInterval: 1000,
+    notifyOnChangeProps: ['data'],
+  });
 };
 
 const orderById = async (id, isUpdateOrder) => {
