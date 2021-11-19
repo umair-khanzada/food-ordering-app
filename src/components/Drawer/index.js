@@ -126,7 +126,7 @@ const Drawer = () => {
     },
   });
   return (
-    <MainDrawer anchor="right" onClose={() => dispatch(closeDrawer())} open={isDrawerOpen} variant="persistent">
+    <MainDrawer anchor="right" onClose={() => dispatch(closeDrawer())} open={isDrawerOpen} variant="temporary">
       <DrawerHeader>
         <DrawerHeading>Cart</DrawerHeading>
         <DrawerCloseIcon onClick={() => dispatch(closeDrawer())} />

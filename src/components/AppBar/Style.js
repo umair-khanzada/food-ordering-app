@@ -5,6 +5,25 @@ import styled from 'styled-components';
 
 import Color from '../../util/Color';
 
+export const CartItemQuantity = styled.span`
+  position: absolute;
+  top: 0;
+  right: 8px;
+  color: white;
+  width: 20px;
+  font-size: 16px;
+  padding: 2;
+  border-radius: 20px;
+  background-color: #ff4d4d;
+  @media (max-width: 380px) {
+    width: 14px;
+    font-size: 9px;
+    padding: 2px;
+    border-radius: 20px;
+    background-color: #ff4d4d;
+  }
+`;
+
 export const StyledDiv = styled.div`
   flex-grow: 1;
   & .MuiToolbar-gutters {
@@ -26,7 +45,6 @@ export const NameLogoutContainer = styled(Grid)`
   justify-content: flex-end;
   @media (max-width: 460px) {
     display: flex;
-    justify-content: space-between;
     flex-wrap: inherit;
   }
 `;
