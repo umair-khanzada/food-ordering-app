@@ -72,7 +72,7 @@ function SideMenu({ mobileOpen, handleDrawerToggle, setMobile }) {
             }}
             onClose={mobileOpen}
             open={mobileOpen}
-            variant="persistent"
+            variant="temporary"
           >
             <IconButton className={classes.backgroundHover} onClick={handleDrawerToggle}>
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
