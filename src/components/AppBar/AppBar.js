@@ -19,8 +19,8 @@ import {
   StyledLogo,
   UserName,
   NameLogoutContainer,
+  CartItemQuantity,
 } from './Style';
-
 const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -29,14 +29,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
 const NavBar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const logOut = () => {
     dispatch(logout({ history }));
   };
-
   const {
     cart: { length: cartItemCount },
     role,
@@ -45,7 +43,6 @@ const NavBar = () => {
       addtocartReducers: { cart },
       authReducer: { role },
     } = state;
-
     return { cart, role };
   }, shallowEqual);
   const { name, isLoading } = useSelector((state) => {
@@ -57,15 +54,13 @@ const NavBar = () => {
       isLoading,
     };
   }, shallowEqual);
-
   const { user } = Roles;
-
   const classes = useStyles();
   function handleDrawerToggle() {
     setMobileOpen((prev) => !prev);
   }
+  const firstname = name.split(' ')[0];
   const [mobileOpen, setMobileOpen] = useState(false);
-
   return (
     <StyledDiv>
       <StyledAppBar position="sticky">
@@ -85,19 +80,18 @@ const NavBar = () => {
               <>
                 <Drawer />
                 <IconButton onClick={() => dispatch(openDrawer())}>
-                  <span style={{ position: 'absolute', top: 0, right: '8px', color: 'red', fontSize: '16px' }}>
-                    {cartItemCount === 0 ? null : cartItemCount}
-                  </span>
+                  {cartItemCount > 0 && (
+                    <CartItemQuantity>{cartItemCount === 0 ? null : cartItemCount}</CartItemQuantity>
+                  )}
                   <ShoppingCartIcon />
                 </IconButton>
               </>
             )}
-
             {isLoading ? (
               <CircularProgress />
             ) : (
               <>
-                <UserName>{name}</UserName>
+                <UserName>{firstname}</UserName>
                 <ListItemIcon>
                   <IconButton onClick={logOut}>
                     <LogoutButton fontSize="large" />
@@ -108,12 +102,10 @@ const NavBar = () => {
           </NameLogoutContainer>
         </Toolbar>
       </StyledAppBar>
-
       <div>
         <SideMenu handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setMobile={setMobileOpen} />
       </div>
     </StyledDiv>
   );
 };
-
 export default NavBar;

@@ -140,7 +140,7 @@ export const FetchOrderHistory = () => {
 
   return useQuery('orders', () => orderHistory(vendorId), {
     keepPreviousData: true,
-    refetchInterval: 1000,
+    refetchInterval: 5000,
     notifyOnChangeProps: ['data'],
   });
 };

@@ -27,6 +27,23 @@ export const DrawerCard = styled(Card)`
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
 `;
+
+export const TotalAmountCard = styled(Card)`
+  display: flex;
+  padding-right: 4px;
+  width: 290px;
+  height: 55px;
+  align-items: center;
+
+  border-radius: 0;
+  border-bottom: 2px solid #00b3e3;
+  margin-bottom: 10px;
+
+  justify-content: space-evenly;
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+`;
 export const ItemImage = styled.img`
   width: 80px;
   height: 70px;
