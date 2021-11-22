@@ -59,6 +59,7 @@ const NavBar = () => {
   function handleDrawerToggle() {
     setMobileOpen((prev) => !prev);
   }
+  const firstname = name.split(' ')[0];
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
     <StyledDiv>
@@ -90,7 +91,7 @@ const NavBar = () => {
               <CircularProgress />
             ) : (
               <>
-                <UserName>{name.indexOf(' ') >= 0 ? name.substr(0, name.indexOf(' ')) : name}</UserName>
+                <UserName>{firstname}</UserName>
                 <ListItemIcon>
                   <IconButton onClick={logOut}>
                     <LogoutButton fontSize="large" />

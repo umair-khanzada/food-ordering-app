@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Fade, Backdrop } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -45,6 +45,7 @@ import {
   QuantityContainer,
   Quantity,
   ItemName,
+  TotalAmountCard,
 } from './style';
 const Drawer = () => {
   const { headers } = GetHeader();
@@ -63,12 +64,22 @@ const Drawer = () => {
   });
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [totalAmount, setTotalAmount] = useState(0);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    let amount = 0;
+    cart.map(({ price, qty }) => {
+      amount += price * qty;
+      setTotalAmount(amount);
+    });
+  }, [totalAmount, cart]);
+
   const placeOrder = () => {
     const items = [];
     let item = {};
@@ -81,6 +92,7 @@ const Drawer = () => {
       };
       items.push(JSON.stringify(item));
       amount += price * qty;
+      setTotalAmount(amount);
       vendor = vendorId;
     });
 
@@ -133,6 +145,13 @@ const Drawer = () => {
       </DrawerHeader>
       {cart.length > 0 ? (
         <CartPaper>
+          <TotalAmountCard>
+            <ItemNameContainer>
+              <h3>Total Amount:</h3>
+            </ItemNameContainer>
+
+            <div> Rs. {totalAmount}</div>
+          </TotalAmountCard>
           {cart.map((cartdata) => {
             return (
               <DrawerCard key={cartdata.id}>
