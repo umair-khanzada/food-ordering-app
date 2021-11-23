@@ -8,13 +8,7 @@ export const validateOnSubmit = (fields, checkEmpty) => {
       return field;
     }
 
-    if (field.errorMessage !== '') {
-      isValid = false;
-      return field;
-    }
-
     field.errorMessage = '';
-
     return field;
   });
 
@@ -26,6 +20,9 @@ export const fieldChangeHandler = (prev, value, index) => {
   const currentTextField = prevForm[index];
 
   currentTextField.value = value;
+  if (currentTextField.value !== '') {
+    currentTextField.errorMessage = '';
+  }
 
   if (currentTextField.getValidation) {
     const getValidationError = currentTextField.getValidation(currentTextField.value);

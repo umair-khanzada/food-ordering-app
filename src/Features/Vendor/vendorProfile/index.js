@@ -104,7 +104,7 @@ const VendorProfile = () => {
   const history = useHistory();
 
   const saveHandler = () => {
-    const { validateArray, isValid } = validateOnSubmit(fields, false);
+    const { validateArray, isValid } = validateOnSubmit(fields, true);
     setFields(validateArray);
     const [{ value: name }, { value: email }, { value: password }, { value: contact }] = fields;
 
