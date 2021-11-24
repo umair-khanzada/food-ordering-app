@@ -70,9 +70,8 @@ const EditMenu = () => {
   const initialItemEditField = [
     {
       type: AUTO_COMPLETE,
-      label: '',
+      label: 'Categories',
       values: categoryData,
-      placeholder: 'Categories',
       value: '',
       name: 'categoryId',
       isValid: true,

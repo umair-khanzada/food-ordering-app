@@ -39,10 +39,10 @@ const AddMenu = () => {
   const initialItemRestaurant = [
     {
       type: AUTO_COMPLETE,
-      label: '',
+      label: 'Categories',
       values: categoryData,
       name: 'categoryId',
-      placeholder: 'Categories',
+
       value: '',
       isValid: true,
       errorMessage: '',
