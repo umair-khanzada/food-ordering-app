@@ -48,19 +48,6 @@ const AddUser = () => {
   const initialUserField = [
     {
       type: TEXT_FIELD,
-      textFieldType: 'text',
-      label: 'Name',
-      variant: 'standard',
-      value: '',
-      name: 'name',
-      errorMessage: '',
-      onChange: ({ target: { value } }, index) => {
-        const updatedFields = fieldChangeHandler(initialUserField, value, index);
-        setFields(updatedFields);
-      },
-    },
-    {
-      type: TEXT_FIELD,
       textFieldType: 'email',
       label: 'Email',
       variant: 'standard',
@@ -73,9 +60,22 @@ const AddUser = () => {
       },
       getValidation: (value) => {
         if (!emailRegex.test(value)) {
-          return 'Email type is not valid';
+          return 'Invalid email';
         }
         return '';
+      },
+    },
+    {
+      type: TEXT_FIELD,
+      textFieldType: 'text',
+      label: 'Name',
+      variant: 'standard',
+      value: '',
+      name: 'name',
+      errorMessage: '',
+      onChange: ({ target: { value } }, index) => {
+        const updatedFields = fieldChangeHandler(initialUserField, value, index);
+        setFields(updatedFields);
       },
     },
     {

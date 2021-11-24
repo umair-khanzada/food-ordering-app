@@ -20,10 +20,11 @@ function LoginForm() {
     let isValid = true;
     const ValidateArray = loginForm.map((textField) => {
       if (textField.value == '') {
+        const { name } = textField;
         isValid = false;
         return {
           ...textField,
-          errorMessage: textField.name + ' field cannot be empty',
+          errorMessage: name.charAt(0).toUpperCase() + name.slice(1) + ' field cannot be empty',
           isValid: false,
         };
       }

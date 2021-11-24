@@ -50,7 +50,7 @@ const EditUser = () => {
       },
       getValidation: (value) => {
         if (!emailRegex.test(value)) {
-          return 'Email type is not valid';
+          return 'Invalid email';
         }
         return '';
       },
@@ -105,13 +105,6 @@ const EditUser = () => {
 
   const { isLoading, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
-      const resetFields = fields.map((field) => {
-        return {
-          ...field,
-          value: '',
-        };
-      });
-      setFields(resetFields);
       dispatch(
         toggleSnackbarOpen({
           snackbarMessage: successMessage,
