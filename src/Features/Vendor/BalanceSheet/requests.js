@@ -11,16 +11,17 @@ export const FetchBalances = () => {
   const vendorId = useSelector((state) => state.authReducer.id);
   return useQuery('balance', async () => {
     const { data } = await axios.get(baseUrl + `balance/vendor/${vendorId}`);
-
     const structutredData = [];
 
-    data.forEach((data) =>
-      structutredData.push({
-        user: data.userId.name,
-        amount: data.amount,
-        id: data.id,
-      }),
-    );
+    data.forEach((data) => {
+      if (data.userId !== null) {
+        structutredData.push({
+          user: data.userId.name,
+          amount: data.amount,
+          id: data.id,
+        });
+      }
+    });
 
     return structutredData;
   });
