@@ -20,7 +20,7 @@ function UsersList() {
   const { headers } = GetHeader();
   const successMessage = 'Successfull user has been deleted';
   const { data: usersData, refetch: refetchUser, isFetching } = FetchUsers('user');
-  const header = ['S.No', 'name', 'email', 'contact', 'Edit'];
+  const header = ['S.No', 'Email', 'Name', 'Contact', 'Edit'];
 
   useEffect(() => {
     if (Array.isArray(usersData)) {

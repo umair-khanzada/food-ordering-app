@@ -19,7 +19,7 @@ function VendorList() {
   const dispatch = useDispatch();
   const [vendors, setVendors] = useState('');
   const successMessage = 'Successfull vendor has been deleted';
-  const header = ['S.No', 'name', 'email', 'contact', 'Edit'];
+  const header = ['S.No', 'Email', 'Name', 'Contact', 'Edit'];
   const { data: vendorsData, isFetching, refetch: refetchVendor } = FetchUsers('vendor');
   const Deletevendor = useMutation(deleteUserById, {
     onError: (error) => {

@@ -32,9 +32,10 @@ function SignUpForm() {
     const ValidateArray = signUpForm.map((textField) => {
       if (textField.value == '') {
         isValid = false;
+        const { name } = textField;
         return {
           ...textField,
-          errorMessage: textField.name + ' field cannot be empty',
+          errorMessage: name.charAt(0).toUpperCase() + name.slice(1) + ' field cannot be empty',
           isValid: false,
         };
       }

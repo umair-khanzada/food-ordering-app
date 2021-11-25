@@ -62,7 +62,7 @@ const EditVendor = () => {
       },
       getValidation: (value) => {
         if (!emailRegex.test(value)) {
-          return 'Email type is not valid';
+          return 'Invalid email';
         }
         return '';
       },
@@ -91,7 +91,6 @@ const EditVendor = () => {
   const [fields, setFields] = useState(initialEditVendorField);
   const { isLoading, mutateAsync } = useMutation(editUserById, {
     onSuccess: () => {
-      setFields(initialEditVendorField);
       dispatch(toggleSnackbarOpen({ snackbarMessage: successMessage, messageType: SUCCESS }));
     },
     onError: (error) => {
