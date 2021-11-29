@@ -20,6 +20,9 @@ export const CustomTableContainer = styled(TableContainer)`
     padding: 5px 14px;
     line-height: 38px;
   }
+  & .MuiTable-root {
+    border-collapse: unset;
+  }
   @media (max-width: 768px) {
     & .MuiTableCell-root {
       padding: 5px 11px;
@@ -43,7 +46,9 @@ export const DeleteProgress = styled(CircularProgress)`
   margin-top: 10px;
 `;
 export const EditDeletCell = styled(TableCell)`
-  display: flex;
+  @media (max-width: 768px) {
+    display: flex;
+  }
 `;
 export const BalanceSheetFilter = styled(SearchBar)`
   margin: 10px 5%;
