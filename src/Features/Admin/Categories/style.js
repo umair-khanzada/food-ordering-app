@@ -9,10 +9,9 @@ export const CategoriesTitleContainer = styled.div`
 export const CategoriesTitle = styled.div`
   color: grey;
   font-size: 25px;
-
   font-weight: 500;
 `;
 export const CustomTableContainer = styled.div`
   margin-top: 20px;
-  height: 85vh;
+  height: 75%;
 `;
